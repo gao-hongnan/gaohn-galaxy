@@ -705,7 +705,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/gaohn-galaxy/gaohn-galaxy
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>D:\a\gaohn-galaxy\gaohn-galaxy
 </pre></div>
 </div>
 </div>
@@ -922,7 +922,7 @@ Image dtype: uint8
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/dda3cef1860fdfa829ecae95b39f13aacd5c812b36110550964098d64e9637ef.svg" src="../../../_images/dda3cef1860fdfa829ecae95b39f13aacd5c812b36110550964098d64e9637ef.svg" /></div>
+<img alt="../../../_images/dc407030ff6486307371a7e94537c326a81164a9f65d71b7f4aa2b7cee9be58e.svg" src="../../../_images/dc407030ff6486307371a7e94537c326a81164a9f65d71b7f4aa2b7cee9be58e.svg" /></div>
 </div>
 </section>
 <section id="size-of-the-image">
@@ -1105,7 +1105,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/dc246fcbe31fa8c4c3e6f1a5ed051d599b673053e1d4990fb8eed0bb3534d597.svg" src="../../../_images/dc246fcbe31fa8c4c3e6f1a5ed051d599b673053e1d4990fb8eed0bb3534d597.svg" /></div>
+<img alt="../../../_images/393a4e648a0c0471fd4d7b94b1be950969aaa120f058628883a41a4cfecb01a5.svg" src="../../../_images/393a4e648a0c0471fd4d7b94b1be950969aaa120f058628883a41a4cfecb01a5.svg" /></div>
 </div>
 <p>To make the colors more distinct, we can use <code class="docutils literal notranslate"><span class="pre">skimage.color</span></code>.</p>
 <div class="cell docutils container">
@@ -1116,7 +1116,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/8aa644382981b5bfa632fd0060d10adb7ace80b887c9a00ecd65a44d653d95ef.svg" src="../../../_images/8aa644382981b5bfa632fd0060d10adb7ace80b887c9a00ecd65a44d653d95ef.svg" /></div>
+<img alt="../../../_images/6729d7e77aeac627e832cb6d0bb9d765daf1cd36436c7b1a5550f23e44c626bb.svg" src="../../../_images/6729d7e77aeac627e832cb6d0bb9d765daf1cd36436c7b1a5550f23e44c626bb.svg" /></div>
 </div>
 <p>We can clearly see that with <span class="math notranslate nohighlight">\(K=2\)</span> clusters, the image is dichotomized into two distinct segments. This is quite a coarse representation of the original image.</p>
 <p>Let’s run the compression technique a few more times, this time with <span class="math notranslate nohighlight">\(K=2, 3, 6\)</span> and <span class="math notranslate nohighlight">\(16\)</span> and observe the results.</p>
@@ -1164,9 +1164,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 |    Compressed size    | 137634  |
 |   Compression ratio   |  0.08   |
 +-----------------------+---------+
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----------------------+---------+
++-----------------------+---------+
 |        Metric         |  Value  |
 +-----------------------+---------+
 |     Original size     | 1650744 |
@@ -1175,7 +1173,9 @@ In summary, the reconstruct_image function takes a compressed image represented 
 |    Compressed size    | 206487  |
 |   Compression ratio   |  0.13   |
 +-----------------------+---------+
-+-----------------------+---------+
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----------------------+---------+
 |        Metric         |  Value  |
 +-----------------------+---------+
 |     Original size     | 1650744 |
@@ -1186,7 +1186,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/655fac7a35caf8769b0ab755c3e8082643b6000a0809dfaf978683d7a0072df1.svg" src="../../../_images/655fac7a35caf8769b0ab755c3e8082643b6000a0809dfaf978683d7a0072df1.svg" /></div>
+<img alt="../../../_images/e4fe4a4ef32dc32ded097b2a92975f2530003857a307efc53fbee7ec718455eb.svg" src="../../../_images/e4fe4a4ef32dc32ded097b2a92975f2530003857a307efc53fbee7ec718455eb.svg" /></div>
 </div>
 <p>As we can see, the quality of the compressed image will depend on the number of clusters used. In general, a larger number of clusters will result in higher image quality, but at the expense of a larger file size.</p>
 <p>We can also use our own implementation of K-Means to perform image compression, we see that the results are the same.
@@ -1216,10 +1216,10 @@ However, ours is very slow since not every operation is vectorized.</p>
 </div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Converged at iteration 23
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4e04756280&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1f7116787f0&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/3522493184e472031862d0bf2e8e2c4413c0e547e512583dfb79bf324949c5e9.svg" src="../../../_images/3522493184e472031862d0bf2e8e2c4413c0e547e512583dfb79bf324949c5e9.svg" /></div>
+<img alt="../../../_images/8e815247c9d22a0468e140654debf4c830d6a63e9d0663e96012d21de7c47562.svg" src="../../../_images/8e815247c9d22a0468e140654debf4c830d6a63e9d0663e96012d21de7c47562.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1280,7 +1280,7 @@ However, ours is very slow since not every operation is vectorized.</p>
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/38863ac764caba9684a45a798e9fe32e5acc8afaa69a9efa395fec23416ff3c4.svg" src="../../../_images/38863ac764caba9684a45a798e9fe32e5acc8afaa69a9efa395fec23416ff3c4.svg" /></div>
+<img alt="../../../_images/518d5034ee9bd77d83772b9254bc70729446fc2ccd6ac61fd69d77a91518a285.svg" src="../../../_images/518d5034ee9bd77d83772b9254bc70729446fc2ccd6ac61fd69d77a91518a285.svg" /></div>
 </div>
 <p>It is important to note that while K-Means can provide significant size reductions for some images, it may not always be the best method for image compression. K-Means is a lossy compression method, meaning that the quality of the compressed image will be lower than the original image. This means that while it can provide significant size reductions, it may not always be the best method for image compression (i.e. if you are seeking for lossless compression).</p>
 <p>The quality of the compressed image will depend on the number of clusters used and the similarity of the pixels in the image. In general, a larger number of clusters will result in higher image quality, but also a larger file size. Experimentation is often necessary to find the optimal number of clusters for a given image.</p>
@@ -1329,7 +1329,7 @@ However, ours is very slow since not every operation is vectorized.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning/clustering/kmeans"
+            path: "./machine_learning\clustering\kmeans"
         },
         predefinedOutput: true
     }
