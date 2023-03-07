@@ -322,6 +322,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_segmentation.html">Application: Image Compression and Segmentation</a></li>
 </ul>
 </li>
 </ul>
@@ -548,7 +550,6 @@ However, it can be treated as EM algorithm with a single Gaussian distribution.<
 </section>
 <section id="notebooks">
 <h3>Notebooks<a class="headerlink" href="#notebooks" title="Permalink to this heading">#</a></h3>
-<p>These two are very good resources for many other topics as well.</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://goodboychan.github.io/python/machine_learning/natural_language_processing/vision/2020/10/26/01-K-Means-Clustering-for-Imagery-Analysis.html">Goodboychan: K-Means Clustering for Imagery Analysis</a></p></li>
 <li><p><a class="reference external" href="https://www.nathanieldake.com/Machine_Learning/04-Unsupervised_Learning_Cluster_Analysis-02-Cluster-Analysis-K-Means-Clustering.html">Nathaniel Dake: K-Means Clustering</a></p></li>
@@ -559,10 +560,10 @@ However, it can be treated as EM algorithm with a single Gaussian distribution.<
 <ul class="simple">
 <li><p>Assumptions of K-Means:</p>
 <ul>
-<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/133656/how-to-understand-the-drawbacks-of-k-means">1</a></p></li>
-<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/576812/what-are-the-k-means-algorithm-assumptions">2</a></p></li>
-<li><p><a class="reference external" href="https://developers.google.com/machine-learning/clustering/algorithm/advantages-disadvantages">3</a></p></li>
-<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html">4</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/133656/how-to-understand-the-drawbacks-of-k-means">Article 1</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/576812/what-are-the-k-means-algorithm-assumptions">Article 2</a></p></li>
+<li><p><a class="reference external" href="https://developers.google.com/machine-learning/clustering/algorithm/advantages-disadvantages">Article 3</a></p></li>
+<li><p><a class="reference external" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html">Article 4</a></p></li>
 </ul>
 </li>
 <li><p>Interview Questions:</p>
@@ -576,10 +577,10 @@ However, it can be treated as EM algorithm with a single Gaussian distribution.<
 <li><p><a class="reference external" href="https://www.youtube.com/watch?v=0MQEt10e4NM">Mathematicalmonk: K-means clustering</a></p></li>
 <li><p>Proof of K-Means Converges in Finite Steps</p>
 <ul>
-<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/188087/proof-of-convergence-of-k-means">https://stats.stackexchange.com/questions/188087/proof-of-convergence-of-k-means</a></p></li>
-<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/211086/proof-of-k-means-convergence-in-finite-iterations">https://stats.stackexchange.com/questions/211086/proof-of-k-means-convergence-in-finite-iterations</a></p></li>
-<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/603327/question-on-the-proof-of-convergence-of-k-means">https://stats.stackexchange.com/questions/603327/question-on-the-proof-of-convergence-of-k-means</a></p></li>
-<li><p><a class="reference external" href="https://las.inf.ethz.ch/courses/lis-s16/hw/hw4_sol.pdf">https://las.inf.ethz.ch/courses/lis-s16/hw/hw4_sol.pdf</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/188087/proof-of-convergence-of-k-means">Article 1</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/211086/proof-of-k-means-convergence-in-finite-iterations">Article 2</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/603327/question-on-the-proof-of-convergence-of-k-means">Article 3</a></p></li>
+<li><p><a class="reference external" href="https://las.inf.ethz.ch/courses/lis-s16/hw/hw4_sol.pdf">Article 4</a></p></li>
 </ul>
 </li>
 </ul>
@@ -618,7 +619,7 @@ However, it can be treated as EM algorithm with a single Gaussian distribution.<
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\clustering\kmeans"
+            path: "./machine_learning/clustering/kmeans"
         },
         predefinedOutput: true
     }

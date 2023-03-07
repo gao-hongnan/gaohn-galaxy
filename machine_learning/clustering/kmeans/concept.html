@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/clustering/kmeans/concept';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Bibliography" href="../../../references_resources_roadmap/bibliography.html" />
+    <link rel="next" title="Implementation: K-Means (Lloyd)" href="implementation.html" />
     <link rel="prev" title="K-Means" href="intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -324,6 +324,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="image_segmentation.html">Application: Image Compression and Segmentation</a></li>
 </ul>
 </li>
 </ul>
@@ -639,6 +641,36 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-find-k">
+   How to find
+   <span class="math notranslate nohighlight">
+    \(K\)
+   </span>
+   ?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choose-k-that-minimizes-the-cost-function">
+     Choose
+     <span class="math notranslate nohighlight">
+      \(K\)
+     </span>
+     that Minimizes the Cost Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#elbow-method">
+     Elbow Method
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#other-methods">
+     Other Methods
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-and-space-complexity">
    Time and Space Complexity
   </a>
@@ -682,11 +714,6 @@ title="Print to PDF"
             <article class="bd-article" role="main">
               
   <div class="cell tag_remove-input docutils container">
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
-</pre></div>
-</div>
-</div>
 </div>
 <section class="tex2jax_ignore mathjax_ignore" id="concept">
 <h1>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h1>
@@ -824,7 +851,7 @@ we can assign data points
 <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> to the cluster <span class="math notranslate nohighlight">\(\hat{C}_k\)</span> that is closest to the cluster mean <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span>.
 This assignment action is called the <strong>assignment function</strong> <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, a function that
 does the assignment of data points to clusters. We will show later that the clustering error <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> is minimized
-when the assignment function is the <strong>nearest neighbor assignment</strong> function <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span>,</p>
+when the assignment function is the <strong>nearest neighbor assignment</strong> function <span class="math notranslate nohighlight">\(\mathcal{A}^{*}(\cdot)\)</span>,</p>
 <div class="math notranslate nohighlight">
 \[
     \mathcal{A}^{*}(n) = \underset{k}{\operatorname{argmin}} \left\|\mathbf{x}^{(n)} - \boldsymbol{\mu}_k \right\|^2
@@ -855,7 +882,7 @@ closeness is still there.</p>
 partitioned into 3 distinct clusters.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../../_images/59d24974ac7f156a744e07402e46fdf9d3633271f14d4b725408899368fac0c6.svg" src="../../../_images/59d24974ac7f156a744e07402e46fdf9d3633271f14d4b725408899368fac0c6.svg" /></div>
+<img alt="../../../_images/40f6e3bcb37d11ada5a7ac307811e5fe975eef32d7b145f52110fa4fa873bf94.svg" src="../../../_images/40f6e3bcb37d11ada5a7ac307811e5fe975eef32d7b145f52110fa4fa873bf94.svg" /></div>
 </div>
 <p>Visually, we can literally just circle out the 3 clusters. The luxury of such simplicity
 is because we are working with 2 features, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^{2}\)</span>.
@@ -1041,7 +1068,7 @@ cluster’s cost individually.</p>
 <div class="proof definition admonition" id="def:kmeans-objective">
 <p class="admonition-title"><span class="caption-number">Definition 5 </span> (K-Means Objective Function)</p>
 <section class="definition-content" id="proof-content">
-<p>The <strong>objective</strong> function is to <strong>minimize</strong> the above expression in <a class="reference internal" href="#equation-eq-kmeans-cost-1">(4)</a>:</p>
+<p>The <strong>objective</strong> function is to <strong>minimize</strong> the above expression in equation <a class="reference internal" href="#equation-eq-kmeans-cost-1">(4)</a>:</p>
 <div class="math notranslate nohighlight" id="equation-eq-k-means-objective-function-1">
 <span class="eqno">(5)<a class="headerlink" href="#equation-eq-k-means-objective-function-1" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{alignat}{3}
@@ -1097,7 +1124,7 @@ whose center <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</sp
 <p>Let’s prove this claim.</p>
 </section>
 </div><div class="proof admonition" id="proof">
-<p>Proof. In <a class="reference internal" href="#equation-eq-k-means-criterion-1-2">(7)</a>, we have that <span class="math notranslate nohighlight">\(\boldsymbol{v}_1, \boldsymbol{v}_2, \ldots, \boldsymbol{v}_K\)</span> are fixed.</p>
+<p>Proof. In equation <a class="reference internal" href="#equation-eq-k-means-criterion-1-2">(7)</a>, we have that <span class="math notranslate nohighlight">\(\boldsymbol{v}_1, \boldsymbol{v}_2, \ldots, \boldsymbol{v}_K\)</span> are fixed.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -1164,7 +1191,7 @@ function of <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</spa
 \end{aligned}
 \end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_k\)</span> is the number of data points assigned to cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
-<p>Now to minimize <a class="reference internal" href="#equation-eq-derivative-of-k-means-cost-function">(10)</a>, we set it to zero and solve for <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</span>.</p>
+<p>Now to minimize equation <a class="reference internal" href="#equation-eq-derivative-of-k-means-cost-function">(10)</a>, we set it to zero and solve for <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{align*}
@@ -1187,7 +1214,7 @@ function of <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</spa
 </div></section>
 <section id="objective-function-re-defined">
 <h3>Objective Function Re-defined<a class="headerlink" href="#objective-function-re-defined" title="Permalink to this heading">#</a></h3>
-<p>We can now re-define the objective function <a class="reference internal" href="#equation-eq-k-means-objective-function-1">(5)</a> in terms of the optimal cluster centers and assignments.</p>
+<p>We can now re-define the objective function in equation <a class="reference internal" href="#equation-eq-k-means-objective-function-1">(5)</a> in terms of the optimal cluster centers and assignments.</p>
 <div class="math notranslate nohighlight" id="equation-eq-k-means-objective-function-2">
 <span class="eqno">(11)<a class="headerlink" href="#equation-eq-k-means-objective-function-2" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{alignat}{4}
@@ -1201,7 +1228,7 @@ function of <span class="math notranslate nohighlight">\(\boldsymbol{v}_k\)</spa
 <p class="admonition-title"><span class="caption-number">Remark 4 </span> (Cost Function is a function of assignments and cluster centers)</p>
 <section class="remark-content" id="proof-content">
 <p>Reminder!</p>
-<p>The cost function <a class="reference internal" href="#equation-eq-k-means-objective-function-2">(11)</a> is a function of the cluster assignments and cluster centers.
+<p>The cost function in equation <a class="reference internal" href="#equation-eq-k-means-objective-function-2">(11)</a> is a function of <strong>both</strong> the cluster assignments and cluster centers.
 And therefore we are minimizing the cost function with respect to the cluster assignments and cluster centers. However,
 jointly optimizing both the cluster assignments and cluster centers is computationally challenging, and therefore
 we split to two steps, first optimizing the cluster assignments and then optimizing the cluster centers in a greedy manner.</p>
@@ -1222,57 +1249,44 @@ we split to two steps, first optimizing the cluster assignments and then optimiz
 <p>the K-Means algorithm aims to group the data points into <span class="math notranslate nohighlight">\(K\)</span> clusters</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{C} = \left\{ \hat{C}_1^{(t)}, \hat{C}_2^{(t)}, \dots, \hat{C}_K^{(t)} \right\}
+\hat{\mathcal{C}} = \left\{ \hat{C}_1, \hat{C}_2, \dots, \hat{C}_K \right\}
 \]</div>
 <p>such that the sum of squared distances
 between each data point and its cluster center is minimized.</p>
-<p>In code, <span class="math notranslate nohighlight">\(\hat{C}\)</span> can be treated as a dictionary/hash map,
+<p>In code, <span class="math notranslate nohighlight">\(\hat{\mathcal{C}}\)</span> can be treated as a dictionary/hash map,
 where the <strong>key</strong> is the cluster number and the <strong>value</strong> is the set of data points assigned to that cluster.</p>
 <ol class="arabic">
-<li><p>Initialize <span class="math notranslate nohighlight">\(K\)</span> cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_1^{(0)}, \boldsymbol{\mu}_2^{(0)}, \dots, \boldsymbol{\mu}_K^{(0)}\)</span> randomly (best to be far apart)
-where the superscript <span class="math notranslate nohighlight">\((0)\)</span> denotes the iteration number <span class="math notranslate nohighlight">\(t=0\)</span>.</p>
-<ul>
-<li><p>In the very first iteration, there are no data points in any cluster <span class="math notranslate nohighlight">\(\hat{C}_k^{(0)} = \emptyset\)</span>. Therefore, the cluster centers are just randomly chosen for simplicity.</p></li>
+<li><p><strong>Initialization Step</strong>: Initialize <span class="math notranslate nohighlight">\(K\)</span> cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_1^{[0]}, \boldsymbol{\mu}_2^{[0]}, \dots, \boldsymbol{\mu}_K^{[0]}\)</span> randomly (best to be far apart)
+where the superscript <span class="math notranslate nohighlight">\([0]\)</span> denotes the iteration number <span class="math notranslate nohighlight">\(t=0\)</span>.</p>
+<ul class="simple">
+<li><p>In the very first iteration, there are no data points in any cluster <span class="math notranslate nohighlight">\(\hat{C}_k^{[0]} = \emptyset\)</span>. Therefore, the cluster centers are just randomly chosen for simplicity.</p></li>
 <li><p>By random, we mean that the cluster centers are randomly chosen from the data points <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \dots, \mathbf{x}^{(N)}\right\}\)</span>
 and not randomly chosen from the feature space <span class="math notranslate nohighlight">\(\mathbb{R}^D\)</span>.</p></li>
-<li><p>Subsequent iterations will have data points in the clusters <span class="math notranslate nohighlight">\(\hat{C}_k^{(t)} \neq \emptyset\)</span> and thus
-<span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t)}\)</span> will be the mean of the data points in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
-<li><p>Each <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(0)}\)</span> is a <span class="math notranslate nohighlight">\(D\)</span>-dimensional vector, where <span class="math notranslate nohighlight">\(D\)</span> is the number of features, and represents the
-mean vector of all the data points in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
-<div class="math notranslate nohighlight">
-\[
-        \boldsymbol{\mu}_k^{(0)} = \begin{bmatrix} \mu_{1k}^{(0)} &amp; \mu_{2k}^{(0)} &amp; \cdots &amp; \mu_{Dk}^{(0)} \end{bmatrix}^{\mathrm{T}}
-        \]</div>
-<p>and <span class="math notranslate nohighlight">\(\mu_{dk}^{(0)}\)</span> is the mean value of the <span class="math notranslate nohighlight">\(d\)</span>-th feature in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
-</li>
-<li><p>We denote <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> to be the collection of all <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_1, \boldsymbol{\mu}_2, \dots, \boldsymbol{\mu}_K\)</span>.</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}
-        \boldsymbol{\mu} = \begin{bmatrix} \boldsymbol{\mu}_1 \\ \boldsymbol{\mu}_2 \\ \vdots \\ \boldsymbol{\mu}_K \end{bmatrix}_{K \times D}
-        \end{split}\]</div>
-</li>
+<li><p>Subsequent iterations will have data points in the clusters <span class="math notranslate nohighlight">\(\hat{C}_k^{[t]} \neq \emptyset\)</span> and thus
+<span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t]}\)</span> will be the mean of the data points in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>Each <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[0]} = \begin{bmatrix} \mu_{1k}^{[0]} &amp; \mu_{2k}^{[0]} &amp; \cdots &amp; \mu_{Dk}^{[0]} \end{bmatrix}^{\mathrm{T}}\)</span> is a <span class="math notranslate nohighlight">\(D\)</span>-dimensional vector, where <span class="math notranslate nohighlight">\(D\)</span> is the number of features, and represents the
+mean vector of all the data points in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>Note that <span class="math notranslate nohighlight">\(\mu_{dk}^{[0]}\)</span> is the mean value of the <span class="math notranslate nohighlight">\(d\)</span>-th feature in cluster <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>We denote <span class="math notranslate nohighlight">\(\boldsymbol{\mu} = \begin{bmatrix} \boldsymbol{\mu}_1 &amp; \boldsymbol{\mu}_2 &amp; \cdots &amp; \boldsymbol{\mu}_K \end{bmatrix}_{K \times D}^{\mathrm{T}}\)</span> to be the collection of all <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_1, \boldsymbol{\mu}_2, \dots, \boldsymbol{\mu}_K\)</span>.</p></li>
 </ul>
 </li>
-</ol>
-<p>For <span class="math notranslate nohighlight">\(t=0, 1, 2, \dots\)</span></p>
-<ol class="arabic" start="2">
-<li><p><strong>Assignment Step (E)</strong>: Assign each data point <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> to the closest cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t)}\)</span>,</p>
+<li><p><strong>Assignment Step (E)</strong>: For <span class="math notranslate nohighlight">\(t=0, 1, 2, \dots\)</span>, assign each data point <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> to the closest cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t]}\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-eq-kmeans-classify">
 <span class="eqno">(12)<a class="headerlink" href="#equation-eq-kmeans-classify" title="Permalink to this equation">#</a></span>\[\begin{split}
     \begin{aligned}
-    \hat{y}^{(n) t} := \mathcal{A}^{* (t)}(n) &amp;= \underset{k \in \{1, 2, \ldots, K\}}{\operatorname{argmin}} \left\| \mathbf{x}^{(n)} - \boldsymbol{\mu}_k^{(t)} \right\|^2 \\
+    \hat{y}^{(n)[t]} := \mathcal{A}^{*(n)[t]} &amp;= \underset{k \in \{1, 2, \ldots, K\}}{\operatorname{argmin}} \left\| \mathbf{x}^{(n)} - \boldsymbol{\mu}_k^{[t]} \right\|^2 \\
     \end{aligned}
     \end{split}\]</div>
-<p>In other words, <span class="math notranslate nohighlight">\(\hat{y}^{(n) t}\)</span> is the output of the optimal assignment rule at the <span class="math notranslate nohighlight">\(t\)</span>-th iteration
-and is the index of the cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t)}\)</span> that is closest to <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span>.</p>
+<p>In other words, <span class="math notranslate nohighlight">\(\hat{y}^{(n)[t]}\)</span> is the output of the optimal assignment rule at the <span class="math notranslate nohighlight">\(t\)</span>-th iteration
+and is the index of the cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t]}\)</span> that is closest to <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span>.</p>
 <p>For instance, if <span class="math notranslate nohighlight">\(K = 3\)</span>, and for the first sample point <span class="math notranslate nohighlight">\(n=1\)</span>,
-assume the closest cluster center is <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_2^{(t)}\)</span>, then the assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span> will
+assume the closest cluster center is <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_2^{[t]}\)</span>, then the assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span> will
 assign this point to cluster <span class="math notranslate nohighlight">\(k=2\)</span>, <span class="math notranslate nohighlight">\(\hat{y}^{(1)} = 2\)</span>. Note that <span class="math notranslate nohighlight">\(\hat{y}^{(n)}\)</span> is a scalar and has the same superscript as <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span>, indicating they belong to the same sample.</p>
-<p>For notational convenience, we can also denote <span class="math notranslate nohighlight">\(\hat{C}_k^{(t)}\)</span> as the set of data points that are assigned to cluster <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<p>For notational convenience, we can also denote <span class="math notranslate nohighlight">\(\hat{C}_k^{[t]}\)</span> as the set of data points that are assigned to cluster <span class="math notranslate nohighlight">\(k\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{aligned}
-    \hat{C}_k^{(t)} &amp;= \left\{ \mathbf{x}^{(n)} \mid \hat{y}^{(n)} = k \right\}
+    \hat{C}_k^{[t]} &amp;= \left\{ \mathbf{x}^{(n)} \mid \hat{y}^{(n)} = k \right\}
     \end{aligned}
     \]</div>
 <p>Mathematically, this means partitioning the data points using <a class="reference external" href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi Diagram</a>,
@@ -1282,23 +1296,23 @@ as mentioned in the previous section <a class="reference internal" href="#def:km
 <div class="math notranslate nohighlight" id="equation-eq-kmeans-recenter">
 <span class="eqno">(13)<a class="headerlink" href="#equation-eq-kmeans-recenter" title="Permalink to this equation">#</a></span>\[\begin{split}
     \begin{aligned}
-    \boldsymbol{\mu}_k^{(t+1)} &amp;= \frac{1}{|\hat{C}_k^{(t)}|} \sum_{\mathbf{x}^{(n)} \in \hat{C}_k^{(t)}} \mathbf{x}^{(n)} \\
+    \boldsymbol{\mu}_k^{[t+1]} &amp;= \frac{1}{|\hat{C}_k^{[t]}|} \sum_{\mathbf{x}^{(n)} \in \hat{C}_k^{[t]}} \mathbf{x}^{(n)} \\
     \end{aligned}
     \end{split}\]</div>
-<p>Notice that the cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t+1)}\)</span> is the mean of all data points that are assigned to cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
+<p>Notice that the cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t+1]}\)</span> is the mean of all data points that are assigned to cluster <span class="math notranslate nohighlight">\(k\)</span>.</p>
 </li>
 <li><p>Repeat steps 2 and 3 until the centroids stop changing.</p>
 <div class="math notranslate nohighlight" id="equation-eq-kmeans-convergence">
 <span class="eqno">(14)<a class="headerlink" href="#equation-eq-kmeans-convergence" title="Permalink to this equation">#</a></span>\[
     \begin{aligned}
-    \boldsymbol{\mu}_k^{(t+1)} = \boldsymbol{\mu}_k^{(t)}
+    \boldsymbol{\mu}_k^{[t+1]} = \boldsymbol{\mu}_k^{[t]}
     \end{aligned}
     \]</div>
 <p>In other words,</p>
 <div class="math notranslate nohighlight">
 \[
     \begin{aligned}
-    \widehat{\mathcal{J}}_{\mathcal{S}}^{(t+1)}\left(\mathcal{A}^{* (t+1)}, \boldsymbol{\mu}^{(t+1)} \right) = \widehat{\mathcal{J}}_{\mathcal{S}}^{(t)}\left(\mathcal{A}^{* (t)}, \boldsymbol{\mu}^{(t)} \right)
+    \widehat{\mathcal{J}}_{\mathcal{S}}^{[t+1]}\left(\mathcal{A}^{*[t+1]}, \boldsymbol{\mu}^{[t+1]} \right) = \widehat{\mathcal{J}}_{\mathcal{S}}^{[t]}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}^{[t]} \right)
     \end{aligned}
     \]</div>
 <p>This is the convergence condition.</p>
@@ -1309,12 +1323,13 @@ as mentioned in the previous section <a class="reference internal" href="#def:km
 <p class="admonition-title"><span class="caption-number">Remark 5 </span> (K-Means is a Greedy Algorithm)</p>
 <section class="remark-content" id="proof-content">
 <p>It is important to recognize that the K-Means (Lloyd’s) Algorithm optimizes two objectives in an alternating fashion.
-It alternatively changes both the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span> and the update step <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t+1)}\)</span>
+It alternatively changes both the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}^{*}(\cdot)\)</span> and the update step <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t+1]}\)</span>
 to greedily minimize the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}(\mathcal{A}, \boldsymbol{\mu})\)</span>.</p>
 </section>
 </div></section>
 <section id="convergence">
 <h2>Convergence<a class="headerlink" href="#convergence" title="Permalink to this heading">#</a></h2>
+<p>In this section, we will prove that the K-Means Algorithm converges to a local minimum of the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}(\mathcal{A}, \boldsymbol{\mu})\)</span>.</p>
 <section id="lemma-1-stirling-numbers-of-the-second-kind">
 <h3>Lemma 1: Stirling Numbers of the Second Kind<a class="headerlink" href="#lemma-1-stirling-numbers-of-the-second-kind" title="Permalink to this heading">#</a></h3>
 <div class="proof lemma admonition" id="stirling-numbers">
@@ -1323,12 +1338,12 @@ to greedily minimize the cost function <span class="math notranslate nohighlight
 <p>The Stirling Numbers of the Second Kind <span class="math notranslate nohighlight">\(S(n, k)\)</span> are defined as the number of ways to partition a set of <span class="math notranslate nohighlight">\(n\)</span> elements into <span class="math notranslate nohighlight">\(k\)</span> non-empty subsets.</p>
 <p>There are at most <span class="math notranslate nohighlight">\(k^n\)</span> ways to partition a set of <span class="math notranslate nohighlight">\(n\)</span> elements into <span class="math notranslate nohighlight">\(k\)</span> non-empty subsets.</p>
 <p>In our case, since there are <span class="math notranslate nohighlight">\(N\)</span> data points, and we want to partition them into <span class="math notranslate nohighlight">\(K\)</span> clusters, there are at most <span class="math notranslate nohighlight">\(K^N\)</span> ways to partition the data points into <span class="math notranslate nohighlight">\(K\)</span> clusters.</p>
-<p>In other words, the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> has at most <span class="math notranslate nohighlight">\(K^N\)</span> possible mappings.
-The same applies to the update step <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> since <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> is dependent on the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>.</p>
+<p>In other words, the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}(\cdot)\)</span> has at most <span class="math notranslate nohighlight">\(K^N\)</span> possible mappings.
+The same applies to the update step <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> since <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span> is dependent on the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}(\cdot)\)</span>.</p>
 </section>
 </div></section>
 <section id="lemma-2-cost-function-of-k-means-monotonically-decreases">
-<h3>Lemma 2: Cost Function of K-Means Monotonically Decreases<a class="headerlink" href="#lemma-2-cost-function-of-k-means-monotonically-decreases" title="Permalink to this heading">#</a></h3>
+<span id="cost-function-monotically-decreases"></span><h3>Lemma 2: Cost Function of K-Means Monotonically Decreases<a class="headerlink" href="#lemma-2-cost-function-of-k-means-monotonically-decreases" title="Permalink to this heading">#</a></h3>
 <div class="proof lemma admonition" id="kmeans-monotonic-decrease">
 <p class="admonition-title"><span class="caption-number">Lemma 2 </span> (Cost Function of K-Means Monotonically Decreases)</p>
 <section class="lemma-content" id="proof-content">
@@ -1336,23 +1351,23 @@ The same applies to the update step <span class="math notranslate nohighlight">\
 <div class="math notranslate nohighlight">
 \[
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t+1)} \leq \widehat{\mathcal{J}}^{(t)}
+\widehat{\mathcal{J}}^{[t+1]} \leq \widehat{\mathcal{J}}^{[t]}
 \end{aligned}
 \]</div>
 <p>for each iteration <span class="math notranslate nohighlight">\(t\)</span>.</p>
 </section>
 </div><div class="proof admonition" id="proof">
 <p>Proof. This is a consequence of <a class="reference internal" href="#criterion:kmeans-optimal-assignment">Criterion 1</a> and <a class="reference internal" href="#criterion:kmeans-optimal-cluster-centers">Criterion 2</a>.</p>
-<p>In particular, the objective function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> is made up of two steps, the assignment step and the update step. We minimize the assignment step by finding the optimal assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span>, and we minimize the update step by finding the optimal cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{*}\)</span> based on the optimal assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span> at each iteration.</p>
+<p>In particular, the objective function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> is made up of two steps, the assignment step and the update step. We minimize the assignment step by finding the optimal assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}(\cdot)\)</span>, and we minimize the update step by finding the optimal cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{*}\)</span> based on the optimal assignment <span class="math notranslate nohighlight">\(\mathcal{A}^{*}(\cdot)\)</span> at each iteration.</p>
 <p>Equation <a class="reference internal" href="#equation-eq-k-means-criterion-1-2">(7)</a> shows that for each iteration <span class="math notranslate nohighlight">\(t\)</span>, fixing the cluster
-centers (mean) <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{(t)}\)</span>, the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}^{*(t)}\)</span> is optimal.</p>
+centers (mean) <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k^{[t]}\)</span>, the assignment step <span class="math notranslate nohighlight">\(\mathcal{A}^{*[t]}\)</span> is optimal.</p>
 <p>This means</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t)} &amp;= \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&amp;\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&amp;= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
+\widehat{\mathcal{J}}^{[t]} &amp;= \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&amp;\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&amp;= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
 \end{aligned}
 \end{split}\]</div>
 <p>What this inequality means is that at iteration <span class="math notranslate nohighlight">\(t\)</span>, at the assignment step (E), the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> is at least as large as the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> at the next iteration <span class="math notranslate nohighlight">\(t + 1\)</span>. This implies that the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> monotonically decreases
@@ -1361,9 +1376,9 @@ at this step.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t)} &amp;= \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&amp;\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
-&amp;= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
+\widehat{\mathcal{J}}^{[t]} &amp;= \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&amp;\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
+&amp;= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
 \end{aligned}
 \end{split}\]</div>
 <p>Now this means that at both steps, the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> monotonically decreases. So,
@@ -1377,22 +1392,22 @@ the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal
 <section class="lemma-content" id="proof-content">
 <p>The <a class="reference external" href="https://en.wikipedia.org/wiki/Monotone_convergence_theorem">Monotone Convergence Theorem</a> states
 that if a sequence of functions <span class="math notranslate nohighlight">\(\{f_n\}\)</span> is non-decreasing and bounded, then the sequence <span class="math notranslate nohighlight">\(\{f_n\}\)</span> converges to a limit.</p>
-<p>In our case, the sequence of functions <span class="math notranslate nohighlight">\(\{f_n\}\)</span> is the sequence of cost functions <span class="math notranslate nohighlight">\(\{\widehat{\mathcal{J}}^{(t)}\}\)</span>, and the limit is the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{*}\)</span>.</p>
-<p>So it is guaranteed that the sequence of cost functions <span class="math notranslate nohighlight">\(\{\widehat{\mathcal{J}}^{(t)}\}\)</span> converges to the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{*}\)</span> (local).</p>
+<p>In our case, the sequence of functions <span class="math notranslate nohighlight">\(\{f_n\}\)</span> is the sequence of cost functions <span class="math notranslate nohighlight">\(\left\{\widehat{\mathcal{J}}^{[t]}\right\}\)</span>, and the limit is the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{*}\)</span>.</p>
+<p>So it is guaranteed that the sequence of cost functions <span class="math notranslate nohighlight">\(\left\{\widehat{\mathcal{J}}^{[t]}\right\}\)</span> converges to the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{*}\)</span> locally.</p>
 </section>
 </div></section>
 <section id="k-means-converges-in-finite-steps">
 <h3>K-Means Converges in Finite Steps<a class="headerlink" href="#k-means-converges-in-finite-steps" title="Permalink to this heading">#</a></h3>
-<p>We are now left to show that the sequence of cost functions <span class="math notranslate nohighlight">\(\{\widehat{\mathcal{J}}^{(t)}\}\)</span> is finite,
-so that <span class="math notranslate nohighlight">\(\{\widehat{\mathcal{J}}^{(t)}\}\)</span> converges in finite steps.</p>
+<p>We are now left to show that the sequence of cost functions <span class="math notranslate nohighlight">\(\left\{\widehat{\mathcal{J}}^{[t]}\right\}\)</span> is finite,
+so that <span class="math notranslate nohighlight">\(\left\{\widehat{\mathcal{J}}^{[t]}\right\}\)</span> converges in finite steps.</p>
 <p>Since <a class="reference internal" href="#stirling-numbers">Lemma 1</a> states that there exists <span class="math notranslate nohighlight">\(K^N\)</span> possible assignments
-<span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and simiarly exists <span class="math notranslate nohighlight">\(K^N\)</span> possible cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span>,
+<span class="math notranslate nohighlight">\(\mathcal{A}(\cdot)\)</span>, and simiarly exists <span class="math notranslate nohighlight">\(K^N\)</span> possible cluster centers <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span>,
 then there exists <span class="math notranslate nohighlight">\(K^N\)</span> possible cost functions <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span>. Then,</p>
 <ul class="simple">
-<li><p>At each iteration <span class="math notranslate nohighlight">\(t\)</span>, the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{(t)}\)</span> decreases monotonically.</p></li>
+<li><p>At each iteration <span class="math notranslate nohighlight">\(t\)</span>, the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{[t]}\)</span> decreases monotonically.</p></li>
 <li><p>This means at <span class="math notranslate nohighlight">\(t+1\)</span>, if the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}^{(t + 1)}\)</span> decreases,
-then this means the assignments <span class="math notranslate nohighlight">\(\mathcal{A}^{*(t + 1)}\)</span> are different from the assignments <span class="math notranslate nohighlight">\(\mathcal{A}^{*(t)}\)</span>. Consequently, the partition never repeats if the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> decreases.</p></li>
-<li><p>This means it will loop over each possible assignment <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and eventually converge to the unique solution <span class="math notranslate nohighlight">\(\mathcal{A}^{*}\)</span>.</p></li>
+then this means the assignments <span class="math notranslate nohighlight">\(\mathcal{A}^{*[t + 1]}\)</span> are different from the assignments <span class="math notranslate nohighlight">\(\mathcal{A}^{*[t]}\)</span>. Consequently, the partition never repeats if the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> decreases.</p></li>
+<li><p>This means it will loop over each possible assignment <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, and eventually converge to the unique solution <span class="math notranslate nohighlight">\(\mathcal{A}^{*}(\cdot)\)</span>.</p></li>
 </ul>
 <p>For that specific initialization, the algorithm has an unique solution, and it is guaranteed to converge to that solution.</p>
 </section>
@@ -1409,7 +1424,7 @@ multiple times. Then, we can choose the best solution among the different local 
 <h2>Hypothesis Space<a class="headerlink" href="#hypothesis-space" title="Permalink to this heading">#</a></h2>
 <p>For completeness sake, let’s define the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> for K-Means.</p>
 <p>Intuitively, the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is the set of all possible clusterings of the data.</p>
-<p>Formally, given a set of <span class="math notranslate nohighlight">\(N\)</span> data points <span class="math notranslate nohighlight">\(\{\mathbf{x}^{(n)}\}_{n=1}^N\)</span>,
+<p>Formally, given a set of <span class="math notranslate nohighlight">\(N\)</span> data points <span class="math notranslate nohighlight">\(\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N\)</span>,
 let <span class="math notranslate nohighlight">\(C_k\)</span> be the Voronoi cell of the <span class="math notranslate nohighlight">\(k\)</span>-th cluster center <span class="math notranslate nohighlight">\(\boldsymbol{\mu}_k\)</span>.</p>
 <p>Then, we can write the class of functions <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> as:</p>
 <div class="math notranslate nohighlight">
@@ -1421,6 +1436,40 @@ let <span class="math notranslate nohighlight">\(C_k\)</span> be the Voronoi cel
 <p>This means the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is finite with cardinality <span class="math notranslate nohighlight">\(K^N\)</span>.</p>
 <p>For more details, see <a class="reference external" href="https://stats.stackexchange.com/posts/502352/">here</a> and <a class="reference external" href="https://courses.cs.washington.edu/courses/cse446/16sp/clustering_1.pdf">here</a>.</p>
 </section>
+<section id="how-to-find-k">
+<h2>How to find <span class="math notranslate nohighlight">\(K\)</span>?<a class="headerlink" href="#how-to-find-k" title="Permalink to this heading">#</a></h2>
+<p>Since <span class="math notranslate nohighlight">\(K\)</span> is a <em>priori</em>, we need to choose <span class="math notranslate nohighlight">\(K\)</span> before we run the algorithm. Choosing the
+wrong <span class="math notranslate nohighlight">\(K\)</span> will result in a poor clustering. So, how do we choose the right <span class="math notranslate nohighlight">\(K\)</span>?</p>
+<section id="choose-k-that-minimizes-the-cost-function">
+<h3>Choose <span class="math notranslate nohighlight">\(K\)</span> that Minimizes the Cost Function<a class="headerlink" href="#choose-k-that-minimizes-the-cost-function" title="Permalink to this heading">#</a></h3>
+<p>In normal supervised problem, we usually run the algorithm on the train dataset and
+choose the model that minimizes the cost function on the train dataset, or one that
+maximizes the performance.</p>
+<p>Can we do the same for K-Means? The answer is no, this is because our cost funtion
+monotonically decreases with increasing <span class="math notranslate nohighlight">\(K\)</span>.</p>
+<p>This is because we “cover” more input space <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> with increasing <span class="math notranslate nohighlight">\(K\)</span>, thus
+decreasing the cost function <span id="id8">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id3" title="Kevin P. Murphy. Probabilistic Machine Learning: An introduction. MIT Press, 2022. URL: probml.ai.">Murphy, 2022</a>]</span>.</p>
+</section>
+<section id="elbow-method">
+<h3>Elbow Method<a class="headerlink" href="#elbow-method" title="Permalink to this heading">#</a></h3>
+<p>While this may not be the best method, it is a simple and widely recognized one to choose <span class="math notranslate nohighlight">\(K\)</span>.</p>
+<p>The simple heuristic is described as follows:</p>
+<div class="proof algorithm admonition" id="elbow-method">
+<p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (Elbow Method)</p>
+<section class="algorithm-content" id="proof-content">
+<ol class="arabic simple">
+<li><p>Run K-Means with <span class="math notranslate nohighlight">\(K\)</span> from 1 to <span class="math notranslate nohighlight">\(K_{\max}\)</span>.</p></li>
+<li><p>For each <span class="math notranslate nohighlight">\(k=0,1,\ldots, K_{\max}\)</span>, compute the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}_k\)</span></p></li>
+<li><p>Plot the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}_k\)</span> against <span class="math notranslate nohighlight">\(k\)</span>.</p></li>
+<li><p>Find the “elbow” of the curve, which is the point where the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}_k\)</span> starts to decrease more slowly.</p></li>
+</ol>
+</section>
+</div></section>
+<section id="other-methods">
+<h3>Other Methods<a class="headerlink" href="#other-methods" title="Permalink to this heading">#</a></h3>
+<p>See <span id="id9">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id3" title="Kevin P. Murphy. Probabilistic Machine Learning: An introduction. MIT Press, 2022. URL: probml.ai.">Murphy, 2022</a>]</span> for more methods.</p>
+</section>
+</section>
 <section id="time-and-space-complexity">
 <h2>Time and Space Complexity<a class="headerlink" href="#time-and-space-complexity" title="Permalink to this heading">#</a></h2>
 <section id="brute-force-search-and-global-minimum">
@@ -1430,12 +1479,12 @@ if we do a brute force search over all possible clusterings, we can find the glo
 <p>Quoting from <a class="reference external" href="http://www.cs.cmu.edu/~ninamf/courses/315sp19/homeworks/hw6.pdf">CMU 10-315</a>,
 we consider the brute-force search to be the following:</p>
 <div class="proof algorithm admonition" id="brute-force-search-kmeans">
-<p class="admonition-title"><span class="caption-number">Algorithm 2 </span> (Brute Force Search for K-Means)</p>
+<p class="admonition-title"><span class="caption-number">Algorithm 3 </span> (Brute Force Search for K-Means)</p>
 <section class="algorithm-content" id="proof-content">
 <p>For each possible cluster</p>
 <div class="math notranslate nohighlight">
 \[
-\hat{C} = \left\{\hat{C}_1, \hat{C}_2, \dots, \hat{C}_K\right\}
+\hat{\mathcal{C}} = \left\{\hat{C}_1, \hat{C}_2, \dots, \hat{C}_K\right\}
 \]</div>
 <p>induced by the assignment <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, compute the
 optimal centroids</p>
@@ -1450,14 +1499,14 @@ optimal centroids</p>
 \]</div>
 <p>is the mean of the points in the <span class="math notranslate nohighlight">\(k\)</span>-th cluster.</p>
 <p>Then, compute the cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span> centroids <span class="math notranslate nohighlight">\(\hat{\boldsymbol{\mu}}\)</span>.</p>
-<p>Repeat this for all possible clusterings <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> and finally
+<p>Repeat this for all possible clusterings <span class="math notranslate nohighlight">\(\mathcal{A}(\cdot)\)</span> in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> and finally
 return the clustering <span class="math notranslate nohighlight">\(\hat{C}\)</span> that gives the minimum cost function <span class="math notranslate nohighlight">\(\widehat{\mathcal{J}}\)</span>.</p>
 </section>
 </div><p>Then the time complexity of the brute force search is exponential with respect to the number of inputs since there are <span class="math notranslate nohighlight">\(K^N\)</span> possible clusterings and
 we are looping over each possible clustering to find the global minimum. Indeed, this has time complexity</p>
 <div class="math notranslate nohighlight">
 \[
-\mathcal{O}(K^N)
+\mathcal{O}\left(K^N\right)
 \]</div>
 </section>
 <section id="lloyds-algorithm">
@@ -1490,7 +1539,7 @@ We are essentially looping like this:</p>
 </pre></div>
 </div>
 <p>where the total time complexity approximately <span class="math notranslate nohighlight">\(\mathcal{O}(T N K D)\)</span>.</p>
-<p>The worst case complexity is given by <span class="math notranslate nohighlight">\(\mathcal{O}(N^{(K+2/D)})\)</span><a class="footnote-reference brackets" href="#worst-case-time-complexity" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
+<p>The worst case complexity is given by <span class="math notranslate nohighlight">\(\mathcal{O}\left(N^{(K+2/D)}\right)\)</span><a class="footnote-reference brackets" href="#worst-case-time-complexity" id="id10" role="doc-noteref"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></a>.</p>
 <table class="table" id="time-complexity-kmeans">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text">Time Complexity of K-Means</span><a class="headerlink" href="#time-complexity-kmeans" title="Permalink to this table">#</a></caption>
 <thead>
@@ -1597,7 +1646,7 @@ they both represent all samples. The cardinality of <span class="math notranslat
 <p>The reason of writing so many equivalent forms is because many textbooks use different notations, so I tried to list a few common ones.</p>
 </aside>
 <aside class="footnote brackets" id="worst-case-time-complexity" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">6</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id10">6</a><span class="fn-bracket">]</span></span>
 <p>Refer to “How slow is the k-means method?” D. Arthur and S. Vassilvitskii - SoCG2006. for more details.</p>
 </aside>
 </section>
@@ -1617,7 +1666,7 @@ they both represent all samples. The cardinality of <span class="math notranslat
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\clustering\kmeans"
+            path: "./machine_learning/clustering/kmeans"
         },
         predefinedOutput: true
     }
@@ -1639,10 +1688,10 @@ they both represent all samples. The cardinality of <span class="math notranslat
           <p class="prev-next-title">K-Means</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="../../../references_resources_roadmap/bibliography.html" title="next page">
+  <a class='right-next' id="next-link" href="implementation.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Bibliography</p>
+      <p class="prev-next-title">Implementation: K-Means (Lloyd)</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -1772,6 +1821,36 @@ they both represent all samples. The cardinality of <span class="math notranslat
   <a class="reference internal nav-link" href="#hypothesis-space">
    Hypothesis Space
   </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-find-k">
+   How to find
+   <span class="math notranslate nohighlight">
+    \(K\)
+   </span>
+   ?
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#choose-k-that-minimizes-the-cost-function">
+     Choose
+     <span class="math notranslate nohighlight">
+      \(K\)
+     </span>
+     that Minimizes the Cost Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#elbow-method">
+     Elbow Method
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#other-methods">
+     Other Methods
+    </a>
+   </li>
+  </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#time-and-space-complexity">
