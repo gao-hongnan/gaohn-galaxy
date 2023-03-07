@@ -16,7 +16,7 @@ kernelspec:
 ---
 
 ```{code-cell} ipython3
-:tags: [remove-input]
+:tags: [remove-input, remove-output]
 
 import sys
 from pathlib import Path
@@ -1029,9 +1029,7 @@ so you need to invoke the cluster centers $\boldsymbol{\mu}_k$, so roughly is $\
   - $\mathcal{O}(KD)$
 ```
 
-## Summary
-
-### Advantages
+## When to Use K-Means?
 
 See [google's article](https://developers.google.com/machine-learning/clustering/algorithm/advantages-disadvantages).
 
@@ -1047,7 +1045,7 @@ See [google's article](https://developers.google.com/machine-learning/clustering
 
 - Generalizes to clusters of different shapes and sizes, such as elliptical clusters.
 
-### Disadvantages
+## When can K-Means Fail?
 
 - The number of clusters ($K$) is specified a **priori**, which means we need to specify
     the number of clusters before running the algorithm. Choosing $K$ may not be straightforward,
@@ -1080,6 +1078,44 @@ See [google's article](https://developers.google.com/machine-learning/clustering
 - Best to feature scale if we use euclidean distance as the distance metric. This is because features with larger scale will dominate the distance metric.
 - For categorical features, we no longer use mean as the cluster center. Instead, we use the mode.
 
+## K-Means++
+
+We have seen earlier that convergence can be an issue with K-Means, and it is recommended to use different seed
+initializations to get better results.
+
+We state a better initialization method, K-Means++. The intuition behind this approach is that spreading out the $K$ initial cluster centers is a good thing: the first cluster center is chosen uniformly at random from the data points that are being clustered, after which each subsequent cluster center is chosen from the remaining data points with probability proportional to its squared distance from the point's closest existing cluster center.
+
+From [Wikipeda: K-Means++](https://en.wikipedia.org/wiki/K-means%2B%2B), we have the following:
+
+The exact algorithm is as follows:
+
+1. Choose one center uniformly at random among the data points.
+2. For each data point $\mathbf{x}$ not chosen yet, compute $\mathrm{D}(\mathbf{x})$, the distance between $\mathbf{x}$ and the nearest center that has already been chosen.
+3. Choose one new data point at random as a new center, using a weighted probability distribution where a point $\mathbf{x}$ is chosen with probability proportional to $\mathrm{D}(\mathbf{x})^2$.
+4. Repeat Steps 2 and 3 until $K$ centers have been chosen.
+5. Now that the initial centers have been chosen, proceed using standard $K$-means clustering.
+
+What is more surprising is that this method can be shown to guarantee that the recontruction error is never more than $\mathcal{O}(\logK)$ worse than optimal
+{cite:ps}`pml1Book`.
+
+## K-Medoids
+
+See section 21.3.5 of Probabilistic Machine Learning: An Introduction by Kevin P. Murphy.
+
+## References and Further Readings
+
+I also highly recommend Nathaniel Dake's [blog on K-Means](https://www.nathanieldake.com/Machine_Learning/04-Unsupervised_Learning_Cluster_Analysis-02-Cluster-Analysis-K-Means-Clustering.html)
+here, he does a fantatic job in explaining the intuition behind K-Means and provide visualizations to help you understand the algorithm,
+especially how K-Means can fail.
+
+- Murphy, Kevin P. "Chapter 21.3. K-Means Clustering." In Probabilistic Machine Learning: An Introduction. MIT Press, 2022.
+- Hal Daumé III. "Chapter 3.4. K-Means Clustering." In A Course in Machine Learning, January 2017.
+- Hal Daumé III. "Chapter 15.1. K-Means Clustering." In A Course in Machine Learning, January 2017.
+- Bishop, Christopher M. "Chapter 9.1. K-Means Clustering." In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.
+- James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. "Chapter 12.4.1. K-Means Clustering." In An Introduction to Statistical Learning: With Applications in R. Boston: Springer, 2022.
+- Raschka, Sebastian. "Chapter 10.1. Grouping objects by similarity using k-means." In Machine Learning with PyTorch and Scikit-Learn.
+- Jung, Alexander. "Chapter 8.1. Hard Clustering with K-Means." In Machine Learning: The Basics. Singapore: Springer Nature Singapore, 2023.
+- Vincent, Tan. "Lecture 17a." In MA4270 Data Modelling and Computation.
 
 
 [^disjoint_union]: Disjoint union indicates that each data point $\mathbf{x}^{(n)}$

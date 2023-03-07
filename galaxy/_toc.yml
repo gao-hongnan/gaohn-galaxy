@@ -8,6 +8,31 @@ parts:
   - caption: Machine Learning
 
     chapters:
+
+    - file: machine_learning/fundamentals/intro.md
+      sections:
+      - file: machine_learning/fundamentals/criterions/intro.md
+        sections:
+        - file: machine_learning/fundamentals/criterions/concept.md
+        - file: machine_learning/fundamentals/criterions/cross_entropy_loss.ipynb
+        - file: machine_learning/fundamentals/criterions/focal_loss.ipynb
+      - file: machine_learning/fundamentals/empirical_risk_minimization/intro.md
+        sections:
+        - file: machine_learning/fundamentals/empirical_risk_minimization/concept.md
+        - file: machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.md
+      - file: machine_learning/fundamentals/learning_theory/intro.md
+        sections:
+        - file: machine_learning/fundamentals/learning_theory/concept.md
+      - file: machine_learning/fundamentals/bias_and_variance/intro.md
+        sections:
+        - file: machine_learning/fundamentals/bias_and_variance/concept.md
+      - file: machine_learning/fundamentals/decision_boundary/intro.md
+        sections:
+        - file: machine_learning/fundamentals/decision_boundary/concept.md
+      - file: machine_learning/fundamentals/voronoi_region/intro.md
+        sections:
+        - file: machine_learning/fundamentals/voronoi_region/concept.md
+
     - file: machine_learning/clustering/intro.md
       sections:
       - file: machine_learning/clustering/kmeans/intro.md
