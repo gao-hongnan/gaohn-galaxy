@@ -20,18 +20,16 @@ However, it can be treated as EM algorithm with a single Gaussian distribution.
 
 ### Notebooks
 
-These two are very good resources for many other topics as well.
-
 - [Goodboychan: K-Means Clustering for Imagery Analysis](https://goodboychan.github.io/python/machine_learning/natural_language_processing/vision/2020/10/26/01-K-Means-Clustering-for-Imagery-Analysis.html)
 - [Nathaniel Dake: K-Means Clustering](https://www.nathanieldake.com/Machine_Learning/04-Unsupervised_Learning_Cluster_Analysis-02-Cluster-Analysis-K-Means-Clustering.html)
 
 ### Online Resources
 
 - Assumptions of K-Means:
-    - [1](https://stats.stackexchange.com/questions/133656/how-to-understand-the-drawbacks-of-k-means)
-    - [2](https://stats.stackexchange.com/questions/576812/what-are-the-k-means-algorithm-assumptions)
-    - [3](https://developers.google.com/machine-learning/clustering/algorithm/advantages-disadvantages)
-    - [4](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html)
+    - [Article 1](https://stats.stackexchange.com/questions/133656/how-to-understand-the-drawbacks-of-k-means)
+    - [Article 2](https://stats.stackexchange.com/questions/576812/what-are-the-k-means-algorithm-assumptions)
+    - [Article 3](https://developers.google.com/machine-learning/clustering/algorithm/advantages-disadvantages)
+    - [Article 4](https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html)
 - Interview Questions:
     - [Chip Huyen's ML Interviews Book](https://huyenchip.com/ml-interviews-book/contents/8.1.2-questions.html)
 - [Wikipedia: K-Means Clustering](https://en.wikipedia.org/wiki/K-means_clustering)
@@ -40,10 +38,10 @@ These two are very good resources for many other topics as well.
 - [Mathematicalmonk: K-means clustering](https://www.youtube.com/watch?v=0MQEt10e4NM)
 
 - Proof of K-Means Converges in Finite Steps
-    - https://stats.stackexchange.com/questions/188087/proof-of-convergence-of-k-means
-    - https://stats.stackexchange.com/questions/211086/proof-of-k-means-convergence-in-finite-iterations
-    - https://stats.stackexchange.com/questions/603327/question-on-the-proof-of-convergence-of-k-means
-    - https://las.inf.ethz.ch/courses/lis-s16/hw/hw4_sol.pdf
+    - [Article 1](https://stats.stackexchange.com/questions/188087/proof-of-convergence-of-k-means)
+    - [Article 2](https://stats.stackexchange.com/questions/211086/proof-of-k-means-convergence-in-finite-iterations)
+    - [Article 3](https://stats.stackexchange.com/questions/603327/question-on-the-proof-of-convergence-of-k-means)
+    - [Article 4](https://las.inf.ethz.ch/courses/lis-s16/hw/hw4_sol.pdf)
 
 ### Implementations
 

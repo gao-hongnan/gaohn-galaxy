@@ -13,6 +13,8 @@ parts:
       - file: machine_learning/clustering/kmeans/intro.md
         sections:
         - file: machine_learning/clustering/kmeans/concept.md
+        - file: machine_learning/clustering/kmeans/implementation.ipynb
+        - file: machine_learning/clustering/kmeans/image_segmentation.ipynb
 
   - caption: References, Resources and Roadmap
     chapters:

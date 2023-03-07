@@ -197,7 +197,7 @@ choice for the cluster center.
 $\mathbf{x}^{(n)}$ to the cluster $\hat{C}_k$ that is closest to the cluster mean $\boldsymbol{\mu}_k$.
 This assignment action is called the **assignment function** $\mathcal{A}$, a function that
 does the assignment of data points to clusters. We will show later that the clustering error $\widehat{\mathcal{J}}$ is minimized
-when the assignment function is the **nearest neighbor assignment** function $\mathcal{A}^{*}$,
+when the assignment function is the **nearest neighbor assignment** function $\mathcal{A}^{*}(\cdot)$,
 
 
     $$
@@ -455,7 +455,7 @@ Finally, we define the objective function as the cost function $\widehat{\mathca
 ```{prf:definition} K-Means Objective Function
 :label: def:kmeans-objective
 
-The **objective** function is to **minimize** the above expression in {eq}`eq:kmeans-cost-1`:
+The **objective** function is to **minimize** the above expression in equation {eq}`eq:kmeans-cost-1`:
 
 $$
 \begin{alignat}{3}
@@ -523,7 +523,7 @@ Let's prove this claim.
 ```
 
 ```{prf:proof}
-In {eq}`eq:k-means-criterion-1.2`, we have that $\boldsymbol{v}_1, \boldsymbol{v}_2, \ldots, \boldsymbol{v}_K$ are fixed.
+In equation {eq}`eq:k-means-criterion-1.2`, we have that $\boldsymbol{v}_1, \boldsymbol{v}_2, \ldots, \boldsymbol{v}_K$ are fixed.
 
 $$
 \begin{aligned}
@@ -601,7 +601,7 @@ $$ (eq:derivative-of-k-means-cost-function)
 
 where $N_k$ is the number of data points assigned to cluster $k$.
 
-Now to minimize {eq}`eq:derivative-of-k-means-cost-function`, we set it to zero and solve for $\boldsymbol{v}_k$.
+Now to minimize equation {eq}`eq:derivative-of-k-means-cost-function`, we set it to zero and solve for $\boldsymbol{v}_k$.
 
 $$
 \begin{align*}
@@ -627,7 +627,7 @@ We will now denote $\boldsymbol{v}_k^*$ as $\boldsymbol{\mu}_k$ in the following
 
 ### Objective Function Re-defined
 
-We can now re-define the objective function {eq}`eq:k-means-objective-function-1` in terms of the optimal cluster centers and assignments.
+We can now re-define the objective function in equation {eq}`eq:k-means-objective-function-1` in terms of the optimal cluster centers and assignments.
 
 $$
 \begin{alignat}{4}
@@ -643,7 +643,7 @@ $$ (eq:k-means-objective-function-2)
 
 Reminder!
 
-The cost function {eq}`eq:k-means-objective-function-2` is a function of the cluster assignments and cluster centers.
+The cost function in equation {eq}`eq:k-means-objective-function-2` is a function of **both** the cluster assignments and cluster centers.
 And therefore we are minimizing the cost function with respect to the cluster assignments and cluster centers. However,
 jointly optimizing both the cluster assignments and cluster centers is computationally challenging, and therefore
 we split to two steps, first optimizing the cluster assignments and then optimizing the cluster centers in a greedy manner.
@@ -665,58 +665,49 @@ $$
 the K-Means algorithm aims to group the data points into $K$ clusters
 
 $$
-\hat{C} = \left\{ \hat{C}_1^{(t)}, \hat{C}_2^{(t)}, \dots, \hat{C}_K^{(t)} \right\}
+\hat{\mathcal{C}} = \left\{ \hat{C}_1, \hat{C}_2, \dots, \hat{C}_K \right\}
 $$
 
 such that the sum of squared distances
 between each data point and its cluster center is minimized.
 
-In code, $\hat{C}$ can be treated as a dictionary/hash map,
+In code, $\hat{\mathcal{C}}$ can be treated as a dictionary/hash map,
 where the **key** is the cluster number and the **value** is the set of data points assigned to that cluster.
 
-1. Initialize $K$ cluster centers $\boldsymbol{\mu}_1^{(0)}, \boldsymbol{\mu}_2^{(0)}, \dots, \boldsymbol{\mu}_K^{(0)}$ randomly (best to be far apart)
-where the superscript $(0)$ denotes the iteration number $t=0$.
-    - In the very first iteration, there are no data points in any cluster $\hat{C}_k^{(0)} = \emptyset$. Therefore, the cluster centers are just randomly chosen for simplicity.
+
+1. **Initialization Step**: Initialize $K$ cluster centers $\boldsymbol{\mu}_1^{[0]}, \boldsymbol{\mu}_2^{[0]}, \dots, \boldsymbol{\mu}_K^{[0]}$ randomly (best to be far apart)
+where the superscript $[0]$ denotes the iteration number $t=0$.
+    - In the very first iteration, there are no data points in any cluster $\hat{C}_k^{[0]} = \emptyset$. Therefore, the cluster centers are just randomly chosen for simplicity.
     - By random, we mean that the cluster centers are randomly chosen from the data points $\mathcal{S} = \left\{\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \dots, \mathbf{x}^{(N)}\right\}$
     and not randomly chosen from the feature space $\mathbb{R}^D$.
-    - Subsequent iterations will have data points in the clusters $\hat{C}_k^{(t)} \neq \emptyset$ and thus
-    $\boldsymbol{\mu}_k^{(t)}$ will be the mean of the data points in cluster $k$.
-    - Each $\boldsymbol{\mu}_k^{(0)}$ is a $D$-dimensional vector, where $D$ is the number of features, and represents the
+    - Subsequent iterations will have data points in the clusters $\hat{C}_k^{[t]} \neq \emptyset$ and thus
+    $\boldsymbol{\mu}_k^{[t]}$ will be the mean of the data points in cluster $k$.
+    - Each $\boldsymbol{\mu}_k^{[0]} = \begin{bmatrix} \mu_{1k}^{[0]} & \mu_{2k}^{[0]} & \cdots & \mu_{Dk}^{[0]} \end{bmatrix}^{\mathrm{T}}$ is a $D$-dimensional vector, where $D$ is the number of features, and represents the
     mean vector of all the data points in cluster $k$.
+    - Note that $\mu_{dk}^{[0]}$ is the mean value of the $d$-th feature in cluster $k$.
+    - We denote $\boldsymbol{\mu} = \begin{bmatrix} \boldsymbol{\mu}_1 & \boldsymbol{\mu}_2 & \cdots & \boldsymbol{\mu}_K \end{bmatrix}_{K \times D}^{\mathrm{T}}$ to be the collection of all $\boldsymbol{\mu}_1, \boldsymbol{\mu}_2, \dots, \boldsymbol{\mu}_K$.
 
-        $$
-        \boldsymbol{\mu}_k^{(0)} = \begin{bmatrix} \mu_{1k}^{(0)} & \mu_{2k}^{(0)} & \cdots & \mu_{Dk}^{(0)} \end{bmatrix}^{\mathrm{T}}
-        $$
 
-        and $\mu_{dk}^{(0)}$ is the mean value of the $d$-th feature in cluster $k$.
-    - We denote $\boldsymbol{\mu}$ to be the collection of all $\boldsymbol{\mu}_1, \boldsymbol{\mu}_2, \dots, \boldsymbol{\mu}_K$.
-
-        $$
-        \boldsymbol{\mu} = \begin{bmatrix} \boldsymbol{\mu}_1 \\ \boldsymbol{\mu}_2 \\ \vdots \\ \boldsymbol{\mu}_K \end{bmatrix}_{K \times D}
-        $$
-
-For $t=0, 1, 2, \dots$
-
-2. **Assignment Step (E)**: Assign each data point $\mathbf{x}^{(n)}$ to the closest cluster center $\boldsymbol{\mu}_k^{(t)}$,
+2. **Assignment Step (E)**: For $t=0, 1, 2, \dots$, assign each data point $\mathbf{x}^{(n)}$ to the closest cluster center $\boldsymbol{\mu}_k^{[t]}$,
 
     $$
     \begin{aligned}
-    \hat{y}^{(n) t} := \mathcal{A}^{* (t)}(n) &= \underset{k \in \{1, 2, \ldots, K\}}{\operatorname{argmin}} \left\| \mathbf{x}^{(n)} - \boldsymbol{\mu}_k^{(t)} \right\|^2 \\
+    \hat{y}^{(n)[t]} := \mathcal{A}^{*(n)[t]} &= \underset{k \in \{1, 2, \ldots, K\}}{\operatorname{argmin}} \left\| \mathbf{x}^{(n)} - \boldsymbol{\mu}_k^{[t]} \right\|^2 \\
     \end{aligned}
     $$ (eq:kmeans-classify)
 
-    In other words, $\hat{y}^{(n) t}$ is the output of the optimal assignment rule at the $t$-th iteration
-    and is the index of the cluster center $\boldsymbol{\mu}_k^{(t)}$ that is closest to $\mathbf{x}^{(n)}$.
+    In other words, $\hat{y}^{(n)[t]}$ is the output of the optimal assignment rule at the $t$-th iteration
+    and is the index of the cluster center $\boldsymbol{\mu}_k^{[t]}$ that is closest to $\mathbf{x}^{(n)}$.
 
     For instance, if $K = 3$, and for the first sample point $n=1$,
-    assume the closest cluster center is $\boldsymbol{\mu}_2^{(t)}$, then the assignment $\mathcal{A}^{*}$ will
+    assume the closest cluster center is $\boldsymbol{\mu}_2^{[t]}$, then the assignment $\mathcal{A}^{*}$ will
     assign this point to cluster $k=2$, $\hat{y}^{(1)} = 2$. Note that $\hat{y}^{(n)}$ is a scalar and has the same superscript as $\mathbf{x}^{(n)}$, indicating they belong to the same sample.
 
-    For notational convenience, we can also denote $\hat{C}_k^{(t)}$ as the set of data points that are assigned to cluster $k$:
+    For notational convenience, we can also denote $\hat{C}_k^{[t]}$ as the set of data points that are assigned to cluster $k$:
 
     $$
     \begin{aligned}
-    \hat{C}_k^{(t)} &= \left\{ \mathbf{x}^{(n)} \mid \hat{y}^{(n)} = k \right\}
+    \hat{C}_k^{[t]} &= \left\{ \mathbf{x}^{(n)} \mid \hat{y}^{(n)} = k \right\}
     \end{aligned}
     $$
 
@@ -727,17 +718,17 @@ For $t=0, 1, 2, \dots$
 
     $$
     \begin{aligned}
-    \boldsymbol{\mu}_k^{(t+1)} &= \frac{1}{|\hat{C}_k^{(t)}|} \sum_{\mathbf{x}^{(n)} \in \hat{C}_k^{(t)}} \mathbf{x}^{(n)} \\
+    \boldsymbol{\mu}_k^{[t+1]} &= \frac{1}{|\hat{C}_k^{[t]}|} \sum_{\mathbf{x}^{(n)} \in \hat{C}_k^{[t]}} \mathbf{x}^{(n)} \\
     \end{aligned}
     $$ (eq:kmeans-recenter)
 
-    Notice that the cluster center $\boldsymbol{\mu}_k^{(t+1)}$ is the mean of all data points that are assigned to cluster $k$.
+    Notice that the cluster center $\boldsymbol{\mu}_k^{[t+1]}$ is the mean of all data points that are assigned to cluster $k$.
 
 4. Repeat steps 2 and 3 until the centroids stop changing.
 
     $$
     \begin{aligned}
-    \boldsymbol{\mu}_k^{(t+1)} = \boldsymbol{\mu}_k^{(t)}
+    \boldsymbol{\mu}_k^{[t+1]} = \boldsymbol{\mu}_k^{[t]}
     \end{aligned}
     $$ (eq:kmeans-convergence)
 
@@ -745,7 +736,7 @@ For $t=0, 1, 2, \dots$
 
     $$
     \begin{aligned}
-    \widehat{\mathcal{J}}_{\mathcal{S}}^{(t+1)}\left(\mathcal{A}^{* (t+1)}, \boldsymbol{\mu}^{(t+1)} \right) = \widehat{\mathcal{J}}_{\mathcal{S}}^{(t)}\left(\mathcal{A}^{* (t)}, \boldsymbol{\mu}^{(t)} \right)
+    \widehat{\mathcal{J}}_{\mathcal{S}}^{[t+1]}\left(\mathcal{A}^{*[t+1]}, \boldsymbol{\mu}^{[t+1]} \right) = \widehat{\mathcal{J}}_{\mathcal{S}}^{[t]}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}^{[t]} \right)
     \end{aligned}
     $$
 
@@ -756,11 +747,13 @@ For $t=0, 1, 2, \dots$
 :label: remark-kmeans-greedy
 
 It is important to recognize that the K-Means (Lloyd's) Algorithm optimizes two objectives in an alternating fashion.
-It alternatively changes both the assignment step $\mathcal{A}^{*}$ and the update step $\boldsymbol{\mu}_k^{(t+1)}$
+It alternatively changes both the assignment step $\mathcal{A}^{*}(\cdot)$ and the update step $\boldsymbol{\mu}_k^{[t+1]}$
 to greedily minimize the cost function $\widehat{\mathcal{J}}(\mathcal{A}, \boldsymbol{\mu})$.
 ```
 
 ## Convergence
+
+In this section, we will prove that the K-Means Algorithm converges to a local minimum of the cost function $\widehat{\mathcal{J}}(\mathcal{A}, \boldsymbol{\mu})$.
 
 ### Lemma 1: Stirling Numbers of the Second Kind
 
@@ -773,10 +766,11 @@ There are at most $k^n$ ways to partition a set of $n$ elements into $k$ non-emp
 
 In our case, since there are $N$ data points, and we want to partition them into $K$ clusters, there are at most $K^N$ ways to partition the data points into $K$ clusters.
 
-In other words, the assignment step $\mathcal{A}$ has at most $K^N$ possible mappings.
-The same applies to the update step $\boldsymbol{\mu}_k$ since $\boldsymbol{\mu}_k$ is dependent on the assignment step $\mathcal{A}$.
+In other words, the assignment step $\mathcal{A}(\cdot)$ has at most $K^N$ possible mappings.
+The same applies to the update step $\boldsymbol{\mu}_k$ since $\boldsymbol{\mu}_k$ is dependent on the assignment step $\mathcal{A}(\cdot)$.
 ```
 
+(cost-function-monotically-decreases)=
 ### Lemma 2: Cost Function of K-Means Monotonically Decreases
 
 ```{prf:lemma} Cost Function of K-Means Monotonically Decreases
@@ -786,7 +780,7 @@ The cost function $\widehat{\mathcal{J}}$ of K-Means monotonically decreases. Th
 
 $$
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t+1)} \leq \widehat{\mathcal{J}}^{(t)}
+\widehat{\mathcal{J}}^{[t+1]} \leq \widehat{\mathcal{J}}^{[t]}
 \end{aligned}
 $$
 
@@ -796,18 +790,18 @@ for each iteration $t$.
 ```{prf:proof}
 This is a consequence of {prf:ref}`criterion:kmeans-optimal-assignment` and {prf:ref}`criterion:kmeans-optimal-cluster-centers`.
 
-In particular, the objective function $\widehat{\mathcal{J}}$ is made up of two steps, the assignment step and the update step. We minimize the assignment step by finding the optimal assignment $\mathcal{A}^{*}$, and we minimize the update step by finding the optimal cluster centers $\boldsymbol{\mu}_k^{*}$ based on the optimal assignment $\mathcal{A}^{*}$ at each iteration.
+In particular, the objective function $\widehat{\mathcal{J}}$ is made up of two steps, the assignment step and the update step. We minimize the assignment step by finding the optimal assignment $\mathcal{A}^{*}(\cdot)$, and we minimize the update step by finding the optimal cluster centers $\boldsymbol{\mu}_k^{*}$ based on the optimal assignment $\mathcal{A}^{*}(\cdot)$ at each iteration.
 
 Equation {eq}`eq:k-means-criterion-1.2` shows that for each iteration $t$, fixing the cluster
-centers (mean) $\boldsymbol{\mu}_k^{(t)}$, the assignment step $\mathcal{A}^{*(t)}$ is optimal.
+centers (mean) $\boldsymbol{\mu}_k^{[t]}$, the assignment step $\mathcal{A}^{*[t]}$ is optimal.
 
 This means
 
 $$
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t)} &= \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
+\widehat{\mathcal{J}}^{[t]} &= \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t + 1)}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
 \end{aligned}
 $$
 
@@ -818,9 +812,9 @@ Similarly, at the update step (M), the cost function $\widehat{\mathcal{J}}$ is 
 
 $$
 \begin{aligned}
-\widehat{\mathcal{J}}^{(t)} &= \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t)}, \boldsymbol{\mu}_2^{(t)}, \dots, \boldsymbol{\mu}_K^{(t)}\right) \\
-&\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
-&= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*(t)}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
+\widehat{\mathcal{J}}^{[t]} &= \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{[t]}, \boldsymbol{\mu}_2^{[t]}, \dots, \boldsymbol{\mu}_K^{[t]}\right) \\
+&\geq \widehat{\mathcal{J}}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
+&= \widehat{\mathcal{J}}^{t+1}\left(\mathcal{A}^{*[t]}, \boldsymbol{\mu}_1^{(t + 1)}, \boldsymbol{\mu}_2^{(t + 1)}, \dots, \boldsymbol{\mu}_K^{(t + 1)}\right) \\
 \end{aligned}
 $$
 
@@ -836,24 +830,24 @@ the cost function $\widehat{\mathcal{J}}$ monotonically decreases at each iterat
 The [Monotone Convergence Theorem](https://en.wikipedia.org/wiki/Monotone_convergence_theorem) states
 that if a sequence of functions $\{f_n\}$ is non-decreasing and bounded, then the sequence $\{f_n\}$ converges to a limit.
 
-In our case, the sequence of functions $\{f_n\}$ is the sequence of cost functions $\{\widehat{\mathcal{J}}^{(t)}\}$, and the limit is the cost function $\widehat{\mathcal{J}}^{*}$.
+In our case, the sequence of functions $\{f_n\}$ is the sequence of cost functions $\left\{\widehat{\mathcal{J}}^{[t]}\right\}$, and the limit is the cost function $\widehat{\mathcal{J}}^{*}$.
 
-So it is guaranteed that the sequence of cost functions $\{\widehat{\mathcal{J}}^{(t)}\}$ converges to the cost function $\widehat{\mathcal{J}}^{*}$ (local).
+So it is guaranteed that the sequence of cost functions $\left\{\widehat{\mathcal{J}}^{[t]}\right\}$ converges to the cost function $\widehat{\mathcal{J}}^{*}$ locally.
 ```
 
 ### K-Means Converges in Finite Steps
 
-We are now left to show that the sequence of cost functions $\{\widehat{\mathcal{J}}^{(t)}\}$ is finite,
-so that $\{\widehat{\mathcal{J}}^{(t)}\}$ converges in finite steps.
+We are now left to show that the sequence of cost functions $\left\{\widehat{\mathcal{J}}^{[t]}\right\}$ is finite,
+so that $\left\{\widehat{\mathcal{J}}^{[t]}\right\}$ converges in finite steps.
 
 Since {prf:ref}`stirling-numbers` states that there exists $K^N$ possible assignments
-$\mathcal{A}$, and simiarly exists $K^N$ possible cluster centers $\boldsymbol{\mu}_k$,
+$\mathcal{A}(\cdot)$, and simiarly exists $K^N$ possible cluster centers $\boldsymbol{\mu}_k$,
 then there exists $K^N$ possible cost functions $\widehat{\mathcal{J}}$. Then,
 
-- At each iteration $t$, the cost function $\widehat{\mathcal{J}}^{(t)}$ decreases monotonically.
+- At each iteration $t$, the cost function $\widehat{\mathcal{J}}^{[t]}$ decreases monotonically.
 - This means at $t+1$, if the cost function $\widehat{\mathcal{J}}^{(t + 1)}$ decreases,
-    then this means the assignments $\mathcal{A}^{*(t + 1)}$ are different from the assignments $\mathcal{A}^{*(t)}$. Consequently, the partition never repeats if the cost function $\widehat{\mathcal{J}}$ decreases.
-- This means it will loop over each possible assignment $\mathcal{A}$, and eventually converge to the unique solution $\mathcal{A}^{*}$.
+    then this means the assignments $\mathcal{A}^{*[t + 1]}$ are different from the assignments $\mathcal{A}^{*[t]}$. Consequently, the partition never repeats if the cost function $\widehat{\mathcal{J}}$ decreases.
+- This means it will loop over each possible assignment $\mathcal{A}$, and eventually converge to the unique solution $\mathcal{A}^{*}(\cdot)$.
 
 For that specific initialization, the algorithm has an unique solution, and it is guaranteed to converge to that solution.
 
@@ -872,7 +866,7 @@ For completeness sake, let’s define the hypothesis space $\mathcal{H}$ for K-M
 
 Intuitively, the hypothesis space $\mathcal{H}$ is the set of all possible clusterings of the data.
 
-Formally, given a set of $N$ data points $\{\mathbf{x}^{(n)}\}_{n=1}^N$,
+Formally, given a set of $N$ data points $\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N$,
 let $C_k$ be the Voronoi cell of the $k$-th cluster center $\boldsymbol{\mu}_k$.
 
 Then, we can write the class of functions $\mathcal{H}$ as:
@@ -886,6 +880,42 @@ $$
 This means the hypothesis space $\mathcal{H}$ is finite with cardinality $K^N$.
 
 For more details, see [here](https://stats.stackexchange.com/posts/502352/) and [here](https://courses.cs.washington.edu/courses/cse446/16sp/clustering_1.pdf).
+
+## How to find $K$?
+
+Since $K$ is a *priori*, we need to choose $K$ before we run the algorithm. Choosing the
+wrong $K$ will result in a poor clustering. So, how do we choose the right $K$?
+
+### Choose $K$ that Minimizes the Cost Function
+
+In normal supervised problem, we usually run the algorithm on the train dataset and
+choose the model that minimizes the cost function on the train dataset, or one that
+maximizes the performance.
+
+Can we do the same for K-Means? The answer is no, this is because our cost funtion
+monotonically decreases with increasing $K$.
+
+This is because we "cover" more input space $\mathcal{X}$ with increasing $K$, thus
+decreasing the cost function {cite:ps}`pml1Book`.
+
+### Elbow Method
+
+While this may not be the best method, it is a simple and widely recognized one to choose $K$.
+
+The simple heuristic is described as follows:
+
+```{prf:algorithm} Elbow Method
+:label: elbow-method
+
+1. Run K-Means with $K$ from 1 to $K_{\max}$.
+2. For each $k=0,1,\ldots, K_{\max}$, compute the cost function $\widehat{\mathcal{J}}_k$
+3. Plot the cost function $\widehat{\mathcal{J}}_k$ against $k$.
+4. Find the "elbow" of the curve, which is the point where the cost function $\widehat{\mathcal{J}}_k$ starts to decrease more slowly.
+```
+
+### Other Methods
+
+See {cite}`pml1Book` for more methods.
 
 ## Time and Space Complexity
 
@@ -903,7 +933,7 @@ we consider the brute-force search to be the following:
 For each possible cluster
 
 $$
-\hat{C} = \left\{\hat{C}_1, \hat{C}_2, \dots, \hat{C}_K\right\}
+\hat{\mathcal{C}} = \left\{\hat{C}_1, \hat{C}_2, \dots, \hat{C}_K\right\}
 $$
 
 induced by the assignment $\mathcal{A}$ in $\mathcal{H}$, compute the
@@ -923,7 +953,7 @@ is the mean of the points in the $k$-th cluster.
 
 Then, compute the cost function $\widehat{\mathcal{J}}$ centroids $\hat{\boldsymbol{\mu}}$.
 
-Repeat this for all possible clusterings $\mathcal{A}$ in $\mathcal{H}$ and finally
+Repeat this for all possible clusterings $\mathcal{A}(\cdot)$ in $\mathcal{H}$ and finally
 return the clustering $\hat{C}$ that gives the minimum cost function $\widehat{\mathcal{J}}$.
 ```
 
@@ -931,7 +961,7 @@ Then the time complexity of the brute force search is exponential with respect t
 we are looping over each possible clustering to find the global minimum. Indeed, this has time complexity
 
 $$
-\mathcal{O}(K^N)
+\mathcal{O}\left(K^N\right)
 $$
 
 ### Lloyd’s Algorithm
@@ -970,7 +1000,7 @@ for t in range(max_iter):
 
 where the total time complexity approximately $\mathcal{O}(T N K D)$.
 
-The worst case complexity is given by $\mathcal{O}(N^{(K+2/D)})$[^worst-case-time-complexity].
+The worst case complexity is given by $\mathcal{O}\left(N^{(K+2/D)}\right)$[^worst-case-time-complexity].
 
 
 ```{list-table} Time Complexity of K-Means
