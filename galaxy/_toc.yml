@@ -1,0 +1,20 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+
+format: jb-book
+root: intro.md
+
+parts:
+  - caption: Machine Learning
+
+    chapters:
+    - file: machine_learning/clustering/intro.md
+      sections:
+      - file: machine_learning/clustering/kmeans/intro.md
+        sections:
+        - file: machine_learning/clustering/kmeans/concept.md
+
+  - caption: References, Resources and Roadmap
+    chapters:
+    - file: references_resources_roadmap/bibliography.md
+    - file: references_resources_roadmap/resources.md

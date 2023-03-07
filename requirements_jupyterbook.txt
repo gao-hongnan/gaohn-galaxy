@@ -1,0 +1,6 @@
+jupyter-book==0.14.0
+myst-nb==0.17.1
+myst-parser==0.18.1
+Sphinx==5.0.2
+sphinx-inline-tabs==2022.1.2b11
+sphinx-proof==0.1.3
