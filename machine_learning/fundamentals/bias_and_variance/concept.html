@@ -1,0 +1,1779 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Bias-Variance Tradeoff Concept &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/fundamentals/bias_and_variance/concept';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Decision Boundary" href="../decision_boundary/intro.html" />
+    <link rel="prev" title="Bias and Variance Tradeoff" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Fundamentals</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Bias and Variance Tradeoff</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fmachine_learning/fundamentals/bias_and_variance/concept.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../_sources/machine_learning/fundamentals/bias_and_variance/concept.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Bias-Variance Tradeoff Concept</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning Objectives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-bias-variance-errors">
+   Overview of Bias-Variance Errors
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-regression-setup">
+     The Regression Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expected-generalization-test-error">
+     Expected Generalization/Test Error
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducible-and-irreducible-error">
+     Reducible and Irreducible Error
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bias-variance-decomposition">
+     Bias-Variance Decomposition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-explanation-of-bias">
+     Intuitive Explanation of Bias
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-explanation-of-variance">
+     Intuitive Explanation of Variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-understanding-of-bias-and-variance">
+     Intuitive Understanding of Bias and Variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hn-s-own-notes">
+     HN’s own notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bias-variance-tradeoff">
+   Bias-Variance Tradeoff
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#low-and-high-bias">
+     Low and High Bias
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#low-and-high-bias-low-and-high-bias">
+     Low and High Bias {#low-and-high-bias}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-tradeoff">
+     The Tradeoff
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-manage-bias-and-variance">
+   How to manage Bias and Variance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fight-your-instincts">
+     Fight Your Instincts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bagging-and-resampling">
+     Bagging and Resampling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#asymptotic-properties-of-algorithms">
+     Asymptotic Properties of Algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#understanding-over-and-under-fitting">
+     Understanding Over- and Under-Fitting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivation-of-decomposition-of-expected-generalized-error">
+   Derivation of Decomposition of Expected Generalized Error
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#true-model">
+     True model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimated-model">
+     Estimated model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-error-of-the-estimated-model">
+     Test error of the estimated model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#establishing-a-useful-order-of-integration">
+     Establishing a useful order of integration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducible-and-irreducible-error-reducible-and-irreducible-error">
+     Reducible and irreducible error {#reducible-and-irreducible-error}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decomposing-the-reducible-error-into-bias-and-variance">
+     Decomposing the reducible error into ‘bias’ and ‘variance’
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#more-info">
+     More info
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#further-readings">
+     Further Readings
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="bias-variance-tradeoff-concept">
+<h1>Bias-Variance Tradeoff Concept<a class="headerlink" href="#bias-variance-tradeoff-concept" title="Permalink to this heading">#</a></h1>
+<section id="learning-objectives">
+<h2>Learning Objectives<a class="headerlink" href="#learning-objectives" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Understand the concepts of bias, variance, and irreducible error.</p></li>
+<li><p>Learn how the bias and variance of a model relate to the complexity of a model.</p></li>
+<li><p>Visualize the tradeoff between bias and variance.</p></li>
+<li><p>Why does increasing number of sample decrease the Variance in the Bias-Variance tradeoff, and therefore, an effective way to curb overfitting?</p></li>
+</ul>
+</section>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<blockquote>
+<div><p><strong>Learning from Data</strong></p>
+</div></blockquote>
+<blockquote>
+<div><p>Think of an ideal situation where your hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> has a singleton hypothesis <span class="math notranslate nohighlight">\(h\)</span> where <span class="math notranslate nohighlight">\(h = f\)</span>, the ground truth function. In this way, we can safely say both the bias and variance of <span class="math notranslate nohighlight">\(h\)</span> is 0 as there is no error to begin with (exclude irreducible error). However, this situation is not going to happen in the real world. As a result, we resort to slowly increasing the size of <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> (i.e. using a larger model with more degrees of freedom), in an attempt to hope that as <span class="math notranslate nohighlight">\(|\mathcal{H}|\)</span> increases, the chance of our target function sitting in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> increases too.</p>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><p>Therefore, we need to strike a balance between achieving the below two points:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>To have some hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> such that there exists <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> that approximates <span class="math notranslate nohighlight">\(f\)</span> as well as possible. In this context, as well as possible refers to the mean squared error.</p></li>
+<li><p>Enable the data to zoom in on the right hypothesis.</p></li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="overview-of-bias-variance-errors">
+<h2>Overview of Bias-Variance Errors<a class="headerlink" href="#overview-of-bias-variance-errors" title="Permalink to this heading">#</a></h2>
+<section id="the-regression-setup">
+<h3>The Regression Setup<a class="headerlink" href="#the-regression-setup" title="Permalink to this heading">#</a></h3>
+<p>Consider the general regression setup where we are given a random pair
+<span class="math notranslate nohighlight">\((X, Y) \in \mathbb{R}^p \times \mathbb{R}\)</span>. We would like to
+“predict” <span class="math notranslate nohighlight">\(Y\)</span> with some <strong>true</strong> function of <span class="math notranslate nohighlight">\(X\)</span>, say, <span class="math notranslate nohighlight">\(f(X)\)</span>.</p>
+<p>To clarify what we mean by “predict,” we specify that we would like
+<span class="math notranslate nohighlight">\(f(X)\)</span> to be “close” to <span class="math notranslate nohighlight">\(Y\)</span>. To further clarify what we mean by
+“close,” we define the <strong>squared error loss</strong> of estimating <span class="math notranslate nohighlight">\(Y\)</span> using
+<span class="math notranslate nohighlight">\(f(X)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+L(Y, f(X)) \triangleq (Y - f(X)) ^ 2
+\]</div>
+<p>Now we can clarify the goal of regression, which is to minimize the
+above loss, on average. We call this the <strong>risk</strong> of estimating <span class="math notranslate nohighlight">\(Y\)</span>
+using <span class="math notranslate nohighlight">\(f(X)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+R(Y, f(X)) \triangleq \mathbb{E}[L(Y, f(X))] = \mathbb{E}_{X, Y}[(Y - f(X)) ^ 2]
+\]</div>
+<p>The above is our favourite Mean Squared Error Loss, where we sum up all
+the squared error loss of each prediction and its ground truth target,
+and take the average of them.</p>
+<p>Before attempting to minimize the risk, we first re-write the risk after
+conditioning on <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_{X, Y} \left[ (Y - f(X)) ^ 2 \right] = \mathbb{E}_{X} \mathbb{E}_{Y \mid X} \left[ ( Y - f(X) ) ^ 2 \mid X = x \right]
+\]</div>
+<p>Minimizing the right-hand side is much easier, as it simply amounts to
+minimizing the inner expectation with respect to <span class="math notranslate nohighlight">\(Y \mid X\)</span>, essentially
+minimizing the risk pointwise, for each <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p>It turns out, that the risk is minimized by setting <span class="math notranslate nohighlight">\(f(x)\)</span> to be equal
+the conditional mean of <span class="math notranslate nohighlight">\(Y\)</span> given <span class="math notranslate nohighlight">\(X\)</span>,</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \mathbb{E}(Y \mid X = x)
+\]</div>
+<p>which we call the <strong>regression function</strong>.^[Note that in this chapter,
+we will refer to <span class="math notranslate nohighlight">\(f(x)\)</span> as the regression function instead of <span class="math notranslate nohighlight">\(\mu(x)\)</span>
+for unimportant and arbitrary reasons.]</p>
+<p>Note that the choice of squared error loss is somewhat arbitrary.
+Suppose instead we chose absolute error loss.</p>
+<div class="math notranslate nohighlight">
+\[
+L(Y, f(X)) \triangleq | Y - f(X) | 
+\]</div>
+<p>The risk would then be minimized setting <span class="math notranslate nohighlight">\(f(x)\)</span> equal to the conditional
+median.</p>
+<div class="math notranslate nohighlight">
+\[
+f(x) = \text{median}(Y \mid X = x)
+\]</div>
+<p>Despite this possibility, our preference will still be for squared error
+loss. The reasons for this are numerous, including: historical, ease of
+optimization, and protecting against large deviations.</p>
+<p>Now, given data
+<span class="math notranslate nohighlight">\(\mathcal{D} = (x_i, y_i) \in \mathbb{R}^p \times \mathbb{R}\)</span>, our goal
+becomes finding some <span class="math notranslate nohighlight">\(\hat{f}\)</span> that is a good estimate of the regression
+function <span class="math notranslate nohighlight">\(f\)</span>. We’ll see that this amounts to minimizing what we call
+the reducible error.</p>
+</section>
+<section id="expected-generalization-test-error">
+<h3>Expected Generalization/Test Error<a class="headerlink" href="#expected-generalization-test-error" title="Permalink to this heading">#</a></h3>
+<blockquote>
+<div><p><strong>Author here uses <span class="math notranslate nohighlight">\(\hat{f}\)</span> to represent hypothesis <span class="math notranslate nohighlight">\(h\)</span>.</strong></p>
+</div></blockquote>
+<hr class="docutils" />
+<p>Suppose that we obtain some <span class="math notranslate nohighlight">\(\hat{f}\)</span>, how well does it estimate <span class="math notranslate nohighlight">\(f\)</span>? We
+define the <strong>expected prediction error</strong> of predicting <span class="math notranslate nohighlight">\(Y\)</span> using
+<span class="math notranslate nohighlight">\(\hat{f}(X)\)</span>. A good <span class="math notranslate nohighlight">\(\hat{f}\)</span> will have a low expected prediction
+error.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{EPE}\left(Y, \hat{f}(X)\right) \triangleq \mathbb{E}_{X, Y, \mathcal{D}} \left[  \left( Y - \hat{f}(X) \right)^2 \right]
+\]</div>
+<p>This expectation is over <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(Y\)</span>, and also <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>. The estimate
+<span class="math notranslate nohighlight">\(\hat{f}\)</span> is actually random depending on the data, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, used
+to estimate <span class="math notranslate nohighlight">\(\hat{f}\)</span>. We could actually write <span class="math notranslate nohighlight">\(\hat{f}(X, \mathcal{D})\)</span>
+to make this dependence explicit, but our notation will become
+cumbersome enough as it is.</p>
+<p>Like before, we’ll condition on <span class="math notranslate nohighlight">\(X\)</span>. This results in the expected
+prediction error of predicting <span class="math notranslate nohighlight">\(Y\)</span> using <span class="math notranslate nohighlight">\(\hat{f}(X)\)</span> when <span class="math notranslate nohighlight">\(X = x\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{EPE}\left(Y, \hat{f}(x)\right) = 
+\mathbb{E}_{Y \mid X, \mathcal{D}} \left[  \left(Y - \hat{f}(X) \right)^2 \mid X = x \right] = 
+\underbrace{\mathbb{E}_{\mathcal{D}} \left[  \left(f(x) - \hat{f}(x) \right)^2 \right]}_\textrm{reducible error} + 
+\underbrace{\mathbb{V}_{Y \mid X} \left[ Y \mid X = x \right]}_\textrm{irreducible error}
+\]</div>
+<p>A number of things to note here:</p>
+<ul class="simple">
+<li><p>The expected prediction error is for a random <span class="math notranslate nohighlight">\(Y\)</span> given a fixed <span class="math notranslate nohighlight">\(x\)</span>
+and a random <span class="math notranslate nohighlight">\(\hat{f}\)</span>. As such, the expectation is over <span class="math notranslate nohighlight">\(Y \mid X\)</span>
+and <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>. Our estimated function <span class="math notranslate nohighlight">\(\hat{f}\)</span> is random
+depending on the data, <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, which is used to perform the
+estimation.</p></li>
+<li><p>The expected prediction error of predicting <span class="math notranslate nohighlight">\(Y\)</span> using <span class="math notranslate nohighlight">\(\hat{f}(X)\)</span>
+when <span class="math notranslate nohighlight">\(X = x\)</span> has been decomposed into two errors:</p>
+<ul>
+<li><p>The <strong>reducible error</strong>, which is the expected squared error
+loss of estimation <span class="math notranslate nohighlight">\(f(x)\)</span> using <span class="math notranslate nohighlight">\(\hat{f}(x)\)</span> at a fixed point
+<span class="math notranslate nohighlight">\(x\)</span>. The only thing that is random here is <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, the
+data used to obtain <span class="math notranslate nohighlight">\(\hat{f}\)</span>. (Both <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(x\)</span> are fixed.)
+We’ll often call this reducible error the <strong>mean squared
+error</strong> of estimating <span class="math notranslate nohighlight">\(f(x)\)</span> using <span class="math notranslate nohighlight">\(\hat{f}\)</span> at a fixed point
+<span class="math notranslate nohighlight">\(x\)</span>. $<span class="math notranslate nohighlight">\(
+\text{MSE}\left(f(x), \hat{f}(x)\right) \triangleq 
+\mathbb{E}_{\mathcal{D}} \left[  \left(f(x) - \hat{f}(x) \right)^2 \right]\)</span>$</p></li>
+<li><p>The <strong>irreducible error</strong>. This is simply the variance of <span class="math notranslate nohighlight">\(Y\)</span>
+given that <span class="math notranslate nohighlight">\(X = x\)</span>, essentially noise that we do not want to
+learn. This is also called the <strong>Bayes error</strong>.</p></li>
+</ul>
+</li>
+</ul>
+<p>As the name suggests, the reducible error is the error that we have some
+control over. But how do we control this error?</p>
+</section>
+<section id="reducible-and-irreducible-error">
+<h3>Reducible and Irreducible Error<a class="headerlink" href="#reducible-and-irreducible-error" title="Permalink to this heading">#</a></h3>
+<p>As mentioned in the previous section, our <strong>Expected Test Error</strong> in a
+Regression Setting is given formally as follows:</p>
+<p>More formally, in a regression setting where we Mean Squared Error,
+$<span class="math notranslate nohighlight">\(\begin{aligned}\mathcal{E}_{\text{out}}(h) = \mathbb{E}_{\mathrm{x}}\left[(h_{\mathcal{D}}(\mathrm{x}) - f(\mathrm{x}))^2 \right]
+\end{aligned}\)</span>$</p>
+<hr class="docutils" />
+<p>This is difficult and confusing to understand. To water down the formal
+definition, it is worth taking an example, in
+<span class="math notranslate nohighlight">\(\mathcal{E}_{\text{out}}(h)\)</span> we are only talking about the <strong>Expected
+Test Error</strong> over the Test Set and nothing else. <strong>Think of a test set
+with only one query point</strong>, we call it <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span>, then the above
+equation is just
+$<span class="math notranslate nohighlight">\(\begin{aligned}\mathcal{E}_{\text{out}}(h) = \mathbb{E}_{\mathrm{x}_{q}}\left[(h_{\mathcal{D}}(\mathrm{x}_{q}) - f(\mathrm{x}_{q}))^2 \right]
+\end{aligned}\)</span>$</p>
+<p>over a single point over the distribution <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span>. That is if
+<span class="math notranslate nohighlight">\(\mathrm{x}_{q} = 3\)</span> and <span class="math notranslate nohighlight">\(h_{\mathcal{D}}(\mathrm{x}_{q}) = 2\)</span> and
+<span class="math notranslate nohighlight">\(f(\mathrm{x}_{q}) = 5\)</span>, then
+<span class="math notranslate nohighlight">\((h_{\mathcal{D}}(\mathrm{x}_{q}) - f(\mathrm{x}_{q}))^2 = 9\)</span> and it
+follows that
+$<span class="math notranslate nohighlight">\(\mathcal{E}_{\text{out}}(h) =  \mathbb{E}_{\mathrm{x}_{q}}\left[(h_{\mathcal{D}}(\mathrm{x}_{q}) - f(\mathrm{x}_{q}))^2 \right] = \mathbb{E}_{\mathrm{x}_{q}}[9] = \frac{9}{1} = 9\)</span>$</p>
+<p>Note that I purposely denoted the denominator to be 1 because we have
+only 1 test point, if we were to have 2 test point, say
+<span class="math notranslate nohighlight">\(\mathrm{x} = [x_{p}, x_{q}] = [3, 6]\)</span>, then if
+<span class="math notranslate nohighlight">\(h_{\mathcal{D}}(x_{p}) = 4\)</span> and <span class="math notranslate nohighlight">\(f(x_{p}) = 6\)</span>, then our
+<span class="math notranslate nohighlight">\((h_{\mathcal{D}}(\mathrm{x}_{p}) - f(\mathrm{x}_{p}))^2 = 4\)</span>.</p>
+<p>Then our
+$<span class="math notranslate nohighlight">\(\mathcal{E}_{\text{out}}(h) =  \mathbb{E}_{\mathrm{x}}\left[(h_{\mathcal{D}}(\mathrm{x}) - f(\mathrm{x}))^2 \right] = \mathbb{E}_{\mathrm{x}_{q}}[[9, 4]] = \frac{1}{2} [9 + 4] = 6.5\)</span>$</p>
+<p>Note how I secretly removed the subscript in <span class="math notranslate nohighlight">\(\mathrm{x}\)</span>, and how when
+there are two points, we are taking expectation over the 2 points. So if
+we have <span class="math notranslate nohighlight">\(m\)</span> test points, then the expectation is taken over all the test
+points.</p>
+<p>Till now, our hypothesis <span class="math notranslate nohighlight">\(h\)</span> is fixed over a particular sample set
+<span class="math notranslate nohighlight">\(\mathcal{D}\)</span>. We will now move on to the next concept on <strong>Expected
+Generalization Error</strong> (adding a word Expected in front makes a lot of
+difference).</p>
+</section>
+<section id="bias-variance-decomposition">
+<h3>Bias-Variance Decomposition<a class="headerlink" href="#bias-variance-decomposition" title="Permalink to this heading">#</a></h3>
+<p>After decomposing the expected prediction error into reducible and
+irreducible error, we can further decompose the reducible error.</p>
+<p>Recall the definition of the <strong>bias</strong> of an estimator.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{bias}(\hat{\theta}) \triangleq \mathbb{E}\left[\hat{\theta}\right] - \theta
+\]</div>
+<p>Also recall the definition of the <strong>variance</strong> of an estimator.</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{V}(\hat{\theta}) = \text{var}(\hat{\theta}) \triangleq \mathbb{E}\left [ ( \hat{\theta} -\mathbb{E}\left[\hat{\theta}\right] )^2 \right]
+\]</div>
+<p>Using this, we further decompose the reducible error (mean squared
+error) into bias squared and variance.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{MSE}\left(f(x), \hat{f}(x)\right) = 
+\mathbb{E}_{\mathcal{D}} \left[  \left(f(x) - \hat{f}(x) \right)^2 \right] = 
+\underbrace{\left(f(x) - \mathbb{E} \left[ \hat{f}(x) \right]  \right)^2}_{\text{bias}^2 \left(\hat{f}(x) \right)} +
+\underbrace{\mathbb{E} \left[ \left( \hat{f}(x) - \mathbb{E} \left[ \hat{f}(x) \right] \right)^2 \right]}_{\text{var} \left(\hat{f}(x) \right)}
+\]</div>
+<p>This is actually a common fact in estimation theory, but we have stated
+it here specifically for estimation of some regression function <span class="math notranslate nohighlight">\(f\)</span>
+using <span class="math notranslate nohighlight">\(\hat{f}\)</span> at some point <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{MSE}\left(f(x), \hat{f}(x)\right) = \text{bias}^2 \left(\hat{f}(x) \right) + \text{var} \left(\hat{f}(x) \right)
+\]</div>
+<p>In a perfect world, we would be able to find some <span class="math notranslate nohighlight">\(\hat{f}\)</span> which is
+<strong>unbiased</strong>, that is <span class="math notranslate nohighlight">\(\text{bias}\left(\hat{f}(x) \right) = 0\)</span>, which
+also has low variance. In practice, this isn’t always possible.</p>
+<p>It turns out, there is a <strong>bias-variance tradeoff</strong>. That is, often, the
+more bias in our estimation, the lesser the variance. Similarly, less
+variance is often accompanied by more bias. Flexible models tend to be
+unbiased, but highly variable. Simple models are often extremely biased,
+but have low variance.</p>
+<p>In the context of regression, models are biased when:</p>
+<ul class="simple">
+<li><p>Parametric: The form of the model <a class="reference external" href="https://en.wikipedia.org/wiki/Omitted-variable_bias">does not incorporate all the
+necessary
+variables</a>, or
+the form of the relationship is too simple. For example, a
+parametric model assumes a linear relationship, but the true
+relationship is quadratic.</p></li>
+<li><p>Non-parametric: The model provides too much smoothing.</p></li>
+</ul>
+<p>In the context of regression, models are variable when:</p>
+<ul class="simple">
+<li><p>Parametric: The form of the model incorporates too many variables,
+or the form of the relationship is too flexible. For example, a
+parametric model assumes a cubic relationship, but the true
+relationship is linear.</p></li>
+<li><p>Non-parametric: The model does not provide enough smoothing. It is
+very, “wiggly.”</p></li>
+</ul>
+<p>So for us, to select a model that appropriately balances the tradeoff
+between bias and variance, and thus minimizes the reducible error, we
+need to select a model of the appropriate flexibility for the data.</p>
+<p>Recall that when fitting models, we’ve seen that train RMSE decreases
+as model flexibility is increasing. (Technically it is non-increasing.)
+For validation RMSE, we expect to see a U-shaped curve. Importantly,
+validation RMSE decreases, until a certain flexibility, then begins to
+increase.</p>
+</section>
+<section id="intuitive-explanation-of-bias">
+<h3>Intuitive Explanation of Bias<a class="headerlink" href="#intuitive-explanation-of-bias" title="Permalink to this heading">#</a></h3>
+<p>The error due to bias is taken as the difference between the expected
+(or average) prediction of our model and the correct value which we are
+trying to predict. Of course you only have one model so talking about
+expected or average prediction values might seem a little strange.
+However, imagine you could repeat the whole model building process more
+than once: each time you gather new data and run a new analysis creating
+a new model. Due to randomness in the underlying data sets, the
+resulting models will have a range of predictions. Bias measures how far
+off in general these models’ predictions are from the correct value.</p>
+</section>
+<section id="intuitive-explanation-of-variance">
+<h3>Intuitive Explanation of Variance<a class="headerlink" href="#intuitive-explanation-of-variance" title="Permalink to this heading">#</a></h3>
+<p>If you were to be able to rebuild the model process multiples times
+producing multiple hypothesis <span class="math notranslate nohighlight">\(h\)</span> using multiple datasets <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>
+sampled from the same distribution <span class="math notranslate nohighlight">\(\mathcal{P}\)</span>, and given a fixed
+point <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> which is from the test set (unseen test point),
+then can I define (intuitively) the variance of the model over that
+fixed point <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> to be:</p>
+<p>How much does the prediction of all the <span class="math notranslate nohighlight">\(h\)</span> on the test point
+<span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> , deviate on average, from the mean prediction made by
+all the <span class="math notranslate nohighlight">\(h\)</span>, on that unseen point <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span>?</p>
+</section>
+<section id="intuitive-understanding-of-bias-and-variance">
+<h3>Intuitive Understanding of Bias and Variance<a class="headerlink" href="#intuitive-understanding-of-bias-and-variance" title="Permalink to this heading">#</a></h3>
+<p>Hi guys, guest here, as usual, please ignore if not important, but I
+have been “stuck” in the Bias-Variance Decomposition for a week now.
+Hope to reaffirm my understanding here.</p>
+<p>Consider the general regression setup where we are given a random pair
+<span class="math notranslate nohighlight">\((X, Y) \in \mathbb{R}^p \times \mathbb{R}\)</span>. We also assume we know the
+true/target function <span class="math notranslate nohighlight">\(f\)</span> which establishes the true relationship between
+<span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>. Assume <span class="math notranslate nohighlight">\(X\)</span> and the stochastic noise <span class="math notranslate nohighlight">\(\epsilon\)</span> is
+independent.</p>
+<p>With a fixed point <span class="math notranslate nohighlight">\(x_{q}\)</span> (the test point is univariate and have one
+single point only), can I understand the following:</p>
+<blockquote>
+<div><p><strong>Variance: My understanding</strong></p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>Imagine I built multiple hypothesis <span class="math notranslate nohighlight">\(h_{i}\)</span> using multiple datasets
+<span class="math notranslate nohighlight">\(\mathcal{D}_{i}\)</span> sampled from the same distribution <span class="math notranslate nohighlight">\(\mathcal{P}\)</span>
+say a uniform distribution <span class="math notranslate nohighlight">\([0, 1]\)</span>, and given a fixed point
+<span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> which is from the test set (unseen test point),
+then can I understand intuitvely that the <strong>variance</strong> of the model
+over that fixed point <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> to be the <strong>total sum of the
+average mean squared deviation</strong> of each <span class="math notranslate nohighlight">\(h_{i}\)</span> from the average
+hypothesis <span class="math notranslate nohighlight">\(\bar{h}\)</span>, where the latter is the mean prediction made
+by <span class="math notranslate nohighlight">\(h_{i}(\mathrm{x}_{q})\)</span>, further divided by the number of
+hypothesis we have (since we are taking two expectations here.</p>
+</div></blockquote>
+</div></blockquote>
+<hr class="docutils" />
+<blockquote>
+<div><p><strong>Bias: My understanding</strong></p>
+</div></blockquote>
+<blockquote>
+<div><blockquote>
+<div><p>Same setting as above, <strong>bias</strong> of the model over a fixed point
+<span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> to be the <strong>squared error</strong> of <span class="math notranslate nohighlight">\(f(\mathrm{x}_{q})\)</span>
+and <span class="math notranslate nohighlight">\(\bar{h}(\mathrm{x}_{q})\)</span>. In particular, if <span class="math notranslate nohighlight">\(\mathrm{x}_{q}\)</span> is
+has <span class="math notranslate nohighlight">\(m\)</span> samples, then we need to sum the squared error of each
+individual test points and divide by the number of test points.</p>
+</div></blockquote>
+</div></blockquote>
+</section>
+<section id="hn-s-own-notes">
+<h3>HN’s own notes<a class="headerlink" href="#hn-s-own-notes" title="Permalink to this heading">#</a></h3>
+<p>For full derivation, you can refer to Learning From Data page 63.</p>
+<hr class="docutils" />
+<p><strong>There are three sources of error in a model:</strong></p>
+<div class="math notranslate nohighlight">
+\[\text{Error} = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{align*}
+\mathbb{E}_{\mathcal{D}}[\mathcal{E}_{\text{out}}(h)] &amp;= \mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\mathrm{x}}\left[(h_{\mathcal{D}}(\mathrm{x}) - f(\mathrm{x}))^2 \right]] 
+\\ &amp;= \big(\;\mathbb{E}_{\mathcal{D}}[\;h_{\mathcal{D}}(x)\;] - f(x)\;\big)^2 + \mathbb{E}_{\mathcal{D}}\big[\;(\;h_{\mathcal{D}}(x) - \mathbb{E}_{\mathcal{D}}[\;h_{\mathcal{D}}(x)\;])^2\;\big] + \mathbb{E}\big[(y-f(x))^2\big]
+\\ &amp;= \big(\;\bar{h}(\mathrm{x}) - f(x)\;\big)^2 + \mathbb{E}_\mathcal{D}\big[\;(\;h_{\mathcal{D}}(x) - \bar{h}(\mathrm{x}) \;])^2\;\big]+ \mathbb{E}\big[(y-f(x))^2\big]
+\end{align*} 
+\end{split}\]</div>
+<p><strong>Where</strong>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f(x)\)</span> is the true function of y given the predictors.</p></li>
+<li><p><span class="math notranslate nohighlight">\(h_{\mathcal{D}}(x)\)</span> is the estimate of y with the model fit on a
+random sample <span class="math notranslate nohighlight">\(\mathcal{D}_{i}\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{E}_{\mathcal{D}}[\mathbb{E}_{\mathrm{x}}\left[(h_{\mathcal{D}}(\mathrm{x}) - f(\mathrm{x}))^2 \right]]\)</span>
+is the average squared error
+across multiple models fit on different random samples between the
+model and the true function. This is also the generalization / test
+error.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}[\;g(x)\;]\)</span> is the average of estimates for given
+predictors across multiple models fit on different random samples.</p></li>
+<li><p><span class="math notranslate nohighlight">\(E\Big[\big(y - f(x)\big)^2\Big]\)</span> is the average squared error
+between the true values and the predictions from the true function
+of the predictors. This is the <strong>irreducible error</strong>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\big(\;\mathbb{E}_{\mathcal{D}}[\;h_{\mathcal{D}}(x)\;] - f(x)\;\big)^2\)</span>
+is the squared error between the average predictions across multiple
+models fit on different random samples and the prediction of the
+true function. This is the <strong>bias</strong> (squared). <strong>Take a look at my
+notes/simulation to understand it better! Because you should use
+np.sum(np.square(hbar, y_test)) instead of np.square(np.sum(hbar,
+y_test)).</strong></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbb{E}_{\mathcal{D}}\big[\;(\;h_{\mathcal{D}}(x) - \mathbb{E}_{\mathcal{D}}[\;h_{\mathcal{D}}(x)\;])^2\;\big]\)</span>
+is the average squared distance between individual model predictions
+and the average prediction of model across multiple random samples.
+This is the <strong>variance</strong>.</p></li>
+<li><p>Average Hypothesis: given size m data points, we draw m number of
+data points <span class="math notranslate nohighlight">\(K \to \infty\)</span> of times from our population
+<span class="math notranslate nohighlight">\(\mathcal{X} \times \mathcal{Y}\)</span> over a distribution <span class="math notranslate nohighlight">\(\mathcal{P}\)</span>.
+Each time we draw <span class="math notranslate nohighlight">\(m\)</span> number of data points, we will form a sampled
+data <span class="math notranslate nohighlight">\(\mathcal{D}_{i}\)</span> where <span class="math notranslate nohighlight">\(i = 1,2,3,...,K\)</span>, we use our learning
+algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to learn the parameters using
+<span class="math notranslate nohighlight">\(\mathcal{D}_{i}\)</span> and form a hypothesis <span class="math notranslate nohighlight">\(h_{i}\)</span> where
+<span class="math notranslate nohighlight">\(i = 1,2,3,...,K\)</span>. We call the average hypothesis
+$<span class="math notranslate nohighlight">\(\bar{h} = \dfrac{1}{K}\sum_{i=1}^{K}h_{i}(x)\)</span>$</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>The irreducible error is “noise” – error in the measurement of
+our target that cannot be accounted for by our predictors.</strong></p></li>
+<li><p>The true function represents the most perfect relationship between
+predictors and target, but that does not mean that our variables can
+perfectly predict the target.</p></li>
+<li><p>The irreducible error can be thought of as the measurement error:
+variation in the target that we cannot represent.</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Error due to Bias:</strong> The error due to bias is taken as the
+difference between the expected (or average) prediction of our model
+and the correct value which we are trying to predict. Of course you
+only have one model so talking about expected or average prediction
+values might seem a little strange. However, imagine you could
+repeat the whole model building process more than once: each time
+you gather new data and run a new analysis creating a new model. Due
+to randomness in the underlying data sets, the resulting models will
+have a range of predictions. Bias measures how far off in general
+these models’ predictions are from the correct value.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\big(\;\text{E}[\;g(x)\;] - f(x)\;\big)^2\)</span> is the squared error
+between the average predictions across multiple models fit on
+different random samples and the prediction of the true function.
+This is the <strong>bias</strong> (squared).</p></li>
+</ul>
+<hr class="docutils" />
+<ul class="simple">
+<li><p><strong>Error due to Variance:</strong> The error due to variance is taken as the
+variability of a model prediction for a given data point. Again,
+imagine you can repeat the entire model building process multiple
+times. The variance is how much the predictions for a given point
+vary between different realizations of the model.</p></li>
+<li><p>Error due to variance is the amount by which the prediction, over
+one training set, differs from the expected value over all the
+training sets. In machine learning, diﬀerent training data sets will
+result in a diﬀerent estimation. But ideally it should not vary too
+much between training sets. However, if a method has high variance
+then small changes in the training data can result in large changes
+in results.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\text{E}\big[\;(\;g(x) - \text{E}[\;g(x)\;])^2\;\big]\)</span> is the
+average squared distance between individual model predictions and
+the average prediction of model across multiple random samples. This
+is the <strong>variance</strong>.</p></li>
+<li><p>Intuitively (but not entirely correct), <strong>Variance</strong> refers to the
+amount by which our <span class="math notranslate nohighlight">\(g\)</span> would change if we estimated it using a
+different training dataset. This means, for a <em><strong>fixed</strong></em>
+<span class="math notranslate nohighlight">\(g \in \mathcal{H}\)</span>, and a training set <span class="math notranslate nohighlight">\(\mathcal{D}_{train}\)</span> which
+is also fixed, we resample different
+<span class="math notranslate nohighlight">\(\mathcal{D} \in \mathcal{X} \times \mathcal{Y}\)</span>, say
+<span class="math notranslate nohighlight">\(\mathcal{D}_{i}\)</span> for <span class="math notranslate nohighlight">\(i \in [0, \infty]\)</span>, and we calculate the
+prediction made for each <span class="math notranslate nohighlight">\(g(\mathrm{x}^{(i)})\)</span> and average it to get
+the mean <span class="math notranslate nohighlight">\(\text{E}[\;g(\mathrm{x}^{(i)})]\)</span>, which is a fixed number.
+Now we take each individual prediction made on the original training
+set <span class="math notranslate nohighlight">\(\mathcal{D}_{train}\)</span> and calculate the difference squared from
+the mean. Let us see more details in code.</p></li>
+<li><p>Why did I say not entirely correct, it is because I fixed <span class="math notranslate nohighlight">\(g\)</span>
+previously, and we will only get <span class="math notranslate nohighlight">\(\;(\;g(x) - \text{E}[\;g(x)\;])^2\)</span>
+and in order to get the full version, we will need to “not” fix
+<span class="math notranslate nohighlight">\(g\)</span>, and this means, we can have multiple <span class="math notranslate nohighlight">\(h_{i}\)</span>, and we average
+over all <span class="math notranslate nohighlight">\(\;(\;h_{i}(x) - \text{E}[\;h_{i}(x)\;])^2\)</span></p></li>
+<li><p>A more correct way of defining is</p></li>
+</ul>
+<blockquote>
+<div><p>The Bias-Variance Decomposition is done to the prediction error on a
+fixed observation in the test set (only 1 single test/query point).</p>
+</div></blockquote>
+<blockquote>
+<div><p>We assume we resample our training set again and again and re-train
+the model with each of the resampled train sets.</p>
+</div></blockquote>
+<blockquote>
+<div><p>For example, the estimation of the error goes in this way: After we
+get <span class="math notranslate nohighlight">\(N\)</span> train sets by resampling, we fit <span class="math notranslate nohighlight">\(N\)</span> models with each of <span class="math notranslate nohighlight">\(N\)</span>
+train sets (resampled). With the each of fitted models, we make a
+prediction on the same observation (Out of sample) in the test set.
+With the predictions, we will have <span class="math notranslate nohighlight">\(N\)</span> predicted values, and the
+expected value of errors is calculated by taking the average of all
+the prediction errors.</p>
+</div></blockquote>
+<blockquote>
+<div><p>Now if we are looking at <span class="math notranslate nohighlight">\(m\)</span> number of query points, then we have to
+average over <span class="math notranslate nohighlight">\(N \times m\)</span> prediction errors!!</p>
+</div></blockquote>
+<blockquote>
+<div><p>The bias-variance decomposition states that the estimated error
+consists of error from bias, error from variance, and reducible error.</p>
+</div></blockquote>
+</section>
+</section>
+<section id="bias-variance-tradeoff">
+<h2>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h2>
+<p>In reality, as the bias goes up, the variance goes down, and vice versa.</p>
+<hr class="docutils" />
+<p>Generally, linear algorithms have a high bias making them fast to learn
+and easier to understand but generally less flexible. In turn, they have
+lower predictive performance on complex problems that fail to meet the
+simplifying assumptions of the algorithms bias.</p>
+<p>On the other hands, Variance is the amount that the estimate of the
+target function will change if different training data was used.</p>
+<p>The target function is estimated from the training data by a machine
+learning algorithm, so we should expect the algorithm to have some
+variance. Ideally, it should not change too much from one training
+dataset to the next, meaning that the algorithm is good at picking out
+the hidden underlying mapping between the inputs and the output
+variables.</p>
+<p>Machine learning algorithms that have a high variance are strongly
+influenced by the specifics of the training data. This means that the
+specifics of the training have influences the number and types of
+parameters used to characterize the mapping function.</p>
+<section id="low-and-high-bias">
+<h3>Low and High Bias<a class="headerlink" href="#low-and-high-bias" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Low Bias: Suggests less assumptions about the form of the target
+function.</p></li>
+<li><p>High-Bias: Suggests more assumptions about the form of the target
+function.</p></li>
+</ul>
+<p><strong>Examples of Low and High Bias</strong></p>
+<ul class="simple">
+<li><p>Examples of low-bias machine learning algorithms include: Decision
+Trees, k-Nearest Neighbors and Support Vector Machines.</p></li>
+<li><p>Examples of high-bias machine learning algorithms include: Linear
+Regression, Linear Discriminant Analysis and Logistic Regression.</p></li>
+</ul>
+</section>
+<section id="low-and-high-bias-low-and-high-bias">
+<h3>Low and High Bias {#low-and-high-bias}<a class="headerlink" href="#low-and-high-bias-low-and-high-bias" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Low Variance: Suggests small changes to the estimate of the target
+function with changes to the training dataset.</p></li>
+<li><p>High Variance: Suggests large changes to the estimate of the target
+function with changes to the training dataset.</p></li>
+</ul>
+<p><strong>Examples of Low and High Bias</strong></p>
+<p>Generally, nonlinear machine learning algorithms that have a lot of
+flexibility have a high variance. For example, decision trees have a
+high variance, that is even higher if the trees are not pruned before
+use.</p>
+<p><strong>Examples of Low and High Variance</strong></p>
+<ul class="simple">
+<li><p>Examples of low-variance machine learning algorithms include: Linear
+Regression, Linear Discriminant Analysis and Logistic Regression.</p></li>
+<li><p>Examples of high-variance machine learning algorithms include:
+Decision Trees, k-Nearest Neighbors and Support Vector Machines.</p></li>
+</ul>
+</section>
+<section id="the-tradeoff">
+<h3>The Tradeoff<a class="headerlink" href="#the-tradeoff" title="Permalink to this heading">#</a></h3>
+<p>The goal of any supervised machine learning algorithm is to achieve low
+bias and low variance. In turn the algorithm should achieve good
+prediction performance.</p>
+<p>You can see a general trend in the examples above:</p>
+<p>Linear machine learning algorithms often have a high bias but a low
+variance. Nonlinear machine learning algorithms often have a low bias
+but a high variance. The parameterization of machine learning algorithms
+is often a battle to balance out bias and variance.</p>
+<p>Below are two examples of configuring the bias-variance trade-off for
+specific algorithms:</p>
+<ul class="simple">
+<li><p>The k-nearest neighbors algorithm has low bias and high variance,
+but the trade-off can be changed by increasing the value of k which
+increases the number of neighbors that contribute t the prediction
+and in turn increases the bias of the model.</p></li>
+<li><p>The support vector machine algorithm has low bias and high variance,
+but the trade-off can be changed by increasing the C parameter that
+influences the number of violations of the margin allowed in the
+training data which increases the bias but decreases the variance.</p></li>
+</ul>
+<hr class="docutils" />
+<p>There is no escaping the relationship between bias and variance in
+machine learning.</p>
+<ul class="simple">
+<li><p>Increasing the bias will decrease the variance.</p></li>
+<li><p>Increasing the variance will decrease the bias. There is a trade-off
+at play between these two concerns and the algorithms you choose and
+the way you choose to configure them are finding different balances
+in this trade-off for your problem</p></li>
+</ul>
+<p>In reality, we cannot calculate the real bias and variance error terms
+because we do not know the actual underlying target function.
+Nevertheless, as a framework, bias and variance provide the tools to
+understand the behavior of machine learning algorithms in the pursuit of
+predictive performance.</p>
+</section>
+</section>
+<section id="how-to-manage-bias-and-variance">
+<h2>How to manage Bias and Variance<a class="headerlink" href="#how-to-manage-bias-and-variance" title="Permalink to this heading">#</a></h2>
+<p>There are some key things to think about when trying to manage bias and
+variance.</p>
+<section id="fight-your-instincts">
+<h3>Fight Your Instincts<a class="headerlink" href="#fight-your-instincts" title="Permalink to this heading">#</a></h3>
+<p>A gut feeling many people have is that they should minimize bias even at
+the expense of variance. Their thinking goes that the presence of bias
+indicates something basically wrong with their model and algorithm. Yes,
+they acknowledge, variance is also bad but a model with high variance
+could at least predict well on average, at least it is not fundamentally
+wrong.</p>
+<p>This is mistaken logic. It is true that a high variance and low bias
+model can preform well in some sort of long-run average sense. However,
+in practice modelers are always dealing with a single realization of the
+data set. In these cases, long run averages are irrelevant, what is
+important is the performance of the model on the data you actually have
+and in this case bias and variance are equally important and one should
+not be improved at an excessive expense to the other.</p>
+</section>
+<section id="bagging-and-resampling">
+<h3>Bagging and Resampling<a class="headerlink" href="#bagging-and-resampling" title="Permalink to this heading">#</a></h3>
+<p>Bagging and other resampling techniques can be used to reduce the
+variance in model predictions. In bagging (Bootstrap Aggregating),
+numerous replicates of the original data set are created using random
+selection with replacement. Each derivative data set is then used to
+construct a new model and the models are gathered together into an
+ensemble. To make a prediction, all of the models in the ensemble are
+polled and their results are averaged.</p>
+<p>One powerful modeling algorithm that makes good use of bagging is Random
+Forests. Random Forests works by training numerous decision trees each
+based on a different resampling of the original training data. In Random
+Forests the bias of the full model is equivalent to the bias of a single
+decision tree (which itself has high variance). By creating many of
+these trees, in effect a “forest”, and then averaging them the
+variance of the final model can be greatly reduced over that of a single
+tree. In practice the only limitation on the size of the forest is
+computing time as an infinite number of trees could be trained without
+ever increasing bias and with a continual (if asymptotically declining)
+decrease in the variance.</p>
+</section>
+<section id="asymptotic-properties-of-algorithms">
+<h3>Asymptotic Properties of Algorithms<a class="headerlink" href="#asymptotic-properties-of-algorithms" title="Permalink to this heading">#</a></h3>
+<p>Academic statistical articles discussing prediction algorithms often
+bring up the ideas of asymptotic consistency and asymptotic efficiency.
+In practice what these imply is that as your training sample size grows
+towards infinity, your model’s bias will fall to 0 (asymptotic
+consistency) and your model will have a variance that is no worse than
+any other potential model you could have used (asymptotic efficiency).</p>
+<p>Both these are properties that we would like a model algorithm to have.
+We, however, do not live in a world of infinite sample sizes so
+asymptotic properties generally have very little practical use. An
+algorithm that may have close to no bias when you have a million points,
+may have very significant bias when you only have a few hundred data
+points. More important, an asymptotically consistent and efficient
+algorithm may actually perform worse on small sample size data sets than
+an algorithm that is neither asymptotically consistent nor efficient.
+When working with real data, it is best to leave aside theoretical
+properties of algorithms and to instead focus on their actual accuracy
+in a given scenario.</p>
+</section>
+<section id="understanding-over-and-under-fitting">
+<h3>Understanding Over- and Under-Fitting<a class="headerlink" href="#understanding-over-and-under-fitting" title="Permalink to this heading">#</a></h3>
+<p>At its root, dealing with bias and variance is really about dealing with
+over- and under-fitting. Bias is reduced and variance is increased in
+relation to model complexity. As more and more parameters are added to a
+model, the complexity of the model rises and variance becomes our
+primary concern while bias steadily falls. For example, as more
+polynomial terms are added to a linear regression, the greater the
+resulting model’s complexity will be 3. In other words, bias has a
+negative first-order derivative in response to model complexity 4 while
+variance has a positive slope.</p>
+<p>Bias and variance contributing to total error. <img alt="Bias and variancecontributing to totalerror." src="https://drive.google.com/uc?id=11ZUNDsLo50flNySlszfNBPx2E1YqNHrr" /></p>
+<p>Understanding bias and variance is critical for understanding the
+behavior of prediction models, but in general what you really care about
+is overall error, not the specific decomposition. The sweet spot for any
+model is the level of complexity at which the increase in bias is
+equivalent to the reduction in variance. Mathematically:</p>
+<div class="math notranslate nohighlight">
+\[\dfrac{dBias}{dComplexity}=−\dfrac{dVariance}{dComplexity}\]</div>
+<hr class="docutils" />
+<p>If our model complexity exceeds this sweet spot, we are in effect
+over-fitting our model; while if our complexity falls short of the sweet
+spot, we are under-fitting the model. In practice, there is not an
+analytical way to find this location. Instead we must use an accurate
+measure of prediction error and explore differing levels of model
+complexity and then choose the complexity level that minimizes the
+overall error. A key to this process is the selection of an accurate
+error measure as often grossly inaccurate measures are used which can be
+deceptive. The topic of accuracy measures is discussed here but
+generally resampling based measures such as cross-validation should be
+preferred over theoretical measures such as Aikake’s Information
+Criteria.</p>
+</section>
+</section>
+<section id="derivation-of-decomposition-of-expected-generalized-error">
+<h2>Derivation of Decomposition of Expected Generalized Error<a class="headerlink" href="#derivation-of-decomposition-of-expected-generalized-error" title="Permalink to this heading">#</a></h2>
+<p><a class="reference external" href="https://stats.stackexchange.com/questions/164378/bias-variance-decomposition-and-independence-of-x-and-epsilon?rq=1">Link</a></p>
+<p>Here is a derivation of the bias-variance decomposition, in which I make
+use of the independence of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+<section id="true-model">
+<h3>True model<a class="headerlink" href="#true-model" title="Permalink to this heading">#</a></h3>
+<p>Suppose that a target variable <span class="math notranslate nohighlight">\(Y\)</span> and a feature variable <span class="math notranslate nohighlight">\(X\)</span> are
+related via <span class="math notranslate nohighlight">\(Y = f(X) + \epsilon\)</span>, where <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(\epsilon\)</span> are
+independent random variables and the expected value of <span class="math notranslate nohighlight">\(\epsilon\)</span> is
+zero, <span class="math notranslate nohighlight">\(E[\epsilon] = 0\)</span>.</p>
+<p>We can use this mathematical relationship to generate a data set
+<span class="math notranslate nohighlight">\(\cal D\)</span>. Because data sets are always of finite size, we may think of
+<span class="math notranslate nohighlight">\(\cal D\)</span> as a random variable, the realizations of which take the form
+<span class="math notranslate nohighlight">\(d = \{ (x_1,y_1), \ldots , (x_m,y_m) \}\)</span>, where <span class="math notranslate nohighlight">\(x_i\)</span> and <span class="math notranslate nohighlight">\(y_i\)</span> are
+realizations of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+</section>
+<section id="estimated-model">
+<h3>Estimated model<a class="headerlink" href="#estimated-model" title="Permalink to this heading">#</a></h3>
+<p>Machine learning uses a particular realization <span class="math notranslate nohighlight">\(d\)</span> of <span class="math notranslate nohighlight">\(\cal D\)</span> to train
+an estimate of the function <span class="math notranslate nohighlight">\(f(x)\)</span>, called the hypothesis <span class="math notranslate nohighlight">\(h_d(x)\)</span>. The
+subscript <span class="math notranslate nohighlight">\(d\)</span> reminds us that the hypothesis is a random function that
+varies over training data sets.</p>
+</section>
+<section id="test-error-of-the-estimated-model">
+<h3>Test error of the estimated model<a class="headerlink" href="#test-error-of-the-estimated-model" title="Permalink to this heading">#</a></h3>
+<p>Having learned an hypothesis for a particular training set <span class="math notranslate nohighlight">\(d\)</span>, we next
+evaluate the error made in predicting the value of <span class="math notranslate nohighlight">\(y\)</span> on an unseen test
+value <span class="math notranslate nohighlight">\(x\)</span>. In linear regression, that test error is quantified by taking
+a test data set (also drawn from the distribution of <span class="math notranslate nohighlight">\(\cal D\)</span>) and
+computing the average of <span class="math notranslate nohighlight">\((Y - h_d)^2\)</span> over the data set. If the size of
+the test data set is large enough, this average is approximated by
+<span class="math notranslate nohighlight">\(E_{X,\epsilon} [ (Y(X,\epsilon) - h_{d}(X))^2 ]\)</span>. As the training data
+set <span class="math notranslate nohighlight">\(d\)</span> varies, so does the test error; in other words, test error is a
+random variable, the average of which over all training sets is given by</p>
+<p>\begin{equation*} \text{expected test error} = E_{\cal D} \left[
+E_{X,\epsilon} \left[ (Y(X,\epsilon) - h_{\cal D}(X))^2
+\right] \right]. \end{equation*}</p>
+<p>In the following sections, I will show how this error arises from three
+sources: a <em>bias</em> that quantifies how much the average of the hypothesis
+deviates from <span class="math notranslate nohighlight">\(f\)</span>; a <em>variance</em> term that quantifies how much the
+hypothesis varies among training data sets; and an <em>irreducible error</em>
+that describes the fact that one’s ability to predict is always limited
+by the noise <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p>
+</section>
+<section id="establishing-a-useful-order-of-integration">
+<h3>Establishing a useful order of integration<a class="headerlink" href="#establishing-a-useful-order-of-integration" title="Permalink to this heading">#</a></h3>
+<p>To compute the expected test error analytically, we rewrite the
+expectation operators in two steps. The first step is to recognize that
+$ E_{X,\epsilon} [\ldots] = E_X \left[ E_\epsilon [ \ldots
+] \right],$ <strong>since <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(E\)</span> are independent</strong>. The second step
+is to use Fubini’s theorem to reverse the order in which <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(D\)</span>
+are integrated out. The final result is that the expected test error is
+given by</p>
+<div class="math notranslate nohighlight">
+\[ 
+\text{expected test error} = 
+E_X \left[ E_{\cal D} \left[ E_\epsilon \left[
+(Y - h)^2 
+\right] \right] \right], \]</div>
+<p>where I have dropped the dependence of <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(h\)</span> on <span class="math notranslate nohighlight">\(X\)</span>, <span class="math notranslate nohighlight">\(\epsilon\)</span>
+and <span class="math notranslate nohighlight">\(\cal D\)</span> in the interests of clarity.</p>
+</section>
+<section id="reducible-and-irreducible-error-reducible-and-irreducible-error">
+<h3>Reducible and irreducible error {#reducible-and-irreducible-error}<a class="headerlink" href="#reducible-and-irreducible-error-reducible-and-irreducible-error" title="Permalink to this heading">#</a></h3>
+<p>We fix values of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(\cal D\)</span> (and therefore <span class="math notranslate nohighlight">\(f\)</span> and <span class="math notranslate nohighlight">\(h\)</span>) and
+compute the inner-most integral in the expected test error:</p>
+<p>\begin{align*} E_\epsilon \left[ (Y - h)^2 \right] &amp; =
+E_\epsilon \left[ (f + \epsilon - h)^2 \right]\ &amp; =
+E_\epsilon \left[ (f-h)^2 + \epsilon^2 + 2\epsilon (f-h)
+\right]\ &amp; = (f-h)^2 + E_\epsilon\left[ \epsilon^2 \right] +
+0 \ &amp; = (f-h)^2 + Var_\epsilon \left[ \epsilon \right].
+\end{align*}</p>
+<p>The last term remains unaltered by subsequent averaging over <span class="math notranslate nohighlight">\(X\)</span> and
+<span class="math notranslate nohighlight">\(D\)</span>. It represents the irreducible error contribution to the expected
+test error.</p>
+<p>The average of the first term,
+<span class="math notranslate nohighlight">\(E_X \left[ E_{\cal D} \left[ \left( f-h\right)^2 \right] \right]\)</span>, is
+sometimes called the reducible error.</p>
+</section>
+<section id="decomposing-the-reducible-error-into-bias-and-variance">
+<h3>Decomposing the reducible error into ‘bias’ and ‘variance’<a class="headerlink" href="#decomposing-the-reducible-error-into-bias-and-variance" title="Permalink to this heading">#</a></h3>
+<p>We relax our constraint that <span class="math notranslate nohighlight">\(\cal D\)</span> is fixed (but keep the constraint
+that <span class="math notranslate nohighlight">\(X\)</span> is fixed) and compute the innermost integral in the reducible
+error:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+E_{\cal D} \left[ (f-h)^2 \right] 
+&amp;= E_{\cal D} \left[ f^2 + h^2 - 2fh \right] \\
+&amp;= f^2 + E_{\cal D} \left[ h^2 \right] - 2f E_{\cal D} \left[h\right] \\
+\end{align}
+\end{split}\]</div>
+<p>Adding and subtracting <span class="math notranslate nohighlight">\(E_{\cal D} \left[ h^2 \right]\)</span>, and rearranging
+terms, we may write the right-hand side above as</p>
+<div class="math notranslate nohighlight">
+\[
+\left( f - E_{\cal D} \left[ h \right] \right)^2 + Var_{\cal D} \left[ h \right].
+\]</div>
+<p>Averaging over <span class="math notranslate nohighlight">\(X\)</span>, and restoring the irreducible error, yields finally:</p>
+<div class="math notranslate nohighlight">
+\[
+\boxed{
+\text{expected test error} = 
+E_X \left[ \left( f - E_{\cal D} \left[ h \right] \right)^2 \right]
++ E_X \left[ Var_{\cal D} \left[ h \right] \right] 
++ Var_\epsilon \left[ \epsilon \right].
+}
+\]</div>
+<p>The first term is called the bias and the second term is called the
+variance.</p>
+<p>The variance component of the expected test error is a consequence of
+the finite size of the training data sets. In the limit that training
+sets contain an infinite number of data points, there are no
+fluctuations in <span class="math notranslate nohighlight">\(h\)</span> among the training sets and the variance term
+vanishes. Put another way, when the size of the training set is large,
+the expected test error is expected to be solely due to bias (assuming
+the irreducible error is negligible).</p>
+</section>
+<section id="more-info">
+<h3>More info<a class="headerlink" href="#more-info" title="Permalink to this heading">#</a></h3>
+<p>An excellent exposition of these concepts and more can be found
+<a class="reference external" href="https://www.youtube.com/watch?v=zrEyxfl2-a8">here</a>.</p>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<section id="further-readings">
+<h3>Further Readings<a class="headerlink" href="#further-readings" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="http://scott.fortmann-roe.com/docs/BiasVariance.html">http://scott.fortmann-roe.com/docs/BiasVariance.html</a></p></li>
+<li><p><a class="reference external" href="https://statisticallearning.org/bias-variance-tradeoff.html">STAT 430</a> - Very good derivation</p></li>
+<li><p><a class="reference external" href="https://statisticallearning.org/bias-variance-tradeoff.html">STAT432 The Bias-Variance Tradeoff</a></p></li>
+<li><p>An Introduction to Statistical Learning</p>
+<ul>
+<li><p>p34-35</p></li>
+</ul>
+</li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/164378/bias-variance-decomposition-and-independence-of-x-and-epsilon?rq=1">https://stats.stackexchange.com/questions/164378/bias-variance-decomposition-and-independence-of-x-and-epsilon?rq=1</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/469384/bias-variance-decomposition-expectations-over-what-">https://stats.stackexchange.com/questions/469384/bias-variance-decomposition-expectations-over-what-</a></p></li>
+<li><p><a class="reference external" href="http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/">http://rasbt.github.io/mlxtend/user_guide/evaluate/bias_variance_decomp/</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./machine_learning/fundamentals/bias_and_variance"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Bias and Variance Tradeoff</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../decision_boundary/intro.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Decision Boundary</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#learning-objectives">
+   Learning Objectives
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#overview-of-bias-variance-errors">
+   Overview of Bias-Variance Errors
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-regression-setup">
+     The Regression Setup
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expected-generalization-test-error">
+     Expected Generalization/Test Error
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducible-and-irreducible-error">
+     Reducible and Irreducible Error
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bias-variance-decomposition">
+     Bias-Variance Decomposition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-explanation-of-bias">
+     Intuitive Explanation of Bias
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-explanation-of-variance">
+     Intuitive Explanation of Variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuitive-understanding-of-bias-and-variance">
+     Intuitive Understanding of Bias and Variance
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hn-s-own-notes">
+     HN’s own notes
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#bias-variance-tradeoff">
+   Bias-Variance Tradeoff
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#low-and-high-bias">
+     Low and High Bias
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#low-and-high-bias-low-and-high-bias">
+     Low and High Bias {#low-and-high-bias}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-tradeoff">
+     The Tradeoff
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#how-to-manage-bias-and-variance">
+   How to manage Bias and Variance
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fight-your-instincts">
+     Fight Your Instincts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bagging-and-resampling">
+     Bagging and Resampling
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#asymptotic-properties-of-algorithms">
+     Asymptotic Properties of Algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#understanding-over-and-under-fitting">
+     Understanding Over- and Under-Fitting
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#derivation-of-decomposition-of-expected-generalized-error">
+   Derivation of Decomposition of Expected Generalized Error
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#true-model">
+     True model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#estimated-model">
+     Estimated model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#test-error-of-the-estimated-model">
+     Test error of the estimated model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#establishing-a-useful-order-of-integration">
+     Establishing a useful order of integration
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#reducible-and-irreducible-error-reducible-and-irreducible-error">
+     Reducible and irreducible error {#reducible-and-irreducible-error}
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decomposing-the-reducible-error-into-bias-and-variance">
+     Decomposing the reducible error into ‘bias’ and ‘variance’
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#more-info">
+     More info
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references">
+   References
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#further-readings">
+     Further Readings
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

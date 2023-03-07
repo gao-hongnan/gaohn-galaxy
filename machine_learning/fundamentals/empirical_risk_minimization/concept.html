@@ -1,0 +1,887 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Concept &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/fundamentals/empirical_risk_minimization/concept';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Bayes Optimal Classifier" href="bayes_optimal_classifier.html" />
+    <link rel="prev" title="Empirical Risk Minimization" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Fundamentals</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 has-children"><a class="reference internal" href="../criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Empirical Risk Minimization</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fmachine_learning/fundamentals/empirical_risk_minimization/concept.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../_sources/machine_learning/fundamentals/empirical_risk_minimization/concept.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Concept</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#approximating-true-risk-with-empirical-risk">
+   Approximating True Risk with Empirical Risk
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empirical-risk-minimization-approximates-true-risk-minimization">
+   Empirical Risk Minimization approximates True Risk Minimization
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="concept">
+<h1>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h1>
+<section id="approximating-true-risk-with-empirical-risk">
+<h2>Approximating True Risk with Empirical Risk<a class="headerlink" href="#approximating-true-risk-with-empirical-risk" title="Permalink to this heading">#</a></h2>
+<p>Our machine learning problem setup is as follows:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is the fixed but unknown distribution of the data. Usually, this refers
+to the joint distribution of the input and the label,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+    \begin{aligned}
+    \mathcal{D} &amp;= \mathbb{P}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta}) \\
+    &amp;= \mathbb{P}_{\{\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta}\}}(\mathbf{x}, y)
+    \end{aligned}
+    \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span> and <span class="math notranslate nohighlight">\(y \in \mathcal{Y}\)</span>, and <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is the
+parameter vector of the distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>.</p>
+</li>
+<li><p>A dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+    \mathcal{S} \overset{\mathrm{iid}}{\sim} \mathcal{D} = \left \{ \left(\mathrm{x}^{(n)}, y^{(n)} \right) \right \}_{n=1}^N
+    \]</div>
+<p>be the dataset with <span class="math notranslate nohighlight">\(N\)</span> samples and <span class="math notranslate nohighlight">\(D\)</span> predictors where each data point in <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>
+is characterized by features <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathcal{X}\)</span> and labels <span class="math notranslate nohighlight">\(y \in \mathcal{Y}\)</span>.</p>
+</li>
+<li><p>a hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> of computationally feasible maps <span class="math notranslate nohighlight">\(h: \mathcal{X} \rightarrow \mathcal{Y}\)</span>,</p></li>
+<li><p>and a loss function <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> that measures the discrepancy between the predicted label <span class="math notranslate nohighlight">\(h(\mathbf{x})\)</span> and the true label <span class="math notranslate nohighlight">\(y\)</span>.</p></li>
+</ul>
+<p>Ideally we would like to learn a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> such that
+<span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> is small for <strong>any</strong> data point <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span>.
+However, to implement this informal goal we need to define what is meant precisely
+by “any data point”. Maybe the most widely used approach to the define the
+concept of “any data point” is the <span class="math notranslate nohighlight">\(\iid\)</span> assumption.</p>
+<div class="proof definition admonition" id="def-true-risk">
+<p class="admonition-title"><span class="caption-number">Definition 3 </span> (True Risk/Generalization Error)</p>
+<section class="definition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\left(\mathbf{x}, y\right)\)</span> be any data point
+drawn from an <span class="math notranslate nohighlight">\(\iid\)</span> joint distribution (<code class="xref prf prf-ref docutils literal notranslate"><span class="pre">def_iid</span></code>) <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
+then the (true) risk of a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is the expectation of the loss
+incurred by <span class="math notranslate nohighlight">\(h\)</span> on (the realizations of) a random data point.</p>
+<div class="math notranslate nohighlight" id="equation-eq-true-risk">
+<span class="eqno">(1)<a class="headerlink" href="#equation-eq-true-risk" title="Permalink to this equation">#</a></span>\[
+\mathcal{R}_{\mathcal{D}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} := \mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right] = \int_{\mathcal{X}} \int_{\mathcal{Y}} \mathcal{L}((\mathbf{x}, y), h) \mathbb{P}_{\mathcal{D}}(\mathbf{x}, y) \mathrm{d} \mathbf{x} \mathrm{d} y
+\]</div>
+<p>Note that if <span class="math notranslate nohighlight">\(\mathrm{x}\)</span> is <span class="math notranslate nohighlight">\(D\)</span>-dimensional, then the integral <span class="math notranslate nohighlight">\(\int_{\mathcal{X}}\)</span> is actually
+a <span class="math notranslate nohighlight">\(D\)</span>-dimensional integral.</p>
+<p>We use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> if <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is clear from the context.</p>
+</section>
+</div><div class="proof remark admonition" id="remark-interpretation-true-risk">
+<p class="admonition-title"><span class="caption-number">Remark 1 </span> (Interpretation of True Risk)</p>
+<section class="remark-content" id="proof-content">
+<p>We know in <span class="xref myst">Joint Expection</span>
+can be found by integrating over the joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
+where the integrand is usually the probability of the event happening multiplied by the
+state of the event. In the case of the true risk, the event is the realization of a data point,
+and the state of the event is the loss incurred by the hypothesis <span class="math notranslate nohighlight">\(h\)</span> on the data point.</p>
+<p>One may wonder why <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> being the state of the event has
+the associated probability <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathbf{x}, y)\)</span>. First, we recognize
+that <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> is a random variable, and the probability of
+it <strong>happening</strong> is the probability of the event <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span> happening, which in
+turn is the probability of the joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>.</p>
+<p>The main confusion can be caused by the lack of understanding of random variables. For example,
+you can also define the joint expecation of the random variables <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(y\)</span> as</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_{\mathcal{D}}\left[\mathbf{x}, y\right] = \int_{\mathcal{X}} \int_{\mathcal{Y}} \left(x_1 \cdot x_2 \cdots x_D \cdot y\right) \cdot \mathbb{P}_{\mathcal{D}}(\mathbf{x}, y) \mathrm{d} \mathbf{x} \mathrm{d} y
+\]</div>
+<p>Then in that case, the state is the joint vector <span class="math notranslate nohighlight">\(\left(x_1 \cdot x_2 \cdots x_D, y\right)\)</span>, and the probability
+of the event happening is the probability of the joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>.</p>
+<p>Though the associated probability is the same, the state and the event are different.</p>
+</section>
+</div><div class="proof remark admonition" id="rem-iid-erm">
+<p class="admonition-title"><span class="caption-number">Remark 2 </span> (<span class="math notranslate nohighlight">\(\iid\)</span> Assumption in ERM)</p>
+<section class="remark-content" id="proof-content">
+<p>Since the <span class="math notranslate nohighlight">\(\iid\)</span> assumption interprets data points as realizations of iid RVs with a
+common probability distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then the concept of
+“any data point” can be made precise since any data point must be drawn independently
+from the same distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>.</p>
+</section>
+</div><div class="proof theorem admonition" id="theorem-true-risk-minimization">
+<p class="admonition-title"><span class="caption-number">Theorem 1 </span> (True Risk Minimization)</p>
+<section class="theorem-content" id="proof-content">
+<p>If we do know the true distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then we can minimize
+the true risk directly by finding/learning a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span>
+such that its true risk <a class="reference internal" href="#equation-eq-true-risk">(1)</a> is minimized.</p>
+<div class="math notranslate nohighlight" id="equation-eq-true-risk-minimization">
+<span class="eqno">(2)<a class="headerlink" href="#equation-eq-true-risk-minimization" title="Permalink to this equation">#</a></span>\[
+h^{*} = \underset{h \in \mathcal{H}}{\mathrm{argmin}} \mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right]
+\]</div>
+</section>
+</div><div class="proof example admonition" id="example-bayes-optimal-classifier">
+<p class="admonition-title"><span class="caption-number">Example 1 </span> (Bayes Optimal Classifier)</p>
+<section class="example-content" id="proof-content">
+<p>See <a class="reference internal" href="bayes_optimal_classifier.html"><span class="doc std std-doc">Bayes Optimal Classifer</span></a> for a concrete example.
+The idea is that if we know the true distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then
+it is relatively easy to find the hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> that minimizes the true risk.</p>
+<p>We can simply construct such a hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> as</p>
+<div class="math notranslate nohighlight" id="equation-eq-bayes-optimal-classifier">
+<span class="eqno">(3)<a class="headerlink" href="#equation-eq-bayes-optimal-classifier" title="Permalink to this equation">#</a></span>\[
+h^{*}(\mathbf{x}) = \underset{y \in \mathcal{Y}}{\mathrm{argmax}} \mathbb{P}_{\mathcal{D}}\left(y \mid \mathbf{x}\right)
+\]</div>
+<p>and declare that this hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> minimizes the true risk <span class="math notranslate nohighlight">\(R\left\{\mathcal{L}((\mathbf{x}, y), h)\right\}\)</span>.</p>
+</section>
+</div><p>Of course, in practice we do not know the true distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, and therefore
+we cannot minimize the true risk directly. Instead, the empirical risk minimization (ERM) principle
+states that we can minimize the empirical risk. That is to say, we approximate the
+expectation in <a class="reference internal" href="#equation-eq-true-risk">(1)</a> by the empirical average of the loss incurred by <span class="math notranslate nohighlight">\(h\)</span> on the training data
+<span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
+<p>More concretely, we state it as follows.</p>
+<div class="proof definition admonition" id="def-empirical-risk">
+<p class="admonition-title"><span class="caption-number">Definition 4 </span> (Empirical Risk)</p>
+<section class="definition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathcal{S} = \left \{ \left(\mathbf{x}^{(n)}, y^{(n)} \right) \right \}_{n=1}^N\)</span>
+be the dataset with <span class="math notranslate nohighlight">\(N\)</span> samples and <span class="math notranslate nohighlight">\(D\)</span> predictors where each data point in <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>
+follows an <span class="math notranslate nohighlight">\(\iid\)</span> joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
+then the empirical risk of a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is the average of the loss
+incurred by <span class="math notranslate nohighlight">\(h\)</span> on the training data.</p>
+<div class="math notranslate nohighlight" id="equation-eq-empirical-risk">
+<span class="eqno">(4)<a class="headerlink" href="#equation-eq-empirical-risk" title="Permalink to this equation">#</a></span>\[
+\hat{\mathcal{R}}_{\mathcal{S}} \left\{\mathcal{L}((\mathbf{x}, y), h)\right\} := \frac{1}{N} \sum_{n=1}^N \mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)
+\]</div>
+<p>To ease notation, we use <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> if <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is clear from the context.</p>
+</section>
+</div><div class="proof example admonition" id="example-empirical-risk">
+<p class="admonition-title"><span class="caption-number">Example 2 </span> (Empirical Risk)</p>
+<section class="example-content" id="proof-content">
+<p>Let’s cite the example from <span id="id1">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id15" title="Hal Daume III. A course in machine learning. 2017.">III, 2017</a>]</span>.</p>
+<p>We write <span class="math notranslate nohighlight">\(\mathbb{E}_{(x, y) \sim \mathcal{D}}[\mathcal{L}(y, f(\boldsymbol{x}))]\)</span> for the expected loss. Expectation means “average.” This is saying “if you drew a bunch of <span class="math notranslate nohighlight">\((x, y)\)</span> pairs independently at random from the underlying distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, what would your average loss be?
+More formally, if <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is a discrete probability distribution, then this expectation can be expanded as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{E}_{(\boldsymbol{x}, y) \sim \mathcal{D}}[\mathcal{L}(y, f(\boldsymbol{x}))]=\sum_{(x, y) \in \mathcal{D}}[\mathcal{D}(\boldsymbol{x}, y) \mathcal{L}(y, f(\boldsymbol{x}))]
+\]</div>
+<p>This is exactly the weighted average loss over the all <span class="math notranslate nohighlight">\((x, y)\)</span> pairs in <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, weighted by their probability, <span class="math notranslate nohighlight">\(\mathcal{D}(\boldsymbol{x}, y)\)</span>. If <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is a finite discrete distribution, for instance defined by a finite data set <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\left(x_1, y_1\right), \ldots,\left(x_N, y_N\right)\right.\)</span> that puts equal weight on each example (probability <span class="math notranslate nohighlight">\(1 / N\)</span> ), then we get:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\mathbb{E}_{(x, y) \sim \mathcal{D}}[\mathcal{L}(y, f(x))] &amp; =\sum_{(x, y) \in \mathcal{D}}[\mathcal{D}(x, y) \mathcal{L}(y, f(x))] &amp; \text{definition of expectation} \\
+&amp; =\sum_{n=1}^N\left[\mathcal{D}\left(x_n, y_n\right) \mathcal{L}\left(y_n, f\left(x_n\right)\right)\right] &amp; \mathcal{D}_{\text{train}} \text{is discrete and finite} \\
+&amp; =\sum_{n=1}^N\left[\frac{1}{N} \mathcal{L}\left(y_n, f\left(x_n\right)\right)\right] &amp; \text{definition of } \mathcal{D}_{\text{train}} \\
+&amp; =\frac{1}{N} \sum_{n=1}^N\left[\mathcal{L}\left(y_n, f\left(x_n\right)\right)\right] &amp; \text{rearranging terms}
+\end{aligned}
+\end{split}\]</div>
+<p>This is exactly the average loss on that dataset.</p>
+<p>The most important thing to remember is that there are two equivalent ways to think about expections: (1) The expectation of some function <span class="math notranslate nohighlight">\(g\)</span> is the weighted average value of <span class="math notranslate nohighlight">\(g\)</span>, where the weights are given by the underlying probability distribution. (2) The expectation of some function <span class="math notranslate nohighlight">\(g\)</span> is your best guess of the value of <span class="math notranslate nohighlight">\(g\)</span> if you were to draw a single item from the underlying probability distribution.</p>
+</section>
+</div><div class="proof theorem admonition" id="theorem-empirical-risk-minimization">
+<p class="admonition-title"><span class="caption-number">Theorem 2 </span> (Empirical Risk Minimization)</p>
+<section class="theorem-content" id="proof-content">
+<p>The empirical risk minimization (ERM) principle states that we can minimize the empirical risk
+as follows:</p>
+<div class="math notranslate nohighlight" id="equation-eq-empirical-risk-minimization">
+<span class="eqno">(5)<a class="headerlink" href="#equation-eq-empirical-risk-minimization" title="Permalink to this equation">#</a></span>\[\begin{split}
+\begin{aligned}
+\hat{h} \in \mathcal{H} &amp;= \underset{h \in \mathcal{H}}{\mathrm{argmin}} \hat{\mathcal{R}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} \\
+&amp;= \underset{h \in \mathcal{H}}{\mathrm{argmin}} \frac{1}{N} \sum_{n=1}^N \mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)
+\end{aligned}
+\end{split}\]</div>
+<p>We see that <span class="math notranslate nohighlight">\(\hat{h}\)</span> may not be unique, so it can mean any hypothesis that minimizes the empirical risk.</p>
+</section>
+</div><div class="proof remark admonition" id="rem-risk-vs-loss">
+<p class="admonition-title"><span class="caption-number">Remark 3 </span> (Risk vs Loss)</p>
+<section class="remark-content" id="proof-content">
+<p>Note that the empirical risk <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> is the expectation of the loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>.
+They are not the same thing!</p>
+<p>Sometimes we also call the risk the cost function or the objective function.</p>
+</section>
+</div><div class="proof remark admonition" id="rem-erm-trial-and-error">
+<p class="admonition-title"><span class="caption-number">Remark 4 </span> (ERM is “learning from data using trial and error”)</p>
+<section class="remark-content" id="proof-content">
+<p>As we can see now, there is no closed-form solution to the empirical risk minimization problem and therefore
+we may try to find a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> by trial and error. And a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> is one that has
+the least empirical risk among all hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
+</section>
+</div></section>
+<section id="empirical-risk-minimization-approximates-true-risk-minimization">
+<span id="emprical-risk-approximates-true-risk"></span><h2>Empirical Risk Minimization approximates True Risk Minimization<a class="headerlink" href="#empirical-risk-minimization-approximates-true-risk-minimization" title="Permalink to this heading">#</a></h2>
+<div class="proof theorem admonition" id="theorem-erm-approximates-trm">
+<p class="admonition-title"><span class="caption-number">Theorem 3 </span> (Empirical Risk Minimization approximates True Risk Minimization when <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>)</p>
+<section class="theorem-content" id="proof-content">
+<p>If we have a large enough dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> with <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>,
+then the empirical risk minimization (ERM) principle approximates the true risk minimization (TRM) principle.</p>
+<div class="math notranslate nohighlight" id="equation-eq-empirical-risk-approximates-true-risk">
+<span class="eqno">(6)<a class="headerlink" href="#equation-eq-empirical-risk-approximates-true-risk" title="Permalink to this equation">#</a></span>\[
+\mathcal{R}_{\mathcal{D}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} \approx \hat{\mathcal{R}}\left\{\mathcal{L}((\mathbf{x}^{(n)}, y^{(n)}), h)\right\} \quad \text{as} \quad N \rightarrow \infty
+\]</div>
+<p>This is just a corollary of The Convergence Theorem of The Law of Large Numbers
+(<code class="xref prf prf-ref docutils literal notranslate"><span class="pre">theorem-weak-law-of-large-numbers</span></code>). Indeed, we can treat
+each <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> as a <span class="math notranslate nohighlight">\(\iid\)</span> random variable such that
+<span class="math notranslate nohighlight">\(\mathcal{L}^{(n)}((\mathbf{x}^{(n)}, y^{(n)}), h)\)</span> is the loss incurred by <span class="math notranslate nohighlight">\(h\)</span> on the <span class="math notranslate nohighlight">\(n\)</span>-th sample.
+Then <span class="math notranslate nohighlight">\(\mathcal{L}^{(1)}, \mathcal{L}^{(2)}, \ldots, \mathcal{L}^{(N)}\)</span> are <span class="math notranslate nohighlight">\(\iid\)</span> random variables,
+then the sample mean</p>
+<div class="math notranslate nohighlight">
+\[
+\hat{\mathcal{R}}\left\{\mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)\right\} = \frac{1}{N} \sum_{n=1}^N \mathcal{L}^{(n)}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)
+\]</div>
+<p>converges to the true risk expectation <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\}=\mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right]\)</span> as <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>.</p>
+</section>
+</div><p>Therefore, ERM is motivated by the law of large numbers, and in turn, the law of large numbers is motivated by
+the samples being <span class="math notranslate nohighlight">\(\iid\)</span> <span id="id2">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id11" title="Alexander Jung. Machine learning: The basics. Springer Nature Singapore, 2023.">Jung, 2023</a>]</span>.</p>
+<p>Note that the choice of the loss function <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> is crucial to the performance of the hypothesis <span class="math notranslate nohighlight">\(h\)</span>.
+And for different tasks such as Linear Regression, Logistic Regression, and other learning algorithms,
+we can design different loss functions, and in turn different empirical risk minimization formulations.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./machine_learning/fundamentals/empirical_risk_minimization"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Empirical Risk Minimization</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="bayes_optimal_classifier.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Bayes Optimal Classifier</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#approximating-true-risk-with-empirical-risk">
+   Approximating True Risk with Empirical Risk
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#empirical-risk-minimization-approximates-true-risk-minimization">
+   Empirical Risk Minimization approximates True Risk Minimization
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
