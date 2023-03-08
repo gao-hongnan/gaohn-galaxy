@@ -795,10 +795,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -887,7 +887,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 has-children"><a class="reference internal" href="../tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../tf_idf/concept.html">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../tf_idf/implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../tf_idf/application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1084,8 +1083,30 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cosine-distance">
+   Cosine Distance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#properties">
    Properties
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretation-of-angles">
+     Interpretation of Angles
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#relationship-to-euclidean-distance">
+     Relationship to Euclidean Distance
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizations">
+   Visualizations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1106,8 +1127,8 @@ title="Print to PDF"
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#further-readings">
-   Further Readings
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>
@@ -1126,11 +1147,17 @@ title="Print to PDF"
 <div class="proof definition admonition" id="cosine-similarity-definition">
 <p class="admonition-title"><span class="caption-number">Definition 149 </span> (Cosine Similarity)</p>
 <section class="definition-content" id="proof-content">
-<p>The cosine of two non-zero vectors can be derived by using the Euclidean dot product formula:</p>
+<p>Given two vectors <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{u}=\begin{bmatrix}u_{1} \\ u_{2} \\ \vdots \\ u_{n}\end{bmatrix}, \quad \mathbf{v}=\begin{bmatrix}v_{1} \\ v_{2} \\ \vdots \\ v_{n}\end{bmatrix}
+\end{split}\]</div>
+<p>The <strong>cosine</strong> of two non-zero <strong>vectors</strong> can be derived by using the <a class="reference external" href="https://en.wikipedia.org/wiki/Dot_product#:~:text=Algebraically%2C%20the%20dot%20product%20is,equivalent%20when%20using%20Cartesian%20coordinates."><strong>Euclidean dot product</strong></a> formula:</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbf{u} \cdot \mathbf{v}=\|\mathbf{u}\|\|\mathbf{v}\| \cos \theta
 \]</div>
+<p>where <span class="math notranslate nohighlight">\(\theta\)</span> is the angle between the two vectors.</p>
 <p>Given two <span class="math notranslate nohighlight">\(n\)</span>-dimensional vectors of attributes, <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>, the <span class="math notranslate nohighlight">\(\operatorname{cosine}\)</span> similarity, <span class="math notranslate nohighlight">\(\cos (\theta)\)</span>, is represented using a dot product and magnitude as</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1139,19 +1166,35 @@ title="Print to PDF"
 <p>where <span class="math notranslate nohighlight">\(u_i\)</span> and <span class="math notranslate nohighlight">\(v_i\)</span> are the <span class="math notranslate nohighlight">\(i\)</span> th components of vectors <span class="math notranslate nohighlight">\(\mathbf{u}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span>, respectively.</p>
 </section>
 </div></section>
-<section id="properties">
-<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h2>
-<p>Following extracted from Wikipedia:</p>
-<p>The resulting similarity ranges from -1 meaning exactly opposite, to 1 meaning exactly the same, with 0 indicating orthogonality or decorrelation, while inbetween values indicate intermediate similarity or dissimilarity.</p>
-<p>For text matching, the attribute vectors <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are usually the term frequency vectors of the documents. Cosine similarity can be seen as a method of normalizing document length during comparison. In the case of information retrieval, the cosine similarity of two documents will range from <span class="math notranslate nohighlight">\(0 \rightarrow 1\)</span>, since the term frequencies cannot be negative. This remains true when using TF-IDF weights. The angle between two term frequency vectors cannot be greater than <span class="math notranslate nohighlight">\(90^{\circ}\)</span>.</p>
-<p>If the attribute vectors are normalized by subtracting the vector means (e.g., <span class="math notranslate nohighlight">\(u-\bar{u}\)</span> ), the measure is called the centered cosine similarity and is equivalent to the Pearson correlation coefficient. For an example of centering,
-if <span class="math notranslate nohighlight">\(u=\left[u_1, u_2\right]^T\)</span>, then <span class="math notranslate nohighlight">\(\bar{u}=\left[\frac{\left(u_1+u_2\right)}{2}, \frac{\left(u_1+u_2\right)}{2}\right]^T\)</span>, so <span class="math notranslate nohighlight">\(u-\bar{u}=\left[\frac{\left(u_1-u_2\right)}{2}, \frac{\left(-u_1+u_2\right)}{2}\right]^T\)</span>.</p>
+<section id="cosine-distance">
+<h2>Cosine Distance<a class="headerlink" href="#cosine-distance" title="Permalink to this heading">#</a></h2>
 <p>The term cosine distance is commonly used for the complement of cosine similarity in positive space, that is</p>
 <div class="math notranslate nohighlight">
 \[
 \text { cosine distance }=D_C(u, v):=1-S_C(u, v) .
 \]</div>
 <p>It is important to note that the cosine distance is not a true distance metric as it does not exhibit the triangle inequality property-or, more formally, the Schwarz inequality-and it violates the coincidence axiom. One way to see this is to note that the cosine distance is half of the squared Euclidean distance of the <span class="math notranslate nohighlight">\(L_2\)</span> normalization of the vectors, and squared Euclidean distance does not satisfy the triangle inequality either. To repair the triangle inequality property while maintaining the same ordering, it is necessary to convert to angular distance or Euclidean distance. Alternatively, the triangular inequality that does work for angular distances can be expressed directly in terms of the cosines; see below.</p>
+</section>
+<section id="properties">
+<h2>Properties<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h2>
+<section id="interpretation-of-angles">
+<h3>Interpretation of Angles<a class="headerlink" href="#interpretation-of-angles" title="Permalink to this heading">#</a></h3>
+<p>The following properties are adapted from <a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">Wikipedia: Cosine Similarity</a>.</p>
+<p>The resulting similarity ranges from -1 meaning exactly opposite, to 1 meaning exactly the same, with 0 indicating orthogonality or decorrelation, while inbetween values indicate intermediate similarity or dissimilarity.</p>
+<p>To interpet the cosine similarity, we have the follows:</p>
+<ul class="simple">
+<li><p>If the angle between the two vectors is <span class="math notranslate nohighlight">\(0^{\circ}\)</span>, then the cosine similarity is <span class="math notranslate nohighlight">\(1\)</span>. This means that the two vectors are identical.</p></li>
+<li><p>If the angle between the two vectors is <span class="math notranslate nohighlight">\(90^{\circ}\)</span>, then the cosine similarity is <span class="math notranslate nohighlight">\(0\)</span>. This means that the two vectors are orthogonal.</p></li>
+<li><p>If the angle between the two vectors is <span class="math notranslate nohighlight">\(180^{\circ}\)</span>, then the cosine similarity is <span class="math notranslate nohighlight">\(-1\)</span>. This means that the two vectors are exactly opposite.</p></li>
+<li><p>If the angle between the two vectors is anywhere between <span class="math notranslate nohighlight">\(0^{\circ}\)</span> and <span class="math notranslate nohighlight">\(90^{\circ}\)</span>, then the cosine similarity is positive. This means that the two vectors are similar to the extent of the angle between them.</p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>For text matching</strong>, the attribute vectors <span class="math notranslate nohighlight">\(u\)</span> and <span class="math notranslate nohighlight">\(v\)</span> are usually the term frequency vectors of the documents. Cosine similarity can be seen as a method of normalizing document length during comparison. In the case of information retrieval, the cosine similarity of two documents will range from <span class="math notranslate nohighlight">\(0 \rightarrow 1\)</span>, since the term frequencies cannot be negative. This remains true when using TF-IDF weights. The angle between two term frequency vectors cannot be greater than <span class="math notranslate nohighlight">\(90^{\circ}\)</span>.</p>
+<p>If the attribute vectors are normalized by subtracting the vector means (e.g., <span class="math notranslate nohighlight">\(u-\bar{u}\)</span> ), the measure is called the centered cosine similarity and is equivalent to the Pearson correlation coefficient. For an example of centering,
+if <span class="math notranslate nohighlight">\(u=\left[u_1, u_2\right]^T\)</span>, then <span class="math notranslate nohighlight">\(\bar{u}=\left[\frac{\left(u_1+u_2\right)}{2}, \frac{\left(u_1+u_2\right)}{2}\right]^T\)</span>, so <span class="math notranslate nohighlight">\(u-\bar{u}=\left[\frac{\left(u_1-u_2\right)}{2}, \frac{\left(-u_1+u_2\right)}{2}\right]^T\)</span>.</p>
+</section>
+<section id="relationship-to-euclidean-distance">
+<h3>Relationship to Euclidean Distance<a class="headerlink" href="#relationship-to-euclidean-distance" title="Permalink to this heading">#</a></h3>
 <p>The most noteworthy property of cosine similarity is that it reflects a relative, rather than absolute, comparison of the individual vector dimensions. For any constant <span class="math notranslate nohighlight">\(a\)</span> and vector <span class="math notranslate nohighlight">\(V\)</span>, the vectors <span class="math notranslate nohighlight">\(V\)</span> and <span class="math notranslate nohighlight">\(a V\)</span> are maximally similar. The measure is thus most appropriate for data where frequency is more important than absolute values; notably, term frequency in documents. However more recent metrics with a grounding in information theory, such as JensenShannon, SED, and triangular divergence have been shown to have improved semantics in at least some contexts.</p>
 <p>Cosine similarity is related to Euclidean distance as follows. Denote Euclidean distance by the usual <span class="math notranslate nohighlight">\(\|A-B\|\)</span>, and observe that</p>
 <div class="math notranslate nohighlight">
@@ -1169,7 +1212,10 @@ if <span class="math notranslate nohighlight">\(u=\left[u_1, u_2\right]^T\)</spa
 D_C(A, B)=\frac{\|A-B\|^2}{2} \quad \text { when } \quad\|A\|^2=\|B\|^2=1 .
 \]</div>
 <p>The Euclidean distance is called the chord distance (because it is the length of the chord on the unit circle) and it is the Euclidean distance between the vectors which were normalized to unit sum of squared values within them.</p>
-<p>Null distribution: For data which can be negative as well as positive, the null distribution for cosine similarity is the distribution of the dot product of two independent random unit vectors. This distribution has a mean of zero and a variance of <span class="math notranslate nohighlight">\(1 / n\)</span> (where <span class="math notranslate nohighlight">\(n\)</span> is the number of dimensions), and although the distribution is bounded between <span class="math notranslate nohighlight">\(-1\)</span> and <span class="math notranslate nohighlight">\(+1\)</span>, as <span class="math notranslate nohighlight">\(n\)</span> grows large the distribution is increasingly well-approximated by the normal distribution. Other types of data such as bitstreams, which only take the values 0 or 1 , the null distribution takes a different form and may have a nonzero mean.</p>
+</section>
+</section>
+<section id="visualizations">
+<h2>Visualizations<a class="headerlink" href="#visualizations" title="Permalink to this heading">#</a></h2>
 <p><strong>Consider plotting out below:</strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1186,12 +1232,12 @@ D_C(A, B)=\frac{\|A-B\|^2}{2} \quad \text { when } \quad\|A\|^2=\|B\|^2=1 .
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
 <span class="n">cos_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cos_sim</span><span class="p">)</span>  <span class="c1"># Output: 1.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The two vectors are parallel: </span><span class="si">{</span><span class="n">cos_sim</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">The two vectors are parallel: <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1.00</span>.
 </pre>
 </div></div>
 </div>
@@ -1200,13 +1246,13 @@ D_C(A, B)=\frac{\|A-B\|^2}{2} \quad \text { when } \quad\|A\|^2=\|B\|^2=1 .
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">])</span>
-<span class="n">cos_sim</span> <span class="o">=</span>  <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cos_sim</span><span class="p">)</span>  <span class="c1"># Output: -1.0</span>
+<span class="n">cos_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The two vectors are parallel but point in opposite directions: </span><span class="si">{</span><span class="n">cos_sim</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-1.0</span>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">The two vectors are parallel but point in opposite directions: <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-1.00</span>.
 </pre>
 </div></div>
 </div>
@@ -1216,12 +1262,12 @@ D_C(A, B)=\frac{\|A-B\|^2}{2} \quad \text { when } \quad\|A\|^2=\|B\|^2=1 .
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
 <span class="n">cos_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cos_sim</span><span class="p">)</span>  <span class="c1"># Output: 0.9746318461970762</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The two vectors are not parallel but similar: </span><span class="si">{</span><span class="n">cos_sim</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.9827076298239907</span>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">The two vectors are not parallel but similar: <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.98</span>.
 </pre>
 </div></div>
 </div>
@@ -1231,12 +1277,12 @@ D_C(A, B)=\frac{\|A-B\|^2}{2} \quad \text { when } \quad\|A\|^2=\|B\|^2=1 .
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
 <span class="n">cos_sim</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">cosine</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">cos_sim</span><span class="p">)</span>  <span class="c1"># Output: 0.0</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The two vectors are orthogonal: </span><span class="si">{</span><span class="n">cos_sim</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.0</span>
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">The two vectors are orthogonal: <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.00</span>.
 </pre>
 </div></div>
 </div>
@@ -1275,16 +1321,31 @@ especially if there exists large values in the vector.</p>
 \end{aligned}
 \end{split}\]</div>
 <p>So, long vector means a vector with large magnitude.</p>
-<p>Consider the word that is a frequent word, such as <code class="docutils literal notranslate"><span class="pre">good</span></code>, this word co-occurs with other words often,
-and also appear in many documents, and hence it has many large values in the vector. Therefore, the word vector for <code class="docutils literal notranslate"><span class="pre">good</span></code> will be dense, and have large values (large frequency).</p>
+<p>Consider the word that is a frequent word, such as <code class="docutils literal notranslate"><span class="pre">the</span></code>, this word co-occurs with other words often,
+and also appear in many documents, and hence it has many large values in the vector. Therefore, the word vector for <code class="docutils literal notranslate"><span class="pre">the</span></code> will be dense, and have large values (large frequency).</p>
 <p>We do not want this property since we want to know how similar two words (vectors) are, regardless of the frequency of the words.</p>
 <p>Thus, if we normalize the dot product by the magnitude of the vectors, we can get a measure of similarity that is independent of the magnitude of the vectors.</p>
+<p>Let’s define 3 words:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">a</span></code>: represents the word “cat”;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">b</span></code>: represents the word “the”;</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">c</span></code>: represents the word “he”.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span> <span class="c1"># word = cat</span>
 <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3000</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span> <span class="c1"># word = the</span>
 <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">6000</span><span class="p">])</span> <span class="c1"># word = he</span>
-<span class="n">dot_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Each vector represents a 3-dimensional vector where each dimensional corresponds to the frequency of the word across <span class="math notranslate nohighlight">\(3\)</span> documents, <code class="docutils literal notranslate"><span class="pre">doc1</span></code>, <code class="docutils literal notranslate"><span class="pre">doc2</span></code>, and <code class="docutils literal notranslate"><span class="pre">doc3</span></code>.</p>
+<p>We see that the word <code class="docutils literal notranslate"><span class="pre">the</span></code> and <code class="docutils literal notranslate"><span class="pre">he</span></code> is <strong>long</strong> because they have large magnitude, and the word <code class="docutils literal notranslate"><span class="pre">cat</span></code> is <strong>short</strong> because it has small magnitude.</p>
+<p>Let’s compute the dot product between each pair.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dot_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
 <span class="n">dot_ac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="n">dot_bc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">dot_ab</span><span class="p">)</span>  <span class="c1"># Output: 26000000</span>
@@ -1334,14 +1395,50 @@ regardless of the magnitude of the vectors.</p>
 </section>
 <section id="why-can-t-we-use-the-euclidean-distance-as-a-similarity-measure">
 <h3>Why can’t we use the Euclidean distance as a similarity measure?<a class="headerlink" href="#why-can-t-we-use-the-euclidean-distance-as-a-similarity-measure" title="Permalink to this heading">#</a></h3>
-<p><strong>SEE my handwritten notes</strong>.</p>
+<p>First the Euclidean distance between two vectors
+<span class="math notranslate nohighlight">\(\mathbf{u}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{v}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\|\mathbf{u}-\mathbf{v}\|&amp;=\sqrt{\left(\mathbf{u}-\mathbf{v}\right) \cdot \left(\mathbf{u}-\mathbf{v}\right)} \\
+&amp;=\sqrt{\sum_{i=1}^n \left(u_i-v_i\right)^2}
+\end{aligned}
+\end{split}\]</div>
+<p>Let’s use the same example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">300</span><span class="p">])</span> <span class="c1"># word = cat</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3000</span><span class="p">,</span><span class="mi">4000</span><span class="p">,</span><span class="mi">5000</span><span class="p">])</span> <span class="c1"># word = the</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2500</span><span class="p">,</span> <span class="mi">4000</span><span class="p">,</span> <span class="mi">6000</span><span class="p">])</span> <span class="c1"># word = he</span>
+
+<span class="n">euclidean_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span>
+<span class="n">euclidean_ac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">a</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span>
+<span class="n">euclidean_bc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">b</span> <span class="o">-</span> <span class="n">c</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">euclidean_ab</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">euclidean_ac</span><span class="p">)</span>  
+<span class="nb">print</span><span class="p">(</span><span class="n">euclidean_bc</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">6703.730304837748</span>
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">7258.787777583802</span>
+</pre>
+</div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1118.033988749895</span>
+</pre>
+</div></div>
+</div>
+<p>It shows that the word <code class="docutils literal notranslate"><span class="pre">cat</span></code> is very dissimilar to <code class="docutils literal notranslate"><span class="pre">the</span></code> and <code class="docutils literal notranslate"><span class="pre">he</span></code> when compared to the word <code class="docutils literal notranslate"><span class="pre">the</span></code> and <code class="docutils literal notranslate"><span class="pre">he</span></code>, this is because the Euclidean distance is large between <code class="docutils literal notranslate"><span class="pre">cat</span></code> and <code class="docutils literal notranslate"><span class="pre">the</span></code> and <code class="docutils literal notranslate"><span class="pre">he</span></code>, and small between <code class="docutils literal notranslate"><span class="pre">the</span></code> and <code class="docutils literal notranslate"><span class="pre">he</span></code>.</p>
+<p>Once again, the magnitude of the vectors is a problem, as when a vector is large in magnitude, the Euclidean distance is naturally dominated by the magnitude of the vector.</p>
 </section>
 </section>
-<section id="further-readings">
-<h2>Further Readings<a class="headerlink" href="#further-readings" title="Permalink to this heading">#</a></h2>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">https://en.wikipedia.org/wiki/Cosine_similarity</a></p></li>
-<li><p>nlp bible</p></li>
+<li><p>Wikipedia Contributors. “Cosine Similarity.” Wikipedia. Wikimedia Foundation, February 26, 2023. <a class="reference external" href="https://en.wikipedia.org/wiki/Cosine_similarity">https://en.wikipedia.org/wiki/Cosine_similarity</a>.</p></li>
+<li><p>Jurafsky, Dan, and James H. Martin. “Chapter 6.4. Cosine for Measuring Similarity.” In Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition. Pearson, 2022.</p></li>
 </ul>
 </section>
 </section>
@@ -1359,7 +1456,7 @@ regardless of the magnitude of the vectors.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./deep_learning\natural_language_processing\vector_semantics_and_embeddings\cosine_similarity"
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity"
         },
         predefinedOutput: true
     }
@@ -1410,8 +1507,30 @@ regardless of the magnitude of the vectors.</p>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#cosine-distance">
+   Cosine Distance
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#properties">
    Properties
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#interpretation-of-angles">
+     Interpretation of Angles
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#relationship-to-euclidean-distance">
+     Relationship to Euclidean Distance
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#visualizations">
+   Visualizations
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -1432,8 +1551,8 @@ regardless of the magnitude of the vectors.</p>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#further-readings">
-   Further Readings
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>

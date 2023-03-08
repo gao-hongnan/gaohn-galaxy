@@ -795,10 +795,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -887,7 +887,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1998,9 +1997,9 @@ as it does not make sense to have 1 cluster.</p>
 </pre>
 </div><div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Using Seed Number <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1992</span>
 </pre>
-</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\numpy\core\fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
+</div><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/core/fromnumeric.py:3432: RuntimeWarning: Mean of empty slice.
   return _methods._mean(a, axis=axis, dtype=dtype,
-C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\numpy\core\_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
+/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/numpy/core/_methods.py:190: RuntimeWarning: invalid value encountered in double_scalars
   ret = ret.dtype.type(ret / rcount)
 </pre></div>
 </div>
@@ -2093,6 +2092,17 @@ program but it really must depend on the use case.</p>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-03-08 08:55:52.256362: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2023-03-08 08:55:53.297007: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer.so.7&#39;; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory
+2023-03-08 08:55:53.297130: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library &#39;libnvinfer_plugin.so.7&#39;; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory
+2023-03-08 08:55:53.297140: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+</pre></div>
+</div>
+</div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -2109,6 +2119,10 @@ program but it really must depend on the use case.</p>
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>    8192/11490434 [..............................] - ETA: 0s
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
+ 4243456/11490434 [==========&gt;...................] - ETA: 0s
 </pre></div>
 </div>
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>
@@ -2825,7 +2839,7 @@ will tells us roughly the loss per sample.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\clustering\kmeans"
+            path: "./machine_learning/clustering/kmeans"
         },
         predefinedOutput: true
     }

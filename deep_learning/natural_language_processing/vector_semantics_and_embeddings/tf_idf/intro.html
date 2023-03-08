@@ -793,10 +793,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -885,7 +885,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 current active has-children"><a class="current reference internal" href="#">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="concept.html">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1055,6 +1054,11 @@ title="Print to PDF"
    Motivation
   </a>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -1074,7 +1078,7 @@ of each word in a document or corpus of documents.</p>
 <p>Consider the example in <a class="reference internal" href="../words_and_vectors/concept.html#words-as-vectors-document-dimensions"><span class="std std-ref">the section on representing words as vectors using document dimension</span></a>.
 Let’s add one more vocab to the matrix, the most frequent word <strong>the</strong>, which appears many times across all documents.</p>
 <table class="table" id="term-document-table-modified">
-<caption><span class="caption-number">Table 19 </span><span class="caption-text">Number of occurrences of selected words (modified) in four Shakespeare plays.</span><a class="headerlink" href="#term-document-table-modified" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 21 </span><span class="caption-text">Number of occurrences of selected words (modified) in four Shakespeare plays.</span><a class="headerlink" href="#term-document-table-modified" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"></th>
 <th class="head"><p>As You Like It</p></th>
@@ -1125,6 +1129,12 @@ almost all documents, so it is not a good indicator of similarity.</p>
 <p>In what follows, the basic idea behind TF-IDF is to give a high weight to words that appear frequently in a document but rarely in other documents, while giving a low weight to words that are common across all documents. The weight assigned to each word is calculated based on two factors: term frequency (TF) and inverse document frequency (IDF).
 This is a solution to the aforementioned problem.</p>
 </section>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Jurafsky, Dan, and James H. Martin. “Chapter 6.5. TF-IDF: Weighting terms in the vector.” In Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition. Pearson, 2022.</p></li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -1142,7 +1152,7 @@ This is a solution to the aforementioned problem.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./deep_learning\natural_language_processing\vector_semantics_and_embeddings\tf_idf"
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf"
         },
         predefinedOutput: true
     }
@@ -1190,6 +1200,11 @@ This is a solution to the aforementioned problem.</p>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#motivation">
    Motivation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>

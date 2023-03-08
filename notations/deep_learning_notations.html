@@ -795,10 +795,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../machine_learning/generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../machine_learning/generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../machine_learning/generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../machine_learning/generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../machine_learning/generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -887,7 +887,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 has-children"><a class="reference internal" href="../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1068,24 +1067,21 @@ title="Print to PDF"
               
   <section class="tex2jax_ignore mathjax_ignore" id="deep-learning-notations">
 <h1>Deep Learning Notations<a class="headerlink" href="#deep-learning-notations" title="Permalink to this heading">#</a></h1>
-<p>We largely follow the <a class="reference external" href="https://link.springer.com/book/10.1007/978-981-16-8193-6">Machine Learning: The Basics</a>
-book in terms of notations.</p>
 <section id="nlp-notations">
 <h2>NLP Notations<a class="headerlink" href="#nlp-notations" title="Permalink to this heading">#</a></h2>
 <p>Given a dataframe of five rows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span> <span class="n">This</span> <span class="ow">is</span> <span class="n">Foo</span><span class="p">,</span> <span class="n">how</span> <span class="n">can</span> <span class="n">I</span> <span class="n">help</span> <span class="n">you</span>
-<span class="mf">2.</span> <span class="n">It</span> <span class="n">might</span> <span class="n">rain</span> <span class="n">today</span>
-<span class="mf">3.</span> <span class="n">I</span> <span class="n">love</span> <span class="n">football</span>
-<span class="mf">4.</span> <span class="n">Crazy</span><span class="p">,</span> <span class="n">Stupid</span> <span class="o">&amp;</span> <span class="n">Love</span>
-<span class="mf">5.</span> <span class="n">I</span> <span class="n">shot</span> <span class="n">the</span> <span class="n">sheriff</span>
+<div class="highlight-markdown notranslate"><div class="highlight"><pre><span></span><span class="k">1.</span> This is Foo, how can I help you
+<span class="k">2.</span> It might rain today
+<span class="k">3.</span> I love football
+<span class="k">4.</span> Crazy, Stupid &amp; Love
+<span class="k">5.</span> I shot the sheriff
 </pre></div>
 </div>
-<p><a class="reference external" href="https://stackoverflow.com/questions/72550835/corpus-vs-vocabulary-vs-document-in-nlp">https://stackoverflow.com/questions/72550835/corpus-vs-vocabulary-vs-document-in-nlp</a>
-We will use this table to explain some terminologies below.</p>
+<p>We will use this table to explain some terminologies below.</p>
+<p><a class="reference external" href="https://stackoverflow.com/questions/72550835/corpus-vs-vocabulary-vs-document-in-nlp">What is the difference between document, corpus, and vocabulary?</a>.</p>
 <p>In NLP, document concept can be a bit vague: a document is a unit, so it can correspond to different text objects, such as entire documents, sentences, passages… In your example, “This is Foo, how can I help you” is a document. “It might rain today” is another document…</p>
 <p>A corpus is a collection of documents. In your example, the corpus is composed by 5 documents.</p>
-<p>The vocabulary is the list of all the words contained in the corpus, therefore all the words contained in all the documents. Your vocabulary is
-<code class="docutils literal notranslate"><span class="pre">[&amp;,</span> <span class="pre">can,</span> <span class="pre">crazy,</span> <span class="pre">foo,</span> <span class="pre">football,</span> <span class="pre">help,</span> <span class="pre">how,</span> <span class="pre">i,</span> <span class="pre">is,</span> <span class="pre">it,</span> <span class="pre">love,</span> <span class="pre">might,</span> <span class="pre">rain,</span> <span class="pre">sheriff,</span> <span class="pre">shot,</span> <span class="pre">stupid,</span> <span class="pre">the,</span> <span class="pre">this,</span> <span class="pre">today,</span> <span class="pre">you]</span></code>.</p>
+<p>The vocabulary is the list of all the words contained in the corpus, therefore all the words contained in all the documents. Your vocabulary is <code class="docutils literal notranslate"><span class="pre">[&amp;,</span> <span class="pre">can,</span> <span class="pre">crazy,</span> <span class="pre">foo,</span> <span class="pre">football,</span> <span class="pre">help,</span> <span class="pre">how,</span> <span class="pre">i,</span> <span class="pre">is,</span> <span class="pre">it,</span> <span class="pre">love,</span> <span class="pre">might,</span> <span class="pre">rain,</span> <span class="pre">sheriff,</span> <span class="pre">shot,</span> <span class="pre">stupid,</span> <span class="pre">the,</span> <span class="pre">this,</span> <span class="pre">today,</span> <span class="pre">you]</span></code>.</p>
 <table class="table" id="basic-nlp-terminologies">
 <caption><span class="caption-number">Table 5 </span><span class="caption-text">Basic NLP Terminologies</span><a class="headerlink" href="#basic-nlp-terminologies" title="Permalink to this table">#</a></caption>
 <thead>
@@ -1094,6 +1090,12 @@ We will use this table to explain some terminologies below.</p>
 </tr>
 </thead>
 <tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathcal{V}\)</span></p></td>
+<td><p>The set of all unique words in the corpus.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathcal{S}\)</span></p></td>
+<td><p>The set of all documents in the corpus (subjected to change).</p></td>
+</tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V\)</span></p></td>
 <td><p>The dimension of the number of vocabulary words in the corpus.</p></td>
 </tr>
@@ -1102,6 +1104,101 @@ We will use this table to explain some terminologies below.</p>
 </tr>
 </tbody>
 </table>
+<div class="full-width docutils">
+<table class="align-left table" id="transformers-and-language-models">
+<caption><span class="caption-number">Table 6 </span><span class="caption-text">Transformers and Language Models</span><a class="headerlink" href="#transformers-and-language-models" title="Permalink to this table">#</a></caption>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 25%" />
+<col style="width: 5%" />
+<col style="width: 25%" />
+<col style="width: 15%" />
+<col style="width: 15%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Notation</p></th>
+<th class="head"><p>Description</p></th>
+<th class="head"><p>Category</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>References</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Self-Supervised</p></td>
+<td><p>Self-supervised learning is a type of training in which the objective is automatically computed from the inputs of the model. That means that humans are not needed to label the data!</p></td>
+<td><p>Machine Learning Paradigm</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Transfer Learning</p></td>
+<td><p>The main idea behind transfer learning is that features learned by a model on one task can be reused as a starting point or foundation for learning features on a new task. This can lead to faster training times, better generalization to new data, and improved performance on the new task, especially when the amount of labeled data for the new task is limited.</p></td>
+<td><p>Machine Learning Paradigm</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>GPT-like (also called auto-regressive Transformer models)</p></td>
+<td><p>The dimension of the number of vocabulary words in the corpus.</p></td>
+<td><p>General</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>BERT-like (also called auto-encoding Transformer models)</p></td>
+<td><p>A collection of documents.</p></td>
+<td><p>General</p></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>BART/T5-like (also called sequence-to-sequence Transformer models)</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Encoder</p></td>
+<td><p>Encoder models have bi-directional attention. Encoder models are best suited for tasks requiring an understanding of the full sentence, such as sentence classification, named entity recognition (and more generally word classification), and extractive question answering.</p>
+<p>More or less, encoder is like a feature extractor, one that extracts <strong>representations</strong> of the input sentence. The representations are then used by the downstream task.</p>
+</td>
+<td></td>
+<td><p>One of the key is bi-directional, since it allows the model to understand the context of the word in the sentence. For example, the word bank in “I went to the <strong>bank</strong> to withdraw money”
+will have a different meaning than the word bank in “I went to the <strong>bank</strong> of the river to fish”.</p></td>
+<td><ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/course/chapter1/5?fw=pt">HuggingFace Course: Encoder Models</a></p></li>
+</ul>
+</td>
+<td><p><strong>Tasks</strong>: Sentence classification, named entity recognition, extractive question answering.</p>
+<p><strong>Models</strong>: ALBERT, BERT, DistilBERT, ELECTRA, RoBERTa, etc</p>
+</td>
+</tr>
+<tr class="row-even"><td><p>Decoder (Auto-Regressive)</p></td>
+<td><p>Decoder models have uni-directional attention. At each stage, the attention
+layer is only allowed to look at the previous tokens in the sequence.</p></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/course/chapter1/6?fw=pt">HuggingFace Course: Decoder Models</a></p></li>
+</ul>
+</td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>Encoder-Decoder (Sequence-to-Sequence)</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td><ul class="simple">
+<li><p><a class="reference external" href="https://huggingface.co/course/chapter1/7?fw=pt">HuggingFace Course: Encoder-Decoder Models</a></p></li>
+</ul>
+</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 </section>
 </section>
 

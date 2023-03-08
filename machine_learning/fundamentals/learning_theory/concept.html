@@ -795,10 +795,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../../generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -887,7 +887,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1355,7 +1354,7 @@ from the following sources:</p>
 <p>How about the number of possible target functions <span class="math notranslate nohighlight">\(f\)</span> can we have? Remember, a target function <span class="math notranslate nohighlight">\(f\)</span> is a mapping which converts an input vector <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to a label <span class="math notranslate nohighlight">\(y\)</span>. For simplicity let us assume that <span class="math notranslate nohighlight">\(f\)</span> maps <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> to a binary output <span class="math notranslate nohighlight">\(y \in\{+1,-1\}\)</span>. Since there are 8 input vectors, we can think of <span class="math notranslate nohighlight">\(f\)</span> as a 8-bit vector, e.g., <span class="math notranslate nohighlight">\(f=[-1,+1,-1,-1,-1,+1,+1,+1]\)</span>, where each entry represents the output. If we do the calculation, we can show that there are totally <span class="math notranslate nohighlight">\(2^{8}=256\)</span> possible target functions.</p>
 <p>Here is the learning problem. Can we learn <span class="math notranslate nohighlight">\(f\)</span> from <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> ? To ensure that <span class="math notranslate nohighlight">\(f\)</span> is unknown, we will not disclose what <span class="math notranslate nohighlight">\(f\)</span> is. Instead, we assume that there is a training set <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> containing 6 training samples <span class="math notranslate nohighlight">\(\left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(6)}\right\}\)</span>. Corresponding to each <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> is the label <span class="math notranslate nohighlight">\(y^{(n)}\)</span>. The relationship between <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> and <span class="math notranslate nohighlight">\(y^{(n)}\)</span> is shown in the table below. So our task is to pick a target function from the 256 possible choices.</p>
 <table class="table" id="truth-table-1">
-<caption><span class="caption-number">Table 8 </span><span class="caption-text">Truth Table for 6 samples</span><a class="headerlink" href="#truth-table-1" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 9 </span><span class="caption-text">Truth Table for 6 samples</span><a class="headerlink" href="#truth-table-1" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span></p></th>
 <th class="head"><p><span class="math notranslate nohighlight">\(y^{(n)}\)</span></p></th>
@@ -1383,7 +1382,7 @@ from the following sources:</p>
 </tbody>
 </table>
 <table class="table" id="boolean-function-truth-table">
-<caption><span class="caption-number">Table 9 </span><span class="caption-text">Function Table</span><a class="headerlink" href="#boolean-function-truth-table" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 10 </span><span class="caption-text">Function Table</span><a class="headerlink" href="#boolean-function-truth-table" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span></p></th>
 <th class="head"><p><span class="math notranslate nohighlight">\(y^{(n)}\)</span></p></th>
@@ -1466,7 +1465,7 @@ from the following sources:</p>
 we will have a <span class="math notranslate nohighlight">\(\circ\)</span> followed by a <span class="math notranslate nohighlight">\(\bullet\)</span>. So the final hypothesis function <span class="math notranslate nohighlight">\(h_S\)</span> can be one of the 4 possible choices, same number of choices of the target functions.</p>
 <p>Since we assert that <span class="math notranslate nohighlight">\(f\)</span> is unknown, by only observing the first 6 entries we will have 4 equally good hypothesis functions. They are equally good, because no matter which hypothesis function we choose, the last 2 entries will agree or disagree with the target depending on which one is the true target function. For example, on the left hand side of the table below, the true target function is <span class="math notranslate nohighlight">\(f_{1}\)</span> and so our <span class="math notranslate nohighlight">\(h_S\)</span> is correct. But if the true target function is <span class="math notranslate nohighlight">\(f_{3}\)</span>, e.g., the right hand side of the table, then our <span class="math notranslate nohighlight">\(h_S\)</span> is wrong. We can repeat the experiment by choosing another <span class="math notranslate nohighlight">\(h_S\)</span>, and we can prove that not matter which <span class="math notranslate nohighlight">\(h_S\)</span> we choose, we only have <span class="math notranslate nohighlight">\(25 \%\)</span> chance of picking the correct one. This is the same as drawing a lottery from 4 numbers. The information we learned from the training set <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> does not allow us to infer anything outside <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
 <table class="table" id="boolean-function-truth-table-f1">
-<caption><span class="caption-number">Table 10 </span><span class="caption-text">Function Table with <span class="math notranslate nohighlight">\(f_1\)</span> as True Function</span><a class="headerlink" href="#boolean-function-truth-table-f1" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 11 </span><span class="caption-text">Function Table with <span class="math notranslate nohighlight">\(f_1\)</span> as True Function</span><a class="headerlink" href="#boolean-function-truth-table-f1" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span></p></th>
 <th class="head"><p><span class="math notranslate nohighlight">\(y^{(n)}\)</span></p></th>
@@ -1545,7 +1544,7 @@ we will have a <span class="math notranslate nohighlight">\(\circ\)</span> follo
 </tbody>
 </table>
 <table class="table" id="boolean-function-truth-table-f3">
-<caption><span class="caption-number">Table 11 </span><span class="caption-text">Function Table with <span class="math notranslate nohighlight">\(f_3\)</span> as True Function</span><a class="headerlink" href="#boolean-function-truth-table-f3" title="Permalink to this table">#</a></caption>
+<caption><span class="caption-number">Table 12 </span><span class="caption-text">Function Table with <span class="math notranslate nohighlight">\(f_3\)</span> as True Function</span><a class="headerlink" href="#boolean-function-truth-table-f3" title="Permalink to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span></p></th>
 <th class="head"><p><span class="math notranslate nohighlight">\(y^{(n)}\)</span></p></th>
@@ -2652,7 +2651,7 @@ So, if we were to <em>a-priori pick</em> a guess function <span class="math notr
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\fundamentals\learning_theory"
+            path: "./machine_learning/fundamentals/learning_theory"
         },
         predefinedOutput: true
     }

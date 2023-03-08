@@ -795,10 +795,10 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
 
-<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -887,7 +887,6 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l3 current active has-children"><a class="reference internal" href="intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l4 current active"><a class="current reference internal" href="#">Concept</a></li>
 <li class="toctree-l4"><a class="reference internal" href="implementation.html">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="application.html">IMDB Recommender System</a></li>
 </ul>
 </li>
 </ul>
@@ -1204,7 +1203,7 @@ scikit-learn’s <a class="reference external" href="https://scikit-learn.org/st
 \]</div>
 <p>For our purpose, we will follow the definition in <span id="id2">[<a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html#id5" title="Dan Jurafsky and James H. Martin. Speech and language processing: An introduction to natural language processing, computational linguistics, and speech recognition. Pearson, 2022.">Jurafsky and Martin, 2022</a>]</span> and use the logarithmically scaled version of the raw count:</p>
 <div class="math notranslate nohighlight" id="equation-eq-tf-log">
-<span class="eqno">(143)<a class="headerlink" href="#equation-eq-tf-log" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(145)<a class="headerlink" href="#equation-eq-tf-log" title="Permalink to this equation">#</a></span>\[
 \operatorname{tf}_{t, d}= \log_{10}(f_{t, d} + 1)
 \]</div>
 </section>
@@ -1277,7 +1276,7 @@ too common and hence the idf weight is <span class="math notranslate nohighlight
         },
         kernelOptions: {
             name: "python3",
-            path: "./deep_learning\natural_language_processing\vector_semantics_and_embeddings\tf_idf"
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf"
         },
         predefinedOutput: true
     }
