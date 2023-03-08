@@ -148,6 +148,13 @@ const thebe_selector_output = ".output, .cell_output"
                     </li>
                 
 
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../intro.html">
                         Clustering
@@ -241,6 +248,13 @@ const thebe_selector_output = ".output, .cell_output"
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../fundamentals/intro.html">
                         Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../mixtures/intro.html">
+                        Mixture Models
                       </a>
                     </li>
                 
@@ -365,8 +379,15 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Concept</a></li>
 <li class="toctree-l3"><a class="reference internal" href="implementation.html">Implementation: K-Means (Lloyd)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="image_segmentation.html">Application: Image Compression and Segmentation</a></li>
@@ -932,7 +953,7 @@ closeness is still there.</p>
 partitioned into 3 distinct clusters.</p>
 <div class="cell tag_remove-input docutils container">
 <div class="cell_output docutils container">
-<img alt="../../../_images/56b5c97042a7fbc2443a7e568425b203f48226cd94817df1c17285b0c9615039.svg" src="../../../_images/56b5c97042a7fbc2443a7e568425b203f48226cd94817df1c17285b0c9615039.svg" /></div>
+<img alt="../../../_images/1078031b212c867a644593d75812937fbf38eba59fd6ececc788187ec9b89703.svg" src="../../../_images/1078031b212c867a644593d75812937fbf38eba59fd6ececc788187ec9b89703.svg" /></div>
 </div>
 <p>Visually, we can literally just circle out the 3 clusters. The luxury of such simplicity
 is because we are working with 2 features, i.e. <span class="math notranslate nohighlight">\(\mathbf{x} \in \mathbb{R}^{2}\)</span>.
@@ -1685,7 +1706,7 @@ initializations to get better results.</p>
 <li><p>Repeat Steps 2 and 3 until <span class="math notranslate nohighlight">\(K\)</span> centers have been chosen.</p></li>
 <li><p>Now that the initial centers have been chosen, proceed using standard <span class="math notranslate nohighlight">\(K\)</span>-means clustering.</p></li>
 </ol>
-<p>What is more surprising is that this method can be shown to guarantee that the recontruction error is never more than <span class="math notranslate nohighlight">\(\mathcal{O}(\logK)\)</span> worse than optimal
+<p>What is more surprising is that this method can be shown to guarantee that the recontruction error is never more than <span class="math notranslate nohighlight">\(\mathcal{O}(\log K)\)</span> worse than optimal
 <span id="id11">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id3" title="Kevin P. Murphy. Probabilistic Machine Learning: An introduction. MIT Press, 2022. URL: probml.ai.">Murphy, 2022</a>]</span>.</p>
 </section>
 <section id="k-medoids">
@@ -1703,6 +1724,7 @@ especially how K-Means can fail.</p>
 <li><p>Hal Daumé III. “Chapter 15.1. K-Means Clustering.” In A Course in Machine Learning, January 2017.</p></li>
 <li><p>Bishop, Christopher M. “Chapter 9.1. K-Means Clustering.” In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.</p></li>
 <li><p>James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. “Chapter 12.4.1. K-Means Clustering.” In An Introduction to Statistical Learning: With Applications in R. Boston: Springer, 2022.</p></li>
+<li><p>Hastie, Trevor, Tibshirani, Robert and Friedman, Jerome. “Chapter 14.3. Cluster Analysis.” In The Elements of Statistical Learning. New York, NY, USA: Springer New York Inc., 2001.</p></li>
 <li><p>Raschka, Sebastian. “Chapter 10.1. Grouping objects by similarity using k-means.” In Machine Learning with PyTorch and Scikit-Learn.</p></li>
 <li><p>Jung, Alexander. “Chapter 8.1. Hard Clustering with K-Means.” In Machine Learning: The Basics. Singapore: Springer Nature Singapore, 2023.</p></li>
 <li><p>Vincent, Tan. “Lecture 17a.” In MA4270 Data Modelling and Computation.</p></li>
@@ -1750,7 +1772,7 @@ they both represent all samples. The cardinality of <span class="math notranslat
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\clustering\kmeans"
+            path: "./machine_learning/clustering/kmeans"
         },
         predefinedOutput: true
     }

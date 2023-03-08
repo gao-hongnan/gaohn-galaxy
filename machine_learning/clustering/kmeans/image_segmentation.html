@@ -148,6 +148,13 @@ const thebe_selector_output = ".output, .cell_output"
                     </li>
                 
 
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="../intro.html">
                         Clustering
@@ -241,6 +248,13 @@ const thebe_selector_output = ".output, .cell_output"
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../../fundamentals/intro.html">
                         Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../mixtures/intro.html">
+                        Mixture Models
                       </a>
                     </li>
                 
@@ -365,8 +379,15 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 </ul>
 </li>
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Clustering</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">K-Means</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="concept.html">Concept</a></li>
 <li class="toctree-l3"><a class="reference internal" href="implementation.html">Implementation: K-Means (Lloyd)</a></li>
 <li class="toctree-l3 current active"><a class="current reference internal" href="#">Application: Image Compression and Segmentation</a></li>
@@ -657,8 +678,8 @@ title="Print to PDF"
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>
@@ -705,7 +726,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>D:\a\gaohn-galaxy\gaohn-galaxy
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/runner/work/gaohn-galaxy/gaohn-galaxy
 </pre></div>
 </div>
 </div>
@@ -922,7 +943,7 @@ Image dtype: uint8
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/dc407030ff6486307371a7e94537c326a81164a9f65d71b7f4aa2b7cee9be58e.svg" src="../../../_images/dc407030ff6486307371a7e94537c326a81164a9f65d71b7f4aa2b7cee9be58e.svg" /></div>
+<img alt="../../../_images/35553a8b83717d717abca46e237ba74c814c9bdbaebddd38b6f38981cf95ce5a.svg" src="../../../_images/35553a8b83717d717abca46e237ba74c814c9bdbaebddd38b6f38981cf95ce5a.svg" /></div>
 </div>
 </section>
 <section id="size-of-the-image">
@@ -1105,7 +1126,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/393a4e648a0c0471fd4d7b94b1be950969aaa120f058628883a41a4cfecb01a5.svg" src="../../../_images/393a4e648a0c0471fd4d7b94b1be950969aaa120f058628883a41a4cfecb01a5.svg" /></div>
+<img alt="../../../_images/14946c13590a0c2a5286f5a74375eb6014b45c67937ff9bac494002231030a63.svg" src="../../../_images/14946c13590a0c2a5286f5a74375eb6014b45c67937ff9bac494002231030a63.svg" /></div>
 </div>
 <p>To make the colors more distinct, we can use <code class="docutils literal notranslate"><span class="pre">skimage.color</span></code>.</p>
 <div class="cell docutils container">
@@ -1116,7 +1137,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/6729d7e77aeac627e832cb6d0bb9d765daf1cd36436c7b1a5550f23e44c626bb.svg" src="../../../_images/6729d7e77aeac627e832cb6d0bb9d765daf1cd36436c7b1a5550f23e44c626bb.svg" /></div>
+<img alt="../../../_images/fa395fa5668b946936de23e2a0a90bbb4620f2cdffa26d3d1f9644749bbf2d7d.svg" src="../../../_images/fa395fa5668b946936de23e2a0a90bbb4620f2cdffa26d3d1f9644749bbf2d7d.svg" /></div>
 </div>
 <p>We can clearly see that with <span class="math notranslate nohighlight">\(K=2\)</span> clusters, the image is dichotomized into two distinct segments. This is quite a coarse representation of the original image.</p>
 <p>Let’s run the compression technique a few more times, this time with <span class="math notranslate nohighlight">\(K=2, 3, 6\)</span> and <span class="math notranslate nohighlight">\(16\)</span> and observe the results.</p>
@@ -1164,7 +1185,9 @@ In summary, the reconstruct_image function takes a compressed image represented 
 |    Compressed size    | 137634  |
 |   Compression ratio   |  0.08   |
 +-----------------------+---------+
-+-----------------------+---------+
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----------------------+---------+
 |        Metric         |  Value  |
 +-----------------------+---------+
 |     Original size     | 1650744 |
@@ -1186,7 +1209,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/e4fe4a4ef32dc32ded097b2a92975f2530003857a307efc53fbee7ec718455eb.svg" src="../../../_images/e4fe4a4ef32dc32ded097b2a92975f2530003857a307efc53fbee7ec718455eb.svg" /></div>
+<img alt="../../../_images/275423a7ddc965e80ef48f5fdc00082d84d81e92e75293472ae11183a66bf39a.svg" src="../../../_images/275423a7ddc965e80ef48f5fdc00082d84d81e92e75293472ae11183a66bf39a.svg" /></div>
 </div>
 <p>As we can see, the quality of the compressed image will depend on the number of clusters used. In general, a larger number of clusters will result in higher image quality, but at the expense of a larger file size.</p>
 <p>We can also use our own implementation of K-Means to perform image compression, we see that the results are the same.
@@ -1216,10 +1239,10 @@ However, ours is very slow since not every operation is vectorized.</p>
 </div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Converged at iteration 23
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x1f7116787f0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4fb1b667f0&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/8e815247c9d22a0468e140654debf4c830d6a63e9d0663e96012d21de7c47562.svg" src="../../../_images/8e815247c9d22a0468e140654debf4c830d6a63e9d0663e96012d21de7c47562.svg" /></div>
+<img alt="../../../_images/b00fc953f8608225f58981b2874e619c35753efe368165d39e07108dab4e4ac2.svg" src="../../../_images/b00fc953f8608225f58981b2874e619c35753efe368165d39e07108dab4e4ac2.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1280,7 +1303,7 @@ However, ours is very slow since not every operation is vectorized.</p>
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/518d5034ee9bd77d83772b9254bc70729446fc2ccd6ac61fd69d77a91518a285.svg" src="../../../_images/518d5034ee9bd77d83772b9254bc70729446fc2ccd6ac61fd69d77a91518a285.svg" /></div>
+<img alt="../../../_images/b1990d594a0e6ab7435fb2bc16618b3b430ab0796d755b55ea7388023e9e25bf.svg" src="../../../_images/b1990d594a0e6ab7435fb2bc16618b3b430ab0796d755b55ea7388023e9e25bf.svg" /></div>
 </div>
 <p>It is important to note that while K-Means can provide significant size reductions for some images, it may not always be the best method for image compression. K-Means is a lossy compression method, meaning that the quality of the compressed image will be lower than the original image. This means that while it can provide significant size reductions, it may not always be the best method for image compression (i.e. if you are seeking for lossless compression).</p>
 <p>The quality of the compressed image will depend on the number of clusters used and the similarity of the pixels in the image. In general, a larger number of clusters will result in higher image quality, but also a larger file size. Experimentation is often necessary to find the optimal number of clusters for a given image.</p>
@@ -1302,8 +1325,8 @@ However, ours is very slow since not every operation is vectorized.</p>
 <p>In this article, we covered how we can utilize K-Means as a way to compress images through the concept of vector quantization. We further link how the images can be segmented into different color spaces as a consequence of performing the clustering algorithm.</p>
 <p>K-Means has many other applications, for example, in the context of Natural Language Processing (NLP), you can use it to <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/text/plot_document_clustering.html">cluster documents</a> as well.</p>
 </section>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Murphy, Kevin P. “Chapter 21.3. K-Means Clustering.” In Probabilistic Machine Learning: An Introduction. MIT Press, 2022.</p></li>
 <li><p>Bishop, Christopher M. “Chapter 9.1.1. Image Segmentation and Compression.” In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.</p></li>
@@ -1329,7 +1352,7 @@ However, ours is very slow since not every operation is vectorized.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\clustering\kmeans"
+            path: "./machine_learning/clustering/kmeans"
         },
         predefinedOutput: true
     }
@@ -1473,8 +1496,8 @@ However, ours is very slow since not every operation is vectorized.</p>
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#references">
-   References
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>

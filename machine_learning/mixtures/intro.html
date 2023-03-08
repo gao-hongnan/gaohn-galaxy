@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Fundamentals &#8212; Machine Learning Chronicles</title>
+    <title>Mixture Models &#8212; Machine Learning Chronicles</title>
   
   
   
@@ -61,11 +61,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/fundamentals/intro';</script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/mixtures/intro';</script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Loss" href="criterions/intro.html" />
-    <link rel="prev" title="Introduction" href="../../intro.html" />
+    <link rel="next" title="Gaussian Mixture Models" href="gmm/intro.html" />
+    <link rel="prev" title="Concept" href="../fundamentals/voronoi_region/concept.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
   </head>
@@ -139,15 +141,15 @@ const thebe_selector_output = ".output, .cell_output"
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fundamentals/intro.html">
                         Fundamentals
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../mixtures/intro.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
                         Mixture Models
                       </a>
                     </li>
@@ -216,6 +218,10 @@ const thebe_selector_output = ".output, .cell_output"
   
 
   
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
 
 </div>
   </nav>
@@ -239,15 +245,15 @@ const thebe_selector_output = ".output, .cell_output"
     </p>
     <ul id="navbar-main-elements" class="navbar-nav">
         
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../fundamentals/intro.html">
                         Fundamentals
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../mixtures/intro.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
                         Mixture Models
                       </a>
                     </li>
@@ -343,39 +349,39 @@ const thebe_selector_output = ".output, .cell_output"
         </ul>
         <p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Fundamentals</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="criterions/concept.html">Concept</a></li>
-<li class="toctree-l3"><a class="reference internal" href="criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
-<li class="toctree-l3"><a class="reference internal" href="criterions/focal_loss.html">Focal Loss</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="empirical_risk_minimization/concept.html">Concept</a></li>
-<li class="toctree-l3"><a class="reference internal" href="empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="learning_theory/concept.html">Concept</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/learning_theory/concept.html">Concept</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="decision_boundary/concept.html">Concept</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/decision_boundary/concept.html">Concept</a></li>
 </ul>
 </li>
-<li class="toctree-l2 has-children"><a class="reference internal" href="voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="voronoi_region/concept.html">Concept</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../fundamentals/voronoi_region/concept.html">Concept</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li class="toctree-l1 has-children"><a class="reference internal" href="../mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l2 has-children"><a class="reference internal" href="../mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../mixtures/gmm/concept.html">Concept</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">Mixture Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="gmm/concept.html">Concept</a></li>
 </ul>
 </li>
 </ul>
@@ -469,7 +475,7 @@ title="Source repository"
 </a>
 </a>
       
-      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fmachine_learning/fundamentals/intro.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fmachine_learning/mixtures/intro.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm dropdown-item"
    data-toggle="tooltip"
 data-placement="left"
@@ -494,7 +500,7 @@ title="Open an issue"
     <i class="fas fa-download"></i>
   </button>
   <ul class="dropdown-menu">
-      <li><a href="../../_sources/machine_learning/fundamentals/intro.md" target="_blank"
+      <li><a href="../../_sources/machine_learning/mixtures/intro.md" target="_blank"
    class="btn btn-sm dropdown-item"
    data-toggle="tooltip"
 data-placement="left"
@@ -527,7 +533,9 @@ title="Print to PDF"
       
   </ul>
 </div>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
     </div>
 </div>
             </div>
@@ -535,20 +543,71 @@ title="Print to PDF"
             
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Fundamentals</h1>
+    <h1>Mixture Models</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
 
             <article class="bd-article" role="main">
               
-  <section class="tex2jax_ignore mathjax_ignore" id="fundamentals">
-<h1>Fundamentals<a class="headerlink" href="#fundamentals" title="Permalink to this heading">#</a></h1>
-<p>All fundamentals of machine learning are covered in this section.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="mixture-models">
+<h1>Mixture Models<a class="headerlink" href="#mixture-models" title="Permalink to this heading">#</a></h1>
+<p>This section talks about mixture models.</p>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>One way to create more complex probability models is to take a convex combination of simple distributions. This is called a mixture model. This has the form</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbb{P}(\boldsymbol{Y} = \boldsymbol{y} \mid \boldsymbol{\theta})=\sum_{k=1}^K \pi_k p_k(\boldsymbol{y})
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(p_k\)</span> is the <span class="math notranslate nohighlight">\(k^{\prime}\)</span> th mixture component, and <span class="math notranslate nohighlight">\(\pi_k\)</span> are the mixture weights which satisfy <span class="math notranslate nohighlight">\(0 \leq \pi_k \leq 1\)</span> and <span class="math notranslate nohighlight">\(\sum_{k=1}^K \pi_k=1\)</span></p>
+<p>We can re-express this model as a hierarchical model, in which we introduce the discrete latent variable <span class="math notranslate nohighlight">\(z \in\{1, \ldots, K\}\)</span>, which specifies which distribution to use for generating the output <span class="math notranslate nohighlight">\(\boldsymbol{y}\)</span>. The prior on this latent variable is <span class="math notranslate nohighlight">\(p(z=k \mid \boldsymbol{\theta})=\pi_k\)</span>, and the conditional is <span class="math notranslate nohighlight">\(p(\boldsymbol{y} \mid z=k, \boldsymbol{\theta})=p_k(\boldsymbol{y})=p\left(\boldsymbol{y} \mid \boldsymbol{\theta}_k\right)\)</span>. That is, we define the following joint model:
+$<span class="math notranslate nohighlight">\(
+\begin{aligned}
+p(z \mid \boldsymbol{\theta}) &amp; =\operatorname{Cat}(z \mid \boldsymbol{\pi}) \\
+p(\boldsymbol{y} \mid z=k, \boldsymbol{\theta}) &amp; =p\left(\boldsymbol{y} \mid \boldsymbol{\theta}_k\right)
+\end{aligned}
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\boldsymbol{\theta}=\left(\pi_1, \ldots, \pi_K, \boldsymbol{\theta}_1, \ldots, \boldsymbol{\theta}_K\right)<span class="math notranslate nohighlight">\( are all the model parameters. The &quot;generative story&quot; for the data is that we first sample a specific component \)</span>z<span class="math notranslate nohighlight">\(, and then we generate the observations \)</span>\boldsymbol{y}<span class="math notranslate nohighlight">\( using the parameters chosen according to the value of \)</span>z<span class="math notranslate nohighlight">\(. By marginalizing out \)</span>z<span class="math notranslate nohighlight">\(, we recover Equation (3.94):
+\)</span><span class="math notranslate nohighlight">\(
+p(\boldsymbol{y} \mid \boldsymbol{\theta})=\sum_{k=1}^K p(z=k \mid \boldsymbol{\theta}) p(\boldsymbol{y} \mid z=k, \boldsymbol{\theta})=\sum_{k=1}^K \pi_k p\left(\boldsymbol{y} \mid \boldsymbol{\theta}_k\right)
+\)</span><span class="math notranslate nohighlight">\(
+We can create different kinds of mixture model by varying the base distribution \)</span>p_k<span class="math notranslate nohighlight">\(, as we illustrate below.
+3.5.1 Gaussian mixture models
+A Gaussian mixture model or GMM, also called a mixture of Gaussians (MoG), is defined as follows:
+\)</span><span class="math notranslate nohighlight">\(
+p(\boldsymbol{y} \mid \boldsymbol{\theta})=\sum_{k=1}^K \pi_k \mathcal{N}\left(\boldsymbol{y} \mid \boldsymbol{\mu}_k, \boldsymbol{\Sigma}_k\right)
+\)</span>$</p>
+</section>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Murphy, Kevin P. “Chapter 3.5. Mixture Models.” In Probabilistic Machine Learning: An Introduction. MIT Press, 2022.</p></li>
+<li><p>Bishop, Christopher M. “Chapter 2.3.9. Mixture of Gaussians.” In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.</p></li>
+</ul>
+</section>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -566,7 +625,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning/fundamentals"
+            path: "./machine_learning/mixtures"
         },
         predefinedOutput: true
     }
@@ -581,17 +640,17 @@ title="Print to PDF"
             <footer class="bd-footer-article">
                 <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-  <a class='left-prev' id="prev-link" href="../../intro.html" title="previous page">
+  <a class='left-prev' id="prev-link" href="../fundamentals/voronoi_region/concept.html" title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
           <p class="prev-next-subtitle">previous</p>
-          <p class="prev-next-title">Introduction</p>
+          <p class="prev-next-title">Concept</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="criterions/intro.html" title="next page">
+  <a class='right-next' id="next-link" href="gmm/intro.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Loss</p>
+      <p class="prev-next-title">Gaussian Mixture Models</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -601,6 +660,32 @@ title="Print to PDF"
           </div>
           
           
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#introduction">
+   Introduction
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
           
           
         </div>
