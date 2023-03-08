@@ -342,7 +342,7 @@ For the following section, we will discuss the case from a probabilistic perspec
 
 However, we will need to assume that the random variables are identically and independently distributed (i.i.d.). This means that the random variables are drawn from the same distribution and are independent of each other.
 
-For formal definition, see [](../../../03_discrete_random_variables/iid.md).
+For formal definition, see [](../../../probability_theory/03_discrete_random_variables/iid.md).
 
 This assumption is ubiquitous in machine learning. Not only does it simplify the analysis,
 it also solidifies many theories governing the framework underlying machine learning.
@@ -483,7 +483,7 @@ $$
 ## The Law of Large Numbers
 
 Recall that in the section {ref}`emprical-risk-approximates-true-risk` of [the chapter on ERM](../empirical_risk_minimization/concept.md), we mentioned that the the Empirical Risk
-approximates the True Risk as the number of samples $N$ grows. This is the [Law of Large Numbers](../../../06_sample_statistics/0603_law_of_large_numbers/concept.md) that was mentioned in an earlier [chapter](../../../06_sample_statistics/0603_law_of_large_numbers/concept.md).
+approximates the True Risk as the number of samples $N$ grows. This is the [Law of Large Numbers](../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/concept.md) that was mentioned in an earlier [chapter](../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/concept.md).
 
 We restate the Weak Law of Large Numbers from {prf:ref}`theorem-weak-law-of-large-numbers` below again, but with notation more aligned to our notations in [machine learning notations chapter](../../../notations/machine_learning_notations.md). In particular, we use $\mathcal{L}$
 suggesting that the random variable is the loss value of $\mathcal{L}(\cdot)$. In other words,
@@ -578,7 +578,7 @@ is the theoretical maximum error we can expect from the Empirical Risk Function?
 
 ## Hoeffding's Inequality
 
-Earlier, we also saw the discussion of this inequality in a previous [chapter](../../../06_sample_statistics/0602_probability_inequalities/concept.md). This inequality will help us answer the question above.
+Earlier, we also saw the discussion of this inequality in a previous [chapter](../../../probability_theory/06_sample_statistics/0602_probability_inequalities/concept.md). This inequality will help us answer the question above.
 
 We restate the Hoeffding's Inequality here, but in machine learning context:
 

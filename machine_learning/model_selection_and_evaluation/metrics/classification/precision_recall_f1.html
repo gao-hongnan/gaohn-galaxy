@@ -1,0 +1,2384 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Precision, Recall and F1 Score &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Brier Score" href="brier_score.html" />
+    <link rel="prev" title="Accuracy" href="accuracy.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/03_discrete_random_variables/intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/04_continuous_random_variables/intro.html">
+                        Chapter 4. Continuous Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/05_joint_distributions/intro.html">
+                        Chapter 5. Joint Distributions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/06_sample_statistics/intro.html">
+                        Chapter 6. Sample Statistics
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../linear_models/intro.html">
+                        Linear Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../generative/intro.html">
+                        Generative
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Model Selection and Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../trees/intro.html">
+                        Trees, Forests, Bagging and Boosting
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../decomposition/intro.html">
+                        Dimensionality Reduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../neighbours/intro.html">
+                        Neighbourhood
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/03_discrete_random_variables/intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/04_continuous_random_variables/intro.html">
+                        Chapter 4. Continuous Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/05_joint_distributions/intro.html">
+                        Chapter 5. Joint Distributions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../probability_theory/06_sample_statistics/intro.html">
+                        Chapter 6. Sample Statistics
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../linear_models/intro.html">
+                        Linear Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../generative/intro.html">
+                        Generative
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Model Selection and Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../trees/intro.html">
+                        Trees, Forests, Bagging and Boosting
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../decomposition/intro.html">
+                        Dimensionality Reduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../neighbours/intro.html">
+                        Neighbourhood
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability Theory</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/01_mathematical_preliminaries/intro.html">Chapter 1. Mathematical Preliminaries</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/01_mathematical_preliminaries/01_combinatorics.html">Permutations and Combinations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/01_mathematical_preliminaries/02_calculus.html">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/01_mathematical_preliminaries/contours.html">Contour Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/01_mathematical_preliminaries/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/02_probability/intro.html">Chapter 2. Probability</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/0202_probability_space.html">Probability Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/0203_probability_axioms.html">Probability Axioms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/0204_conditional_probability.html">Conditional Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/0205_independence.html">Independence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/0206_bayes_theorem.html">Baye’s Theorem and the Law of Total Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/02_probability/summary.html">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/intro.html">Chapter 3. Discrete Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0301_random_variables.html">Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0302_discrete_random_variables.html">Discrete Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0303_probability_mass_function.html">Probability Mass Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0304_cumulative_distribution_function.html">Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0305_expectation.html">Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/0306_moments_and_variance.html">Moments and Variance</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/uniform/intro.html">Discrete Uniform Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/bernoulli/intro.html">Bernoulli Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/iid.html">Independent and Identically Distributed (IID)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/binomial/intro.html">Binomial Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_implementation.html">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application.html">Real World Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/geometric/intro.html">Geometric Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/geometric/0310_geometric_distribution_concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/poisson/intro.html">Poisson Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/poisson/0311_poisson_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/poisson/0311_poisson_distribution_implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/summary.html">Important</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/03_discrete_random_variables/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/intro.html">Chapter 4. Continuous Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/from_discrete_to_continuous.html">From Discrete to Continuous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0401_continuous_random_variables.html">Continuous Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0402_probability_density_function.html">Probability Density Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0403_expectation.html">Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0404_moments_and_variance.html">Moments and Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0405_cumulative_distribution_function.html">Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0406_mean_median_mode.html">Mean, Median and Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0407_continuous_uniform_distribution.html">Continuous Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0408_exponential_distribution.html">Exponential Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0409_gaussian_distribution.html">Gaussian Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0410_skewness_and_kurtosis.html">Skewness and Kurtosis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0411_convolve_and_sum_of_random_variables.html">Convolution and Sum of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/04_continuous_random_variables/0412_functions_of_random_variables.html">Functions of Random Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/intro.html">Chapter 5. Joint Distributions</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/from_single_variable_to_joint_distributions.html">From Single Variable to Joint Distributions</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0501_joint_pmf_pdf/intro.html">Joint PMF and PDF</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0501_joint_pmf_pdf/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/intro.html">Joint Expectation and Correlation</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/intro.html">Conditional PMF and PDF</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0504_conditional_expectation_variance/intro.html">Conditional Expectation and Variance</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0504_conditional_expectation_variance/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0504_conditional_expectation_variance/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0505_sum_of_random_variables/intro.html">Sum of Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0505_sum_of_random_variables/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0506_random_vectors/intro.html">Random Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0506_random_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/intro.html">Multivariate Gaussian Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/application_transformation.html">Application: Plots and Transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/psd.html">Covariance Matrix is Positive Semi-Definite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/eigendecomposition.html">Eigendecomposition and Covariance Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/05_joint_distributions/0507_multivariate_gaussian/geometry_of_multivariate_gaussian.html">The Geometry of Multivariate Gaussians</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/intro.html">Chapter 6. Sample Statistics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/intro.html">Moment Generating and Characteristic Functions</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function.html">Moment Generating Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function_application_sum_of_rv.html">Application: Moment Generating Function and the Sum of Random Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/characteristic_function.html">Characteristic Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0602_probability_inequalities/intro.html">Probability Inequalities</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0602_probability_inequalities/concept.html">Probability Inequalities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0602_probability_inequalities/application.html">Application: Learning Theory</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/intro.html">Law of Large Numbers</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-21"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/convergence.html">Convergence of Sample Average</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/application.html">Application: Learning Theory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-23"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-24"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-25"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-28"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-30"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-31"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../linear_models/linear_regression/implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../linear_models/logistic_regression/intro.html">Logistic Regression</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../linear_models/logistic_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../linear_models/logistic_regression/implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../linear_models/generalized_linear_models/intro.html">Generalized Linear Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../../generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../intro.html">Model Selection and Evaluation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-35"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../intro.html">Metrics and Scoring Rules</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-36"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="intro.html">Classification Metrics</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-37"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="accuracy.html">Accuracy</a></li>
+<li class="toctree-l4 current active"><a class="current reference internal" href="#">Precision, Recall and F1 Score</a></li>
+<li class="toctree-l4"><a class="reference internal" href="brier_score.html">Brier Score</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../regression/intro.html">Regression Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-38"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../regression/mae.html">Mean Absolute Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../regression/rmse.html">(Root) Mean Squared Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../regression/mape.html">Mean Absolute Percentage Error</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../trees/intro.html">Trees, Forests, Bagging and Boosting</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-39"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../trees/decision_trees/intro.html">Decision Trees</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-40"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../trees/decision_trees/concept.html">Braindump</a></li>
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../trees/ensemble_learning/intro.html">Ensemble Learning</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-41"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../trees/ensemble_learning/bagging/intro.html">Bagging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../trees/ensemble_learning/random_forests/intro.html">Random Forests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../trees/ensemble_learning/boosting/intro.html">Boosting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../decomposition/intro.html">Dimensionality Reduction</a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-42"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../decomposition/pca/intro.html">Principal Component Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-43"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../decomposition/pca/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../decomposition/pca/implementation.html">PCA</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../../decomposition/pca/eigenface.html">Eigenface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../neighbours/intro.html">Neighbourhood</a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-44"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../neighbours/k_nearest_neighbours/intro.html">K-Nearest Neighbours</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-45"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-46"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-47"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-48"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/intro.html">Natural Language Processing (NLP)</a><input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-49"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/intro.html">Vector Semantics and Embeddings</a><input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-50"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-51" name="toctree-checkbox-51" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-51"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-52" name="toctree-checkbox-52" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-52"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">IMDB Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://colab.research.google.com/github/gao-hongnan/gaohn-galaxy/blob/main/galaxy/machine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fmachine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../../_sources/machine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Precision, Recall and F1 Score</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#precision">
+   <strong>
+    Precision
+   </strong>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-use-precision">
+     When to use Precision?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-not-to-use-precision">
+     When NOT to use Precision?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation-of-precision">
+     Implementation of Precision
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recall-sensitivity-true-positive-rate">
+   Recall/Sensitivity/True Positive Rate
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-use-recall">
+     When to use Recall?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-not-use-recall">
+     When to NOT use Recall?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation-of-recall">
+     Implementation of Recall
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-precision-recall-tradeoff">
+   The Precision-Recall Tradeoff
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#specificity-true-negative-rate">
+   Specificity/True Negative Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#false-positive-rate">
+   False Positive Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#false-negative-rate">
+   False Negative Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f1-score">
+   F1-Score
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuition">
+     Intuition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Definition
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiclass-classification">
+   Multiclass Classification
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#label-binarize">
+     Label Binarize
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#macro-averaging">
+     Macro-Averaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#micro-averaging">
+     Micro-Averaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#micro-vs-macro">
+     Micro vs Macro
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-our-own-classification-report">
+     Building our own Classification Report
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="precision-recall-and-f1-score">
+<h1>Precision, Recall and F1 Score<a class="headerlink" href="#precision-recall-and-f1-score" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">metrics</span><span class="p">,</span> <span class="n">preprocessing</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">confusion_matrix_</span><span class="p">(</span><span class="n">y_true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Calculates the confusion matrix.</span>
+<span class="sd">    We assume that the inputs are binarized already.</span>
+<span class="sd">    This can be used in both binary and multiclass classification</span>
+<span class="sd">    provided that we label binarized the multiclass labels.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true (np.ndarray): the correct labels, shape (n_samples, )</span>
+<span class="sd">        y_pred (np.ndarray): the predicted labels, shape (n_samples, )</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        cm (np.ndarray): the confusion matrix, shape (n_classes, n_classes)</span>
+<span class="sd">                         with [[tp, fp], [fn, tn]]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+
+    <span class="k">for</span> <span class="n">y_t</span><span class="p">,</span> <span class="n">y_p</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+        <span class="c1"># if actual and predicted both are positive class</span>
+        <span class="k">if</span> <span class="n">y_t</span> <span class="o">==</span> <span class="n">y_p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># if actual and predicted both are negative class</span>
+        <span class="k">elif</span> <span class="n">y_t</span> <span class="o">==</span> <span class="n">y_p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">tn</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># if actual is negative and predicted is positive</span>
+        <span class="k">elif</span> <span class="n">y_t</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">y_p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">fp</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># if actual is positive and predicted is negative</span>
+        <span class="k">elif</span> <span class="n">y_t</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">y_p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">fn</span> <span class="o">+=</span> <span class="mi">1</span>
+
+    <span class="n">cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">],</span> <span class="p">[</span><span class="n">fn</span><span class="p">,</span> <span class="n">tn</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">cm</span>
+
+<span class="k">def</span> <span class="nf">plot_confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+    <span class="n">labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+    <span class="n">tick_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plots a Binary Confusion Matrix.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true (np.ndarray): the actual labels.</span>
+<span class="sd">        y_pred (np.ndarray): the predicted labels.</span>
+<span class="sd">        title (str): the title of the plot.</span>
+<span class="sd">        tick_labels (List[str]): The labels for the ticks.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Unravel into tn, fp, fn and tp</span>
+    <span class="n">tn</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tp</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">confusion_matrix</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="n">labels</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+    <span class="c1"># reshape into tp, fp, fn, tn - this is personal preference</span>
+    <span class="n">reshaped_cm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([[</span><span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">],</span> <span class="p">[</span><span class="n">fn</span><span class="p">,</span> <span class="n">tn</span><span class="p">]])</span>
+
+    <span class="c1"># flatten this 2d array</span>
+    <span class="n">cm_flattened</span> <span class="o">=</span> <span class="n">reshaped_cm</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+
+    <span class="n">labels</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">&quot;True Positive&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;False Positive&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;False Negative&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;True Negative&quot;</span><span class="p">,</span>
+    <span class="p">]</span>
+    <span class="n">annot</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+            <span class="p">[</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">cm_count</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">cm_count</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">cm_flattened</span><span class="p">)</span>
+            <span class="p">]</span>
+        <span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">()</span>
+    <span class="n">heatmap</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span>
+        <span class="n">reshaped_cm</span><span class="p">,</span>
+        <span class="n">annot</span><span class="o">=</span><span class="n">annot</span><span class="p">,</span>
+        <span class="n">fmt</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span>
+        <span class="n">cmap</span><span class="o">=</span><span class="s2">&quot;Greens&quot;</span><span class="p">,</span>
+        <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span>
+        <span class="n">xticklabels</span><span class="o">=</span><span class="n">tick_labels</span><span class="p">,</span>
+        <span class="n">yticklabels</span><span class="o">=</span><span class="n">tick_labels</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Predicted labels&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;True labels&quot;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="precision">
+<h2><strong>Precision</strong><a class="headerlink" href="#precision" title="Permalink to this heading">#</a></h2>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<div class="proof definition admonition" id="prf:definition">
+<p class="admonition-title"><span class="caption-number">Definition 138 </span> (Precision)</p>
+<section class="definition-content" id="proof-content">
+<p>Precision measures how many of the samples predicted as positive are actually positive. Mathematically, it is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[\text{Precision} = \dfrac{\text{TP}}{\text{TP} + \text{FP}}=P(Y=1 | \hat{Y} = 1)\]</div>
+</section>
+</div><hr class="docutils" />
+<div class="admonition-probablistic-interpretation admonition">
+<p class="admonition-title">Probablistic Interpretation</p>
+<p>Notice that the above definition has a probabilitic interpretation <span class="math notranslate nohighlight">\(P(Y = 1 | \hat{Y} = 1)\)</span>, where <span class="math notranslate nohighlight">\(Y\)</span> and <span class="math notranslate nohighlight">\(\hat{Y}\)</span> refers to the actual label and predicted labels respectively. We interpreted precision and recall not as ratios but as <a class="reference external" href="https://en.wikipedia.org/wiki/Precision_and_recall">estimations of probabilities</a>.
+Precision is then the estimated probability that a random point selected from the samples are positive. This might be a tough pill to swallow as someone who was never good in statistics but it is just conditional probability. If you try to think a bit further, you can form an intuition as follows:</p>
+<blockquote>
+<div><p>If your classifier <span class="math notranslate nohighlight">\(h\)</span> is trained and the last layer is say, sigmoid, which in binary classification, calibrates the logits and turn them into probabilities. Then it can be interpretated that given a randomly chosen point <span class="math notranslate nohighlight">\(x \in X_{train}\)</span>, what is the probability of this point <span class="math notranslate nohighlight">\(x\)</span> to be positive given that it is predicted as positive by the classifer?</p>
+</div></blockquote>
+</div>
+<hr class="docutils" />
+<p>Informally, precision answers the question <strong>what proportion of positive predictions was actually correct</strong>? In other words, out of all the positive predictions made by the model, how many of those positive predictions were actually positive when compared to the ground truth?</p>
+<hr class="docutils" />
+<p>When I learned this back then, it is not immediately obvious what the denominator is doing. Dissecting the formula helps. The loose dynamics is that TP and FP are inversely related, and assuming a fixed threshold, the denominator is fixed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\text{Predicted Number of Positives} = \text{TP} + \text{FP}\]</div>
+<p>Thus, minimizing FP is equivalent to maximizing TP, doing so will lead to an increase in precision.</p>
+<p>Just like the confusion matrix, we yield different precision score should we treat benign as the positive class.</p>
+<div class="proof example admonition" id="prf:example-precision">
+<p class="admonition-title"><span class="caption-number">Example 30 </span> (Example)</p>
+<section class="example-content" id="proof-content">
+<p>Consider a email company that developed a email spam detector for their uses. There are two outcomes/classes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>positive class = spam
+negative class = not spam
+</pre></div>
+</div>
+<p>From the company’s perspective, they will be optimizing precision over recall because they want the spam detector to have minimal False Positives because predicting an not spam (which could be an important email) email as spam is much more costly than predicting a spam email as not spam. Imagine your important emails being put into spam folder by the spam detector?!</p>
+</section>
+</div></section>
+<section id="when-to-use-precision">
+<h3>When to use Precision?<a class="headerlink" href="#when-to-use-precision" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When your company needs you to <em><strong>restrict the number of False Positives</strong></em>. Prime examples are email spam prediction.</p></li>
+<li><p>There is a trade-off between precision and recall, and restricting the number of FP <em><strong>may</strong></em> give rise to the increase in FN. So ultimately, bear in mind that it is not simply a matter of <em><strong>restricting the number of False Positives</strong></em> but a matter of <em><strong>use cases in your business setting, on whether achieving lesser FP is more important than achieving a lesser FN</strong></em>.</p></li>
+</ul>
+</section>
+<section id="when-not-to-use-precision">
+<h3>When NOT to use Precision?<a class="headerlink" href="#when-not-to-use-precision" title="Permalink to this heading">#</a></h3>
+<p>!!! danger
+- If you have a precision score of 1, then this means that <span class="math notranslate nohighlight">\(TP = TP + FP = 1 \implies FP = 0\)</span>. This means it can be achieved if your predictions have 0 False Positives, but this does not tell us <strong>anything</strong> about the False Negatives.
+- When you prioritize recall/sensitivity more than precision for your business needs.
+- You should never ever use <code class="docutils literal notranslate"><span class="pre">precision</span></code> as a single metric.</p>
+</section>
+<section id="implementation-of-precision">
+<h3>Implementation of Precision<a class="headerlink" href="#implementation-of-precision" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+
+<span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">confusion_matrix_</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">reighns_precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;our precision: </span><span class="si">{</span><span class="n">reighns_precision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sklearn_precision</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">precision_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;binary&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sklearn precision: </span><span class="si">{</span><span class="n">sklearn_precision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>our precision: 0.75
+sklearn precision: 0.75
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="recall-sensitivity-true-positive-rate">
+<h2>Recall/Sensitivity/True Positive Rate<a class="headerlink" href="#recall-sensitivity-true-positive-rate" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<div class="proof definition admonition" id="prf:definition-recall">
+<p class="admonition-title"><span class="caption-number">Definition 139 </span> (Recall)</p>
+<section class="definition-content" id="proof-content">
+<p>Recall measures the following: out of all the actual positives (say, the real cancer patients), how many of them were identified correctly by the classifier? Mathematically, it is expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Recall}= \dfrac{\text{TP}}{\text{TP} + \text{FN}}= P(\hat{Y}=1 | Y = 1)=1-FNR
+\]</div>
+</section>
+</div><p>Similarly, we can interpret recall probabilistically like how we did to precision. Recall is the conditional probability of the sample being predicted as positive given that the sample is positive.</p>
+<p>From the formula, we see the denominator to be defined as TP + FN, which is unsurprising as this gives you the actual number of positives. The dynamics is also similar to the one in precision.</p>
+<div class="proof example admonition" id="prf:example-recall">
+<p class="admonition-title"><span class="caption-number">Example 31 </span> (Example)</p>
+<section class="example-content" id="proof-content">
+<p>For cancer data modeling, anything that doesn’t account for false-negatives is like committing a crime indirectly (a strong statement, but lives are at stake here!). Recall is a better measure than precision in this aspect assuming that the positive class is malignant.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>positive class = malignant
+negative class = benign
+</pre></div>
+</div>
+<p>A healthcare company came up with a cancer test kit. Instead of reporting its accuracy, we should examine the recall first as the test kit should have minimum False Negatives because predicting a patient with cancer as benign yields a much higher cost than predicting a healthy patient to have cancer. You really do not want to miss any sick patients, you will see later on how we can tune the decision threshold of a classifier to achieve a higher recall at the expense of lowering precision.</p>
+</section>
+</div></section>
+<section id="when-to-use-recall">
+<h3>When to use Recall?<a class="headerlink" href="#when-to-use-recall" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>When your company needs you to <em><strong>restrict the number of False Negatives</strong></em>.</p></li>
+</ul>
+</section>
+<section id="when-to-not-use-recall">
+<h3>When to NOT use Recall?<a class="headerlink" href="#when-to-not-use-recall" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>If you have a recall score of 1, then this means that <span class="math notranslate nohighlight">\(TP = TP + FN = 1 \implies FN = 0\)</span>; there are 0 False Negatives, but this does not tell us <strong>anything</strong> about the False Positives.</p></li>
+<li><p>When you prioritize precision more than recall for your business needs.</p></li>
+<li><p>You almost never ever use <code class="docutils literal notranslate"><span class="pre">recall</span></code> as a single metric.</p></li>
+</ul>
+</section>
+<section id="implementation-of-recall">
+<h3>Implementation of Recall<a class="headerlink" href="#implementation-of-recall" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+
+<span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">confusion_matrix_</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+<span class="n">reighns_recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;our recall: </span><span class="si">{</span><span class="n">reighns_recall</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">sklearn_recall</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">recall_score</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">average</span><span class="o">=</span><span class="s2">&quot;binary&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;sklearn recall: </span><span class="si">{</span><span class="n">sklearn_recall</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>our recall: 0.6
+sklearn recall: 0.6
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="the-precision-recall-tradeoff">
+<h2>The Precision-Recall Tradeoff<a class="headerlink" href="#the-precision-recall-tradeoff" title="Permalink to this heading">#</a></h2>
+<p>Does this term reminisce with the Bias-Variance Tradeoff? More specifically, when we talk about precision and recall in the sections above, we are fixated at one <strong>decision threshold</strong> of our classifier. One should note that both metrics are parametrized by <span class="math notranslate nohighlight">\(t\)</span>, the decision threshold. We can tune our threshold to achieve a better precision or recall, but usually not both, hence the tradeoff.</p>
+<hr class="docutils" />
+<p>We can read more from <a class="reference external" href="https://developers.google.com/machine-learning/crash-course/classification/precision-and-recall">Google’s Machine Learning Crash Course on Precison and Recall</a>.</p>
+</section>
+<section id="specificity-true-negative-rate">
+<h2>Specificity/True Negative Rate<a class="headerlink" href="#specificity-true-negative-rate" title="Permalink to this heading">#</a></h2>
+<div class="proof definition admonition" id="prf:definition-specificity">
+<p class="admonition-title"><span class="caption-number">Definition 140 </span> (Specificity)</p>
+<section class="definition-content" id="proof-content">
+<div class="math notranslate nohighlight">
+\[
+TNR = \dfrac{TN}{TN + FP} = P(\hat{Y} = 0| Y=0) = 1 - FPR
+\]</div>
+</section>
+</div></section>
+<section id="false-positive-rate">
+<h2>False Positive Rate<a class="headerlink" href="#false-positive-rate" title="Permalink to this heading">#</a></h2>
+<div class="proof definition admonition" id="prf:definition-fpr">
+<p class="admonition-title"><span class="caption-number">Definition 141 </span> (False Positive Rate)</p>
+<section class="definition-content" id="proof-content">
+<p>Out of all the real negative classes (negative ground truth), how many were predicted wrongly (predicted as positive from the model).</p>
+<div class="math notranslate nohighlight">
+\[
+FPR = \dfrac{FP}{FP + TN}=1-TNR
+\]</div>
+</section>
+</div></section>
+<section id="false-negative-rate">
+<h2>False Negative Rate<a class="headerlink" href="#false-negative-rate" title="Permalink to this heading">#</a></h2>
+<div class="proof definition admonition" id="prf:definition-fnr">
+<p class="admonition-title"><span class="caption-number">Definition 142 </span> (False Negative Rate)</p>
+<section class="definition-content" id="proof-content">
+<div class="math notranslate nohighlight">
+\[
+TNR = \dfrac{FN}{FN + TP} = 1 - TPR
+\]</div>
+</section>
+</div></section>
+<section id="f1-score">
+<h2>F1-Score<a class="headerlink" href="#f1-score" title="Permalink to this heading">#</a></h2>
+<section id="intuition">
+<h3>Intuition<a class="headerlink" href="#intuition" title="Permalink to this heading">#</a></h3>
+<p>Motivated by the examples above, where using single precision or recall do not tell us much about the whole story. We thus turn to a combination of the above metrics. Penalizes extreme values of precision and recall more than arithmetic mean<a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+</section>
+<section id="id3">
+<h3>Definition<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<div class="proof definition admonition" id="prf:definition-f1">
+<p class="admonition-title"><span class="caption-number">Definition 143 </span> (F1-Score)</p>
+<section class="definition-content" id="proof-content">
+<p>The F1 score is the <b>harmonic mean</b> between Precision and Recall, bounded between 0 and 1.</p>
+<div class="math notranslate nohighlight">
+\[
+F1 = \dfrac{2(\text{Precision} \times \text{Recall})}{\text{Precision} + \text{Recall}}
+\]</div>
+</section>
+</div><div class="proof example admonition" id="prf:example-f1">
+<p class="admonition-title"><span class="caption-number">Example 32 </span> (Example)</p>
+<section class="example-content" id="proof-content">
+<p>TO CITE: For example, imagine that the blood protein levels in diseased people and healthy people are normally distributed with means of 2 g/dL and 1 g/dL respectively. A medical test might measure the level of a certain protein in a blood sample and classify any number above a certain threshold as indicating disease. The experimenter can adjust the threshold (black vertical line in the figure), which will in turn change the false positive rate. Increasing the threshold would result in fewer false positives (and more false negatives), corresponding to a leftward movement on the curve. The actual shape of the curve is determined by how much overlap the two distributions have.</p>
+</section>
+</div></section>
+</section>
+<section id="multiclass-classification">
+<h2>Multiclass Classification<a class="headerlink" href="#multiclass-classification" title="Permalink to this heading">#</a></h2>
+<p>We can extend the binary classification metrics to a multiclass classification setting. Initially, it is not entirely clear how we should handle precision, recall and f1-score because metrics like False Negatives are not well defined - we simply do not know who is the “positive” and “negative” class here. It turns out that this is not a problem if we use the One-vs-Rest scheme.</p>
+<p>We introduce two ways to do so, which is either using micro-averaging, or macro-averaging. Before we go deeper, we first need to understand the notion of One-vs-Rest.</p>
+<p>Consider a multiclass problem with 3 labels:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our dataset is as follows</span>
+<span class="n">label_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;benign&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Turn them into numbers in the label_dict</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">label_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">y_true</span><span class="p">])</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">label_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">y_pred</span><span class="p">])</span>
+</pre></div>
+</div>
+<p>We can calculate the metrics (precision etc) for each label indepedently. What we mean here is that we treat an n-class problem as n-binary classification problem, such as the following:</p>
+<div class="proof example admonition" id="prf:example-multiclass-benign">
+<p class="admonition-title"><span class="caption-number">Example 33 </span> (Benign as Positive Class)</p>
+<section class="example-content" id="proof-content">
+<p>If we take benign as positive class, which is represented as 1, and both borderline and malignant as the negative class 0, then logically (even without the fancy term label binarize), we can just simply replace as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where we just replace all 0 (initially benign) to 1, and all 1 and 2 (initially borderline and malignant) to 0 (may be confusing at first).</p>
+</section>
+</div><div class="proof example admonition" id="prf:example-multiclass-borderline">
+<p class="admonition-title"><span class="caption-number">Example 34 </span> (Borderline as Positive Class)</p>
+<section class="example-content" id="proof-content">
+<p>If we take borderline as positive class, which is represented as 1, and both benign and malignant as the negative class 0, then logically (even without the fancy term label binarize), we can just simply replace as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where we just replace all 1 (initially borderline) to 1, and all 0 and 2 (initially benign and malignant) to 0.</p>
+</section>
+</div><div class="proof example admonition" id="prf:example-multiclass-malignant">
+<p class="admonition-title"><span class="caption-number">Example 35 </span> (Malignant as Positive Class)</p>
+<section class="example-content" id="proof-content">
+<p>If we take malignant as positive class, which is represented as 2, and both benign and borderline as the negative class 0, then logically (even without the fancy term label binarize), we can just simply replace as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_true</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">-&gt;</span> <span class="n">y_pred</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where we just replace all 2 (initially malignant) to 1, and all 0 and 1 (initially benign and borderline) to 0.</p>
+</section>
+</div><p>In this case, we have 3 different confusion matrices, one for each class (diagram). In the example above, we did not mention a crucial technique, which is called label binarizer<a class="footnote-reference brackets" href="#id6" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. We will introduce it in code below.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Our dataset is as follows</span>
+<span class="n">label_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;benign&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Turn them into numbers in the label_dict</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">label_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">y_true</span><span class="p">])</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">label_dict</span><span class="p">[</span><span class="n">label</span><span class="p">]</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">y_pred</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="label-binarize">
+<h3>Label Binarize<a class="headerlink" href="#label-binarize" title="Permalink to this heading">#</a></h3>
+<p>What we have just done in the previous example is that we binarized both <code class="docutils literal notranslate"><span class="pre">y_true</span></code> and <code class="docutils literal notranslate"><span class="pre">y_pred</span></code>. The process of treating each class <span class="math notranslate nohighlight">\(C_i\)</span> as an independent class and then applying the “replacement” technique is called label binarizing.</p>
+<figure>
+    <img src='https://storage.googleapis.com/reighns/reighns_ml_projects/docs/metrics/classification_metrics/label_binarize.png'/>
+    <figcaption>Label Binarizing, by Hongnan G.</figcaption>
+</figure>
+<div class="proof algorithm admonition" id="prf:algorithm-label-binarize">
+<p class="admonition-title"><span class="caption-number">Algorithm 4 </span> (Label Binarize)</p>
+<section class="algorithm-content" id="proof-content">
+<ol class="arabic simple">
+<li><p>For each label (0, 1 and 2 here), we call <code class="docutils literal notranslate"><span class="pre">np.where</span></code> such that whenever the y array has this label, we replace it with 1 (positive class), and 0 otherwise (negative class).</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">binarized_cols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+    <span class="n">binarize_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="n">label</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">binarized_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binarize_col</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>Conventially, we stack them column wise as follows:</p></li>
+</ol>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">binarized_cols</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">binarized_cols</span><span class="p">)</span>
+<span class="n">binarized_cols</span> <span class="o">=</span> <span class="n">binarized_cols</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</section>
+</div><p>Let us look at the binarized array for <code class="docutils literal notranslate"><span class="pre">y_true</span></code>, notice that the first column <code class="docutils literal notranslate"><span class="pre">[1,0,0,1,0,0]</span></code> corresponds exactly to the example above when we treat benign as positive class (we can verify the same for the rest).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+       <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>We note that it is commom practice to label binarize the y values first before passing in for metric calculation.</p>
+<p><strong>Setup:</strong></p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">classes</span></code>: <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2]</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">y_true</span></code>: <code class="docutils literal notranslate"><span class="pre">([0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">0,</span> <span class="pre">1,</span> <span class="pre">2])</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">label_binarized_y</span></code>:</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+   <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+   <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p>First way:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">binarized_cols</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="c1"># this is a column wise operation but should eventually show &quot;transposed&quot;</span>
+<span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">:</span>
+    <span class="c1"># in the first loop, label = 0, so replace all instance of 0 in y_true with pos class 1 and others 0 </span>
+    <span class="n">binarize_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="n">label</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">binarized_cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">binarize_col</span><span class="p">)</span>
+    
+<span class="n">label_binarized_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">binarized_cols</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Second way:</p>
+<ul class="simple">
+<li><p>Initialize <code class="docutils literal notranslate"><span class="pre">label_binarized_y</span></code> with shape <code class="docutils literal notranslate"><span class="pre">(len(y_true),</span> <span class="pre">len(classes))</span></code>. That is, if <code class="docutils literal notranslate"><span class="pre">y_true</span></code> is of length 6 elements, and we have 3 classes, then it is <strong>necessary</strong> that after binarizing (one-hot), we must have <span class="math notranslate nohighlight">\((6, 3)\)</span> shape.</p></li>
+<li><p>loop through <code class="docutils literal notranslate"><span class="pre">y_true</span></code> with <code class="docutils literal notranslate"><span class="pre">enumerate</span></code>:</p>
+<ul>
+<li><p>if we encounter <code class="docutils literal notranslate"><span class="pre">y_true</span> <span class="pre">=</span> <span class="pre">0</span></code>, then we should have <code class="docutils literal notranslate"><span class="pre">[1,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>, since we initialized our <code class="docutils literal notranslate"><span class="pre">label_binarized_y</span></code> as all zeros, then <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index]</span></code> is just <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>, we want to assign the 0-th index (coincides with the class index by the way) as 1, so we do <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index][int(each_y_true_element)]</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+<li><p>if we encounter <code class="docutils literal notranslate"><span class="pre">y_true</span> <span class="pre">=</span> <span class="pre">1</span></code>, then we should have <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">0]</span></code>, since we initialized our <code class="docutils literal notranslate"><span class="pre">label_binarized_y</span></code> as all zeros, then <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index]</span></code> is just <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>, we want to assign the 1-st index (coincides with the class index by the way) as 1, so we do <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index][int(each_y_true_element)]</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+<li><p>if we encounter <code class="docutils literal notranslate"><span class="pre">y_true</span> <span class="pre">=</span> <span class="pre">2</span></code>, then we should have <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">1]</span></code>, since we initialized our <code class="docutils literal notranslate"><span class="pre">label_binarized_y</span></code> as all zeros, then <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index]</span></code> is just <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0]</span></code>, we want to assign the 2-nd index (coincides with the class index by the way) as 1, so we do <code class="docutils literal notranslate"><span class="pre">label_binarized_y[y_index][int(each_y_true_element)]</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">label_binarized_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)))</span>
+<span class="c1"># this is a column wise operation but should eventually show &quot;transposed&quot;</span>
+<span class="k">for</span> <span class="n">y_index</span><span class="p">,</span> <span class="n">each_y_true_element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y_true</span><span class="p">):</span>
+     <span class="n">label_binarized_y</span><span class="p">[</span><span class="n">y_index</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">each_y_true_element</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="macro-averaging">
+<h3>Macro-Averaging<a class="headerlink" href="#macro-averaging" title="Permalink to this heading">#</a></h3>
+<p>Back to where we ended off, we have 3 confusion matrices, we filled up each cell manually by inspection over which is considered TP, FP, FN or TN. Well, the good news is, with label binarizing done, we can just use our good ol’ <code class="docutils literal notranslate"><span class="pre">confusion_matrix_</span></code> function done earlier to calculate them for us!</p>
+<p>We encode the second method which is more readable but the bad thing about this method is it has less flexibility than the first, if we wish to define “custom” positive label then we need to make more changes. For example, if positive label is defined to be 3, then this function can no longer take advantage that the class labels will always be in the form of <code class="docutils literal notranslate"><span class="pre">[0,</span> <span class="pre">1,</span> <span class="pre">2,</span> <span class="pre">...]</span></code> where we easily index them.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiclass_label_binarize</span><span class="p">(</span>
+    <span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">class_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">neg_label</span><span class="o">=</span><span class="mi">0</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binarize labels in one-vs-all fashion.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y (np.ndarray) Sequence of integer labels to encode</span>
+<span class="sd">        class_labels (array-like) Labels for each class</span>
+<span class="sd">        pos_label (int) Value for positive labels</span>
+<span class="sd">        neg_label (int) Value for negative labels</span>
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray of shape (n_samples, n_classes) Encoded dataset</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">y</span> <span class="o">==</span> <span class="n">label</span><span class="p">,</span> <span class="n">pos_label</span><span class="p">,</span> <span class="n">neg_label</span><span class="p">)</span> <span class="k">for</span> <span class="n">label</span> <span class="ow">in</span> <span class="n">class_labels</span>
+    <span class="p">]</span>
+    <span class="n">label_binarized_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">return</span> <span class="n">label_binarized_y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">multiclass_label_binarize_readable</span><span class="p">(</span><span class="n">y</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">class_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Binarize labels in one-vs-all fashion.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y (np.ndarray) Sequence of integer labels to encode</span>
+<span class="sd">        class_labels (array-like) Labels for each class, must start from 0 and be in order.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        np.ndarray of shape (n_samples, n_classes) Encoded dataset</span>
+
+<span class="sd">    Example:</span>
+<span class="sd">        &gt;&gt;&gt; y_true = np.array([0, 1, 2, 0, 1, 2])</span>
+<span class="sd">        &gt;&gt;&gt; class_labels = [0, 1, 2]</span>
+<span class="sd">        &gt;&gt;&gt; y_true_binarized = multiclass_label_binarize(y_true, class_labels)</span>
+<span class="sd">        &gt;&gt;&gt; from sklearn.preprocessing import label_binarize</span>
+<span class="sd">        &gt;&gt;&gt; assert label_binarize(y_true, classes = classes) == y_true_binarized</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+    <span class="n">label_binarized_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_labels</span><span class="p">)))</span>
+    <span class="c1"># this is a column wise operation but should eventually show &quot;transposed&quot;</span>
+    <span class="k">for</span> <span class="n">y_index</span><span class="p">,</span> <span class="n">each_y_element</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">y</span><span class="p">):</span>
+        <span class="n">label_binarized_y</span><span class="p">[</span><span class="n">y_index</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">each_y_element</span><span class="p">)]</span> <span class="o">=</span> <span class="mi">1</span>
+
+    <span class="k">return</span> <span class="n">label_binarized_y</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binarize the labels</span>
+<span class="n">y_true_binarized</span> <span class="o">=</span> <span class="n">multiclass_label_binarize</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
+<span class="n">y_pred_binarized</span> <span class="o">=</span> <span class="n">multiclass_label_binarize</span><span class="p">(</span><span class="n">y_pred</span><span class="p">,</span> <span class="n">classes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">label_binarize</span>
+
+<span class="n">label_binarize</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span><span class="p">)</span> <span class="o">==</span> <span class="n">y_true_binarized</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ True,  True,  True],
+       [ True,  True,  True],
+       [ True,  True,  True],
+       [ True,  True,  True],
+       [ True,  True,  True],
+       [ True,  True,  True]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tp_c1</span><span class="p">,</span> <span class="n">fp_c1</span><span class="p">,</span> <span class="n">fn_c1</span><span class="p">,</span> <span class="n">tn_c1</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">tp_c2</span><span class="p">,</span> <span class="n">fp_c2</span><span class="p">,</span> <span class="n">fn_c2</span><span class="p">,</span> <span class="n">tn_c2</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">tp_c3</span><span class="p">,</span> <span class="n">fp_c3</span><span class="p">,</span> <span class="n">fn_c3</span><span class="p">,</span> <span class="n">tn_c3</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix (Benign as +)&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">tick_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;not benign&quot;</span><span class="p">,</span> <span class="s2">&quot;benign&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix (Borderline as +)&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">tick_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;not borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="n">plot_confusion_matrix</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Confusion Matrix (Malignant as +)&quot;</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="n">tick_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;not malignant&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../../_images/7b53536ffba773eb10678b7ceb15f224be64080afd0d75c5b35d9655631c4943.png" src="../../../../_images/7b53536ffba773eb10678b7ceb15f224be64080afd0d75c5b35d9655631c4943.png" />
+<img alt="../../../../_images/848cf5efbed9e2955d96cca6a8e2f0c850caa68d08b9d55942804e337d64cad4.png" src="../../../../_images/848cf5efbed9e2955d96cca6a8e2f0c850caa68d08b9d55942804e337d64cad4.png" />
+<img alt="../../../../_images/5a8249093b8d457e9fd8772a263672ffb63501d3686fa8abfaa51b2fc917a5b0.png" src="../../../../_images/5a8249093b8d457e9fd8772a263672ffb63501d3686fa8abfaa51b2fc917a5b0.png" />
+</div>
+</div>
+<p>Then Macro-Average is calculated for each confusion matrix, and then averaged over the total number of classes.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Macro-Average Precision} = \frac{1}{\text{num_class}}\sum_{i=1}^{\text{num_class}}P_{i}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(P_i\)</span> is the precision score for each individual confusion matrix for each class. This can be extended for recall and f1 etc.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Macro-Average</span>
+<span class="n">precision_c1</span> <span class="o">=</span> <span class="n">tp_c1</span> <span class="o">/</span> <span class="p">(</span>
+    <span class="n">tp_c1</span> <span class="o">+</span> <span class="n">fp_c1</span>
+<span class="p">)</span>  <span class="c1"># precision for confusion matrix 1 where benign is +</span>
+<span class="n">precision_c2</span> <span class="o">=</span> <span class="n">tp_c2</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp_c2</span> <span class="o">+</span> <span class="n">fp_c2</span><span class="p">)</span>
+<span class="n">precision_c3</span> <span class="o">=</span> <span class="n">tp_c3</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp_c3</span> <span class="o">+</span> <span class="n">fp_c3</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">precision_c1</span><span class="p">,</span> <span class="n">precision_c2</span><span class="p">,</span> <span class="n">precision_c3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span>
+    <span class="sa">f</span><span class="s2">&quot;Macro-Averaged Precision: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">precision_c1</span><span class="p">,</span><span class="w"> </span><span class="n">precision_c2</span><span class="p">,</span><span class="w"> </span><span class="n">precision_c3</span><span class="p">])</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6666666666666666 0.0 0.0
+Macro-Averaged Precision: 0.2222222222222222
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="micro-averaging">
+<h3>Micro-Averaging<a class="headerlink" href="#micro-averaging" title="Permalink to this heading">#</a></h3>
+<p>Similar to Micro-Averaging, we still have 3 confusion matrices, but we first aggregate all the 3 confusion matrices into one single confusion matrices.</p>
+<div class="math notranslate nohighlight">
+\[TP_{\text{agg}}=\frac{1}{\text{num_class}}\sum_{i=1}^{\text{num_class}}TP_{i}\]</div>
+<div class="math notranslate nohighlight">
+\[FP_{\text{agg}}=\frac{1}{\text{num_class}}\sum_{i=1}^{\text{num_class}}FP_{i}\]</div>
+<div class="math notranslate nohighlight">
+\[FN_{\text{agg}}=\frac{1}{\text{num_class}}\sum_{i=1}^{\text{num_class}}FN_{i}\]</div>
+<div class="math notranslate nohighlight">
+\[TN_{\text{agg}}=\frac{1}{\text{num_class}}\sum_{i=1}^{\text{num_class}}TN_{i}\]</div>
+<p>And then once we get the aggregated metrics, we can apply the normal calculation to it.</p>
+<div class="math notranslate nohighlight">
+\[\text{Precision} = \frac{TP_{\text{agg}}}{TP_{\text{agg}} + FP_{\text{agg}}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tp_c1</span><span class="p">,</span> <span class="n">fp_c1</span><span class="p">,</span> <span class="n">fn_c1</span><span class="p">,</span> <span class="n">tn_c1</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">tp_c2</span><span class="p">,</span> <span class="n">fp_c2</span><span class="p">,</span> <span class="n">fn_c2</span><span class="p">,</span> <span class="n">tn_c2</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+<span class="n">tp_c3</span><span class="p">,</span> <span class="n">fp_c3</span><span class="p">,</span> <span class="n">fn_c3</span><span class="p">,</span> <span class="n">tn_c3</span> <span class="o">=</span> \
+    <span class="n">confusion_matrix_</span><span class="p">(</span>
+    <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Aggregation</span>
+<span class="n">tp_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">tp_c1</span> <span class="o">+</span> <span class="n">tp_c2</span> <span class="o">+</span> <span class="n">tp_c3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">fp_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">fp_c1</span> <span class="o">+</span> <span class="n">fp_c2</span> <span class="o">+</span> <span class="n">fp_c3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">fn_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">fn_c1</span> <span class="o">+</span> <span class="n">fn_c2</span> <span class="o">+</span> <span class="n">fn_c3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+<span class="n">tn_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">tn_c1</span> <span class="o">+</span> <span class="n">tn_c2</span> <span class="o">+</span> <span class="n">tn_c3</span><span class="p">)</span> <span class="o">/</span> <span class="mi">3</span>
+
+<span class="c1"># Calculate precision using Micro-Averaging</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Micro-Averaged Precision: </span><span class="si">{</span><span class="n">tp_agg</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="p">(</span><span class="n">tp_agg</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">fp_agg</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Micro-Averaged Precision: 0.3333333333333333
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="micro-vs-macro">
+<h3>Micro vs Macro<a class="headerlink" href="#micro-vs-macro" title="Permalink to this heading">#</a></h3>
+<p>The following content is taken from DataScienceExchange<a class="footnote-reference brackets" href="#id6" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
+<p>Micro- and macro-averages (for whatever metric) will compute slightly different things, and thus their interpretation differs. A macro-average will compute the metric independently for each class and then take the average (hence treating all classes equally), whereas a micro-average will aggregate the contributions of all classes to compute the average metric. In a multi-class classification setup, micro-average is preferable if you suspect there might be class imbalance (i.e you may have many more examples of one class than of other classes).</p>
+<p>To illustrate why, take for example precision <span class="math notranslate nohighlight">\(Pr=\frac{TP}{(TP+FP)}\)</span>. Let’s imagine you have a <em>One-vs-All</em> (there is only one correct class output per example) multi-class classification system with four classes and the following numbers when tested:</p>
+<ul class="simple">
+<li><p>Class A: 1 TP and 1 FP</p></li>
+<li><p>Class B: 10 TP and 90 FP</p></li>
+<li><p>Class C: 1 TP and 1 FP</p></li>
+<li><p>Class D: 1 TP and 1 FP</p></li>
+</ul>
+<p>You can see easily that <span class="math notranslate nohighlight">\(Pr_A = Pr_C = Pr_D = 0.5\)</span>, whereas <span class="math notranslate nohighlight">\(Pr_B=0.1\)</span>.</p>
+<ul class="simple">
+<li><p>A macro-average will then compute: <span class="math notranslate nohighlight">\(Pr=\frac{0.5+0.1+0.5+0.5}{4}=0.4\)</span></p></li>
+<li><p>A micro-average will compute: <span class="math notranslate nohighlight">\(Pr=\frac{1+10+1+1}{2+100+2+2}=0.123\)</span></p></li>
+</ul>
+<p>These are quite different values for precision. Intuitively, in the macro-average the “good” precision (0.5) of classes A, C and D is contributing to maintain a “decent” overall precision (0.4). While this is technically true (across classes, the average precision is 0.4), it is a bit misleading, since a large number of examples are not properly classified. These examples predominantly correspond to class B, so they only contribute 1/4 towards the average in spite of constituting 94.3% of your test data. The micro-average will adequately capture this class imbalance, and bring the overall precision average down to 0.123 (more in line with the precision of the dominating class B (0.1)).</p>
+<p>For computational reasons, it may sometimes be more convenient to compute class averages and then macro-average them. If class imbalance is known to be an issue, there are several ways around it. One is to report not only the macro-average, but also its standard deviation (for 3 or more classes). Another is to compute a weighted macro-average, in which each class contribution to the average is weighted by the relative number of examples available for it. In the above scenario, we obtain:</p>
+<p><span class="math notranslate nohighlight">\(Pr_{macro-mean}={0.25·0.5+0.25·0.1+0.25·0.5+0.25·0.5}=0.4\)</span>
+<span class="math notranslate nohighlight">\(Pr_{macro-stdev}=0.173\)</span></p>
+<p><span class="math notranslate nohighlight">\(Pr_{macro-weighted}={0.0189·0.5+0.943·0.1+0.0189·0.5+0.0189·0.5}={0.009+0.094+0.009+0.009}=0.123\)</span></p>
+<p>The large standard deviation (0.173) already tells us that the 0.4 average does not stem from a uniform precision among classes, but it might be just easier to compute the weighted macro-average, which in essence is another way of computing the micro-average.</p>
+</section>
+<section id="building-our-own-classification-report">
+<h3>Building our own Classification Report<a class="headerlink" href="#building-our-own-classification-report" title="Permalink to this heading">#</a></h3>
+<p>Just like scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.classification_report.html#sklearn.metrics.classification_report">classification report</a>, we can build our own and test if it correct.</p>
+<p>The code is made easy to follow such that you can detail each step in details if you do not understand how micro or macro is calculated.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">classification_report_</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+    <span class="n">class_labels</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">],</span>
+    <span class="n">display_labels</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]],</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Union</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">],</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Classification report that reports precision, recall and f1-score.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        y_true (np.ndarray): Ground truth (correct) target values.</span>
+<span class="sd">        y_pred (np.ndarray): Predicted target values.</span>
+<span class="sd">        class_labels (List[int]): List of class labels.</span>
+<span class="sd">        display_labels: List of display labels.</span>
+<span class="sd">                        (if None, class_labels is used).</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        confusion_matrices (List[np.ndarray]): List of confusion matrices.</span>
+<span class="sd">        tp_fp_fn_tn (Dict[str, float]): List of true positive, false positive,</span>
+<span class="sd">                                        true negative and false negative</span>
+<span class="sd">                                        values.</span>
+<span class="sd">        metrics Dict[str, float]: List of precision, recall and f1-score</span>
+<span class="sd">                                    values.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">display_labels</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># assign display labels to default labels if none is passed in.</span>
+        <span class="n">display_labels</span> <span class="o">=</span> <span class="n">class_labels</span>  
+    <span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="n">y_true_binarized</span> <span class="o">=</span> <span class="n">multiclass_label_binarize</span><span class="p">(</span>
+        <span class="n">y_true</span><span class="p">,</span> <span class="n">class_labels</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">neg_label</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+    <span class="n">y_pred_binarized</span> <span class="o">=</span> <span class="n">multiclass_label_binarize</span><span class="p">(</span>
+        <span class="n">y_pred</span><span class="p">,</span> <span class="n">class_labels</span><span class="p">,</span> <span class="n">pos_label</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">neg_label</span><span class="o">=</span><span class="mi">0</span>
+    <span class="p">)</span>
+
+    <span class="n">confusion_matrices</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">int</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">tp_fp_fn_tn</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">label</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">class_labels</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="p">(</span>
+            <span class="n">index</span> <span class="o">==</span> <span class="n">label</span>
+        <span class="p">),</span> <span class="s2">&quot;Index should coincide with label,</span><span class="se">\</span>
+<span class="s2">            if not, please check how your classes are labelled.&quot;</span>
+        <span class="n">cm</span> <span class="o">=</span> <span class="n">confusion_matrix_</span><span class="p">(</span>
+            <span class="n">y_true_binarized</span><span class="p">[:,</span> <span class="n">index</span><span class="p">],</span> <span class="n">y_pred_binarized</span><span class="p">[:,</span> <span class="n">index</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">confusion_matrices</span><span class="p">[</span><span class="n">display_labels</span><span class="p">[</span><span class="n">index</span><span class="p">]]</span> <span class="o">=</span> <span class="n">cm</span>
+        <span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+
+        <span class="n">precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+        <span class="n">recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+        <span class="n">f1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+            <span class="k">else</span> <span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="n">tp_fp_fn_tn</span><span class="p">[</span><span class="n">display_labels</span><span class="p">[</span><span class="n">index</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;precision&quot;</span><span class="p">:</span> <span class="n">precision</span><span class="p">,</span>
+            <span class="s2">&quot;recall&quot;</span><span class="p">:</span> <span class="n">recall</span><span class="p">,</span>
+            <span class="s2">&quot;f1&quot;</span><span class="p">:</span> <span class="n">f1</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">calculate_micro_avg</span><span class="p">(</span><span class="n">confusion_matrices</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate micro average for precision, recall and f1-score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            confusion_matrices ([type]): Pass in from local scope.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, float]: Dictionary of micro average values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tp_agg</span><span class="p">,</span> <span class="n">fp_agg</span><span class="p">,</span> <span class="n">fn_agg</span><span class="p">,</span> <span class="n">tn_agg</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="n">micro_metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">total_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">cm</span> <span class="ow">in</span> <span class="n">confusion_matrices</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+            <span class="n">tp_agg</span> <span class="o">+=</span> <span class="n">tp</span>
+            <span class="n">fp_agg</span> <span class="o">+=</span> <span class="n">fp</span>
+            <span class="n">fn_agg</span> <span class="o">+=</span> <span class="n">fn</span>
+            <span class="n">tn_agg</span> <span class="o">+=</span> <span class="n">tn</span>
+            <span class="n">total_count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">assert</span> <span class="n">total_count</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span>
+            <span class="n">class_labels</span>
+        <span class="p">),</span> <span class="s2">&quot;Denominator total_count should equal number of class labels.&quot;</span>
+
+        <span class="n">tp_agg</span><span class="p">,</span> <span class="n">fp_agg</span><span class="p">,</span> <span class="n">fn_agg</span><span class="p">,</span> <span class="n">tn_agg</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="n">tp_agg</span><span class="p">,</span> <span class="n">fp_agg</span><span class="p">,</span> <span class="n">fn_agg</span><span class="p">,</span> <span class="n">tn_agg</span><span class="p">])</span> <span class="o">/</span> <span class="n">total_count</span>
+        <span class="p">)</span>  <span class="c1"># aggregation is performed here using numpy broadcasting</span>
+
+        <span class="n">micro_precision</span> <span class="o">=</span> <span class="n">tp_agg</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp_agg</span> <span class="o">+</span> <span class="n">fp_agg</span><span class="p">)</span>
+        <span class="n">micro_recall</span> <span class="o">=</span> <span class="n">tp_agg</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp_agg</span> <span class="o">+</span> <span class="n">fn_agg</span><span class="p">)</span>
+        <span class="n">micro_f1</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">2</span>
+            <span class="o">*</span> <span class="p">(</span><span class="n">micro_precision</span> <span class="o">*</span> <span class="n">micro_recall</span><span class="p">)</span>
+            <span class="o">/</span> <span class="p">(</span><span class="n">micro_precision</span> <span class="o">+</span> <span class="n">micro_recall</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">micro_precision</span> <span class="o">+</span> <span class="n">micro_recall</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+            <span class="k">else</span> <span class="mi">0</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;micro_precision&quot;</span><span class="p">:</span> <span class="n">micro_precision</span><span class="p">,</span>
+            <span class="s2">&quot;micro_recall&quot;</span><span class="p">:</span> <span class="n">micro_recall</span><span class="p">,</span>
+            <span class="s2">&quot;micro_f1&quot;</span><span class="p">:</span> <span class="n">micro_f1</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;micro_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calculate_micro_avg</span><span class="p">(</span><span class="n">confusion_matrices</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">calculate_macro_avg</span><span class="p">(</span><span class="n">confusion_matrices</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Calculate macro average for precision, recall and f1-score.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            confusion_matrices ([type]): Pass in from local scope.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dict[str, float]: Dictionary of macro average values.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">macro_precision</span><span class="p">,</span> <span class="n">macro_recall</span><span class="p">,</span> <span class="n">macro_f1</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">cm</span> <span class="ow">in</span> <span class="n">confusion_matrices</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">tp</span><span class="p">,</span> <span class="n">fp</span><span class="p">,</span> <span class="n">fn</span><span class="p">,</span> <span class="n">tn</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">ravel</span><span class="p">()</span>
+            <span class="n">precision</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fp</span><span class="p">)</span>
+            <span class="n">recall</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">/</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">fn</span><span class="p">)</span>
+            <span class="n">f1</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">precision</span> <span class="o">*</span> <span class="n">recall</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">precision</span> <span class="o">+</span> <span class="n">recall</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span>
+                <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">)</span>
+            <span class="n">macro_precision</span> <span class="o">+=</span> <span class="n">precision</span>
+            <span class="n">macro_recall</span> <span class="o">+=</span> <span class="n">recall</span>
+            <span class="n">macro_f1</span> <span class="o">+=</span> <span class="n">f1</span>
+
+        <span class="n">macro_precision</span> <span class="o">=</span> <span class="n">macro_precision</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_labels</span><span class="p">)</span>
+        <span class="n">macro_recall</span> <span class="o">=</span> <span class="n">macro_recall</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_labels</span><span class="p">)</span>
+        <span class="n">macro_f1</span> <span class="o">=</span> <span class="n">macro_f1</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">class_labels</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;macro_precision&quot;</span><span class="p">:</span> <span class="n">macro_precision</span><span class="p">,</span>
+            <span class="s2">&quot;macro_recall&quot;</span><span class="p">:</span> <span class="n">macro_recall</span><span class="p">,</span>
+            <span class="s2">&quot;macro_f1&quot;</span><span class="p">:</span> <span class="n">macro_f1</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="n">metrics</span><span class="p">[</span><span class="s2">&quot;macro_scores&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">calculate_macro_avg</span><span class="p">(</span><span class="n">confusion_matrices</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">confusion_matrices</span><span class="p">,</span> <span class="n">tp_fp_fn_tn</span><span class="p">,</span> <span class="n">metrics</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">confusion_matrices</span><span class="p">,</span> <span class="n">tp_fp_fn_tn</span><span class="p">,</span> <span class="n">metrics_report</span> <span class="o">=</span> <span class="n">classification_report_</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">class_labels</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span>
+    <span class="n">display_labels</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+
+<span class="n">sklearn_classification_report</span> <span class="o">=</span> <span class="n">metrics</span><span class="o">.</span><span class="n">classification_report</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">output_dict</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span>
+    <span class="n">target_names</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;benign&quot;</span><span class="p">,</span> <span class="s2">&quot;borderline&quot;</span><span class="p">,</span> <span class="s2">&quot;malignant&quot;</span><span class="p">],</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Our own classification report: </span><span class="si">{</span><span class="n">metrics_report</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;scikit-learn&#39;s classification report: </span><span class="si">{</span><span class="n">sklearn_classification_report</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Our own classification report: {&#39;micro_scores&#39;: {&#39;micro_precision&#39;: 0.3333333333333333, &#39;micro_recall&#39;: 0.3333333333333333, &#39;micro_f1&#39;: 0.3333333333333333}, &#39;macro_scores&#39;: {&#39;macro_precision&#39;: 0.2222222222222222, &#39;macro_recall&#39;: 0.3333333333333333, &#39;macro_f1&#39;: 0.26666666666666666}}
+scikit-learn&#39;s classification report: {&#39;benign&#39;: {&#39;precision&#39;: 0.6666666666666666, &#39;recall&#39;: 1.0, &#39;f1-score&#39;: 0.8, &#39;support&#39;: 2}, &#39;borderline&#39;: {&#39;precision&#39;: 0.0, &#39;recall&#39;: 0.0, &#39;f1-score&#39;: 0.0, &#39;support&#39;: 2}, &#39;malignant&#39;: {&#39;precision&#39;: 0.0, &#39;recall&#39;: 0.0, &#39;f1-score&#39;: 0.0, &#39;support&#39;: 2}, &#39;accuracy&#39;: 0.3333333333333333, &#39;macro avg&#39;: {&#39;precision&#39;: 0.2222222222222222, &#39;recall&#39;: 0.3333333333333333, &#39;f1-score&#39;: 0.26666666666666666, &#39;support&#39;: 6}, &#39;weighted avg&#39;: {&#39;precision&#39;: 0.2222222222222222, &#39;recall&#39;: 0.3333333333333333, &#39;f1-score&#39;: 0.26666666666666666, &#39;support&#39;: 6}}
+</pre></div>
+</div>
+</div>
+</div>
+<p>We have successfully coded out classification report to behave the same way as scikit-learn’s one.</p>
+<hr class="footnotes docutils" />
+<aside class="footnote brackets" id="id6" role="note">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id2">1</a>,<a role="doc-backlink" href="#id4">2</a>,<a role="doc-backlink" href="#id5">3</a>)</span>
+<p><a class="reference external" href="https://stackoverflow.com/questions/26355942/why-is-the-f-measure-a-harmonic-mean-and-not-an-arithmetic-mean-of-the-precision/26360501#26360501">https://stackoverflow.com/questions/26355942/why-is-the-f-measure-a-harmonic-mean-and-not-an-arithmetic-mean-of-the-precision/26360501#26360501</a></p>
+</aside>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./machine_learning/model_selection_and_evaluation/metrics/classification"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="accuracy.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Accuracy</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="brier_score.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Brier Score</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#precision">
+   <strong>
+    Precision
+   </strong>
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-use-precision">
+     When to use Precision?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-not-to-use-precision">
+     When NOT to use Precision?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation-of-precision">
+     Implementation of Precision
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#recall-sensitivity-true-positive-rate">
+   Recall/Sensitivity/True Positive Rate
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-use-recall">
+     When to use Recall?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#when-to-not-use-recall">
+     When to NOT use Recall?
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#implementation-of-recall">
+     Implementation of Recall
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-precision-recall-tradeoff">
+   The Precision-Recall Tradeoff
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#specificity-true-negative-rate">
+   Specificity/True Negative Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#false-positive-rate">
+   False Positive Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#false-negative-rate">
+   False Negative Rate
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#f1-score">
+   F1-Score
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#intuition">
+     Intuition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id3">
+     Definition
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multiclass-classification">
+   Multiclass Classification
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#label-binarize">
+     Label Binarize
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#macro-averaging">
+     Macro-Averaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#micro-averaging">
+     Micro-Averaging
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#micro-vs-macro">
+     Micro vs Macro
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#building-our-own-classification-report">
+     Building our own Classification Report
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

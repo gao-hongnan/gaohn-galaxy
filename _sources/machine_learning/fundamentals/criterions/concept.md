@@ -14,7 +14,7 @@ $$
 \end{aligned}
 $$
 
-which maps a pair of data point $\mathbf{x}$ and label $y$ together with a hypothesis $h$ to a non-negative real number $\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)$. 
+which maps a pair of data point $\mathbf{x}$ and label $y$ together with a hypothesis $h$ to a non-negative real number $\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)$.
 
 For example, if $h$ is an element from the linear map taking on the form $h(\mathbf{x})=\mathbf{w}^T\mathbf{x}$, then the loss is a function of the parameters $\mathbf{w}$ of the hypothesis $h$.
 This means we seek to find $\hat{\mathbf{w}}$ that minimizes the loss function $\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)$.
@@ -25,7 +25,7 @@ We sometimes abuse notation by writing $\mathcal{L}\left(\left(\mathbf{x}, y\rig
 ```{prf:definition} Loss Function as a Random Variable
 :label: def-loss-function-rv
 
-[In our random variables chapter](../../../03_discrete_random_variables/0301_random_variables.md),
+[In our random variables chapter](../../../probability_theory/03_discrete_random_variables/0301_random_variables.md),
 we defined a random variable as a map of sample space to real numbers.
 
 The definition of a loss function satisfies the requirement to be a random variable.
@@ -40,6 +40,6 @@ this is also the **state** of the random variable.
 
 ## Further Readings
 
-- Jung, Alexander. "Chapter 2.3. The Loss." In Machine Learning: The Basics. Springer Nature Singapore, 2023. 
+- Jung, Alexander. "Chapter 2.3. The Loss." In Machine Learning: The Basics. Springer Nature Singapore, 2023.
 - [Wikipedia: Empirical Risk Minimization](https://en.wikipedia.org/wiki/Empirical_risk_minimization)
 - [Wikipedia: Loss Function](https://en.wikipedia.org/wiki/Loss_function)
