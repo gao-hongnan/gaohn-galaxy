@@ -5,10 +5,17 @@ format: jb-book
 root: intro.md
 
 parts:
+  - caption: Optimization
+    chapters:
+      - file: optimization/gradient_descent/intro.md
+        sections:
+        - file: optimization/gradient_descent/concept.md
+        - file: optimization/gradient_descent/implementation.ipynb
+        - file: optimization/gradient_descent/application.ipynb
+
   - caption: Machine Learning
 
     chapters:
-
     - file: machine_learning/fundamentals/intro.md
       sections:
       - file: machine_learning/fundamentals/criterions/intro.md

@@ -20,6 +20,7 @@ opencv-python==4.7.0.68
 transformers==4.26.1  # huggingface transformers
 datasets==2.10.0 # huggingface datasets
 scikit-image==0.19.3
+d2l # consider adding version since this breaks earlier packages like numpy
 # rich
 # graphviz==0.20.1
 
