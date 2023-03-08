@@ -1,0 +1,3 @@
+# Ensemble Learning
+
+Ensemble learning is a machine learning paradigm where multiple models, such as decision trees, are trained to solve the same problem. Each individual model makes a prediction, and the ensemble model makes a final prediction based on all of the predictions from the individual models. Ensemble learning is a powerful technique that can often achieve better performance than a single model.

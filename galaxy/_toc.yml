@@ -123,6 +123,24 @@ parts:
         - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/eigendecomposition.md
         - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/geometry_of_multivariate_gaussian.md
 
+    - file: probability_theory/06_sample_statistics/intro.md
+      sections:
+      # - file: probability_theory/06_sample_statistics/from_population_to_sample.md
+      - file: probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/intro.md
+        sections:
+        - file: probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function.md
+        - file: probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function_application_sum_of_rv.md
+        - file: probability_theory/06_sample_statistics/0601_moment_generating_and_characteristic_functions/characteristic_function.md
+      - file: probability_theory/06_sample_statistics/0602_probability_inequalities/intro.md
+        sections:
+        - file: probability_theory/06_sample_statistics/0602_probability_inequalities/concept.md
+        - file: probability_theory/06_sample_statistics/0602_probability_inequalities/application.md
+      - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/intro.md
+        sections:
+        - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/concept.md
+        - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/convergence.ipynb
+        - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/application.md
+
   - caption: Optimization
     chapters:
       - file: optimization/gradient_descent/intro.md
@@ -157,12 +175,70 @@ parts:
         sections:
         - file: machine_learning/fundamentals/voronoi_region/concept.md
 
+    - file: machine_learning/linear_models/intro.md
+      sections:
+      - file: machine_learning/linear_models/linear_regression/intro.md
+        sections:
+        - file: machine_learning/linear_models/linear_regression/concept.md
+        - file: machine_learning/linear_models/linear_regression/implementation.ipynb
+      - file: machine_learning/linear_models/logistic_regression/intro.md
+        sections:
+        - file: machine_learning/linear_models/logistic_regression/concept.md
+        - file: machine_learning/linear_models/logistic_regression/implementation.ipynb
+      - file: machine_learning/linear_models/generalized_linear_models/intro.md
+
+    - file: machine_learning/generative/intro.md
+      sections:
+      - file: machine_learning/generative/naive_bayes/intro.md
+        sections:
+        - file: machine_learning/generative/naive_bayes/concept.md
+        - file: machine_learning/generative/naive_bayes/example_penguins.ipynb
+        - file: machine_learning/generative/naive_bayes/application_mnist.ipynb
+        - file: machine_learning/generative/naive_bayes/implementation.md
+
+    - file: machine_learning/model_selection_and_evaluation/intro.md
+      sections:
+      - file: machine_learning/model_selection_and_evaluation/metrics/intro.md
+        sections:
+        - file: machine_learning/model_selection_and_evaluation/metrics/classification/intro.md
+          sections:
+          - file: machine_learning/model_selection_and_evaluation/metrics/classification/accuracy.ipynb
+          - file: machine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1.ipynb
+          - file: machine_learning/model_selection_and_evaluation/metrics/classification/brier_score.ipynb
+        - file: machine_learning/model_selection_and_evaluation/metrics/regression/intro.md
+          sections:
+          - file: machine_learning/model_selection_and_evaluation/metrics/regression/mae.ipynb
+          - file: machine_learning/model_selection_and_evaluation/metrics/regression/rmse.ipynb
+          - file: machine_learning/model_selection_and_evaluation/metrics/regression/mape.ipynb
+
+    - file: machine_learning/trees/intro.md
+      sections:
+      - file: machine_learning/trees/decision_trees/intro.md
+        sections:
+        - file: machine_learning/trees/decision_trees/concept.ipynb
+      - file: machine_learning/trees/ensemble_learning/intro.md
+        sections:
+        - file: machine_learning/trees/ensemble_learning/bagging/intro.md
+        - file: machine_learning/trees/ensemble_learning/random_forests/intro.md
+        - file: machine_learning/trees/ensemble_learning/boosting/intro.md
+
+    - file: machine_learning/decomposition/intro.md
+      sections:
+      - file: machine_learning/decomposition/pca/intro.md
+        sections:
+        - file: machine_learning/decomposition/pca/concept.md
+        - file: machine_learning/decomposition/pca/implementation.ipynb
+        - file: machine_learning/decomposition/pca/eigenface.ipynb
+
+    - file: machine_learning/neighbours/intro.md
+      sections:
+      - file: machine_learning/neighbours/k_nearest_neighbours/intro.md
+
     - file: machine_learning/mixtures/intro.md
       sections:
       - file: machine_learning/mixtures/gmm/intro.md
         sections:
         - file: machine_learning/mixtures/gmm/concept.ipynb
-
 
     - file: machine_learning/clustering/intro.md
       sections:

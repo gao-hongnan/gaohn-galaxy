@@ -54,7 +54,7 @@ We use $\mathcal{R}$ if $\mathcal{D}$ is clear from the context.
 ```{prf:remark} Interpretation of True Risk
 :label: remark-interpretation-true-risk
 
-We know in [Joint Expection](../../../05_joint_distributions/0502_joint_expectation_and_correlation/concept.md)
+We know in [Joint Expection](../../../probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/concept.md)
 can be found by integrating over the joint distribution $\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})$,
 where the integrand is usually the probability of the event happening multiplied by the
 state of the event. In the case of the true risk, the event is the realization of a data point,
