@@ -1,0 +1,1493 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Real World Examples &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Geometric Distribution" href="../geometric/intro.html" />
+    <link rel="prev" title="Implementation" href="0309_binomial_distribution_implementation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_mathematical_preliminaries/intro.html">Chapter 1. Mathematical Preliminaries</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/01_combinatorics.html">Permutations and Combinations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/02_calculus.html">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/contours.html">Contour Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_probability/intro.html">Chapter 2. Probability</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0202_probability_space.html">Probability Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0203_probability_axioms.html">Probability Axioms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0204_conditional_probability.html">Conditional Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0205_independence.html">Independence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0206_bayes_theorem.html">Baye’s Theorem and the Law of Total Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/summary.html">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Chapter 3. Discrete Random Variables</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../0301_random_variables.html">Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../0302_discrete_random_variables.html">Discrete Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../0303_probability_mass_function.html">Probability Mass Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../0304_cumulative_distribution_function.html">Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../0305_expectation.html">Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../0306_moments_and_variance.html">Moments and Variance</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../uniform/intro.html">Discrete Uniform Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../uniform/0307_discrete_uniform_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../uniform/0307_discrete_uniform_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../bernoulli/intro.html">Bernoulli Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../bernoulli/0308_bernoulli_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../bernoulli/0308_bernoulli_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../iid.html">Independent and Identically Distributed (IID)</a></li>
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Binomial Distribution</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0309_binomial_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="0309_binomial_distribution_implementation.html">Implementation</a></li>
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Real World Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../geometric/intro.html">Geometric Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../geometric/0310_geometric_distribution_concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../poisson/intro.html">Poisson Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../poisson/0311_poisson_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../poisson/0311_poisson_distribution_implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../summary.html">Important</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../exercises.html">Exercises</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/intro.html">Natural Language Processing (NLP)</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-21"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/intro.html">Vector Semantics and Embeddings</a><input class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-23"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-24"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-25"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">IMDB Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://colab.research.google.com/github/gao-hongnan/gaohn-galaxy/blob/main/galaxy/probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fprobability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../_sources/probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Real World Examples</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#utilities">
+   Utilities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#call-center-simulation">
+   Call Center Simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bernoulli-trials">
+     Bernoulli Trials
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binomial-distribution">
+     Binomial Distribution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alternative-way-to-calculate-expected-value-of-revenue-per-day">
+     Alternative way to Calculate Expected Value of Revenue per Day
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-readings">
+   Further Readings
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="real-world-examples">
+<h1>Real World Examples<a class="headerlink" href="#real-world-examples" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://stats.stackexchange.com/questions/593079/interpretation-of-bernoulli-and-binomial-random-variables-in-a-call-simulation-c">Tim’s reply on my confusion</a>.</p>
+<section id="utilities">
+<h2>Utilities<a class="headerlink" href="#utilities" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="n">parent_dir</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">Path</span><span class="p">()</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span> <span class="k">as</span> <span class="nn">stats</span>
+
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">&quot;ignore&quot;</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">DeprecationWarning</span><span class="p">)</span>
+<span class="o">%</span><span class="k">matplotlib</span> inline
+
+<span class="kn">from</span> <span class="nn">src.utils.general</span> <span class="kn">import</span> <span class="n">seed_all</span>
+<span class="kn">from</span> <span class="nn">src.utils.plot</span> <span class="kn">import</span> <span class="n">true_pmf</span><span class="p">,</span> <span class="n">empirical_pmf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">seed_all</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Using Seed Number <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">42</span>
+</pre>
+</div></div>
+</div>
+</section>
+<section id="call-center-simulation">
+<h2>Call Center Simulation<a class="headerlink" href="#call-center-simulation" title="Permalink to this heading">#</a></h2>
+<p>This example is taken from <span id="id1">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id18" title="Tony Yiu. Fun with the binomial distribution - towards data science. Jul 2019. URL: https://towardsdatascience.com/fun-with-the-binomial-distribution-96a5ecabf65b.">Yiu, 2019</a>]</span>, please take a look at this author’s articles, they are really good!</p>
+<p>Imagine that we are data scientists tasked with improving the ROI (Return on Investment) of our company’s call center,
+where employees attempt to cold call potential customers and get them to purchase our product.</p>
+<p>You look at some historical data and find the following:</p>
+<ul class="simple">
+<li><p>The typical call center employee completes on average 50 calls per day.</p></li>
+<li><p>The probability of a conversion (purchase) for each call is <span class="math notranslate nohighlight">\(4\%\)</span>.</p></li>
+<li><p>The average revenue to your company for each conversion is <span class="math notranslate nohighlight">\(90\)</span>.</p></li>
+<li><p>The call center you are analyzing has <span class="math notranslate nohighlight">\(100\)</span> employees.</p></li>
+<li><p>Each employee is paid <span class="math notranslate nohighlight">\(200\)</span> per day of work.</p></li>
+</ul>
+<section id="bernoulli-trials">
+<h3>Bernoulli Trials<a class="headerlink" href="#bernoulli-trials" title="Permalink to this heading">#</a></h3>
+<p>Let <span class="math notranslate nohighlight">\(X\)</span> be the <em><strong>success conversion call status</strong></em> of a <em><strong>call made by 1 single randomly chosen employee</strong></em>.
+In other words, let <span class="math notranslate nohighlight">\(X\)</span> be the <em><strong>outcome of a call</strong></em> made by <em><strong>1 single randomly chosen employee</strong></em>
+where the outcome is either success or failure in conversion.</p>
+<p>Then we can model the <em><strong>probability of success</strong></em> of a call made by a <em><strong>randomly chosen employee</strong></em> as
+a Bernoulli random variable <span class="math notranslate nohighlight">\(X\)</span> with parameter <span class="math notranslate nohighlight">\(p\)</span> where <span class="math notranslate nohighlight">\(p\)</span> is the <em><strong>probability of success</strong></em>
+of a call made by that <em><strong>randomly chosen employee</strong></em>.</p>
+<p>We need to follow some assumptions in order to make <span class="math notranslate nohighlight">\(X\)</span> a Bernoulli Trial:</p>
+<ul class="simple">
+<li><p>Each trial has two possible outcomes: 1 or 0 (success of failure);</p>
+<ul>
+<li><p>This means any single employee can only make call that is successful or not.</p></li>
+</ul>
+</li>
+<li><p>The probability of success is constant for each trial, as mentioned,
+the probability of a conversion (purchase) for each call is <span class="math notranslate nohighlight">\(p=0.04\)</span>. We treat is as constant.</p>
+<ul>
+<li><p>This means everytime a call is made by a randomly chosen employee, the success rate is constant at <span class="math notranslate nohighlight">\(p=0.04\)</span>.</p></li>
+</ul>
+</li>
+<li><p>Each trial is independent.</p>
+<ul>
+<li><p>This means that each call made by the randomly chosen employee is independent of the previous calls made.</p></li>
+</ul>
+</li>
+</ul>
+<p>We define the sample space, event space and probability measure below:</p>
+<ul class="simple">
+<li><p>The sample space <span class="math notranslate nohighlight">\(\S = \{0,1\}\)</span> where <span class="math notranslate nohighlight">\(0\)</span> represents <em><strong>failure</strong></em> and <span class="math notranslate nohighlight">\(1\)</span> represents <em><strong>success</strong></em>.</p></li>
+<li><p>The event space <span class="math notranslate nohighlight">\(\E = \{\emptyset, \{0\}, \{1\}, \{0,1\}\}\)</span>.</p></li>
+<li><p>The probability measure <span class="math notranslate nohighlight">\(\P\)</span> is defined as follows:</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(\P(\emptyset) = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\P(\{0\}) = 1-p = 0.96\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\P(\{1\}) = p = 0.04\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\P(\{0,1\}) = 1\)</span></p></li>
+</ul>
+</li>
+</ul>
+<p>Our random variable <span class="math notranslate nohighlight">\(X: \S \to \R\)</span> can be defined as <span class="math notranslate nohighlight">\(X(\{0\}) = 0\)</span> and <span class="math notranslate nohighlight">\(X(\{1\}) = 1\)</span>,
+or <span class="math notranslate nohighlight">\(X(0) = 0\)</span> and <span class="math notranslate nohighlight">\(X(1) = 1\)</span>. The states of <span class="math notranslate nohighlight">\(X\)</span> are <span class="math notranslate nohighlight">\(\lset 0, 1 \rset\)</span>.</p>
+<p>Consequently, the PMF is fully determined by</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+f_X(x) = \P(X=x) = \begin{cases}
+    0.96  &amp; \text{if } x = 0 \\
+    0.04  &amp; \text{if } x = 1
+\end{cases}
+\end{align}
+\end{split}\]</div>
+<p><span class="math notranslate nohighlight">\(X\)</span> is a Bernoulli Trial because we can think of it as 1 single person tossing 1 coin, then the corresponding
+random variable <span class="math notranslate nohighlight">\(X\)</span> is <strong>the outcome of the coin toss made by 1 randomly chosen single person.</strong> Therefore,
+it can be made to fit as a Bernoulli Trial if we assume the assumptions as above.</p>
+</section>
+<section id="binomial-distribution">
+<h3>Binomial Distribution<a class="headerlink" href="#binomial-distribution" title="Permalink to this heading">#</a></h3>
+<p>Now the above details a <em><strong>single call</strong></em> made by a <em><strong>randomly chosen employee</strong></em>, which follows a Bernoulli distribution.
+You can associate this with a <em><strong>single coin toss</strong></em> made by a <em><strong>randomly chosen person</strong></em>, which also follows a Bernoulli distribution
+(i.e. <span class="math notranslate nohighlight">\(X \sim \bern(0.04)\)</span>).</p>
+<p>Now, a single employee can make multiple calls. For example, in the example above, an employee can make
+50 calls a day. We can define a sequence of calls <span class="math notranslate nohighlight">\(X_1, X_2, \ldots, X_{50}\)</span>.
+One confusion that arise here is what each <span class="math notranslate nohighlight">\(X_i\)</span> mean. In this particular settings,
+it would be reasonable to assume that each <span class="math notranslate nohighlight">\(X_i\)</span> is a copy of <span class="math notranslate nohighlight">\(X\)</span> where <span class="math notranslate nohighlight">\(X\)</span> is <em><strong>the</strong></em> randomly
+chosen person. This means once <span class="math notranslate nohighlight">\(X\)</span> is determined (tagged to the person chosen, say person A), then
+<span class="math notranslate nohighlight">\(X_1, X_2, \ldots, X_{50}\)</span> all refer to this person A’s calls as it does not make sense
+that <span class="math notranslate nohighlight">\(X_i\)</span> correspond to different person. See <a class="reference external" href="https://stats.libretexts.org/Bookshelves/Probability_Theory/Probability_Mathematical_Statistics_and_Stochastic_Processes_(Siegrist)/11%3A_Bernoulli_Trials/11.01%3A_Introduction_to_Bernoulli_Trials">here</a>’s
+example on “Suppose that a student takes a multiple choice test” to see how they phrase it. I think I should
+rephrase the definition of my Bernoulli r.v. just now as the employee is not “random”?</p>
+<p>Since each <span class="math notranslate nohighlight">\(X_i\)</span> is a Bernoulli trial, then  <span class="math notranslate nohighlight">\(n\)</span> such calls are <strong>identically and independently distributed</strong> (i.i.d.),
+then we can define <span class="math notranslate nohighlight">\(Y\)</span> to be the <em><strong>number of successful conversion calls</strong></em>, which now follows a <em><strong>Binomial distribution</strong></em> because
+each call made by the employee is <span class="math notranslate nohighlight">\(\iid\)</span> and follows a Bernoulli distribution with constant parameter <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p>Since <span class="math notranslate nohighlight">\(n=50\)</span> and <span class="math notranslate nohighlight">\(p=0.04\)</span>, we can define our <span class="math notranslate nohighlight">\(Y\)</span> as follows:</p>
+<div class="math notranslate nohighlight">
+\[
+Y \sim \binomial(50, 0.04)
+\]</div>
+<p>So <span class="math notranslate nohighlight">\(Y = X_0 + X_1 + \ldots + X_{50}\)</span> in this scenario, note <span class="math notranslate nohighlight">\(Y\)</span> is still made by 1 single employee.
+It is just the total number of successful conversion calls made by 1 single employee.</p>
+<p>Each call by 1 single employee is <span class="math notranslate nohighlight">\(\iid\)</span>, this means it is similar idea to 1 single person tossing 1 coin 50 times.</p>
+<p>Below is a realization of the PMF of <span class="math notranslate nohighlight">\(Y\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{align}
+\P(Y=y) = \begin{cases}
+0.12988579352203838   &amp;\quad \text{ if } y=0 \\
+0.2705954031709139   &amp;\quad \text{ if } y=1 \\
+0.27623280740364115 &amp;\quad \text{ if } y=2 \\
+\vdots &amp;\quad \vdots \\
+1.2676506002282307e-70   &amp;\quad \text{ if } y=50 \\
+\end{cases}
+\end{align}
+\end{split}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.04</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">50</span>
+
+<span class="c1"># our random variable Y</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>  <span class="c1"># [0, 1, ..., 50]</span>
+
+<span class="n">f</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>  <span class="c1"># pmf P(Y=0) P(Y=1)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">();</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/91072c2d245069065eade7c26d2a9c5d9a2e4e7bffe8eb3e30e0fee53dde0a57.png" src="../../../_images/91072c2d245069065eade7c26d2a9c5d9a2e4e7bffe8eb3e30e0fee53dde0a57.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">y_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">51</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;PMF for Y=</span><span class="si">{</span><span class="n">y_</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">Y</span><span class="o">.</span><span class="n">pmf</span><span class="p">(</span><span class="n">y_</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>PMF for Y=0 is 0.12988579352203838
+PMF for Y=1 is 0.2705954031709139
+PMF for Y=2 is 0.27623280740364115
+PMF for Y=3 is 0.18415520493576068
+PMF for Y=4 is 0.09015931908313288
+PMF for Y=5 is 0.03456107231520094
+PMF for Y=6 is 0.010800335098500296
+PMF for Y=7 is 0.002828659192464365
+PMF for Y=8 is 0.0006335017983123325
+PMF for Y=9 is 0.00012318090522739773
+PMF for Y=10 is 2.1043404643013807e-05
+PMF for Y=11 is 3.1883946428808775e-06
+PMF for Y=12 is 4.317617745567845e-07
+PMF for Y=13 is 5.2586369978069964e-08
+PMF for Y=14 is 5.790760979727912e-09
+PMF for Y=15 is 5.790760979727948e-10
+PMF for Y=16 is 5.278037351314524e-11
+PMF for Y=17 is 4.398364459428767e-12
+PMF for Y=18 is 3.3598617398414237e-13
+PMF for Y=19 is 2.3577977121694196e-14
+PMF for Y=20 is 1.5227443557760843e-15
+PMF for Y=21 is 9.063954498667164e-17
+PMF for Y=22 is 4.978308342070981e-18
+PMF for Y=23 is 2.525228869166441e-19
+PMF for Y=24 is 1.1837010324217706e-20
+PMF for Y=25 is 5.129371140494332e-22
+PMF for Y=26 is 2.055036514621123e-23
+PMF for Y=27 is 7.611246350448613e-25
+PMF for Y=28 is 2.60503967351663e-26
+PMF for Y=29 is 8.234320807092859e-28
+PMF for Y=30 is 2.4016769020687333e-29
+PMF for Y=31 is 6.456120704485886e-31
+PMF for Y=32 is 1.5972173617868683e-32
+PMF for Y=33 is 3.630039458606517e-34
+PMF for Y=34 is 7.562582205430263e-36
+PMF for Y=35 is 1.4404918486533809e-37
+PMF for Y=36 is 2.500853903912116e-39
+PMF for Y=37 is 3.9427876863479427e-41
+PMF for Y=38 is 5.620201745890709e-43
+PMF for Y=39 is 7.205386853706048e-45
+PMF for Y=40 is 8.256172436538177e-47
+PMF for Y=41 is 8.390419142823334e-49
+PMF for Y=42 is 7.491445663235104e-51
+PMF for Y=43 is 5.807322219562096e-53
+PMF for Y=44 is 3.8495507137248904e-55
+PMF for Y=45 is 2.138639285402722e-57
+PMF for Y=46 is 9.685866328816647e-60
+PMF for Y=47 is 3.434704371920785e-62
+PMF for Y=48 is 8.944542635210379e-65
+PMF for Y=49 is 1.5211807202738746e-67
+PMF for Y=50 is 1.2676506002282307e-70
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span><span class="p">,</span> <span class="n">var</span> <span class="o">=</span> <span class="n">Y</span><span class="o">.</span><span class="n">stats</span><span class="p">(</span><span class="n">moments</span><span class="o">=</span><span class="s2">&quot;mv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected value: </span><span class="si">{</span><span class="n">mean</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Variance: </span><span class="si">{</span><span class="n">var</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expected value: 2.0
+Variance: 1.92
+</pre></div>
+</div>
+</div>
+</div>
+<p>At this very moment, we can already calculate our the total revenue earned per day
+and the corresponding profits per day.</p>
+<p>This is because we can use the expected value <span class="math notranslate nohighlight">\(\P \lsq Y \rsq\)</span>
+to get the average number of successful conversion per day.</p>
+<p>We see that we are making a loss of <span class="math notranslate nohighlight">\(-2000\)</span> a day.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">num_employees</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">salary_per_employee</span> <span class="o">=</span> <span class="mi">200</span>
+<span class="n">revenue_per_successful_call</span> <span class="o">=</span> <span class="mi">90</span>
+
+<span class="n">expected_total_conversions</span> <span class="o">=</span> <span class="n">mean</span> <span class="o">*</span> <span class="n">num_employees</span>
+<span class="n">expected_total_revenue</span>     <span class="o">=</span> <span class="n">revenue_per_successful_call</span> <span class="o">*</span> <span class="n">expected_total_conversions</span>
+<span class="n">expected_total_profits</span>     <span class="o">=</span> <span class="n">expected_total_revenue</span> <span class="o">-</span> <span class="n">salary_per_employee</span> <span class="o">*</span> <span class="n">num_employees</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected Total Conversions Per Day: </span><span class="si">{</span><span class="n">expected_total_conversions</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected Total Revenue Per Day: </span><span class="si">{</span><span class="n">expected_total_revenue</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Expected Total Profits Per Day: </span><span class="si">{</span><span class="n">expected_total_profits</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Expected Total Conversions Per Day: 200.0
+Expected Total Revenue Per Day: 18000.0
+Expected Total Profits Per Day: -2000.0
+</pre></div>
+</div>
+</div>
+</div>
+<p>By theory, we know that increasing either <span class="math notranslate nohighlight">\(n\)</span> or <span class="math notranslate nohighlight">\(p\)</span> will increase the expectation
+<span class="math notranslate nohighlight">\(\exp \lsq Y \rsq\)</span> since <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(p\)</span> are both positive. Consequently, increasing both at the same
+time will also guarantee an increase in expectation.</p>
+<p>So the solutions to increase revenue/profits per day are:</p>
+<ul class="simple">
+<li><p>Increase <span class="math notranslate nohighlight">\(n\)</span>, the number of calls performed by 1 single employee;</p></li>
+<li><p>Increase <span class="math notranslate nohighlight">\(p\)</span>, the success rate of a call conversion by 1 single employee through techniques like not hard pressing the customers to buy something;</p></li>
+</ul>
+<p>With this realized state of the theoretical (true) PMF, we can employ <strong>generative/synthesis</strong> method to generate
+samples from this distribution because <strong>we assumed that <span class="math notranslate nohighlight">\(Y\)</span> follows a Binomial distribution prior</strong>.</p>
+<p>So if we have <code class="docutils literal notranslate"><span class="pre">Y.rvs(size</span> <span class="pre">=</span> <span class="pre">10)</span></code>, it simply means generate a sequence 10 random variables <span class="math notranslate nohighlight">\(Y_1, Y_2, \ldots, Y_{10}\)</span> of <span class="math notranslate nohighlight">\(Y\)</span>.</p>
+<p>We have</p>
+<div class="math notranslate nohighlight">
+\[
+Y_i \sim \binomial(50, 0.04) \quad i \in \{0, 1, \ldots, 50\}
+\]</div>
+<p>In this context, we can be unambiguous and say that each <span class="math notranslate nohighlight">\(Y_i\)</span> should be the <em><strong>number of successful conversion calls</strong></em> made by a single randomly selected employee.</p>
+<p>To be more precise, each experiment for <span class="math notranslate nohighlight">\(Y_i\)</span> is like a new randomly drawn 50 calls by a random person, so
+each time is a realisation of 50 calls from a randomly selected person. So if you have 100 people you can have 100 <span class="math notranslate nohighlight">\(Y_i\)</span>.
+Note the distinction, in <span class="math notranslate nohighlight">\(X_i\)</span>, this <span class="math notranslate nohighlight">\(X_i\)</span> is bind to a single person (may be wrong here), here each <span class="math notranslate nohighlight">\(Y_i\)</span>
+can be any member from the population.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># generate states from binomial distribution</span>
+<span class="n">Y</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 4, 3, 2, 1, 1, 0, 4, 2, 3])
+</pre></div>
+</div>
+</div>
+</div>
+<p>If we plot 100 such <span class="math notranslate nohighlight">\(Y_i\)</span>, we form an empirical distribution and compared to the true PMF it has a bit of differences.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">Y</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span>
+    <span class="n">bins</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/36f542e645be873c35dc935a5fcfcd924533cf0e51654661a012579a7a080c93.png" src="../../../_images/36f542e645be873c35dc935a5fcfcd924533cf0e51654661a012579a7a080c93.png" />
+</div>
+</div>
+<p>When we increase to 10000, the empirical starts to be closer to the true PMF.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">bins</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">50</span> <span class="o">+</span> <span class="mf">1.5</span><span class="p">)</span> <span class="o">-</span> <span class="mf">0.5</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">Y</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">),</span>
+    <span class="n">bins</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="s2">&quot;bo&quot;</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/98167d8edb24876d6dbf1159fab69741404b0aca3d597506089d30e1042fc2d1.png" src="../../../_images/98167d8edb24876d6dbf1159fab69741404b0aca3d597506089d30e1042fc2d1.png" />
+</div>
+</div>
+</section>
+<section id="alternative-way-to-calculate-expected-value-of-revenue-per-day">
+<h3>Alternative way to Calculate Expected Value of Revenue per Day<a class="headerlink" href="#alternative-way-to-calculate-expected-value-of-revenue-per-day" title="Permalink to this heading">#</a></h3>
+<p>We already know in the long run the company does not earn profits by the law of average (expectation).</p>
+<p>We can also calculate it by defining the total revenue as a random variable <span class="math notranslate nohighlight">\(Z = 90Y\)</span> where <span class="math notranslate nohighlight">\(90\)</span> refers
+to the revenue earned per successful call conversion by an employee.</p>
+<div class="math notranslate nohighlight">
+\[
+\expectation \lsq Z \rsq = \expectation \lsq 90Y \rsq = 90 \expectation \lsq Y \rsq = 90 \times 2 = 180
+\]</div>
+<p>This means on <strong>average</strong>, the company earns revenue of 180 per day per employee. Thus if there’s 100 employees,
+then on <strong>average</strong>, the total revenue per day is <span class="math notranslate nohighlight">\(180 \times 100 = 18000\)</span>, which is the same as we got earlier.</p>
+<p>And if we want to further calculate how much the company loses in 1 year, that will be</p>
+<div class="math notranslate nohighlight">
+\[
+365 \times (18000 - 20000) = 730000
+\]</div>
+<p>assuming everything else constant (no employees left etc).</p>
+<p>We can also simulate 365 days using code below, we define <code class="docutils literal notranslate"><span class="pre">Z</span> <span class="pre">=</span> <span class="pre">90</span> <span class="pre">*</span> <span class="pre">Y.rvs(size</span> <span class="pre">=</span> <span class="pre">100)</span></code>
+to be the random variable <span class="math notranslate nohighlight">\(Z = 90Y\)</span> (as there is no good way to just use <code class="docutils literal notranslate"><span class="pre">Z=90*Y</span></code>).</p>
+<p>At each loop (day), we get a new draw random variable <span class="math notranslate nohighlight">\(Z\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">yearly_revenue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span>
+<span class="n">yearly_salary_paid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20000</span>
+
+<span class="k">for</span> <span class="n">each_day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">365</span><span class="p">):</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">Y</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># 100 employees&#39; revenue [90, 180, 0, ...]</span>
+    <span class="n">daily_revenue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">yearly_revenue</span><span class="p">[</span><span class="n">each_day</span><span class="p">]</span> <span class="o">=</span> <span class="n">daily_revenue</span>
+    
+<span class="n">yearly_profits</span> <span class="o">=</span> <span class="n">yearly_revenue</span> <span class="o">-</span>  <span class="n">yearly_salary_paid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#bins = np.arange(0, yearly_revenue.max() + 1.5) - 0.5</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">yearly_profits</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># plt.plot(y, f, &quot;bo&quot;, ms=10)</span>
+<span class="c1"># plt.vlines(y, 0, f, colors=&quot;b&quot;, lw=5, alpha=0.5)</span>
+<span class="c1">#plt.xticks(y)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/3eb2e8d4422d56c9b6a451a1d7a174fd3ef036733596156d001b83111960cb31.png" src="../../../_images/3eb2e8d4422d56c9b6a451a1d7a174fd3ef036733596156d001b83111960cb31.png" />
+</div>
+</div>
+<p>If we increase <span class="math notranslate nohighlight">\(n\)</span> or <span class="math notranslate nohighlight">\(p\)</span>, say just bump out both by a bit to <span class="math notranslate nohighlight">\(n=58\)</span> and <span class="math notranslate nohighlight">\(p=0.06\)</span>, then we have</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">p</span> <span class="o">=</span> <span class="mf">0.06</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">58</span>
+
+<span class="c1"># our random variable Y</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">binom</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span>
+
+<span class="n">yearly_revenue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span>
+<span class="n">yearly_salary_paid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="mi">365</span><span class="p">)</span> <span class="o">*</span> <span class="mi">20000</span>
+
+<span class="k">for</span> <span class="n">each_day</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">365</span><span class="p">):</span>
+    <span class="n">Z</span> <span class="o">=</span> <span class="mi">90</span> <span class="o">*</span> <span class="n">Y</span><span class="o">.</span><span class="n">rvs</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span> <span class="c1"># 100 employees&#39; revenue [90, 180, 0, ...]</span>
+    <span class="n">daily_revenue</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">Z</span><span class="p">)</span>
+    <span class="n">yearly_revenue</span><span class="p">[</span><span class="n">each_day</span><span class="p">]</span> <span class="o">=</span> <span class="n">daily_revenue</span>
+    
+<span class="n">yearly_profits_improved</span> <span class="o">=</span> <span class="n">yearly_revenue</span> <span class="o">-</span>  <span class="n">yearly_salary_paid</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#bins = np.arange(0, yearly_revenue.max() + 1.5) - 0.5</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">yearly_profits</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span>
+    <span class="n">yearly_profits_improved</span><span class="p">,</span>
+    <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+    <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+    <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># plt.plot(y, f, &quot;bo&quot;, ms=10)</span>
+<span class="c1"># plt.vlines(y, 0, f, colors=&quot;b&quot;, lw=5, alpha=0.5)</span>
+<span class="c1">#plt.xticks(y)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../../_images/8c0e22db449b6806fd6291ca3f041e929d648453b761ee49c92a56c08cbfc92d.png" src="../../../_images/8c0e22db449b6806fd6291ca3f041e929d648453b761ee49c92a56c08cbfc92d.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="further-readings">
+<h2>Further Readings<a class="headerlink" href="#further-readings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://www.youtube.com/watch?v=qIzC1-9PwQo&amp;amp;list=PLvxOuBpazmsNIHP5cz37oOPZx0JKyNszN&amp;amp;index=4">https://www.youtube.com/watch?v=qIzC1-9PwQo&amp;list=PLvxOuBpazmsNIHP5cz37oOPZx0JKyNszN&amp;index=4</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/fun-with-the-binomial-distribution-96a5ecabf65b">https://towardsdatascience.com/fun-with-the-binomial-distribution-96a5ecabf65b</a></p></li>
+<li><p><a class="reference external" href="https://stats.stackexchange.com/questions/593079/interpretation-of-bernoulli-and-binomial-random-variables-in-a-call-simulation-c">Tim’s reply on my confusion</a>.</p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./probability_theory/03_discrete_random_variables/binomial"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="0309_binomial_distribution_implementation.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Implementation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../geometric/intro.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Geometric Distribution</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#utilities">
+   Utilities
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#call-center-simulation">
+   Call Center Simulation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#bernoulli-trials">
+     Bernoulli Trials
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#binomial-distribution">
+     Binomial Distribution
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#alternative-way-to-calculate-expected-value-of-revenue-per-day">
+     Alternative way to Calculate Expected Value of Revenue per Day
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#further-readings">
+   Further Readings
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

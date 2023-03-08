@@ -21,7 +21,8 @@ In NLP, document concept can be a bit vague: a document is a unit, so it can cor
 
 A corpus is a collection of documents. In your example, the corpus is composed by 5 documents.
 
-The vocabulary is the list of all the words contained in the corpus, therefore all the words contained in all the documents. Your vocabulary is [&, can, crazy, foo, football, help, how, i, is, it, love, might, rain, sheriff, shot, stupid, the, this, today, you]
+The vocabulary is the list of all the words contained in the corpus, therefore all the words contained in all the documents. Your vocabulary is
+`[&, can, crazy, foo, football, help, how, i, is, it, love, might, rain, sheriff, shot, stupid, the, this, today, you]`.
 
 ```{list-table} Basic NLP Terminologies
 :header-rows: 1
