@@ -5,6 +5,13 @@ format: jb-book
 root: intro.md
 
 parts:
+
+  - caption: Notations
+    chapters:
+    - file: notations/mathematical_notations.md
+    - file: notations/machine_learning_notations.md
+    - file: notations/deep_learning_notations.md
+
   - caption: Optimization
     chapters:
       - file: optimization/gradient_descent/intro.md
@@ -54,6 +61,28 @@ parts:
         - file: machine_learning/clustering/kmeans/concept.md
         - file: machine_learning/clustering/kmeans/implementation.ipynb
         - file: machine_learning/clustering/kmeans/image_segmentation.ipynb
+
+  - caption: Deep Learning
+    chapters:
+      - file: deep_learning/intro.md
+      - file: deep_learning/natural_language_processing/intro.md
+        sections:
+        - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/intro.md
+          sections:
+          - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/intro.md
+            sections:
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/concept.ipynb
+          - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/intro.md
+            sections:
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/concept.ipynb
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/implementation.ipynb
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/word_similarity.ipynb
+          - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.md
+            sections:
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.ipynb
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.ipynb
+            - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.ipynb
+
 
   - caption: References, Resources and Roadmap
     chapters:
