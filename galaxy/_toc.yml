@@ -12,6 +12,63 @@ parts:
     - file: notations/machine_learning_notations.md
     - file: notations/deep_learning_notations.md
 
+  - caption: Probability Theory
+    chapters:
+    - file: probability_theory/01_mathematical_preliminaries/intro.md
+      sections:
+      - file: probability_theory/01_mathematical_preliminaries/01_combinatorics.md
+      - file: probability_theory/01_mathematical_preliminaries/02_calculus.md
+      - file: probability_theory/01_mathematical_preliminaries/contours.ipynb
+      - file: probability_theory/01_mathematical_preliminaries/exercises.ipynb
+
+    - file: probability_theory/02_probability/intro.md
+      sections:
+      - file: probability_theory/02_probability/0202_probability_space.md
+      - file: probability_theory/02_probability/0203_probability_axioms.md
+      - file: probability_theory/02_probability/0204_conditional_probability.md
+      - file: probability_theory/02_probability/0205_independence.md
+      - file: probability_theory/02_probability/0206_bayes_theorem.md
+      - file: probability_theory/02_probability/summary.md
+
+    - file: probability_theory/03_discrete_random_variables/intro.md
+      sections:
+      - file: probability_theory/03_discrete_random_variables/0301_random_variables.md
+      - file: probability_theory/03_discrete_random_variables/0302_discrete_random_variables.md
+      - file: probability_theory/03_discrete_random_variables/0303_probability_mass_function.md
+      - file: probability_theory/03_discrete_random_variables/0304_cumulative_distribution_function.md
+      - file: probability_theory/03_discrete_random_variables/0305_expectation.md
+      - file: probability_theory/03_discrete_random_variables/0306_moments_and_variance.md
+
+      - file: probability_theory/03_discrete_random_variables/uniform/intro.md
+        sections:
+        - file: probability_theory/03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_concept.md
+        - file: probability_theory/03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_application.ipynb
+
+      - file: probability_theory/03_discrete_random_variables/bernoulli/intro.md
+        sections:
+        - file: probability_theory/03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_concept.md
+        - file: probability_theory/03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_application.ipynb
+
+      - file: probability_theory/03_discrete_random_variables/iid.md
+
+      - file: probability_theory/03_discrete_random_variables/binomial/intro.md
+        sections:
+        - file: probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_concept.md
+        - file: probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_implementation.ipynb
+        - file: probability_theory/03_discrete_random_variables/binomial/0309_binomial_distribution_application.ipynb
+
+      - file: probability_theory/03_discrete_random_variables/geometric/intro.md
+        sections:
+        - file: probability_theory/03_discrete_random_variables/geometric/0310_geometric_distribution_concept.md
+
+      - file: probability_theory/03_discrete_random_variables/poisson/intro.md
+        sections:
+        - file: probability_theory/03_discrete_random_variables/poisson/0311_poisson_distribution_concept.md
+        - file: probability_theory/03_discrete_random_variables/poisson/0311_poisson_distribution_implementation.ipynb
+
+      - file: probability_theory/03_discrete_random_variables/summary.md
+      - file: probability_theory/03_discrete_random_variables/exercises.md
+
   - caption: Optimization
     chapters:
       - file: optimization/gradient_descent/intro.md
@@ -21,7 +78,6 @@ parts:
         - file: optimization/gradient_descent/application.ipynb
 
   - caption: Machine Learning
-
     chapters:
     - file: machine_learning/fundamentals/intro.md
       sections:
@@ -64,7 +120,6 @@ parts:
 
   - caption: Deep Learning
     chapters:
-      - file: deep_learning/intro.md
       - file: deep_learning/natural_language_processing/intro.md
         sections:
         - file: deep_learning/natural_language_processing/vector_semantics_and_embeddings/intro.md

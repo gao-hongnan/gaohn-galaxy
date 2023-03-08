@@ -19,8 +19,13 @@ kernelspec:
 :tags: [remove-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+
+parent_dir = str(Path().resolve().parents[3])
 sys.path.append(parent_dir)
+
+from src.utils.general import seed_all
+
+seed_all()
 
 import matplotlib.pyplot as plt
 %matplotlib inline
@@ -29,7 +34,7 @@ matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
 plt.style.use("dark_background")
 ```
 
-# Bernoulli Distribution
+# Concept
 
 ## PMF and CDF of Bernoulli Distribution
 
@@ -51,8 +56,8 @@ See more [here](https://www.statisticshowto.com/bernoulli-trials/).
 ```{prf:definition} Bernoulli Distribution (PMF)
 :label: def_bernoulli_distribution_pmf
 
-Let $X$ be a **Bernoulli random variable** with parameter $p$. Then the 
-probability mass function (PMF) of $X$ is given by 
+Let $X$ be a **Bernoulli random variable** with parameter $p$. Then the
+probability mass function (PMF) of $X$ is given by
 
 $$
 \begin{align}
@@ -64,7 +69,7 @@ p   &\quad \text{ if } x=1 \\
 \end{align}
 $$
 
-where $0 \leq p \leq 1$ is called the Bernoulli parameter. 
+where $0 \leq p \leq 1$ is called the Bernoulli parameter.
 
 A **Bernoulli distribution is a Bernoulli trial**.
 
@@ -106,7 +111,7 @@ The PMF and CDF plots are shown below.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_bernoulli_pmf
+from src.utils.plot import plot_bernoulli_pmf
 
 _fig, axes = plt.subplots(1,2, figsize=(8.4, 4.8), sharey=True, dpi=125)
 plot_bernoulli_pmf(p=0.2, ax=axes[0])
@@ -116,7 +121,7 @@ plt.show()
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_bernoulli_pmf, plot_empirical_bernoulli
+from src.utils.plot import plot_bernoulli_pmf, plot_empirical_bernoulli
 
 fig, axes = plt.subplots(1, 2, figsize=(8.4, 4.8), sharey=True, dpi=125)
 plot_bernoulli_pmf(p=0.2, ax=axes[0])
@@ -191,7 +196,7 @@ $$
 $$
 ```
 
-## Maximum Variance 
+## Maximum Variance
 
 ### Minimum and Maximum Variance of Coin Toss
 
@@ -203,13 +208,13 @@ If we toss the coin $n$ times, then we ask ourselves what is the minimum and max
 
 Recall in {prf:ref}`def_variance` that the variance is basically how much the data deviates from the mean.
 
-If the coin is biased at $p=1$, then the variance is $0$ because the coin always lands on heads. The 
+If the coin is biased at $p=1$, then the variance is $0$ because the coin always lands on heads. The
 intuition is that the coin is "deterministic", and hence there is no variance at all. If the coin
 is biased at $p=0.9$, then there is a little variance, because the coin will consistently land on heads
 $90\%$ of the time. If the coin is biased at $p=0.5$, then there is a lot of variance, because the coin
 is fair and has a 50-50 chance of landing on heads or tails. Though fair, the variance is maximum here.
 
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 3.5.1. Bernoulli random variable." In Introduction to Probability for Data Science, 137-142. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 3.5.1. Bernoulli random variable." In Introduction to Probability for Data Science, 137-142. Ann Arbor, Michigan: Michigan Publishing Services, 2021.

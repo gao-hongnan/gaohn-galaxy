@@ -1,3 +1,4 @@
+import os
 import random
 from dataclasses import dataclass, fields
 from typing import Any, List, Mapping, Optional, Tuple
@@ -5,10 +6,10 @@ from urllib.request import urlopen
 
 import numpy as np
 import PIL
+import torch
 from matplotlib.colors import ListedColormap
 from PIL.Image import Image
 from rich import print  # pylint: disable=redefined-builtin
-
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 
@@ -104,9 +105,17 @@ def seed_all(seed: int = 1992) -> None:
     """Seed all random number generators."""
     print(f"Using Seed Number {seed}")
 
-    # os.environ["PYTHONHASHSEED"] = str(seed)  # set PYTHONHASHSEED env var
-    np.random.seed(seed)  # numpy pseudo-random generator
-    random.seed(seed)  # built-in pseudo-random generator
+    # set PYTHONHASHSEED env var at fixed value
+    os.environ["PYTHONHASHSEED"] = str(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    torch.cuda.manual_seed(seed)  # pytorch (both CPU and CUDA)
+    np.random.seed(seed)  # for numpy pseudo-random generator
+    # set fixed value for python built-in pseudo-random generator
+    random.seed(seed)
+    torch.backends.cudnn.deterministic = True
+    torch.backends.cudnn.benchmark = False
+    torch.backends.cudnn.enabled = False
 
 
 class ChainableDict(dict):

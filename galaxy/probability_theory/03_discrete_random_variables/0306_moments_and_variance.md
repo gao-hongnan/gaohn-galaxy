@@ -123,8 +123,8 @@ expectation (population mean). The variance is the average of these data points 
 - **Sample Variance** is the variance of a **random sample** from the true population, which is a random variable.
 ````
 
-## Further Readings
+## References and Further Readings
 
-- Pishro-Nik, Hossein. "Chapter 3.2.4. Variance." In Introduction to Probability, Statistics, and Random Processes, 202-206. Kappa Research, 2014. 
-- Chan, Stanley H. "Chapter 3.4.4. Momenets and variance." In Introduction to Probability for Data Science, 133-136. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Pishro-Nik, Hossein. "Chapter 3.2.4. Variance." In Introduction to Probability, Statistics, and Random Processes, 202-206. Kappa Research, 2014.
+- Chan, Stanley H. "Chapter 3.4.4. Momenets and variance." In Introduction to Probability for Data Science, 133-136. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
 

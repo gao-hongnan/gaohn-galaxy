@@ -19,7 +19,7 @@ kernelspec:
 :tags: [remove-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[3])
 sys.path.append(parent_dir)
 
 import matplotlib.pyplot as plt
@@ -28,7 +28,7 @@ import matplotlib_inline
 matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
 ```
 
-# Binomial Distribution
+# Concept
 
 In the previous chapter on Bernoulli, we say that given a true population,
 what is the probability of a randomly drawn person has covid? This probability
@@ -107,7 +107,7 @@ $n=10$ and $p=0.5$, with the latter consisting of 5000 samples drawn from a bino
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_binomial_pmfs, plot_empirical_binomial
+from src.utils.plot import plot_binomial_pmfs, plot_empirical_binomial
 
 _fig, ax = plt.subplots(1, figsize=(12, 8), dpi=125)
 plot_binomial_pmfs(ns=[10], ps=[0.5], ax=ax)
@@ -125,7 +125,7 @@ More specifically, when we fix $n=60$ and $p$ varies, and when we fix $p=0.5$ an
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_binomial_pmfs
+from src.utils.plot import plot_binomial_pmfs
 
 _fig, axes = plt.subplots(2, 1, figsize=(10, 10), dpi=125)
 plot_binomial_pmfs(ns=[60, 60, 60], ps=[0.1, 0.5, 0.9], ax=axes[0])
@@ -175,12 +175,12 @@ $$
 ```{prf:definition} Binomial Distribution as a Sum of Bernoulli Trials
 :label: def:binomial_as_sum_of_bernoulli
 
-Let us define $X_1, X_2, \ldots, X_n$ to be $n$ independent Bernoulli trials with parameter $p$ 
-(i.e. $X_i \sim \bern(p)$). 
+Let us define $X_1, X_2, \ldots, X_n$ to be $n$ independent Bernoulli trials with parameter $p$
+(i.e. $X_i \sim \bern(p)$).
 
 Then the random variable $X = X_1 + X_2 + \cdots + X_n$ is a Binomial random variable with parameters $n$ and $p$.
 ```
 
 ## Further Readings
 
-- Chan, Stanley H. "Chapter 3.5.2. Binomial random variable." In Introduction to Probability for Data Science, 143-149. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 3.5.2. Binomial random variable." In Introduction to Probability for Data Science, 143-149. Ann Arbor, Michigan: Michigan Publishing Services, 2021.

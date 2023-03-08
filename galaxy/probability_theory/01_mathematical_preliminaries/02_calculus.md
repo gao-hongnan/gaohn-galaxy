@@ -1,7 +1,5 @@
 # Calculus
 
-See Further Readings for a list of recommended resources if you want to brush up on your calculus.
-
 ## Integration
 
 ### Intuition
@@ -25,7 +23,7 @@ $$\sum_x f(x)\Delta x\approx\int_a^b f(x)\,dx,$$
 where we take those rectangle widths to be vanishingly small and refer to them as $dx$.
 
 
-The symbol used for integration, ∫, is in fact just a stylized "S" for "sum"; The classical definition of the definite integral is 
+The symbol used for integration, ∫, is in fact just a stylized "S" for "sum"; The classical definition of the definite integral is
 $\int_a^b f(x)\,dx=\lim_{\Delta x \to 0} \sum_{x=a}^b f(x)\Delta x$. The limit of the Riemann sum of f(x) between a and b as the increment of X approaches zero (and thus the number of rectangles approaches infinity).
 
 ### The Fundamental Theorem of Calculus
@@ -50,7 +48,7 @@ $$
 
 for any $x \in (a, b)$. $F$ is called the ***antiderivative*** of $f$.
 
-```{prf:corollary} 
+```{prf:corollary}
 :label: fundamental_theorem_of_calculus_corollary
 
 The fundamental theorem is often employed to compute the definite integral of a function $f$ for which an antiderivative $F$ is known.
@@ -71,7 +69,7 @@ See [Paul's Online Notes](https://tutorial.math.lamar.edu/classes/calciii/Double
 ### Integration and Probability
 
 Let's see how to construct measures on a probability space using integration.'
-The post below is fully cited from [What's an intuitive explanation for 
+The post below is fully cited from [What's an intuitive explanation for
 integration?](https://math.stackexchange.com/questions/916569/whats-an-intuitive-explanation-for-integration);
 written by user Felix B.
 
@@ -85,8 +83,8 @@ $$
 \text{Expected Payoff} = \frac{1}{6} 2 \text{€} + \frac{5}{6}(-1\text{€}) = -0.5\text{€}
 $$
 
-Now let us try to formalize this and think about what is happening here. We have a set 
-of possible outcomes $\Omega=\{1,2,3,4,5,6\}$ where each outcome is equally likely. 
+Now let us try to formalize this and think about what is happening here. We have a set
+of possible outcomes $\Omega=\{1,2,3,4,5,6\}$ where each outcome is equally likely.
 And we have a mapping $Y:\Omega \to \mathbb{R}$ which denotes the payoff. I.e.
 
 $$
@@ -97,8 +95,8 @@ Y(\omega) = \begin{cases}
 $$
 And then the expected payoff is
 $$
-  \mathbb{E}[Y] = \frac{1}{|\Omega|}\sum_{\omega\in\Omega} Y(\omega) 
-  = \frac{1}{6}(2 + (-1) + ... + (-1)) 
+  \mathbb{E}[Y] = \frac{1}{|\Omega|}\sum_{\omega\in\Omega} Y(\omega)
+  = \frac{1}{6}(2 + (-1) + ... + (-1))
   = -0.5
 $$
 
@@ -124,12 +122,12 @@ Intuitively this payoff should have the same expected payoff as the previous
 one. But if we simply try to do the same thing as previously...
 
 $$
-  \mathbb{E}[Y] = \frac{1}{|\Omega|}\sum_{\omega\in\Omega} Y(\omega) 
+  \mathbb{E}[Y] = \frac{1}{|\Omega|}\sum_{\omega\in\Omega} Y(\omega)
   = \frac{1}\infty (\infty - \infty)...
 $$
 
 Okay so we have to be a bit more clever about this. If we have a look at a
-plot of your payoff $Y$, 
+plot of your payoff $Y$,
 
 ```{figure} ../assets/payoff_plot.png
 ---
@@ -344,7 +342,7 @@ But all of these things are technicalities distracting from the intuition.
   [law of large numbers]: https://en.wikipedia.org/wiki/Law_of_large_numbers
 
 
-## Further Readings
+## References and Further Readings
 
 - https://www.khanacademy.org/math/calculus-1
 - https://tutorial.math.lamar.edu/

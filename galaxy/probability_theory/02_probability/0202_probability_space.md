@@ -33,7 +33,7 @@ We will go through the notations in the following sections.
 :label: sample_space
 
 A **sample space** $\Omega$ is a set of all possible outcomes of an experiment.
-We denote $\xi \in \Omega$ as an *outcome*. 
+We denote $\xi \in \Omega$ as an *outcome*.
 
 Note that a **sample space** can be **uncountable**.
 ````
@@ -128,7 +128,7 @@ defined as such:
 * - **Outcome**: Result of an experiment/Probability Space
   - When you toss a coin, only outcomes are **Heads (H) or Tails (T)**
 * - **Sample Space**: Set of all possible outcomes
-  - $\S = \{\text{Heads, Tails}\}$  
+  - $\S = \{\text{Heads, Tails}\}$
 * - **Event Space**: Set of all possible events
   - $\E = \{\emptyset, \{\text{Heads}\}, \{\text{Tails}\}, \{\text{Heads, Tails}\}\}$
 * - **Events**: Subset of the Sample Space
@@ -310,7 +310,3 @@ and of course any element of the event space is considered an event. For
 example, let $A$ be the event such that the ball is round, and
 correspondingly, $A = \{1,2,3,7\}$. Let $B$ be the event such that the
 ball is red, and the correspondingly, $B = \{1,2,3,4,5,6\}$.
-
-### What is a Probability Space?
-
-See my brain dump `important.md`.

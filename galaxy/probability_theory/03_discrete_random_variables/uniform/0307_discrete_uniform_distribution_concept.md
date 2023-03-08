@@ -19,16 +19,21 @@ kernelspec:
 :tags: [remove-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+
+parent_dir = str(Path().resolve().parents[3])
 sys.path.append(parent_dir)
+
+from src.utils.plot import use_svg_display
+from src.utils.general import seed_all
 
 import matplotlib.pyplot as plt
 %matplotlib inline
-import matplotlib_inline
-matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
+
+use_svg_display()
+seed_all()
 ```
 
-# Discrete Uniform Distribution
+# Concept
 
 ## PMF and CDF of Discrete Uniform Distribution
 
@@ -38,14 +43,14 @@ matplotlib_inline.backend_inline.set_matplotlib_formats('svg')
 Let $X$ be a **discrete random variable** that follows a Uniform distribution over the set $\S$.
 This means that $X=x$ has an equally likely chance of being drawn.
 
-Then the probability mass function (PMF) of $X$ is given by 
+Then the probability mass function (PMF) of $X$ is given by
 
 $$
 \P(X=x) = \dfrac{1}{\lvert \S \rvert}
 $$
 
-More specifically, if $X$ is a discrete random variable that follows a Uniform distribution 
-over the ordered set $\S$ where the lower bound is $a$ and the upper bound is $b$, 
+More specifically, if $X$ is a discrete random variable that follows a Uniform distribution
+over the ordered set $\S$ where the lower bound is $a$ and the upper bound is $b$,
 then the PMF of $X$ is given by
 
 $$
@@ -81,7 +86,7 @@ with $a=1$ and $b=6$, essentially a dice roll.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_discrete_uniform_pmf, plot_empirical_discrete_uniform
+from src.utils.plot import plot_discrete_uniform_pmf, plot_empirical_discrete_uniform
 
 fig, axes = plt.subplots(1, 2, figsize=(12, 6), dpi=125)
 low, high = 1, 6  # [1, 6] for dice roll

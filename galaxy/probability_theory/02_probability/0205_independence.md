@@ -42,12 +42,6 @@ $$
 \P(A) = \P(A ~|~ B) = \dfrac{\P(A \cap B)}{\P(B)} \Longrightarrow \P(A)\P(B) = \P(A \cap B)
 $$
 
-```{figure} https://storage.googleapis.com/reighns/reighns_ml_projects/docs/probability_and_statistics/02_introduction_to_probability/conditional.png
----
-height: 300px
-name: conditional
----
-```
 
 > So the intuition can be understood by using conditional, say
 > $\P(A ~|~ B)$, if $A$ and $B$ are truly independent, then even if $B$
@@ -95,7 +89,7 @@ $\textbf{Disjoint} \iff \textbf{Independence}$ is if $\P(A) = 0$ or
 $\P(B) = 0$.
 ```
 
-## Exercise (Independence) 
+## Exercise (Independence)
 
 In {cite}`chan_2021`, chapter 2, section 2.4.2, the author gave an example that is not easy to visualize.
 

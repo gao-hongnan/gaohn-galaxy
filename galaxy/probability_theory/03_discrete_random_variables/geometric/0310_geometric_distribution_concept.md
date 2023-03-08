@@ -1,4 +1,4 @@
-# Geometric Distribution
+# Concept
 
 ## Definition
 
@@ -13,7 +13,7 @@ $$
 
 where $0 \leq p \leq 1$ is called the geometric parameter.
 
-We write 
+We write
 
 $$
 X \sim \geometric(p)
@@ -46,4 +46,4 @@ $$
 
 ## Further Readings
 
-- Chan, Stanley H. "Chapter 3.5.3. Geometric random variable." In Introduction to Probability for Data Science, 149-152. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 3.5.3. Geometric random variable." In Introduction to Probability for Data Science, 149-152. Ann Arbor, Michigan: Michigan Publishing Services, 2021.

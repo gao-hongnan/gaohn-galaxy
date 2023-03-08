@@ -23,10 +23,10 @@ $$
 
 Let $\P$ be a probability function defined over the probability space $\pspace$.
 
-A discrete random variable $X$ with $\S = \lset \xi_1, \xi_2, \ldots \rset$ has an **expectation** if 
+A discrete random variable $X$ with $\S = \lset \xi_1, \xi_2, \ldots \rset$ has an **expectation** if
 and only if it is **absolutely summable**.
 
-That is, 
+That is,
 
 $$
 \expectation \lsq \lvert X \rvert \rsq \overset{\text{def}}{=} \sum_{x \in X(\S)} \lvert x \rvert \cdot \P \lsq X = x \rsq < \infty
@@ -57,7 +57,7 @@ can be found here.
 ```{prf:property} Linearity
 :label: prop_expectation_linearity_discrete
 
-For any constants $a$ and $b$, 
+For any constants $a$ and $b$,
 
 $$
 \expectation \lsq aX + b \rsq = a \cdot \expectation(X) + b
@@ -108,7 +108,7 @@ and is **random**.
 - **Average** of a random sample is a random variable and as sample size increases, the **average** of a random sample converges to the **population mean**.
 ````
 
-## Further Readings
+## References and Further Readings
 
-- Pishro-Nik, Hossein. "Chapter 3.2.3. Functions of Random Variables." In Introduction to Probability, Statistics, and Random Processes, 199–201. Kappa Research, 2014. 
-- Chan, Stanley H. "Chapter 3.4. Expectation." In Introduction to Probability for Data Science, 125-133. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Pishro-Nik, Hossein. "Chapter 3.2.3. Functions of Random Variables." In Introduction to Probability, Statistics, and Random Processes, 199–201. Kappa Research, 2014.
+- Chan, Stanley H. "Chapter 3.4. Expectation." In Introduction to Probability for Data Science, 125-133. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
