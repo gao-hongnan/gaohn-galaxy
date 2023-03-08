@@ -1095,7 +1095,7 @@ The exact algorithm is as follows:
 4. Repeat Steps 2 and 3 until $K$ centers have been chosen.
 5. Now that the initial centers have been chosen, proceed using standard $K$-means clustering.
 
-What is more surprising is that this method can be shown to guarantee that the recontruction error is never more than $\mathcal{O}(\logK)$ worse than optimal
+What is more surprising is that this method can be shown to guarantee that the recontruction error is never more than $\mathcal{O}(\log K)$ worse than optimal
 {cite:ps}`pml1Book`.
 
 ## K-Medoids
@@ -1113,6 +1113,7 @@ especially how K-Means can fail.
 - Hal Daumé III. "Chapter 15.1. K-Means Clustering." In A Course in Machine Learning, January 2017.
 - Bishop, Christopher M. "Chapter 9.1. K-Means Clustering." In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.
 - James, Gareth, Daniela Witten, Trevor Hastie, and Robert Tibshirani. "Chapter 12.4.1. K-Means Clustering." In An Introduction to Statistical Learning: With Applications in R. Boston: Springer, 2022.
+- Hastie, Trevor, Tibshirani, Robert and Friedman, Jerome. "Chapter 14.3. Cluster Analysis." In The Elements of Statistical Learning. New York, NY, USA: Springer New York Inc., 2001.
 - Raschka, Sebastian. "Chapter 10.1. Grouping objects by similarity using k-means." In Machine Learning with PyTorch and Scikit-Learn.
 - Jung, Alexander. "Chapter 8.1. Hard Clustering with K-Means." In Machine Learning: The Basics. Singapore: Springer Nature Singapore, 2023.
 - Vincent, Tan. "Lecture 17a." In MA4270 Data Modelling and Computation.

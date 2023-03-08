@@ -33,6 +33,13 @@ parts:
         sections:
         - file: machine_learning/fundamentals/voronoi_region/concept.md
 
+    - file: machine_learning/mixtures/intro.md
+      sections:
+      - file: machine_learning/mixtures/gmm/intro.md
+        sections:
+        - file: machine_learning/mixtures/gmm/concept.ipynb
+
+
     - file: machine_learning/clustering/intro.md
       sections:
       - file: machine_learning/clustering/kmeans/intro.md
