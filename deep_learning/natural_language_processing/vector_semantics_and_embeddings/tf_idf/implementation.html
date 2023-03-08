@@ -1,0 +1,1581 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Implementation &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="IMDB Recommender System" href="application.html" />
+    <link rel="prev" title="Concept" href="concept.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../intro.html">Natural Language Processing (NLP)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../intro.html">Vector Semantics and Embeddings</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="../words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="concept.html">Concept</a></li>
+<li class="toctree-l4 current active"><a class="current reference internal" href="#">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">IMDB Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://colab.research.google.com/github/gao-hongnan/gaohn-galaxy/blob/main/galaxy/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fdeep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../../_sources/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Implementation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="implementation">
+<h1>Implementation<a class="headerlink" href="#implementation" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">rich.pretty</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfTransformer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">CountVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;The sun is the largest celestial body in the solar system&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The solar system consists of the sun and eight revolving planets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Ra was the Egyptian Sun God&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The Pyramids were the pinnacle of Egyptian architecture&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The quick brown fox jumps over the lazy dog&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">corpus_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;doc_1&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_2&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_3&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_4&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_5&quot;</span><span class="p">]</span>
+
+<span class="n">num_documents</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">]</span>  <span class="c1"># lower case</span>
+<span class="n">vocabulary</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">))</span>  <span class="c1"># unique vocabulary</span>
+<span class="n">vocabulary</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>  <span class="c1"># sort alphabetically</span>
+<span class="n">num_vocabs</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocabulary</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of documents: </span><span class="si">{</span><span class="n">num_documents</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of unique words: </span><span class="si">{</span><span class="n">num_vocabs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of documents: 5
+Number of unique words: 30
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="n">vocabulary</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">&quot;tfid&quot;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">smooth_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sublinear_tf</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+
+
+<span class="n">idf</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;tfid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idf_</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idf</span><span class="p">)</span>
+
+
+<span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0 0 1 0 1 0 0 0 0 0 0 1 1 0 1 0 0 0 0 0 0 0 0 0 1 1 1 3 0 0]
+ [1 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 1 1 1 1 2 0 0]
+ [0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 1 0]
+ [0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 0 1 0 1 0 0 0 0 0 0 2 0 1]
+ [0 0 0 1 0 0 1 0 0 1 0 0 0 1 0 1 0 1 0 0 0 1 0 0 0 0 0 2 0 0]]
+[2.60943791 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791
+ 2.60943791 1.91629073 2.60943791 2.60943791 2.60943791 2.60943791
+ 2.60943791 2.60943791 2.60943791 2.60943791 1.91629073 2.60943791
+ 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791
+ 1.91629073 1.51082562 1.91629073 1.         2.60943791 2.60943791]
+[[0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         1.91629073 1.91629073 0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         2.60943791 0.         0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         1.91629073 0.         1.91629073 0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         0.         2.60943791 0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         2.60943791 0.         0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [1.91629073 1.91629073 0.         0.         0.        ]
+ [1.51082562 1.51082562 1.51082562 0.         0.        ]
+ [1.91629073 1.91629073 0.         0.         0.        ]
+ [3.         2.         1.         2.         2.        ]
+ [0.         0.         2.60943791 0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>The code below creates an ordered dictionary <code class="docutils literal notranslate"><span class="pre">word_freq</span></code> to store the frequency of each word in each document in the corpus. The structure of the dictionary is <code class="docutils literal notranslate"><span class="pre">{word:</span> <span class="pre">{doc_1:</span> <span class="pre">freq,</span> <span class="pre">doc_2:</span> <span class="pre">freq,</span> <span class="pre">...},</span> <span class="pre">...}</span></code>.</p>
+<ol class="arabic simple">
+<li><p>The code loops through each word in the vocabulary, and for each word, it checks if it is already in the <code class="docutils literal notranslate"><span class="pre">word_freq</span></code> dictionary. If it is not, it adds the word to the dictionary.</p></li>
+<li><p>It then loops through each document and for each document, it checks if the document name is already in the <code class="docutils literal notranslate"><span class="pre">word_freq[word]</span></code> dictionary. If it is not, it adds the document name to the dictionary.</p></li>
+<li><p>Finally, it counts the number of times the word appears in the document using the <code class="docutils literal notranslate"><span class="pre">count()</span></code> method of Python strings, and adds this count to the corresponding entry in the <code class="docutils literal notranslate"><span class="pre">word_freq</span></code> dictionary.</p></li>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">pprint()</span></code> function from the <code class="docutils literal notranslate"><span class="pre">pprint</span></code> module is then used to print the dictionary <code class="docutils literal notranslate"><span class="pre">word_freq</span></code> in a readable format.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create an ordered dictionary to store the frequency of each word in each document in the corpus</span>
+<span class="n">word_freq</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span> <span class="c1"># {word: {doc_1: freq, doc_2: freq, ...}, ...}</span>
+
+<span class="c1"># Loop through each word in the vocabulary</span>
+<span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">vocabulary</span><span class="p">:</span>
+    
+    <span class="c1"># If the word is not in the word_freq dictionary, add it</span>
+    <span class="k">if</span> <span class="n">word</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_freq</span><span class="p">:</span>
+        <span class="n">word_freq</span><span class="p">[</span><span class="n">word</span><span class="p">]</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+    
+    <span class="c1"># Loop through each document and count the number of times the word appears in the document</span>
+    <span class="k">for</span> <span class="n">doc</span><span class="p">,</span> <span class="n">doc_name</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">corpus</span><span class="p">,</span> <span class="n">corpus_names</span><span class="p">):</span>
+        
+        <span class="c1"># If the document name is not in the word_freq[word] dictionary, add it</span>
+        <span class="k">if</span> <span class="n">doc_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">word_freq</span><span class="p">[</span><span class="n">word</span><span class="p">]:</span>
+            <span class="n">word_freq</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="n">doc_name</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        
+        <span class="c1"># Count the number of times the word appears in the document using the count() method</span>
+        <span class="n">word_freq</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="n">doc_name</span><span class="p">]</span> <span class="o">+=</span> <span class="n">doc</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+<span class="c1"># Print the word_freq dictionary using the pprint function for pretty printing</span>
+<span class="n">pprint</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">word_freq</span><span class="o">.</span><span class="n">items</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"><span style="font-weight: bold">{</span>
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'and'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'architecture'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'body'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'brown'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'celestial'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'consists'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'dog'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'egyptian'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'eight'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'fox'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'god'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'in'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'is'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'jumps'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'largest'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'lazy'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'of'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'over'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'pinnacle'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'planets'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'pyramids'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'quick'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'ra'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'revolving'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'solar'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'sun'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'system'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'the'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'was'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>,
+<span style="color: #7fbf7f; text-decoration-color: #7fbf7f">│   </span><span style="color: #008000; text-decoration-color: #008000">'were'</span>: <span style="color: #800080; text-decoration-color: #800080; font-weight: bold">OrderedDict</span><span style="font-weight: bold">([(</span><span style="color: #008000; text-decoration-color: #008000">'doc_1'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_2'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_3'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_4'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span><span style="font-weight: bold">)</span>, <span style="font-weight: bold">(</span><span style="color: #008000; text-decoration-color: #008000">'doc_5'</span>, <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span><span style="font-weight: bold">)])</span>
+<span style="font-weight: bold">}</span>
+</pre>
+</div></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Convert the dictionary <code class="docutils literal notranslate"><span class="pre">word_freq</span></code> to a Pandas DataFrame. The <code class="docutils literal notranslate"><span class="pre">transpose()</span></code> method is used to transpose the DataFrame, so that the document names are the column names and the words are the row names.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">word_freq</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>doc_1</th>
+      <th>doc_2</th>
+      <th>doc_3</th>
+      <th>doc_4</th>
+      <th>doc_5</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>and</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>architecture</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>body</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>brown</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>celestial</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>consists</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>dog</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>egyptian</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>eight</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>fox</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>god</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>in</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>is</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>jumps</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>largest</th>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>lazy</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>of</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>over</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>pinnacle</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>planets</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>pyramids</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>quick</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>ra</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>revolving</th>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>solar</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>sun</th>
+      <td>1</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>system</th>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>the</th>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
+      <td>2</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>was</th>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>were</th>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Convert the DataFrame to a NumPy array. Essentially turning
+the corpus/df into a matrix of shape <span class="math notranslate nohighlight">\(n_{words} \times n_{docs}\)</span>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">values</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Word frequency array shape: </span><span class="si">{</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Word frequency array shape: (30, 5)
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>Sanity Check: We check our implementation by comparing the results to the results from the <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> class in the <code class="docutils literal notranslate"><span class="pre">sklearn.feature_extraction.text</span></code> module. Note
+that the <code class="docutils literal notranslate"><span class="pre">CountVectorizer</span></code> will return a sparse matrix, so we need to convert it to a dense matrix using the <code class="docutils literal notranslate"><span class="pre">toarray()</span></code> method. Furthermore, the matrix is in the shape
+<span class="math notranslate nohighlight">\(n_{docs} \times n_{words}\)</span>, so we need to transpose it using the <code class="docutils literal notranslate"><span class="pre">T</span></code> attribute.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pipe</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">(</span><span class="s2">&quot;count&quot;</span><span class="p">,</span> <span class="n">CountVectorizer</span><span class="p">(</span><span class="n">vocabulary</span><span class="o">=</span><span class="n">vocabulary</span><span class="p">)),</span>
+        <span class="p">(</span><span class="s2">&quot;tfid&quot;</span><span class="p">,</span> <span class="n">TfidfTransformer</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">smooth_idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">sublinear_tf</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
+    <span class="p">]</span>
+<span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="n">count</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span>
+
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span>
+    <span class="n">count</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">X</span>
+<span class="p">),</span> <span class="s2">&quot;The word frequency array does not match the count array&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic" start="7">
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">X_tf</span></code> which holds the term frequency values for each word in each document.</p>
+<div class="math notranslate nohighlight">
+\[
+   \operatorname{tf}_{t, d} = \log_{10}(\text{count}_{t, d} + 1)
+   \]</div>
+<ul class="simple">
+<li><p>Create a new numpy array <code class="docutils literal notranslate"><span class="pre">X_tf</span></code> with the same shape and data type as <code class="docutils literal notranslate"><span class="pre">X</span></code>, but filled with uninitialized floats.</p></li>
+<li><p>Loop through each row and its index in <code class="docutils literal notranslate"><span class="pre">X</span></code> using the <code class="docutils literal notranslate"><span class="pre">enumerate()</span></code> function.</p></li>
+<li><p>Calculate the term frequency of each word in the row using the formula <code class="docutils literal notranslate"><span class="pre">tf</span> <span class="pre">=</span> <span class="pre">log10(each_row</span> <span class="pre">+</span> <span class="pre">1)</span></code>, where count is the frequency count of the word in the row. Now, <code class="docutils literal notranslate"><span class="pre">each_row</span></code> is just the frequency of word <span class="math notranslate nohighlight">\(t\)</span> in document <span class="math notranslate nohighlight">\(d\)</span>. So we can directly apply <code class="docutils literal notranslate"><span class="pre">np.log10()</span></code>.</p></li>
+<li><p>Assign the calculated term frequency values to the corresponding row in <code class="docutils literal notranslate"><span class="pre">X_tf</span></code> using row_index.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_tf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty_like</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">each_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+    <span class="n">tf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">each_row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">X_tf</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">tf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ol class="arabic" start="8">
+<li><p>Create <code class="docutils literal notranslate"><span class="pre">X_idf</span></code> which holds the inverse document frequency values for each word in the corpus.</p>
+<div class="math notranslate nohighlight">
+\[
+   \text{idf}_{t} = \log_{10}\left(\frac{n_{docs}}{1 + \text{df}_{t}}\right)
+   \]</div>
+<ul class="simple">
+<li><p>Create a new numpy array <code class="docutils literal notranslate"><span class="pre">X_idf</span></code> with the same shape and data type as <code class="docutils literal notranslate"><span class="pre">X</span></code>, but filled with uninitialized floats.</p></li>
+<li><p>Loop through each column and its index in <code class="docutils literal notranslate"><span class="pre">X</span></code> using the <code class="docutils literal notranslate"><span class="pre">enumerate()</span></code> function.</p></li>
+<li><p>Calculate the inverse document frequency of each word in the column using the formula <code class="docutils literal notranslate"><span class="pre">idf</span> <span class="pre">=</span> <span class="pre">log10(n_docs</span> <span class="pre">/</span> <span class="pre">(1</span> <span class="pre">+</span> <span class="pre">df))</span></code>, where <code class="docutils literal notranslate"><span class="pre">df</span></code> is the document frequency of the word in the column.</p></li>
+<li><p>Assign the calculated inverse document frequency values to the corresponding column in <code class="docutils literal notranslate"><span class="pre">X_idf</span></code> using col_index.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_idf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">num_vocabs</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">row_index</span><span class="p">,</span> <span class="n">each_row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">X</span><span class="p">):</span>
+   
+    <span class="n">df</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">count_nonzero</span><span class="p">(</span><span class="n">each_row</span><span class="p">)</span> <span class="c1"># df is document frequency and it answers how many documents contain this word</span>
+    <span class="n">idf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">num_documents</span> <span class="o">/</span> <span class="n">df</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span> <span class="c1"># for eg, if we have 4 documents and a word that appears in 2 documents, then idf = log10(4/2) = 0.301</span>
+    <span class="n">X_idf</span><span class="p">[</span><span class="n">row_index</span><span class="p">]</span> <span class="o">=</span> <span class="n">idf</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_idf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([2.60943791, 2.60943791, 2.60943791, 2.60943791, 2.60943791,
+       2.60943791, 2.60943791, 1.91629073, 2.60943791, 2.60943791,
+       2.60943791, 2.60943791, 2.60943791, 2.60943791, 2.60943791,
+       2.60943791, 1.91629073, 2.60943791, 2.60943791, 2.60943791,
+       2.60943791, 2.60943791, 2.60943791, 2.60943791, 1.91629073,
+       1.51082562, 1.91629073, 1.        , 2.60943791, 2.60943791])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idf</span> <span class="o">=</span> <span class="n">pipe</span><span class="p">[</span><span class="s2">&quot;tfid&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idf_</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">idf</span><span class="p">)</span>
+
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_idf</span><span class="p">,</span> <span class="n">idf</span><span class="p">),</span> <span class="s2">&quot;The idf array does not match the idf array&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[2.60943791 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791
+ 2.60943791 1.91629073 2.60943791 2.60943791 2.60943791 2.60943791
+ 2.60943791 2.60943791 2.60943791 2.60943791 1.91629073 2.60943791
+ 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791 2.60943791
+ 1.91629073 1.51082562 1.91629073 1.         2.60943791 2.60943791]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_idf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [1.91629073],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [1.91629073],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [2.60943791],
+       [1.91629073],
+       [1.51082562],
+       [1.91629073],
+       [1.        ],
+       [2.60943791],
+       [2.60943791]])
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">X_tf</span> <span class="o">*</span> <span class="n">X_idf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_tfidf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((30, 5),
+ array([[0.        , 0.78551908, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.78551908, 0.        ],
+        [0.78551908, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.78551908, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.78551908, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.        , 0.        , 0.57686099, 0.57686099, 0.        ],
+        [0.        , 0.78551908, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.        , 0.        , 0.78551908, 0.        , 0.        ],
+        [0.78551908, 0.        , 0.        , 0.        , 0.        ],
+        [0.78551908, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.78551908, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.        , 0.57686099, 0.        , 0.57686099, 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.        , 0.        , 0.        , 0.78551908, 0.        ],
+        [0.        , 0.78551908, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.78551908, 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 0.78551908],
+        [0.        , 0.        , 0.78551908, 0.        , 0.        ],
+        [0.        , 0.78551908, 0.        , 0.        , 0.        ],
+        [0.57686099, 0.57686099, 0.        , 0.        , 0.        ],
+        [0.45480383, 0.45480383, 0.45480383, 0.        , 0.        ],
+        [0.57686099, 0.57686099, 0.        , 0.        , 0.        ],
+        [0.60205999, 0.47712125, 0.30103   , 0.47712125, 0.47712125],
+        [0.        , 0.        , 0.78551908, 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.78551908, 0.        ]]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_tfidf</span> <span class="o">=</span> <span class="n">X</span> <span class="o">*</span> <span class="n">X_idf</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">X_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">X_tfidf</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>((30, 5),
+ array([[0.        , 2.60943791, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 2.60943791, 0.        ],
+        [2.60943791, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [2.60943791, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 2.60943791, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [0.        , 0.        , 1.91629073, 1.91629073, 0.        ],
+        [0.        , 2.60943791, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [0.        , 0.        , 2.60943791, 0.        , 0.        ],
+        [2.60943791, 0.        , 0.        , 0.        , 0.        ],
+        [2.60943791, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [2.60943791, 0.        , 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [0.        , 1.91629073, 0.        , 1.91629073, 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [0.        , 0.        , 0.        , 2.60943791, 0.        ],
+        [0.        , 2.60943791, 0.        , 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 2.60943791, 0.        ],
+        [0.        , 0.        , 0.        , 0.        , 2.60943791],
+        [0.        , 0.        , 2.60943791, 0.        , 0.        ],
+        [0.        , 2.60943791, 0.        , 0.        , 0.        ],
+        [1.91629073, 1.91629073, 0.        , 0.        , 0.        ],
+        [1.51082562, 1.51082562, 1.51082562, 0.        , 0.        ],
+        [1.91629073, 1.91629073, 0.        , 0.        , 0.        ],
+        [3.        , 2.        , 1.        , 2.        , 2.        ],
+        [0.        , 0.        , 2.60943791, 0.        , 0.        ],
+        [0.        , 0.        , 0.        , 2.60943791, 0.        ]]))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tfidf_matrix</span> <span class="o">=</span> <span class="n">pipe</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">corpus</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+<span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_tfidf</span><span class="p">,</span> <span class="n">tfidf_matrix</span><span class="o">.</span><span class="n">toarray</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="s2">&quot;The tfidf array does not match the tfidf array&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         1.91629073 1.91629073 0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         2.60943791 0.         0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [2.60943791 0.         0.         0.         0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         1.91629073 0.         1.91629073 0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         0.         2.60943791 0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]
+ [0.         0.         0.         0.         2.60943791]
+ [0.         0.         2.60943791 0.         0.        ]
+ [0.         2.60943791 0.         0.         0.        ]
+ [1.91629073 1.91629073 0.         0.         0.        ]
+ [1.51082562 1.51082562 1.51082562 0.         0.        ]
+ [1.91629073 1.91629073 0.         0.         0.        ]
+ [3.         2.         1.         2.         2.        ]
+ [0.         0.         2.60943791 0.         0.        ]
+ [0.         0.         0.         2.60943791 0.        ]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="concept.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Concept</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="application.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">IMDB Recommender System</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

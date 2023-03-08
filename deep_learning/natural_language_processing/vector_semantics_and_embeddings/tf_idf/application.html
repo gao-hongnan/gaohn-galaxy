@@ -1,0 +1,1613 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>IMDB Recommender System &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Bibliography" href="../../../../references_resources_roadmap/bibliography.html" />
+    <link rel="prev" title="Implementation" href="implementation.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../intro.html">Natural Language Processing (NLP)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../intro.html">Vector Semantics and Embeddings</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="../words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="implementation.html">Implementation</a></li>
+<li class="toctree-l4 current active"><a class="current reference internal" href="#">IMDB Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://colab.research.google.com/github/gao-hongnan/gaohn-galaxy/blob/main/galaxy/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fdeep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../../_sources/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>IMDB Recommender System</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="imdb-recommender-system">
+<h1>IMDB Recommender System<a class="headerlink" href="#imdb-recommender-system" title="Permalink to this heading">#</a></h1>
+<p><strong>TF-IDF is used in <a class="reference internal" href="../words_and_vectors/concept.html#words-as-vectors-document-dimensions"><span class="std std-ref">the case document is as dimension</span></a>
+and <a class="reference internal" href="../words_and_vectors/concept.html#term-document-matrix"><span class="std std-ref">the case term document matrix</span></a>.</strong></p>
+<p>In this section, we will use TF-IDF and cosine similarity to build a recommender system for movies.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">OrderedDict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">datasets</span> <span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="kn">from</span> <span class="nn">rich.pretty</span> <span class="kn">import</span> <span class="n">pprint</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics.pairwise</span> <span class="kn">import</span> <span class="n">cosine_similarity</span><span class="p">,</span> <span class="n">linear_kernel</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the IMDb movie reviews dataset</span>
+<span class="n">dataset</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;SandipPalit/Movie_Dataset&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "b70154e71fd84a9989b154d1815d5562"}</script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Downloading and preparing dataset csv/SandipPalit--Movie_Dataset to /home/runner/.cache/huggingface/datasets/SandipPalit___csv/SandipPalit--Movie_Dataset-83bb53eb261b0039/0.0.0/6b34fb8fcf56f7c8ba51dc895bfa2bfbe43546f190a60fcf74bb5e8afdcc2317...
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "03911d2f30f841fda96a72a7b22b88bd"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "1a1bd1670bd94963a49a38ff3f4a4903"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "4431d106e8714a1b82dd5de3fc9cdbc1"}</script><script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "c054c1cce6f5438cbfb04372f764dcb9"}</script><div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/datasets/download/streaming_download_manager.py:776: FutureWarning: the &#39;mangle_dupe_cols&#39; keyword is deprecated and will be removed in a future version. Please take steps to stop the use of &#39;mangle_dupe_cols&#39;
+  return pd.read_csv(xopen(filepath_or_buffer, &quot;rb&quot;, use_auth_token=use_auth_token), **kwargs)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dataset csv downloaded and prepared to /home/runner/.cache/huggingface/datasets/SandipPalit___csv/SandipPalit--Movie_Dataset-83bb53eb261b0039/0.0.0/6b34fb8fcf56f7c8ba51dc895bfa2bfbe43546f190a60fcf74bb5e8afdcc2317. Subsequent calls will reuse this data.
+</pre></div>
+</div>
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "1bd65f1e997d4325b095c59f1015fb8c"}</script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">YEAR</span> <span class="o">=</span> <span class="mi">2000</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">dataset_cutoff</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">example</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s2">&quot;Release Date&quot;</span><span class="p">],</span> <span class="s2">&quot;%Y-%m-</span><span class="si">%d</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">year</span> <span class="o">&gt;</span> <span class="n">YEAR</span><span class="p">)</span>
+<span class="n">dataset_cutoff</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">{"version_major": 2, "version_minor": 0, "model_id": "9240ffc72f5a41c39e7b8da661ce19ef"}</script><div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DatasetDict({
+    train: Dataset({
+        features: [&#39;Release Date&#39;, &#39;Title&#39;, &#39;Overview&#39;, &#39;Genre&#39;, &#39;Vote Average&#39;, &#39;Vote Count&#39;],
+        num_rows: 46064
+    })
+})
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">dataset_cutoff</span><span class="p">[</span><span class="s2">&quot;train&quot;</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Number of training examples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">train_dataset</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="p">[</span><span class="s2">&quot;Overview&quot;</span><span class="p">]</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Number of training examples: 46064
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&quot;Japan&#39;s number one extreme reality show is having it&#39;s first all-American special! Six lucky contestants, chosen from thousands of applicants, will have the chance to win millions of dollars, and all they have to do is stay alive!&quot;,
+       &#39;This documentary examines a selection of real life serial killers and compares them to the fictional Hannibal Lecter.&#39;,
+       &#39;An undercover cop lets his job get personal while on an underground assignment.&#39;,
+       ...,
+       &quot;A young artist, imprisoned within the trammels of opium addiction, relives his phantasmagorical courtship with a mysterious Soprano known only as Ligeia. While exploring these opium induced memories, the lines dividing reality and fantasy, memory and hallucination, begin to blur into an indecipherable labyrinth of obsession and despair. Though he is nursed back to health by a new love, the Lady Rowena, the haunting of Ligeia&#39;s memories as well as the spirits of Azrael and Nehushtan, continue to plague his mind and soul.&quot;,
+       &#39;In the center of the plot is the Vatican list of the Kazan Icon of the Mother of God, the main Orthodox shrine of Kazan. The film describes four layers of Russian history: the liberation of Moscow by the militia of Minin and Pozharsky, the battle of Poltava, the Patriotic War of 1812 and the Great Patriotic War. During all these events, the Orthodox inhabitants of Tatarstan turned to their protector, the icon of the Kazan Mother of God, for help. It is believed that the icon was carried away in 1611 by the Kazan militia and later helped Minin and Pozharsky liberate Moscow from the Poles.&#39;,
+       &#39;About the life of Elizabeth Feodorovna, sister of the last Russian Empress.&#39;],
+      dtype=&#39;&lt;U1000&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>The labels are binary, indicating whether the review is positive or negative. But since we are
+not doing any classification, we will ignore the labels.</p>
+<p>We will be less pedantic and not split a validation set.</p>
+<div class="cell tag_output_scroll docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span> <span class="o">=</span> <span class="n">train_dataset</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+<span class="n">df_train</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Release Date</th>
+      <th>Title</th>
+      <th>Overview</th>
+      <th>Genre</th>
+      <th>Vote Average</th>
+      <th>Vote Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2001-01-01</td>
+      <td>Slashers</td>
+      <td>Japan's number one extreme reality show is hav...</td>
+      <td>['Horror', 'Thriller']</td>
+      <td>5.5</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001-01-01</td>
+      <td>Serial Killers: The Real Life Hannibal Lecters</td>
+      <td>This documentary examines a selection of real ...</td>
+      <td>['Documentary']</td>
+      <td>7.0</td>
+      <td>13</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2001-01-08</td>
+      <td>The Proposal</td>
+      <td>An undercover cop lets his job get personal wh...</td>
+      <td>['Drama', 'Thriller']</td>
+      <td>6.7</td>
+      <td>10</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001-01-18</td>
+      <td>Super Troopers</td>
+      <td>Five bored, occasionally high and always ineff...</td>
+      <td>['Comedy', 'Crime', 'Mystery']</td>
+      <td>6.6</td>
+      <td>856</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2001-01-22</td>
+      <td>Enigma</td>
+      <td>The story of the WWII project to crack the cod...</td>
+      <td>['Mystery', 'Drama', 'Thriller', 'Romance', 'W...</td>
+      <td>6.4</td>
+      <td>222</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>46059</th>
+      <td>2022-09-30</td>
+      <td>The Good House</td>
+      <td>Hildy Good, a wry New England realtor and desc...</td>
+      <td>['Drama', 'Comedy']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46060</th>
+      <td>2022-10-13</td>
+      <td>Czyściec</td>
+      <td>From the earliest times, people have wondered ...</td>
+      <td>['Drama']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46061</th>
+      <td>2022-10-31</td>
+      <td>Edgar Allen Poe's Ligeia</td>
+      <td>A young artist, imprisoned within the trammels...</td>
+      <td>['Horror', 'Romance']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46062</th>
+      <td>2022-11-03</td>
+      <td>Заступница</td>
+      <td>In the center of the plot is the Vatican list ...</td>
+      <td>['Documentary']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>46063</th>
+      <td>2022-11-03</td>
+      <td>Hosanna</td>
+      <td>About the life of Elizabeth Feodorovna, sister...</td>
+      <td>['Documentary']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+<p>46064 rows × 6 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="s2">&quot;Title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="s2">&quot;Batman&quot;</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Release Date</th>
+      <th>Title</th>
+      <th>Overview</th>
+      <th>Genre</th>
+      <th>Vote Average</th>
+      <th>Vote Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>981</th>
+      <td>2008-07-08</td>
+      <td>Batman: Gotham Knight</td>
+      <td>A collection of key events mark Bruce Wayne's ...</td>
+      <td>['Science Fiction', 'Animation', 'Action', 'Ad...</td>
+      <td>6.7</td>
+      <td>516</td>
+    </tr>
+    <tr>
+      <th>5417</th>
+      <td>2012-08-19</td>
+      <td>The Batman Shootings</td>
+      <td>The premiere of The Dark Knight Rises was the ...</td>
+      <td>['Documentary', 'History']</td>
+      <td>6.4</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>5427</th>
+      <td>2012-08-21</td>
+      <td>Batman: The Dark Knight Returns, Part 1</td>
+      <td>Batman has not been seen for ten years. A new ...</td>
+      <td>['Science Fiction', 'Action', 'Animation', 'My...</td>
+      <td>7.8</td>
+      <td>1255</td>
+    </tr>
+    <tr>
+      <th>7336</th>
+      <td>2013-01-03</td>
+      <td>Batman: The Dark Knight Returns, Part 2</td>
+      <td>Batman has stopped the reign of terror that Th...</td>
+      <td>['Science Fiction', 'Action', 'Animation', 'My...</td>
+      <td>8.0</td>
+      <td>1156</td>
+    </tr>
+    <tr>
+      <th>12880</th>
+      <td>2014-04-09</td>
+      <td>Batman: Strange Days</td>
+      <td>Celebrating Batman’s 75th anniversary, DC Ente...</td>
+      <td>['Action', 'Animation', 'TV Movie']</td>
+      <td>7.1</td>
+      <td>78</td>
+    </tr>
+    <tr>
+      <th>13026</th>
+      <td>2014-04-19</td>
+      <td>Batman Beyond</td>
+      <td>This short celebrating 75 years of Batman from...</td>
+      <td>['Action', 'Animation', 'Science Fiction', 'TV...</td>
+      <td>7.2</td>
+      <td>45</td>
+    </tr>
+    <tr>
+      <th>13310</th>
+      <td>2014-05-13</td>
+      <td>Son of Batman</td>
+      <td>Batman learns he has a violent, unruly pre-tee...</td>
+      <td>['Animation', 'Action', 'Adventure']</td>
+      <td>7.0</td>
+      <td>847</td>
+    </tr>
+    <tr>
+      <th>14239</th>
+      <td>2014-08-12</td>
+      <td>Batman: Assault on Arkham</td>
+      <td>Batman works desperately to find a bomb plante...</td>
+      <td>['Thriller', 'Animation', 'Action', 'Crime']</td>
+      <td>7.4</td>
+      <td>927</td>
+    </tr>
+    <tr>
+      <th>15497</th>
+      <td>2014-11-10</td>
+      <td>Batman: The Birth of the Modern Blockbuster</td>
+      <td>A documentary exploring the impact of "Batman"...</td>
+      <td>['Documentary']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>15512</th>
+      <td>2014-11-11</td>
+      <td>Hanging with Batman</td>
+      <td>This elegantly constructed portrait of Batman ...</td>
+      <td>['Documentary']</td>
+      <td>0.0</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>17489</th>
+      <td>2015-04-14</td>
+      <td>Batman vs. Robin</td>
+      <td>Damian Wayne is having a hard time coping with...</td>
+      <td>['Science Fiction', 'Action', 'Adventure', 'An...</td>
+      <td>7.2</td>
+      <td>746</td>
+    </tr>
+    <tr>
+      <th>18521</th>
+      <td>2015-07-10</td>
+      <td>Behind the Mask: The Batman Dead End Story</td>
+      <td>Director and Writer Eric Dow ("Honor in the Va...</td>
+      <td>['Documentary']</td>
+      <td>8.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>23286</th>
+      <td>2016-07-24</td>
+      <td>Batman Unlimited: Mechs vs. Mutants</td>
+      <td>Mr. Freeze turns Killer Croc and Bane into sup...</td>
+      <td>['Animation', 'Action', 'Science Fiction']</td>
+      <td>6.6</td>
+      <td>68</td>
+    </tr>
+    <tr>
+      <th>23288</th>
+      <td>2016-07-24</td>
+      <td>Batman: The Killing Joke</td>
+      <td>As Batman hunts for the escaped Joker, the Clo...</td>
+      <td>['Action', 'Animation', 'Crime', 'Drama']</td>
+      <td>6.6</td>
+      <td>1493</td>
+    </tr>
+    <tr>
+      <th>23394</th>
+      <td>2016-08-04</td>
+      <td>Batman: Bad Blood</td>
+      <td>Bruce Wayne is missing. Alfred covers for him ...</td>
+      <td>['Science Fiction', 'Action', 'Animation']</td>
+      <td>7.2</td>
+      <td>604</td>
+    </tr>
+    <tr>
+      <th>26940</th>
+      <td>2017-05-06</td>
+      <td>Batman &amp; Bill</td>
+      <td>Everyone thinks that Bob Kane created Batman, ...</td>
+      <td>['Documentary']</td>
+      <td>7.1</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>27975</th>
+      <td>2017-08-14</td>
+      <td>Batman and Harley Quinn</td>
+      <td>Batman and Nightwing are forced to team with t...</td>
+      <td>['Adventure', 'Action', 'Animation', 'Science ...</td>
+      <td>6.2</td>
+      <td>492</td>
+    </tr>
+    <tr>
+      <th>28524</th>
+      <td>2017-09-30</td>
+      <td>Batman &amp; Jesus</td>
+      <td>Was Jesus a historical person? We'll trace and...</td>
+      <td>['Documentary', 'Comedy']</td>
+      <td>6.7</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>30056</th>
+      <td>2018-01-31</td>
+      <td>Scooby-Doo! &amp; Batman: The Brave and the Bold</td>
+      <td>Scooby-Doo and the Mystery Inc. gang meet up w...</td>
+      <td>['Animation', 'Comedy', 'Action', 'Family']</td>
+      <td>7.4</td>
+      <td>172</td>
+    </tr>
+    <tr>
+      <th>30665</th>
+      <td>2018-03-24</td>
+      <td>Batman Ninja</td>
+      <td>Batman, along with many of his allies and adve...</td>
+      <td>['Animation', 'Action']</td>
+      <td>5.8</td>
+      <td>790</td>
+    </tr>
+    <tr>
+      <th>33163</th>
+      <td>2018-10-30</td>
+      <td>Heart of Batman</td>
+      <td>In the early 1990s, a rare gathering of talent...</td>
+      <td>['Documentary']</td>
+      <td>7.0</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>34808</th>
+      <td>2019-03-31</td>
+      <td>Batman vs. Teenage Mutant Ninja Turtles</td>
+      <td>Batman, Batgirl and Robin forge an alliance wi...</td>
+      <td>['Animation', 'Action', 'Family']</td>
+      <td>7.2</td>
+      <td>357</td>
+    </tr>
+    <tr>
+      <th>35928</th>
+      <td>2019-07-19</td>
+      <td>Batman: Hush</td>
+      <td>A mysterious new villain known only as Hush us...</td>
+      <td>['Science Fiction', 'Crime', 'Animation', 'Mys...</td>
+      <td>7.3</td>
+      <td>657</td>
+    </tr>
+    <tr>
+      <th>35961</th>
+      <td>2019-07-21</td>
+      <td>Lego DC Batman: Family Matters</td>
+      <td>Suspicion is on high after Batman, Batgirl, Ro...</td>
+      <td>['Animation', 'Family', 'Action', 'Comedy']</td>
+      <td>7.1</td>
+      <td>108</td>
+    </tr>
+    <tr>
+      <th>41799</th>
+      <td>2021-01-12</td>
+      <td>Batman: Soul of the Dragon</td>
+      <td>Bruce Wayne faces a deadly menace from his pas...</td>
+      <td>['Animation', 'Action', 'Adventure', 'Crime', ...</td>
+      <td>7.1</td>
+      <td>243</td>
+    </tr>
+    <tr>
+      <th>43262</th>
+      <td>2021-06-21</td>
+      <td>Batman: The Long Halloween, Part One</td>
+      <td>Following a brutal series of murders taking pl...</td>
+      <td>['Animation', 'Mystery', 'Action', 'Crime']</td>
+      <td>7.6</td>
+      <td>401</td>
+    </tr>
+    <tr>
+      <th>43614</th>
+      <td>2021-07-26</td>
+      <td>Batman: The Long Halloween, Part Two</td>
+      <td>As Gotham City's young vigilante, the Batman, ...</td>
+      <td>['Animation', 'Mystery', 'Action', 'Crime']</td>
+      <td>7.6</td>
+      <td>338</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize an instance of tf-idf Vectorizer</span>
+<span class="n">tfidf_vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span><span class="o">=</span><span class="s2">&quot;english&quot;</span><span class="p">)</span>
+
+<span class="c1"># Generate the tf-idf vectors for the corpus</span>
+<span class="n">X_train_tfidf</span> <span class="o">=</span> <span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(46064, 73634)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">MemoryError</span><span class="g g-Whitespace">                               </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">10</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="o">.</span><span class="n">toarray</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span> <span class="p">:])</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/_compressed.py:1051,</span> in <span class="ni">_cs_matrix.toarray</span><span class="nt">(self, order, out)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1049</span> <span class="k">if</span> <span class="n">out</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">order</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1050</span>     <span class="n">order</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_swap</span><span class="p">(</span><span class="s1">&#39;cf&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="ne">-&gt; </span><span class="mi">1051</span> <span class="n">out</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_toarray_args</span><span class="p">(</span><span class="n">order</span><span class="p">,</span> <span class="n">out</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1052</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">out</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">c_contiguous</span> <span class="ow">or</span> <span class="n">out</span><span class="o">.</span><span class="n">flags</span><span class="o">.</span><span class="n">f_contiguous</span><span class="p">):</span>
+<span class="g g-Whitespace">   </span><span class="mi">1053</span>     <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Output array must be C or F contiguous&#39;</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/_base.py:1298,</span> in <span class="ni">spmatrix._process_toarray_args</span><span class="nt">(self, order, out)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1296</span>     <span class="k">return</span> <span class="n">out</span>
+<span class="g g-Whitespace">   </span><span class="mi">1297</span> <span class="k">else</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">1298</span>     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> <span class="n">order</span><span class="o">=</span><span class="n">order</span><span class="p">)</span>
+
+<span class="ne">MemoryError</span>: Unable to allocate 25.3 GiB for an array with shape (46064, 73634) and data type float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>This means we have <span class="math notranslate nohighlight">\(D = 34,552\)</span> documents and <span class="math notranslate nohighlight">\(T = 61,460\)</span> unique words.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">len</span><span class="p">(</span><span class="n">tfidf_vectorizer</span><span class="o">.</span><span class="n">vocabulary_</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>73634
+</pre></div>
+</div>
+</div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">Input</span><span class="p">:</span>
+    <span class="n">X</span> <span class="p">:</span> <span class="p">{</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sparse</span> <span class="n">matrix</span><span class="p">}</span> <span class="n">of</span> <span class="n">shape</span> <span class="p">(</span><span class="n">n_samples_X</span><span class="p">,</span> <span class="n">n_features</span><span class="p">)</span>
+        <span class="n">Input</span> <span class="n">data</span><span class="o">.</span>
+
+    <span class="n">Y</span> <span class="p">:</span> <span class="p">{</span><span class="n">ndarray</span><span class="p">,</span> <span class="n">sparse</span> <span class="n">matrix</span><span class="p">}</span> <span class="n">of</span> <span class="n">shape</span> <span class="p">(</span><span class="n">n_samples_Y</span><span class="p">,</span> <span class="n">n_features</span><span class="p">),</span> \
+            <span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+        <span class="n">Input</span> <span class="n">data</span><span class="o">.</span> <span class="n">If</span> <span class="kc">None</span><span class="p">,</span> <span class="n">the</span> <span class="n">output</span> <span class="n">will</span> <span class="n">be</span> <span class="n">the</span> <span class="n">pairwise</span>
+        <span class="n">similarities</span> <span class="n">between</span> <span class="nb">all</span> <span class="n">samples</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span>
+<span class="o">...</span>
+
+<span class="n">Returns</span><span class="p">:</span>
+    <span class="n">kernel</span> <span class="n">matrix</span> <span class="p">:</span> <span class="n">ndarray</span> <span class="n">of</span> <span class="n">shape</span> <span class="p">(</span><span class="n">n_samples_X</span><span class="p">,</span> <span class="n">n_samples_Y</span><span class="p">)</span>
+        <span class="n">Returns</span> <span class="n">the</span> <span class="n">cosine</span> <span class="n">similarity</span> <span class="n">between</span> <span class="n">samples</span> <span class="ow">in</span> <span class="n">X</span> <span class="ow">and</span> <span class="n">Y</span><span class="o">.</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="c1"># compute and print the cosine similarity matrix</span>
+<span class="n">cosine_sim</span> <span class="o">=</span> <span class="n">cosine_similarity</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">X_train_tfidf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cosine_sim</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(46064, 46064)
+CPU times: user 18.9 s, sys: 21.6 s, total: 40.5 s
+Wall time: 57.9 s
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>
+<span class="c1"># compute and print the cosine similarity matrix</span>
+<span class="n">cosine_sim_linear_kernel</span> <span class="o">=</span> <span class="n">linear_kernel</span><span class="p">(</span><span class="n">X_train_tfidf</span><span class="p">,</span> <span class="n">X_train_tfidf</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">cosine_sim_linear_kernel</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(46064, 46064)
+CPU times: user 20.2 s, sys: 22.2 s, total: 42.4 s
+Wall time: 1min 14s
+</pre></div>
+</div>
+</div>
+</div>
+<p>How to interpret the cosine similarity matrix operated on the TF-IDF matrix?</p>
+<p>First of all, the cosine similarity assumes your input is in the shape of <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> by <code class="docutils literal notranslate"><span class="pre">n_features</span></code>.
+In our case, the <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> is the number of documents, and the <code class="docutils literal notranslate"><span class="pre">n_features</span></code> is the number of unique words.</p>
+<p>It returns a matrix of shape <code class="docutils literal notranslate"><span class="pre">n_samples</span></code> by <code class="docutils literal notranslate"><span class="pre">n_samples</span></code>. The value at the <span class="math notranslate nohighlight">\(i\)</span>-th row and <span class="math notranslate nohighlight">\(j\)</span>-th column is
+the cosine similarity between the <span class="math notranslate nohighlight">\(i\)</span>-th document and the <span class="math notranslate nohighlight">\(j\)</span>-th document denoted by:</p>
+<div class="math notranslate nohighlight">
+\[
+\text{cosine similarity}_{i, j}
+\]</div>
+<p>Consequently, the matrix’s diagonal is <span class="math notranslate nohighlight">\(1\)</span> since the cosine similarity between a document and itself is <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">recommend_movies</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">cosine_sim</span><span class="p">,</span> <span class="n">top_k</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+    <span class="c1"># Get the index of the movie that matches the title</span>
+    <span class="n">idx</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="n">df_train</span><span class="p">[</span><span class="s2">&quot;Title&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">title</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># Get the pairwise similarity scores of all movies with that movie</span>
+    <span class="n">sim_scores</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">cosine_sim</span><span class="p">[</span><span class="n">idx</span><span class="p">]))</span>
+
+    <span class="c1"># Sort the movies based on the similarity scores</span>
+    <span class="n">sim_scores</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">sim_scores</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># Get the scores of the 10 most similar movies</span>
+    <span class="n">sim_scores</span> <span class="o">=</span> <span class="n">sim_scores</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">top_k</span><span class="p">]</span>
+
+    <span class="c1"># Get the movie indices</span>
+    <span class="n">movie_indices</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">sim_scores</span><span class="p">]</span>
+
+    <span class="c1"># Return the top 10 most similar movies</span>
+    <span class="k">return</span> <span class="n">df_train</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">movie_indices</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">recommend_movies</span><span class="p">(</span><span class="s2">&quot;Batman: The Dark Knight Returns, Part 1&quot;</span><span class="p">,</span> <span class="n">cosine_sim_linear_kernel</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Release Date</th>
+      <th>Title</th>
+      <th>Overview</th>
+      <th>Genre</th>
+      <th>Vote Average</th>
+      <th>Vote Count</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5427</th>
+      <td>2012-08-21</td>
+      <td>Batman: The Dark Knight Returns, Part 1</td>
+      <td>Batman has not been seen for ten years. A new ...</td>
+      <td>['Science Fiction', 'Action', 'Animation', 'My...</td>
+      <td>7.8</td>
+      <td>1255</td>
+    </tr>
+    <tr>
+      <th>23394</th>
+      <td>2016-08-04</td>
+      <td>Batman: Bad Blood</td>
+      <td>Bruce Wayne is missing. Alfred covers for him ...</td>
+      <td>['Science Fiction', 'Action', 'Animation']</td>
+      <td>7.2</td>
+      <td>604</td>
+    </tr>
+    <tr>
+      <th>20422</th>
+      <td>2015-11-27</td>
+      <td>Red Hood: The Fallen</td>
+      <td>Following the Death of Batman, a new vigilante...</td>
+      <td>['Action']</td>
+      <td>6.5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>35928</th>
+      <td>2019-07-19</td>
+      <td>Batman: Hush</td>
+      <td>A mysterious new villain known only as Hush us...</td>
+      <td>['Science Fiction', 'Crime', 'Animation', 'Mys...</td>
+      <td>7.3</td>
+      <td>657</td>
+    </tr>
+    <tr>
+      <th>10068</th>
+      <td>2013-09-16</td>
+      <td>The Dark Knight Legacy</td>
+      <td>A fan film imagining the world after Batman's ...</td>
+      <td>['Action', 'Crime', 'Drama']</td>
+      <td>2.0</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>26940</th>
+      <td>2017-05-06</td>
+      <td>Batman &amp; Bill</td>
+      <td>Everyone thinks that Bob Kane created Batman, ...</td>
+      <td>['Documentary']</td>
+      <td>7.1</td>
+      <td>61</td>
+    </tr>
+    <tr>
+      <th>43614</th>
+      <td>2021-07-26</td>
+      <td>Batman: The Long Halloween, Part Two</td>
+      <td>As Gotham City's young vigilante, the Batman, ...</td>
+      <td>['Animation', 'Mystery', 'Action', 'Crime']</td>
+      <td>7.6</td>
+      <td>338</td>
+    </tr>
+    <tr>
+      <th>35961</th>
+      <td>2019-07-21</td>
+      <td>Lego DC Batman: Family Matters</td>
+      <td>Suspicion is on high after Batman, Batgirl, Ro...</td>
+      <td>['Animation', 'Family', 'Action', 'Comedy']</td>
+      <td>7.1</td>
+      <td>108</td>
+    </tr>
+    <tr>
+      <th>981</th>
+      <td>2008-07-08</td>
+      <td>Batman: Gotham Knight</td>
+      <td>A collection of key events mark Bruce Wayne's ...</td>
+      <td>['Science Fiction', 'Animation', 'Action', 'Ad...</td>
+      <td>6.7</td>
+      <td>516</td>
+    </tr>
+    <tr>
+      <th>7336</th>
+      <td>2013-01-03</td>
+      <td>Batman: The Dark Knight Returns, Part 2</td>
+      <td>Batman has stopped the reign of terror that Th...</td>
+      <td>['Science Fiction', 'Action', 'Animation', 'My...</td>
+      <td>8.0</td>
+      <td>1156</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="implementation.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Implementation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../../../../references_resources_roadmap/bibliography.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Bibliography</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>

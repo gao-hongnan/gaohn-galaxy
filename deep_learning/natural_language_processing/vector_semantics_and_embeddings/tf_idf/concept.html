@@ -1,0 +1,1079 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Concept &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/clipboard.min.js"></script>
+    <script src="../../../../_static/copybutton.js"></script>
+    <script src="../../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept';</script>
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+    <link rel="next" title="Implementation" href="implementation.html" />
+    <link rel="prev" title="Term Frequency-Inverse Document Frequency (TF-IDF)" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../intro.html">
+                        Introduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../../intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../intro.html">Introduction</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../../intro.html">Natural Language Processing (NLP)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="../intro.html">Vector Semantics and Embeddings</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 has-children"><a class="reference internal" href="../words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 current active has-children"><a class="reference internal" href="intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l4 current active"><a class="current reference internal" href="#">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="application.html">IMDB Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://colab.research.google.com/github/gao-hongnan/gaohn-galaxy/blob/main/galaxy/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../../../../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fdeep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../../_sources/deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Concept</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#term-frequency-tf">
+     Term Frequency (TF)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inverse-document-frequency-idf">
+     Inverse Document Frequency (IDF)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Term Frequency (TF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   Inverse Document Frequency (IDF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#term-frequency-inverse-document-frequency-tf-idf">
+   Term Frequency-Inverse Document Frequency (TF-IDF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#justification-and-link-with-information-theory">
+   Justification and Link with Information Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conceptual-questions">
+   Conceptual Questions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-do-we-use-logarithmically-scaled-term-frequency">
+     Why do we use logarithmically scaled term frequency?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="concept">
+<h1>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h1>
+<p><strong>TF-IDF is used in <a class="reference internal" href="../words_and_vectors/concept.html#words-as-vectors-document-dimensions"><span class="std std-ref">the case document is as dimension</span></a>
+and <a class="reference internal" href="../words_and_vectors/concept.html#term-document-matrix"><span class="std std-ref">the case term document matrix</span></a>.</strong></p>
+<p><strong>Note this section’s notation is not consistent with the notations defined
+in this notes.</strong></p>
+<p>We will denote the vocabulary as an ordered (lexicographically) set of words <span class="math notranslate nohighlight">\(\mathcal{V} = \{v_1, v_2, \dots, v_T\}\)</span>, where <span class="math notranslate nohighlight">\(T\)</span> is the size of the vocabulary.</p>
+<p>We will denote the set of documents as <span class="math notranslate nohighlight">\(\mathcal{S} = \{s_1, s_2, \dots, s_D\}\)</span>, where <span class="math notranslate nohighlight">\(D\)</span> is the number of documents.</p>
+<section id="motivation">
+<h2>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">#</a></h2>
+<p>Suppose we have a <strong>corpus</strong> consisting of <span class="math notranslate nohighlight">\(5\)</span> documents as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">corpus</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s2">&quot;The sun is the largest celestial body in the solar system&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The solar system consists of the sun and eight revolving planets&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;Ra was the Egyptian Sun God&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The Pyramids were the pinnacle of Egyptian architecture&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;The quick brown fox jumps over the lazy dog&quot;</span><span class="p">,</span>
+<span class="p">]</span>
+
+<span class="n">corpus_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;doc_1&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_2&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_3&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_4&quot;</span><span class="p">,</span> <span class="s2">&quot;doc_5&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>where each element in <code class="docutils literal notranslate"><span class="pre">corpus</span></code> corresponds to a document.</p>
+<p>The unique vocabularies in lexicographical order are as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">vocabulary</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;and&#39;</span><span class="p">,</span> <span class="s1">&#39;architecture&#39;</span><span class="p">,</span> <span class="s1">&#39;body&#39;</span><span class="p">,</span> <span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>To this end, the <code class="docutils literal notranslate"><span class="pre">corpus</span></code> is our set <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> and the <code class="docutils literal notranslate"><span class="pre">vocabulary</span></code> is our set <span class="math notranslate nohighlight">\(\mathcal{V}\)</span>.</p>
+<section id="term-frequency-tf">
+<h3>Term Frequency (TF)<a class="headerlink" href="#term-frequency-tf" title="Permalink to this heading">#</a></h3>
+<p>Suppose now we have a new document <code class="docutils literal notranslate"><span class="pre">query</span></code> as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;Why did the chicken cross the road?&quot;</span>
+</pre></div>
+</div>
+<p>and we want to rank the documents in <code class="docutils literal notranslate"><span class="pre">corpus</span></code> according to their relevance to <code class="docutils literal notranslate"><span class="pre">query</span></code>.</p>
+<p>A simple way to start out is by eliminating documents that do not contain all the words “why”, “did”, “the”, “chicken”, “cross” and “road”. However, none of the
+documents will be eliminated since all of them contain the common word “the”.</p>
+<p>To further distinguish them, we can count the number of times each word from <code class="docutils literal notranslate"><span class="pre">query</span></code> occurs in each document. The number of times a word occurs in a document is called its <strong>term frequency</strong>. For example, in <code class="docutils literal notranslate"><span class="pre">doc_4</span></code>, the word <code class="docutils literal notranslate"><span class="pre">the</span></code> occurred <span class="math notranslate nohighlight">\(2\)</span> times, while in <code class="docutils literal notranslate"><span class="pre">doc_1</span></code>, it occurred <span class="math notranslate nohighlight">\(3\)</span> times. Hence we can intuitively rank <code class="docutils literal notranslate"><span class="pre">doc_1</span></code> over <code class="docutils literal notranslate"><span class="pre">doc_4</span></code> as being more relevant to <code class="docutils literal notranslate"><span class="pre">query</span></code>.</p>
+</section>
+<section id="inverse-document-frequency-idf">
+<h3>Inverse Document Frequency (IDF)<a class="headerlink" href="#inverse-document-frequency-idf" title="Permalink to this heading">#</a></h3>
+<p>The word “the” is very common and can skew the results by giving too much emphasis to documents that happen to use it more often, instead of focusing on more meaningful terms like “chicken”, “cross”, and “road”. To address this issue, an inverse document frequency factor is added to reduce the weight of frequently occurring terms and increase the weight of rarely occurring terms, making them more significant in distinguishing relevant and non-relevant documents and terms.</p>
+</section>
+</section>
+<section id="id1">
+<h2>Term Frequency (TF)<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Term frequency, <span class="math notranslate nohighlight">\(\operatorname{tf}_{t, d}\)</span>, is the relative frequency of word/term/vocab <span class="math notranslate nohighlight">\(t \in \mathcal{V}\)</span> in document <span class="math notranslate nohighlight">\(d \in \mathcal{S}\)</span>, i.e., the number of times that term <span class="math notranslate nohighlight">\(t\)</span> occurs in document <span class="math notranslate nohighlight">\(d\)</span> divided by the total number of terms in document <span class="math notranslate nohighlight">\(d\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{tf}_{t, d}=\frac{f_{t, d}}{\sum_{t^{\prime} \in d} f_{t^{\prime}, d}},
+\]</div>
+<p>where</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(f_{t, d}\)</span> is the raw count of a term in a document, i.e., the number of times that term <span class="math notranslate nohighlight">\(t\)</span> occurs in document <span class="math notranslate nohighlight">\(d\)</span>. Note the denominator is simply the total number of terms in document <span class="math notranslate nohighlight">\(d\)</span> (counting each occurrence of the same term separately).</p></li>
+</ul>
+<p>There are various other ways to define term frequency, for example,
+scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">TfidfVectorizer</a> uses the the raw count itself as the term frequency, i.e., <span class="math notranslate nohighlight">\(f_{t, d}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{tf}_{t, d}=f_{t, d}
+\]</div>
+<p>For our purpose, we will follow the definition in <span id="id2">[<a class="reference internal" href="../../../../references_resources_roadmap/bibliography.html#id5" title="Dan Jurafsky and James H. Martin. Speech and language processing: An introduction to natural language processing, computational linguistics, and speech recognition. Pearson, 2022.">Jurafsky and Martin, 2022</a>]</span> and use the logarithmically scaled version of the raw count:</p>
+<div class="math notranslate nohighlight" id="equation-eq-tf-log">
+<span class="eqno">(44)<a class="headerlink" href="#equation-eq-tf-log" title="Permalink to this equation">#</a></span>\[
+\operatorname{tf}_{t, d}= \log_{10}(f_{t, d} + 1)
+\]</div>
+</section>
+<section id="id3">
+<h2>Inverse Document Frequency (IDF)<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h2>
+<p>Define the <strong>document frequency</strong> <span class="math notranslate nohighlight">\(\operatorname{df}_{t}\)</span> as the number of documents in the corpus that contain the term <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{df}_{t}=\left|\left\{d \in \mathcal{S} \quad \text{s.t.} \quad t \in d\right\}\right|
+\]</div>
+<p>The inverse document frequency is a measure of how much information the word provides, i.e., if it is common or rare across all documents. It is the logarithmically scaled inverse fraction of the documents that contain the word (obtained by dividing the total number of documents by the number of documents containing the term, and then taking the logarithm of that quotient):</p>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{idf}_{t}=\log\left(\frac{D}{\operatorname{df}_{t}}\right)
+\]</div>
+<p>with</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(D\)</span> : total number of documents in the corpus <span class="math notranslate nohighlight">\(D = \left|\mathcal{S}\right|\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\operatorname{df}_{t} = |\{d \in \mathcal{S} \quad \text{s.t.} \quad t \in d\}|\)</span> : number of documents where the term <span class="math notranslate nohighlight">\(t\)</span> appears. However, this term <span class="math notranslate nohighlight">\(t\)</span> is from the query and hence may or may not be in the existing training corpus. If it is not, then this will make <span class="math notranslate nohighlight">\(\operatorname{df}_{t}=0\)</span>, causing division-by-zero. Hence, a variant of the inverse document frequency is used:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+\operatorname{idf}_{t}=\log\left(\frac{D}{\operatorname{df}_{t}}\right) + 1
+\]</div>
+<p>which is the implementation used by scikit-learn’s <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html">TfidfVectorizer</a>. Another thing is that scikit-learn uses <span class="math notranslate nohighlight">\(\log\)</span> which is the natural logarithm, i.e., <span class="math notranslate nohighlight">\(\log_{e}\)</span>, instead of <span class="math notranslate nohighlight">\(\log_{10}\)</span>.</p>
+</section>
+<section id="term-frequency-inverse-document-frequency-tf-idf">
+<h2>Term Frequency-Inverse Document Frequency (TF-IDF)<a class="headerlink" href="#term-frequency-inverse-document-frequency-tf-idf" title="Permalink to this heading">#</a></h2>
+<p>The <strong>tf-idf</strong> weighted value of a term <span class="math notranslate nohighlight">\(t\)</span> in a document <span class="math notranslate nohighlight">\(d\)</span> is simply the product of the term frequency and the inverse document frequency, which we denote as <span class="math notranslate nohighlight">\(w_{t, d}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+w_{t, d}=\operatorname{tf}_{t, d} \cdot \operatorname{idf}_{t}
+\]</div>
+<p>So what this formula is doing intuitively is if <span class="math notranslate nohighlight">\(D=10\)</span> for example (<span class="math notranslate nohighlight">\(10\)</span> documents) and
+say the word “the” appears in all <span class="math notranslate nohighlight">\(10\)</span> documents, then <span class="math notranslate nohighlight">\(\operatorname{df}_{t} = 10\)</span> and
+<span class="math notranslate nohighlight">\(\operatorname{idf}_{t} = \log(10/10) = \log(1) = 0\)</span>. This leads to a weight <span class="math notranslate nohighlight">\(w_{t, d} = 10 \times 0\)</span>. This means that the word “the” is
+too common and hence the idf weight is <span class="math notranslate nohighlight">\(0\)</span>, essentially, this means this word is ignore.</p>
+<p>On the other hand, if the word “chicken” appears in only <span class="math notranslate nohighlight">\(1\)</span> document, then we have
+<span class="math notranslate nohighlight">\(\operatorname{df}_{t} = 1\)</span> and <span class="math notranslate nohighlight">\(\operatorname{idf}_{t} = \log(10/1) = \log(10) = 2.3\)</span>, which holds a higher weight <span class="math notranslate nohighlight">\(w_{t, d} = 1 \times 2.3 = 2.3\)</span>.</p>
+</section>
+<section id="justification-and-link-with-information-theory">
+<h2>Justification and Link with Information Theory<a class="headerlink" href="#justification-and-link-with-information-theory" title="Permalink to this heading">#</a></h2>
+<p>See <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf#Justification_of_idf">Wikipedia</a>.</p>
+</section>
+<section id="conceptual-questions">
+<h2>Conceptual Questions<a class="headerlink" href="#conceptual-questions" title="Permalink to this heading">#</a></h2>
+<section id="why-do-we-use-logarithmically-scaled-term-frequency">
+<h3>Why do we use logarithmically scaled term frequency?<a class="headerlink" href="#why-do-we-use-logarithmically-scaled-term-frequency" title="Permalink to this heading">#</a></h3>
+<p>The log transformation is used to “squash” the term frequencies to reduce the impact of very high frequency terms, as they can disproportionately dominate the weighting of a document. By using log, the scaling factor becomes less significant for very high frequency terms, while still allowing for a differentiation between non-zero and zero term frequency. The logarithmic scaling also ensures that the range of values is compressed, allowing for a better distribution of weights across the different terms. Overall, using the log transformation helps to normalize the term frequency values and prevent any one term from dominating the analysis.</p>
+</section>
+</section>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">Wikipedia: TF-IDF</a></p></li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Term Frequency-Inverse Document Frequency (TF-IDF)</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="implementation.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Implementation</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#motivation">
+   Motivation
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#term-frequency-tf">
+     Term Frequency (TF)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#inverse-document-frequency-idf">
+     Inverse Document Frequency (IDF)
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
+   Term Frequency (TF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   Inverse Document Frequency (IDF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#term-frequency-inverse-document-frequency-tf-idf">
+   Term Frequency-Inverse Document Frequency (TF-IDF)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#justification-and-link-with-information-theory">
+   Justification and Link with Information Theory
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conceptual-questions">
+   Conceptual Questions
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#why-do-we-use-logarithmically-scaled-term-frequency">
+     Why do we use logarithmically scaled term frequency?
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
