@@ -69,13 +69,14 @@ The PDF and CDF of two exponential distributions are shown below.
 :tags: [hide-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[2])
 sys.path.append(parent_dir)
 
 import numpy as np
 import scipy.stats as stats
 
-from utils import seed_all, plot_continuous_pdf_and_cdf
+from src.utils.general import seed_all
+from src.utils.plot import plot_continuous_pdf_and_cdf
 seed_all()
 
 # x = np.linspace(0, 10, 5000)
@@ -100,10 +101,10 @@ $$
 $$ (eq:thm_exponential_distribution_expectation_variance)
 ```
 
-## Further Readings
+## References and Further Readings
 
 Further readings is a must since Professor Chan give many intuition on how Exponential distribution is used in real life.
 He also showed how Exponential distribution is derived from the Poisson distribution.
 
-- Chan, Stanley H. "Chapter 4.5. Uniform and Exponential Random Variables." In Introduction to Probability for Data Science, 205-211. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
-- Pishro-Nik, Hossein. "Chapter 4.2.2. Exponential Distribution" In Introduction to Probability, Statistics, and Random Processes, 249-252. Kappa Research, 2014. 
+- Chan, Stanley H. "Chapter 4.5. Uniform and Exponential Random Variables." In Introduction to Probability for Data Science, 205-211. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
+- Pishro-Nik, Hossein. "Chapter 4.2.2. Exponential Distribution" In Introduction to Probability, Statistics, and Random Processes, 249-252. Kappa Research, 2014.

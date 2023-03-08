@@ -1,4 +1,4 @@
-# Exercises
+# Application
 
 ## Medical Diagnosis
 
@@ -14,7 +14,7 @@ let $Y$ be the ground truth label of the patient, in this case, $Y \in \{0, 1\}$
 where $0$ (negative) indicates that the patient is healthy and $1$ (positive)
 indicates that the patient has HIV.
 
-Let $\hat{Y}$ be the hard label predicted by the test, i.e., $\hat{Y} \in \{0, 1\}$. 
+Let $\hat{Y}$ be the hard label predicted by the test, i.e., $\hat{Y} \in \{0, 1\}$.
 
 To keep the notation similar to the original example, denote the first test as $\hat{Y}_1$ and the second test as $\hat{Y}_2$.
 
@@ -45,7 +45,7 @@ P(Y = 1 \mid \hat{Y}_1 = 1) = \frac{P(\hat{Y}_1 = 1 \mid Y = 1) P(Y = 1)}{P(\hat
 $$
 
 Intuitively this is going to depend on how common the disease is,
-since it affects the number of false alarms. 
+since it affects the number of false alarms.
 
 We further assume the prior probability of the patient having HIV is $0.0015$.
 
@@ -53,7 +53,7 @@ $$
 \mathbb{P}(Y = 1) = 0.0015.
 $$
 
-Then we can invoke Bayes' theorem, 
+Then we can invoke Bayes' theorem,
 
 $$
 \begin{aligned}
@@ -192,7 +192,7 @@ where $N \sim \operatorname{Gaussian}(0,1)$ is the noise, which is independent o
         not change the probability of $X$ happening. Ask why $N = Y - X$ does not imply that $X$
         is dependent on $N$.
    2. Note that $X$ and $Y$ are **not** independent. Can we justify or our intuition is wrong.
-   
+
 2. To find $P[X=1 | Y>0]$, we need the following:
    1. We first recall that to find the conditional probability, we need to find the conditional PDF $f_{X|Y}(x|y)$ first, or more concretely, $f_{X|Y}(x=1|y>0)$.
    2. We first note $f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)}$.
@@ -228,7 +228,7 @@ where $N \sim \operatorname{Gaussian}(0,1)$ is the noise, which is independent o
 
    6. We can now use the standard normal table to find the probability, which is $0.8413$. See chan's solution which is $1 - \Phi(-1) = 0.8413$.
    7. Similarly, we can find $P[Y>0|X=-1]$ by plugging in $y>0$ into the PDF of $\mathcal{N}(-1, 1)$, which is $f_{Y|X}(y>0|x=-1) = \frac{1}{\sqrt{2\pi}}e^{-\frac{1}{2}(y+1)^2}$. We can then integrate over $y>0$ to find the probability, $1-\Phi(1)$.
-   
+
 4. As of now, we have recovered $P[X=+1]$ and $P[Y>0|X=+1]$, what is left is the denominator $P[Y>0]$. By the law of total probability, we have
 
     $$

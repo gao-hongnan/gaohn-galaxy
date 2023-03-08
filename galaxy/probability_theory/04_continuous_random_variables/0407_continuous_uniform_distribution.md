@@ -22,7 +22,7 @@ kernelspec:
 ```{prf:definition} Continuous Uniform Distribution (PDF)
 :label: def_continuous_uniform_distribution_pdf
 
-$X$ is a continuous random variable with a **continuous uniform distribution** if the 
+$X$ is a continuous random variable with a **continuous uniform distribution** if the
 probability density function is given by:
 
 $$
@@ -69,7 +69,7 @@ from scipy import stats
 fig, axes = plt.subplots(2, 2, figsize=(10, 10))
 
 u = np.linspace(-1, 9, 5000) # random variable realizations
-U1 = stats.uniform(0.2, 0.8) 
+U1 = stats.uniform(0.2, 0.8)
 
 axes[0, 0].plot(u, U1.pdf(u), "r-", lw=3, alpha=0.6, label="Uniform[0.2, 0.8]")
 axes[0, 0].set_title("PDF of Uniform[0.2, 0.8]")
@@ -109,17 +109,18 @@ plt.show()
 :tags: [hide-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[2])
 sys.path.append(parent_dir)
 
 import numpy as np
 import scipy.stats as stats
 
-from utils import seed_all, plot_continuous_pdf_and_cdf
+from src.utils.general import seed_all
+from src.utils.plot import plot_continuous_pdf_and_cdf
 seed_all()
 
 # x = np.linspace(-1, 9, 5000) # random variable realizations
-U1 = stats.uniform(0.2, 0.8) 
+U1 = stats.uniform(0.2, 0.8)
 U2 = stats.uniform(2, 6)
 
 plot_continuous_pdf_and_cdf(U1, -1, 9, title="Uniform$([0.2, 0.8])$", xlim=(-0.1, 1.3), ylim=(0, 2))
@@ -141,14 +142,14 @@ $$ (eq:thm_continuous_uniform_distribution)
 ```{prf:remark} Intuition for Expectation and Variance of Continuous Uniform Distribution
 :label: rmk_continuous_uniform_distribution
 
-The expectation of a continuous uniform distribution is the midpoint of the interval on which the random variable is defined. 
+The expectation of a continuous uniform distribution is the midpoint of the interval on which the random variable is defined.
 
 This should not be surprising, since the probability density function is constant over the interval, and the probability of any point in the interval is the same.
 
 Let's say we have $X \sim \text{Uniform}(0, 10)$, then $\expectation \lsq X \rsq = 5$.
 ```
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.5. Uniform and Exponential Random Variables." In Introduction to Probability for Data Science, 201-205. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
-- Pishro-Nik, Hossein. "Chapter 4.2.1. Uniform Distribution" In Introduction to Probability, Statistics, and Random Processes, 248-248. Kappa Research, 2014. 
+- Chan, Stanley H. "Chapter 4.5. Uniform and Exponential Random Variables." In Introduction to Probability for Data Science, 201-205. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
+- Pishro-Nik, Hossein. "Chapter 4.2.1. Uniform Distribution" In Introduction to Probability, Statistics, and Random Processes, 248-248. Kappa Research, 2014.

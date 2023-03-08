@@ -292,10 +292,10 @@ We then generate some data from a 2D Gaussian distribution with the following pa
 
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parents[1])
+parent_dir = str(Path().resolve().parents[3])
 sys.path.append(parent_dir)
 
-from utils import use_svg_display
+from src.utils.plot import use_svg_display
 
 import numpy as np
 import scipy.stats as stats

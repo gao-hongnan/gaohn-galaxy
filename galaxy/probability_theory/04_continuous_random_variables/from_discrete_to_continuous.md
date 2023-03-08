@@ -19,7 +19,7 @@ kernelspec:
 :tags: [remove-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[2])
 sys.path.append(parent_dir)
 
 import numpy as np
@@ -30,13 +30,14 @@ import seaborn as sns
 from typing import *
 %matplotlib inline
 
-from utils import seed_all, plot_continuous_pdf_and_cdf
+from src.utils.general import seed_all
+from src.utils.plot import plot_continuous_pdf_and_cdf
 seed_all()
 ```
 
 # From Discrete to Continuous
 
-## Calculus 
+## Calculus
 
 The following content is adapted from {cite}`continous_random_variables_mit_1805`.
 
@@ -93,7 +94,7 @@ Notice immediately that for the $\lambda_2 = 2$, the PDF starts off at $2$. This
 you that PDF is not probability, as it is more than $1$.
 
 One might wonder why you cannot define the probability of a continuous random variable
-as the sum like their discrete counterparts. Like, if the domain/sample space is 
+as the sum like their discrete counterparts. Like, if the domain/sample space is
 from $[0, 10]$, why don't we just sum up the probability of all the points in the domain?
 
 The simple answer is that the domain is infinite, and therefore the sum is infinite. Henceforth,
@@ -114,17 +115,17 @@ and not $1$.
 
 The misconception is that we need to use the idea of "summing" in terms of integration.
 
-### Probability at a Point in a Small Neighborhood 
+### Probability at a Point in a Small Neighborhood
 
 As [Aerin Kim](https://towardsdatascience.com/pdf-is-not-a-probability-5a4b8a5d9531)
 intuitively pointed out, the probability of a point is not $0$, but rather $0$ in the limit.
 
-So, if we take a small enough neighborhood around $x$, say the interval $[x, x+\Delta x]$, 
-or equivalently, $[x, x + dx]$ or $[x, x + \delta]$, 
+So, if we take a small enough neighborhood around $x$, say the interval $[x, x+\Delta x]$,
+or equivalently, $[x, x + dx]$ or $[x, x + \delta]$,
 then the probability of the point $x$ can be approximated by the area under the curve
 in that interval.
 
-Therefore, if $\Delta x$ is small enough, then we can approximately say that 
+Therefore, if $\Delta x$ is small enough, then we can approximately say that
 $\P \lsq X = x \rsq$ is the area under the curve between $x$ and $x + \Delta x$.
 
 She further mentioned that the probability density at a point $x$ signifies
@@ -133,7 +134,7 @@ how dense the probability is around $x$ in the small neighborhood.
 ```{admonition} Warning
 :class: warning
 
-In this section, we are talking about the probability density at a point, and try to 
+In this section, we are talking about the probability density at a point, and try to
 interpret it as the area under the curve in a small neighborhood. We have not formalized
 the idea with integration, which we will do so in the next section.
 ```
@@ -142,9 +143,9 @@ the idea with integration, which we will do so in the next section.
 
 This example below is modified from a problem set in Singapore's Junior College notes.
 
-The masses of 200 six-month-old babies are collected. To visualise the distribution of the 
+The masses of 200 six-month-old babies are collected. To visualise the distribution of the
 mass of a six-month old baby (which is a continuous random variable), let us for a moment
-treat this 200 data points as the probability distribution[^empirical] of all the babies' 
+treat this 200 data points as the probability distribution[^empirical] of all the babies'
 masses.
 
 Then, we can say that $X$ is a random variable that represents the mass of a (randomly drawn) baby.
@@ -153,7 +154,7 @@ Then, we can say that $X$ is a random variable that represents the mass of a (ra
 the true population (PDF), we will assume that these 200 data points is our true population
 since I am trying to understand PDF.
 
-We can then group the data into 5 classes with a class width of 1 kg each. The frequency table and the histogram 
+We can then group the data into 5 classes with a class width of 1 kg each. The frequency table and the histogram
 corresponding to the data {ref}`baby_frequency_1` are shown below.
 
 ```{list-table} Baby Mass Frequency Table
@@ -187,7 +188,7 @@ population = np.concatenate((bin_56, bin_67, bin_78, bin_89, bin_910))
 ```
 
 If we plot out their histograms with bin size of 1, from 5-10 inclusive, we recover
-the following histogram. 
+the following histogram.
 
 In the frequency histogram on the left, we can say that,
 
@@ -197,7 +198,7 @@ In the frequency histogram on the left, we can say that,
 - 36 babies with mass between 8 and 9;
 - 16 babies with mass between 9 and 10.
 
-In the relative frequency in the middle, we can say that, 
+In the relative frequency in the middle, we can say that,
 
 - $\frac{20}{200} = 0.1$ babies with mass between 5 and 6;
 - $\frac{48}{200} = 0.24$ babies with mass between 6 and 7;
@@ -208,7 +209,7 @@ In the relative frequency in the middle, we can say that,
 In the density histogram on the right, we first define the density histogram
 so that the area of each rectangle in the histogram is equal to the relative frequency.
 In other words, the width $w$ (interval) of each bin multiply by the height $h$ (density)
-gives the area of the rectangle, and consequently the relative frequency of the bin. 
+gives the area of the rectangle, and consequently the relative frequency of the bin.
 So to recover the density value $h$, we divide the relative frequency by the width $w$.
 
 - $\frac{20}{200} / 1 = 0.1$ babies with mass between 5 and 6;
@@ -217,7 +218,7 @@ So to recover the density value $h$, we divide the relative frequency by the wid
 - $\frac{36}{200} / 1 = 0.18$ babies with mass between 8 and 9;
 - $\frac{16}{200} / 1 = 0.08$ babies with mass between 9 and 10.
 
-In this case the density histogram is the same as the relative frequency histogram, which 
+In this case the density histogram is the same as the relative frequency histogram, which
 is not the case in general (we will see later).
 
 
@@ -274,7 +275,7 @@ def plot_histogram(population: np.ndarray, bins: int, show_labels: bool = True, 
     axes[2].set_xlabel("Mass (kg)")
     axes[2].set_ylabel("Density")
     axes[2].set_title("Density Histogram of Baby Mass.")
-    
+
     if save:
         fig.savefig('plot.png', dpi=300)
 ```
@@ -298,7 +299,7 @@ We try to link back how a density histogram can connect to PDF and its integral.
 
 Note we defined this without the usage of integrals.
 
-Now this definition seems quite coarse because we are only restricted with a fixed interval, i.e. bins 5-10 with only 1 width, and 
+Now this definition seems quite coarse because we are only restricted with a fixed interval, i.e. bins 5-10 with only 1 width, and
 we can only find cases for these discretized bins.
 
 What if we want to find $\mathbb{P}[5 < X < 5.25]$? Well, we can discretize our bins further to have 0.25 intervals (width)!
@@ -313,14 +314,14 @@ plot_histogram(population, bins, save=False)
 ```
 
 Before we move on, we take note that in the relative frequency diagram, the y-labels must sum to 1, but this
-will not be true here in the density diagram. Recall relative frequency is density multiplied by bin width (i.e. in 
+will not be true here in the density diagram. Recall relative frequency is density multiplied by bin width (i.e. in
 the bin 5 to 5.25, we have $0.06 \times 0.25 = 0.015$.
 
-Now the problem is that all the bins are discretized, and hence does not fit the definition of continuous, we can keep ask for a smaller interval on the real line 
+Now the problem is that all the bins are discretized, and hence does not fit the definition of continuous, we can keep ask for a smaller interval on the real line
 (i.e. what is $\mathbb{P}[5.00000001 < X \leq 5.00000002]$). Then we have to keep shrink the bin width to recover the area of the rectangle in order to
 recover the relative frequency (probability).
 
-Define the number of bins to be $k$, and the width of a bin to be $\frac{5}{k}$ where $5$ is $10 - 5$, 
+Define the number of bins to be $k$, and the width of a bin to be $\frac{5}{k}$ where $5$ is $10 - 5$,
 then we can solve this problem by letting $k \to \infty$, this will eventually smooth out the whole
 histogram into infinitely number of bins and recover a smooth function $f$, which turns out to be our PDF.
 
@@ -352,7 +353,7 @@ we have an interval $(x, x+\delta]$. We then ask ourselves the probability betwe
 this interval, which is $\mathbb{P}[x < X \leq x + \delta]$.
 
 Now recall we have showed earlier that we can approximately interpret integration as sums, and this is now connected to the histograms
-we plotted. If the interval/bin width is very small, then we can say that the probability of this interval is 
+we plotted. If the interval/bin width is very small, then we can say that the probability of this interval is
 $\mathbb{P}[x < X \leq x + \delta] \approx \delta f_X(x)$. Note carefully that the interval must be small,
 if not the "area" won't be close to the probability as seen in {numref}`mit1805_integration_modified`.
 
@@ -363,7 +364,7 @@ $$
 $$
 
 Then we can see that the PDF at a point $x$ is the **probability** per **delta**, which translates to the probability mass per unit length around $x$
-within the small neighbourhood $\delta$. One can think of it as how densely packed $f_X$ is around the point $x$, if 
+within the small neighbourhood $\delta$. One can think of it as how densely packed $f_X$ is around the point $x$, if
 $f_X(x)$ turns out to be larger than the rest, this means that the probability of occurring at that point (and its neighbourhood)
 is larger than the rest. More concretely, for the same interval length $\delta$, a larger $f_X$ means the probability is higher.
 
@@ -383,14 +384,14 @@ $$
 name: mit1805_integration_modified
 ---
 Notice that in the last interval, the interval is too large and therefore the approximation is not good. The one
-shaded with red is the actual area under the curve between the interval $[x_{n-1}, x_{n}$ where as the 
+shaded with red is the actual area under the curve between the interval $[x_{n-1}, x_{n}$ where as the
 rectangle area (includes the green line) will over approximate.
 ```
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.1. Probability Density Function." In Introduction to Probability for Data Science, 172-180. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
-- Pishro-Nik, Hossein. "Chapter 4.1.1. Probability Density Function (PDF)" In Introduction to Probability, Statistics, and Random Processes, 226-230. Kappa Research, 2014. 
+- Chan, Stanley H. "Chapter 4.1. Probability Density Function." In Introduction to Probability for Data Science, 172-180. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
+- Pishro-Nik, Hossein. "Chapter 4.1.1. Probability Density Function (PDF)" In Introduction to Probability, Statistics, and Random Processes, 226-230. Kappa Research, 2014.
 - [Intuition of PDF](https://mathinsight.org/probability_density_function_idea)
 - [Stanford CS70](https://stanford.edu/~dntse/classes/cs70_fall09/note18_fall09.pdf)
 - [PSU STAT 414](https://online.stat.psu.edu/stat414/lesson/14/14.1)

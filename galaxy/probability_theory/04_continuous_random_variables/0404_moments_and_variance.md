@@ -1,6 +1,6 @@
 # Moments and Variance
 
-The moment and variance of a continuous random variable $X$ are similar to the moment and 
+The moment and variance of a continuous random variable $X$ are similar to the moment and
 variance of a discrete random variable in [](../03_discrete_random_variables/0306_moments_and_variance.md),
 but they are defined using integrals instead of sums.
 
@@ -54,7 +54,7 @@ $$
 $$ (eq_var_continuous_2)
 ```
 
-## Concept 
+## Concept
 
 ````{admonition} Concept
 :class: important
@@ -68,6 +68,6 @@ expectation (population mean). The variance is the average of these data points 
 - **Sample Variance** is the variance of a **random sample** from the true population, which is a random variable.
 ````
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.2.3. Momenets and variance." In Introduction to Probability for Data Science, 184-185. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 4.2.3. Momenets and variance." In Introduction to Probability for Data Science, 184-185. Ann Arbor, Michigan: Michigan Publishing Services, 2021.

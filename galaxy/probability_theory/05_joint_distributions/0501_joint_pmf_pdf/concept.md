@@ -141,7 +141,7 @@ In the chapter on
 we see that the
 denominator $\mathbb{P}(\mathbf{X})$ can be derived by marginalization.
 
-See the [examples section in the chapter on Conditional PMF and PDF](../0503_conditional_pmf_pdf/exercises.md) for a concrete example.
+See the [examples section in the chapter on Conditional PMF and PDF](../0503_conditional_pmf_pdf/application.md) for a concrete example.
 ```
 
 ```{prf:example} Marginal PDF of Bivariate Normal Distribution

@@ -83,7 +83,7 @@ Similarly, if we just scale the Gaussian distribution by a constant $c=2$, i.e.,
 This same line of logic applies to other distributions as well.
 
 (functions-of-random-variables-further-readings)=
-## Further Readings
+## References and Further Readings
 
 - Chan, Stanley H. "Chapter 4.7. Functions of Random Variables." In Introduction to Probability for Data Science, 223-229. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
 - Pishro-Nik, Hossein. "Chapter 4.1.3. Functions of Continuous Random Variables." In Introduction to Probability, Statistics, and Random Processes, 236-242. Kappa Research, 2014.

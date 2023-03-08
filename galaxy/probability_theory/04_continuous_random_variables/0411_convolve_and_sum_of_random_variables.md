@@ -19,7 +19,7 @@ kernelspec:
 :tags: [remove-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[2])
 sys.path.append(parent_dir)
 
 import matplotlib.pyplot as plt
@@ -56,7 +56,7 @@ shape will "evolve" and become more and more like a bell curve, as shown below.
 
 ```{code-cell} ipython3
 :tags: [hide-input]
-from plot import plot_sum_of_uniform_distribution
+from src.utils.plot import plot_sum_of_uniform_distribution
 
 plot_sum_of_uniform_distribution()
 ```

@@ -19,23 +19,23 @@ $$
 
 ## Existence of Expectation
 
-As seen in the discrete counterpart in [](../03_discrete_random_variables/0305_expectation.md), 
+As seen in the discrete counterpart in [](../03_discrete_random_variables/0305_expectation.md),
 we have a similar result for continuous random variables.
 
 ```{prf:theorem} Existence of Expectation
 :label: thm_existence_of_expectation_continuous
 
-A continuous random variable $X$ with sample space $\S$ has an **expectation** if 
+A continuous random variable $X$ with sample space $\S$ has an **expectation** if
 and only if it is [**absolutely integrable**](https://en.wikipedia.org/wiki/Absolutely_integrable_function).
 
-That is, 
+That is,
 
 $$
 \expectation \lsq \lvert X \rvert \rsq \overset{\text{def}}{=} \int_{\S} \lvert x \rvert \cdot \pdf(x) \, dx < \infty
 $$
 ```
 
-```{prf:corollary} 
+```{prf:corollary}
 :label: cor_continuous_expectation
 
 For any continuous random variable $X$ with sample space $\S$ and probability density function $\pdf$,
@@ -60,7 +60,7 @@ Then the ***expectation*** of $X$ has the following properties:
 ```{prf:property} The Law of The Unconscious Statistician
 :label: prop_expectation_function_continuous
 
-For any function $g: \S \to \R$, 
+For any function $g: \S \to \R$,
 
 $$
 \expectation \lsq g(X) \rsq = \int_{\S} g(x) \cdot \pdf(x) \, dx
@@ -70,7 +70,7 @@ $$
 ```{prf:property} Linearity
 :label: prop_expectation_linearity_continuous
 
-For any constants $a$ and $b$, 
+For any constants $a$ and $b$,
 
 $$
 \expectation \lsq aX + b \rsq = a \cdot \expectation(X) + b
@@ -121,7 +121,7 @@ and is **random**.
 - **Average** of a random sample is a random variable and as sample size increases, the **average** of a random sample converges to the **population mean**.
 ````
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.2. Expectation, Moment, and Variance." In Introduction to Probability for Data Science, 180–184. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 4.2. Expectation, Moment, and Variance." In Introduction to Probability for Data Science, 180–184. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
 

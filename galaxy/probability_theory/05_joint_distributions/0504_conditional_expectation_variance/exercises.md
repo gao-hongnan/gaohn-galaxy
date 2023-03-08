@@ -5,7 +5,7 @@
 ```{admonition} Problem
 :class: note
 
-Suppose that the number of customers visiting a fast food restaurant in a given day 
+Suppose that the number of customers visiting a fast food restaurant in a given day
 follows a Poisson distribution with parameter $\lambda$. We further note that each customer
 purchases a drink with probability $p$, independently from other customers and independently
 from Poisson distribution. Then, let $X$ be the number of customers who purchase drinks, find $\mathbb{E}[X]$.
@@ -28,7 +28,7 @@ We can then model $X$ as the number of customers who purchase drinks **in a day*
 parameters $n$ and $p$. More concretely, we have $X$ as a sum of $n$ independent Bernoulli random variables $W$
 with parameter $p$, then we have $X \sim \text{Binomial}(n, p)$.
 
-The question asks us to find $\mathbb{E}[X]$. We do know that $\mathbb{E}[X] = np$, 
+The question asks us to find $\mathbb{E}[X]$. We do know that $\mathbb{E}[X] = np$,
 but we do not know what $n$ is in a single day. Our intuition says that since the number of customers visiting the restaurant
 in a day follows a Poisson distribution, then the average number of customers visiting the restaurant in a day is $\lambda$,
 by definition {prf:ref}`prop:poi_exp`. Then we can instead say $\mathbb{E}[X] = \lambda p$. It turns out

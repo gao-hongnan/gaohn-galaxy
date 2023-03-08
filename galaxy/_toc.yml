@@ -69,6 +69,60 @@ parts:
       - file: probability_theory/03_discrete_random_variables/summary.md
       - file: probability_theory/03_discrete_random_variables/exercises.md
 
+    - file: probability_theory/04_continuous_random_variables/intro.md
+      sections:
+      - file: probability_theory/04_continuous_random_variables/from_discrete_to_continuous.md
+      - file: probability_theory/04_continuous_random_variables/0401_continuous_random_variables.md
+      - file: probability_theory/04_continuous_random_variables/0402_probability_density_function.md
+      - file: probability_theory/04_continuous_random_variables/0403_expectation.md
+      - file: probability_theory/04_continuous_random_variables/0404_moments_and_variance.md
+      - file: probability_theory/04_continuous_random_variables/0405_cumulative_distribution_function.md
+      - file: probability_theory/04_continuous_random_variables/0406_mean_median_mode.md
+      - file: probability_theory/04_continuous_random_variables/0407_continuous_uniform_distribution.md
+      - file: probability_theory/04_continuous_random_variables/0408_exponential_distribution.md
+      - file: probability_theory/04_continuous_random_variables/0409_gaussian_distribution.md
+      - file: probability_theory/04_continuous_random_variables/0410_skewness_and_kurtosis.md
+      - file: probability_theory/04_continuous_random_variables/0411_convolve_and_sum_of_random_variables.md
+      - file: probability_theory/04_continuous_random_variables/0412_functions_of_random_variables.md
+
+    - file: probability_theory/05_joint_distributions/intro.md
+      sections:
+      - file: probability_theory/05_joint_distributions/from_single_variable_to_joint_distributions.md
+
+      - file: probability_theory/05_joint_distributions/0501_joint_pmf_pdf/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0501_joint_pmf_pdf/concept.md
+
+      - file: probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/concept.md
+
+      - file: probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/concept.md
+        - file: probability_theory/05_joint_distributions/0503_conditional_pmf_pdf/application.md
+
+      - file: probability_theory/05_joint_distributions/0504_conditional_expectation_variance/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0504_conditional_expectation_variance/concept.md
+        - file: probability_theory/05_joint_distributions/0504_conditional_expectation_variance/exercises.md
+
+      - file: probability_theory/05_joint_distributions/0505_sum_of_random_variables/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0505_sum_of_random_variables/concept.md
+
+      - file: probability_theory/05_joint_distributions/0506_random_vectors/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0506_random_vectors/concept.md
+
+      - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/intro.md
+        sections:
+        - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/concept.md
+        - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/application_transformation.ipynb
+        - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/psd.md
+        - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/eigendecomposition.md
+        - file: probability_theory/05_joint_distributions/0507_multivariate_gaussian/geometry_of_multivariate_gaussian.md
+
   - caption: Optimization
     chapters:
       - file: optimization/gradient_descent/intro.md

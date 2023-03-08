@@ -42,8 +42,8 @@ Some conventions:
 ```{prf:definition} Gaussian Distribution (CDF)
 :label: def_gaussian_distribution_cdf
 
-There is no closed form for the CDF of the Gaussian distribution. 
-But we will see that it is easy to compute the CDF of the Gaussian distribution 
+There is no closed form for the CDF of the Gaussian distribution.
+But we will see that it is easy to compute the CDF of the Gaussian distribution
 using the CDF of the standard normal distribution later.
 
 Therefore, the CDF of the Gaussian distribution is given by:
@@ -116,7 +116,7 @@ plt.show()
 ```{prf:remark} Gaussian Distribution (PDF)
 :label: rmk_gaussian_distribution_pdf
 
-Note in the plots above, the PDF of the Gaussian distribution is symmetric about the mean $\mu$, and 
+Note in the plots above, the PDF of the Gaussian distribution is symmetric about the mean $\mu$, and
 given a small enough $\sigma$, the PDF can be greater than 1, as long as the area under the curve is 1.
 
 Note that the PDF curve moves left and right as $\mu$ increases and decreases, respectively.
@@ -165,9 +165,9 @@ If we use PDF to compute the probability, we will have to integrate the PDF over
 
 $$
 \P \lsq a \leq X \leq b \rsq = \int_a^b \pdf(x) \, \mathrm{d}x
-$$ 
+$$
 
-We have seen that there is no closed form solution for this integral. 
+We have seen that there is no closed form solution for this integral.
 
 Furthermore, in practice, we use the CDF to compute the probability of an interval.
 
@@ -211,13 +211,14 @@ Take note of the $\Phi$ notation, which is the standard notation for the CDF of 
 :tags: [hide-input]
 import sys
 from pathlib import Path
-parent_dir = str(Path().resolve().parent)
+parent_dir = str(Path().resolve().parents[2])
 sys.path.append(parent_dir)
 
 import numpy as np
 import scipy.stats as stats
 
-from utils import seed_all, plot_continuous_pdf_and_cdf
+from src.utils.general import seed_all
+from src.utils.plot import plot_continuous_pdf_and_cdf
 seed_all()
 
 # x = np.linspace(0, 10, 5000)
@@ -298,7 +299,7 @@ $$ (eq:probability_interval)
 ```{prf:corollary} Corollary of Standard Gaussian
 :label: cor_standard_gaussian
 
-As a consequence of {prf:ref}`thm_cdf_arbitrary_gaussian_distribution`, we have 
+As a consequence of {prf:ref}`thm_cdf_arbitrary_gaussian_distribution`, we have
 the following corollaries {cite}`chan_2021`:
 
 - $\Phi(y) = 1 - \Phi(-y)$
@@ -307,8 +308,8 @@ the following corollaries {cite}`chan_2021`:
 ```
 
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.6. Gaussian Random Variables." In Introduction to Probability for Data Science, 211-223. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
-- Pishro-Nik, Hossein. "Chapter 4.2.3. Normal (Gaussian) Distribution" In Introduction to Probability, Statistics, and Random Processes, 253-260. Kappa Research, 2014. 
+- Chan, Stanley H. "Chapter 4.6. Gaussian Random Variables." In Introduction to Probability for Data Science, 211-223. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
+- Pishro-Nik, Hossein. "Chapter 4.2.3. Normal (Gaussian) Distribution" In Introduction to Probability, Statistics, and Random Processes, 253-260. Kappa Research, 2014.
 - https://jmshea.github.io/Foundations-of-Data-Science-with-Python/08-random-variables/important-continuous-rvs.html#normal-gaussian-random-variable

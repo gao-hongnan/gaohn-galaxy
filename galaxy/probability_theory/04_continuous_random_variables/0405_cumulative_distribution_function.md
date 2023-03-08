@@ -26,13 +26,13 @@ Let $X$ be a random variable (either discrete or continuous), then the CDF $\cdf
 
 1. The CDF is **non-decreasing**.
 
-2. The CDF is a probability function. 
+2. The CDF is a probability function.
 
     $$
     0 \leq \cdf(x) \leq 1
     $$
 
-    In particular, we have the **minimum** of the CDF is 0 and the **maximum** is 1 for 
+    In particular, we have the **minimum** of the CDF is 0 and the **maximum** is 1 for
     $x = -\infty$ and $x = \infty$ respectively.
 ````
 
@@ -41,7 +41,7 @@ Let $X$ be a random variable (either discrete or continuous), then the CDF $\cdf
 
 Let $X$ be a continuous random variable.
 
-If the CDF $\cdf$ of $X$ is continuous at any $a \leq x \leq b$, then 
+If the CDF $\cdf$ of $X$ is continuous at any $a \leq x \leq b$, then
 the probability of an interval $[a, b]$ is given by:
 
 $$
@@ -102,13 +102,13 @@ $$
 \pdf \lpar x \rpar = \frac{d}{dx} \cdf \lpar x \rpar = \frac{d}{dx} \int_{-\infty}^x \pdf \lpar t \rpar \, dt
 $$
 
-**if** $\cdf$ is **differentiable** at $x$. If $\cdf$ is not differentiable at $x=b$, then 
+**if** $\cdf$ is **differentiable** at $x$. If $\cdf$ is not differentiable at $x=b$, then
 
 $$
 \pdf(b) = \P \lsq X = b \rsq = \P \lsq X = b \rsq \delta(x-b)
 $$
 ````
 
-## Further Readings
+## References and Further Readings
 
-- Chan, Stanley H. "Chapter 4.3. Cumulative Distribution Function." In Introduction to Probability for Data Science, 185-196. Ann Arbor, Michigan: Michigan Publishing Services, 2021. 
+- Chan, Stanley H. "Chapter 4.3. Cumulative Distribution Function." In Introduction to Probability for Data Science, 185-196. Ann Arbor, Michigan: Michigan Publishing Services, 2021.
