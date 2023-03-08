@@ -192,9 +192,9 @@ parts:
       - file: machine_learning/generative/naive_bayes/intro.md
         sections:
         - file: machine_learning/generative/naive_bayes/concept.md
+        - file: machine_learning/generative/naive_bayes/implementation.md
         - file: machine_learning/generative/naive_bayes/example_penguins.ipynb
         - file: machine_learning/generative/naive_bayes/application_mnist.ipynb
-        - file: machine_learning/generative/naive_bayes/implementation.md
 
     - file: machine_learning/model_selection_and_evaluation/intro.md
       sections:

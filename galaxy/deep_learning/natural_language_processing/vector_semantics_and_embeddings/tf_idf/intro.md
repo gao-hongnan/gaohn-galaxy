@@ -54,3 +54,8 @@ almost all documents, so it is not a good indicator of similarity.
 
 In what follows, the basic idea behind TF-IDF is to give a high weight to words that appear frequently in a document but rarely in other documents, while giving a low weight to words that are common across all documents. The weight assigned to each word is calculated based on two factors: term frequency (TF) and inverse document frequency (IDF).
 This is a solution to the aforementioned problem.
+
+
+## References and Further Readings
+
+- Jurafsky, Dan, and James H. Martin. "Chapter 6.5. TF-IDF: Weighting terms in the vector." In Speech and Language Processing: An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition. Pearson, 2022.
