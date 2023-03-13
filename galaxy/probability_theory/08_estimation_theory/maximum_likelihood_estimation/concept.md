@@ -181,3 +181,80 @@ Furthermore, the section Maximum Likelihood Estimation for Priors in [Naive Baye
 
 ### Visualizing the Likelihood Function
 
+This section mainly details how the likelihood function, despite being a function
+of $\boldsymbol{\theta}$, also depends on the underlying dataset $\mathcal{S}$. The
+presence of both should be kept in mind when we talk about the likelihood function.
+
+For a more detailed analysis, see page 471-472 of Professor Stanley Chan's book "Introduction to Probability for Data Science" (see references section).
+
+## Maximum Likelihood Estimation
+
+After rigorously defining the likelihood function, we can now talk about the term **maximum** in maximum likelihood estimation.
+
+The action of maximization is in itself under [optimization theory](https://en.wikipedia.org/wiki/Mathematical_optimization), a branch in mathematics. Consequently, the maximum
+likelihood estimation problem is an optimization problem that seeks to find the
+parameter $\boldsymbol{\theta}$ that maximizes the likelihood function.
+
+```{prf:definition} Maximum Likelihood Estimation
+:label: def:maximum-likelihood-estimation
+
+Given a dataset $\mathcal{S}$ consisting of $N$ samples defined as:
+
+$$
+\mathcal{S} = \left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right\},
+$$
+
+where $\mathcal{S}$ is $i.i.d.$ generated from the distribution $\mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right)$, parametrized by $\boldsymbol{\theta}$, where the parameter $\boldsymbol{\theta}$ can be a vector of parameters defined as:
+
+$$
+\boldsymbol{\theta} = \left\{\theta_{1}, \ldots, \theta_{k}\right\}.
+$$
+
+
+We define the likelihood function to be:
+
+$$
+\mathcal{L}(\boldsymbol{\theta}) = \mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right),
+$$
+
+
+then the maximum-likelihood estimate of the parameter $\boldsymbol{\theta}$ is a parameter that maximizes the likelihood function:
+
+$$
+\begin{aligned}
+\widehat{\boldsymbol{\theta}} &\stackrel{\text { def }}{=} \underset{\boldsymbol{\theta}}{\operatorname{argmax}} \mathcal{L}\left(\boldsymbol{\theta} \mid \mathcal{S}\right) \\
+&\stackrel{\text{ def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \widehat{\boldsymbol{\theta}}\right)
+\end{aligned}
+$$ (eq:maximum-likelihood-estimation)
+```
+
+```{prf:remark} Maximum Likelihood Estimation for $\mathcal{S}$ with Label $y$
+:label: rmk:maximum-likelihood-estimation
+
+To be more verbose, let's also define the maximum likelihood estimate of the parameter $\boldsymbol{\theta}$ for a dataset $\mathcal{S}$ with label $y$.
+
+First, we redefine $\mathcal{S}$ to be:
+
+$$
+\mathcal{S} = \left\{\left(\mathbf{x}^{(1)}, y^{(1)}\right), \ldots, \left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}
+$$
+
+where $\mathcal{S}$ is generated from the distribution $\mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta}\right)$. The likelihood function is then defined as:
+
+$$
+\mathcal{L}(\boldsymbol{\theta}) = \mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y}; \boldsymbol{\theta}\right),
+$$
+
+then the maximum-likelihood estimate of the parameter $\boldsymbol{\theta}$ is a parameter that maximizes the likelihood function:
+
+$$
+\begin{aligned}
+\widehat{\boldsymbol{\theta}} &\stackrel{\text { def }}{=} \underset{\boldsymbol{\theta}}{\operatorname{argmax}} \mathcal{L}\left(\boldsymbol{\theta} \mid \mathcal{S}, y\right) \\
+&\stackrel{\text{ def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y}; \widehat{\boldsymbol{\theta}}\right)
+\end{aligned}
+$$
+```
+
+## References and Further Readings
+
+- Chan, Stanley H. "Chapter 8.1. Maximum-Likelihood Estimation." In Introduction to Probability for Data Science. Ann Arbor, Michigan: Michigan Publishing Services, 2021.

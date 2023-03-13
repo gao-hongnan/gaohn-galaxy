@@ -1,153 +1,6 @@
 
 
-\section{Independent observations}
-
-While $f_{\mathbf{X}}(\mathbf{x})$ provides us with a complete picture of the random vector $\mathbf{X}$, using $f_{\mathbf{X}}(\mathbf{x})$ is tedious. We need to describe how each $x^{(n)}$ is generated and describe how $x^{(n)}$ is related to $X_{m}$ for all pairs of $n$ and $m$. If the vector $\mathbf{X}$ contains $N$ entries, then there are $N^{2} / 2$ pairs of correlations we need to compute. When $N$ is large, finding $f_{\mathbf{X}}(\mathbf{x})$ would be very difficult if not impossible.
-
-In practice, $f_{\mathbf{X}}(\mathbf{x})$ may sometimes be overkill. For example, if we measure the interarrival time of a bus for several days, it is quite likely that the measurements will not be correlated. In this case, instead of using the full $f_{\mathbf{X}}(\mathbf{x})$, we can make assumptions about the data points. The assumption we will make is that all the data points are independent and that they are drawn from an identical distribution $f_{X}(x)$. The assumption that the data points are independently and identically distributed (i.i.d.) significantly simplifies the problem so that the joint PDF $f_{\mathbf{X}}$ can be written as a product of single PDFs $f_{x^{(n)}}$ :
-
-$$
-f_{\mathbf{X}}(\mathbf{x})=f_{x^{(1)}, \ldots, x^{(n)}}\left(x^{(1)}, \ldots, x^{(n)}\right)=\prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)}\right) .
-$$
-
-If you prefer a visualization, we can take a look at the covariance matrix, which goes from a full covariance matrix to a diagonal matrix and then to an identity matrix:
-
-$$
-\begin{aligned}
-& {\left[\begin{array}{cccc}
-\operatorname{Var}\left[x^{(1)}\right] & \operatorname{Cov}\left(x^{(1)}, x^{(2)}\right) & \cdots & \operatorname{Cov}\left(x^{(1)}, x^{(n)}\right) \\
-\operatorname{Cov}\left[x^{(2)}, x^{(1)}\right] & \operatorname{Var}\left[x^{(2)}\right] & \cdots & \operatorname{Cov}\left(x^{(2)}, x^{(n)}\right) \\
-\vdots & \vdots & \ddots & \vdots \\
-\operatorname{Cov}\left(x^{(n)}, x^{(1)}\right) & \operatorname{Cov}\left(x^{(n)}, x^{(2)}\right) & \cdots & \operatorname{Var}\left[x^{(n)}\right]
-\end{array}\right] \text { independent }\left[\begin{array}{cccc}
-\operatorname{Var}\left[x^{(1)}\right] & 0 & \cdots & 0 \\
-0 & \operatorname{Var}\left[x^{(2)}\right] & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \operatorname{Var}\left[x^{(n)}\right]
-\end{array}\right]} \\
-& \underset{\text { identical }}{\Longrightarrow}\left[\begin{array}{cccc}
-\sigma^{2} & 0 & \cdots & 0 \\
-0 & \sigma^{2} & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \sigma^{2}
-\end{array}\right]
-\end{aligned}
-$$
-
-The assumption of i.i.d. is strong. Not all data can be modeled as i.i.d. (For example, photons passing through a scattering medium have correlated statistics.) However, if the i.i.d. assumption is valid, we can simplify the model significantly.
-
-If the data points are i.i.d., then we can write the joint PDF as
-
-$$
-f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})=\prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)} ; \boldsymbol{\theta}\right)
-$$
-
-This gives us a simplified form of the likelihood function, written as a product of the individual PDFs.
-
-\section{CHAPTER 8. ESTIMATION}
-
-Definition 8.2. Given i.i.d. random variables $x^{(1)}, \ldots, x^{(n)}$ that all have the same PDF $f_{x^{(n)}}\left(x^{(n)}\right)$, the likelihood function $i s$
-
-$$
-\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x}) \stackrel{\text { def }}{=} \prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)} ; \boldsymbol{\theta}\right)
-$$
-
-In computation we often take the log of the likelihood function. We call the resulting function the log-likelihood.
-
-Definition 8.3. Given a set of i.i.d. random variables $x^{(1)}, \ldots, x^{(n)}$ with $P D F f_{x^{(n)}}(x ; ; \boldsymbol{\theta})$, the log-likelihood is defined as
-
-$$
-\log \mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})=\log f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})=\sum_{n=1}^{N} \log f_{x^{(n)}}\left(x^{(n)} ; \boldsymbol{\theta}\right)
-$$
-
-Example 8.3. Find the log-likelihood of a sequence of i.i.d. Gaussian random variables $x^{(1)}, \ldots, x^{(n)}$ with mean $\mu$ and variance $\sigma^{2}$.
-
-Solution. Since the random variables $x^{(1)}, \ldots, x^{(n)}$ are i.i.d. Gaussian, the PDF is
-
-$$
-f_{\mathbf{X}}\left(\mathbf{x} ; \mu, \sigma^{2}\right)=\prod_{n=1}^{N}\left\{\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\frac{\left(x^{(n)}-\mu\right)^{2}}{2 \sigma^{2}}}\right\}
-$$
-
-Taking the log on both sides yields the log-likelihood function:
-
-$$
-\begin{aligned}
-\log \mathcal{L}\left(\mu, \sigma^{2} \mid \mathbf{x}\right) & =\log f_{\mathbf{X}}\left(\mathbf{x} ; \mu, \sigma^{2}\right) \\
-& =\log \left\{\prod_{n=1}^{N}\left\{\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\frac{\left(x^{(n)}-\mu\right)^{2}}{2 \sigma^{2}}}\right\}\right\} \\
-& =\sum_{n=1}^{N} \log \left\{\frac{1}{\sqrt{2 \pi \sigma^{2}}} e^{-\frac{\left(x^{(n)}-\mu\right)^{2}}{2 \sigma^{2}}}\right\} \\
-& =\sum_{n=1}^{N}\left\{-\frac{1}{2} \log \left(2 \pi \sigma^{2}\right)-\frac{\left(x^{(n)}-\mu\right)^{2}}{2 \sigma^{2}}\right\} \\
-& =-\frac{N}{2} \log \left(2 \pi \sigma^{2}\right)-\frac{1}{2 \sigma^{2}} \sum_{n=1}^{N}\left(x^{(n)}-\mu\right)^{2} .
-\end{aligned}
-$$
-
-Practice Exercise 8.1. Find the log-likelihood of a sequence of i.i.d. Bernoulli random variables $x^{(1)}, \ldots, x^{(n)}$ with parameter $\theta$.
-
-\subsection{MAXIMUM-LIKELIHOOD ESTIMATION}
-
-Solution. If $x^{(1)}, \ldots, x^{(n)}$ are i.i.d. Bernoulli random variables, we have
-
-$$
-f_{\mathbf{X}}(\mathbf{x} ; \theta)=\prod_{n=1}^{N}\left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\} .
-$$
-
-Taking the log on both sides of the equation yields the log-likelihood function:
-
-$$
-\begin{aligned}
-\log \mathcal{L}(\theta \mid \mathbf{x}) & =\log \left\{\prod_{n=1}^{N}\left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\}\right\} \\
-& =\sum_{n=1}^{N} \log \left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\} \\
-& =\sum_{n=1}^{N} x^{(n)} \log \theta+\left(1-x^{(n)}\right) \log (1-\theta) \\
-& =\left(\sum_{n=1}^{N} x^{(n)}\right) \cdot \log \theta+\left(N-\sum_{n=1}^{N} x^{(n)}\right) \cdot \log (1-\theta)
-\end{aligned}
-$$
-
-\section{Visualizing the likelihood function}
-
-The likelihood function $\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})$ is a function of $\boldsymbol{\theta}$, but its value also depends on the underlying measurements $\mathbf{x}$. It is extremely important to keep in mind the presence of both.
-
-To help you visualize the effect of $\boldsymbol{\theta}$ and $\mathbf{x}$, we consider a set of i.i.d. Bernoulli random variables. As we have just shown in the practice exercise, the likelihood function of these i.i.d. random variables is
-
-$$
-\log \mathcal{L}(\theta \mid \mathbf{x})=\underbrace{\left(\sum_{n=1}^{N} x^{(n)}\right)}_{S} \cdot \log \theta+\underbrace{\left(N-\sum_{n=1}^{N} x^{(n)}\right)}_{N-S} \cdot \log (1-\theta),
-$$
-
-where we define $S=\sum_{n=1}^{N} x^{(n)}$ as the sum of the (binary) measurements.
-
-To make the dependency on $S$ and $\theta$ explicit, we write $\mathcal{L}(\theta \mid \mathbf{x})$ as
-
-$$
-\log \mathcal{L}(\theta \mid S)=S \log \theta+(N-S) \log (1-\theta)
-$$
-
-which emphasizes the role of $S$ in defining the log-likelihood function. We plot the surface of $L(\theta \mid S)$ as a function of $S$ and $\theta$, assuming that $N=50$. As shown on the left-hand side of Figure 8.3, the surface $L(\theta \mid S)$ has a saddle shape. Along one direction the function goes up, whereas along another direction the function goes down. In the middle of Figure 8.3. we show a bird's-eye view of the surface, with the color-coding matched with the surface plot. As you can see, when plotted as a function of $\theta$ and $\mathbf{x}$ (in our case, we use a summary statistic $S=\sum_{n=1}^{N} x^{(n)}$ ), the two-dimensional plot tells us how the log-likelihood function changes when $S$ changes. On the right-hand side of Figure 8.3, we show two particular cross sections of the two-dimensional plot. One cross section is taken from $S=25$ and the other cross section is taken from $S=12$. Since the total number of heads in this numerical experiment is assumed to be $N=50$, the first cross section at $S=25$ is obtained when
-
-\section{CHAPTER 8. ESTIMATION}
-![](https://cdn.mathpix.com/cropped/2023_03_13_39570ad67b23e5b59046g-488.jpg?height=524&width=1412&top_left_y=232&top_left_x=133)
-
-Figure 8.3: We plot the log-likelihood function as a function of $S=\sum_{n=1}^{N} x^{(n)}$ and $\theta$. [Left] We show the surface plot of $\mathcal{L}(\theta \mid S)=S \log \theta+(N-S) \log (1-\theta)$. Note that the surface has a saddle shape. [Middle] By taking a bird's-eye view of the surface plot, we obtain a 2-dimensional contour plot of the surface, where the color code matches the height of the log-likelihood function. [Right] We take two cross sections along $S=25$ and $S=12$. Observe how the shape changes.
-
-half of the Bernoulli measurements are "1", whereas the second cross section at $S=12$ is obtained when a quarter of the Bernoulli measurements are "1".
-
-The cross sections tell us the log-likelihood function $\log \mathcal{L}(\theta \mid S)$ is a function defined specifically for a given measurement $\mathbf{x}$. As you can see from Figure 8.3, the log-likelihood function changes when $S$ changes. Therefore, if our goal is to "find a $\theta$ that maximizes the log-likelihood function", then for a different $\mathbf{x}$ we will have a different answer. For example, according to Figure 8.3 the maximum for $\log \mathcal{L}(\theta \mid S=25)$ occurs when $\theta \approx 0.5$, and the maximum for $\log \mathcal{L}(\theta \mid S=12)$ occurs when $\theta \approx 0.24$. These are the maximum-likelihood estimates for the respective measurements.
-
-We use the following MATLAB code to generate the surface plot:
-
-![](https://cdn.mathpix.com/cropped/2023_03_13_39570ad67b23e5b59046g-488.jpg?height=431&width=1124&top_left_y=1484&top_left_x=149)
-
-For the bird's-eye view plot, we replace surf with imagesc(S,theta, L). For the cross section plots, we call the commands plot(theta, L $(:, 12)$ ) and plot(theta, L $(:, 25)$ ).
-
-\subsubsection{Maximum-likelihood estimate}
-
-The likelihood is the PDF of $\mathbf{X}$ but viewed as a function of $\boldsymbol{\theta}$. The optimization problem of maximizing $\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})$ is called the maximum-likelihood (ML) estimation:
-
-\subsection{MAXIMUM-LIKELIHOOD ESTIMATION}
-
-Definition 8.4. Let $\mathcal{L}(\boldsymbol{\theta})$ be the likelihood function of the parameter $\boldsymbol{\theta}$ given the measurements $\mathbf{x}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}$. The maximum-likelihood estimate of the parameter $\boldsymbol{\theta}$ is a parameter that maximizes the likelihood:
-
-$$
-\widehat{\boldsymbol{\theta}}_{M L} \stackrel{\text { def }}{=} \underset{\boldsymbol{\theta}}{\operatorname{argmax}} \mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})
-$$
-
+Definition 8.4.
 Example 8.4. Find the ML estimate for a set of i.i.d. Bernoulli random variables $\left\{x^{(1)}, \ldots, x^{(n)}\right\}$ with $x^{(n)} \sim \operatorname{Bernoulli}(\theta)$ for $n=1, \ldots, N$.
 
 Solution. We know that the log-likelihood function of a set of i.i.d. Bernoulli random variables is given by
@@ -159,7 +12,7 @@ $$
 Thus, to find the ML estimate, we need to solve the optimization problem
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\underset{\theta}{\operatorname{argmax}}\left\{\left(\sum_{n=1}^{N} x^{(n)}\right) \cdot \log \theta+\left(N-\sum_{n=1}^{N} x^{(n)}\right) \cdot \log (1-\theta)\right\} .
+\widehat{\theta}=\underset{\theta}{\operatorname{argmax}}\left\{\left(\sum_{n=1}^{N} x^{(n)}\right) \cdot \log \theta+\left(N-\sum_{n=1}^{N} x^{(n)}\right) \cdot \log (1-\theta)\right\} .
 $$
 
 Taking the derivative with respect to $\theta$ and setting it to zero, we obtain
@@ -177,19 +30,19 @@ $$
 Rearranging the terms yields
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
+\widehat{\theta}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
 $$
 
-Let's do a sanity check to see if this result makes sense. The solution to this problem says that $\widehat{\theta}_{\mathrm{ML}}$ is the empirical average of the measurements. Assume that $N=50$. Let us consider two particular scenarios as illustrated in Figure $\mathbf{8 . 4}$
+Let's do a sanity check to see if this result makes sense. The solution to this problem says that $\widehat{\theta}$ is the empirical average of the measurements. Assume that $N=50$. Let us consider two particular scenarios as illustrated in Figure $\mathbf{8 . 4}$
 
-- Scenario 1: $\mathbf{x}$ is a vector of measurements such that $S \stackrel{\text { def }}{=} \sum_{n=1}^{N} x^{(n)}=25$. Since $N=50$, the formula tells us that $\widehat{\theta}_{\mathrm{ML}}=\frac{25}{50}=0.5$. This is the best guess based on the 50 measurements where 25 are heads. If you look at Figure 8.3 and Figure 8.4 when $S=25$, we are looking at a particular cross section in the $2 \mathrm{D}$ plot. The likelihood function we are inspecting is $\mathcal{L}(\theta \mid S=25)$. For this likelihood function, the maximum occurs at $\theta=0.5$.
+- Scenario 1: $\mathbf{x}$ is a vector of measurements such that $S \stackrel{\text { def }}{=} \sum_{n=1}^{N} x^{(n)}=25$. Since $N=50$, the formula tells us that $\widehat{\theta}=\frac{25}{50}=0.5$. This is the best guess based on the 50 measurements where 25 are heads. If you look at Figure 8.3 and Figure 8.4 when $S=25$, we are looking at a particular cross section in the $2 \mathrm{D}$ plot. The likelihood function we are inspecting is $\mathcal{L}(\theta \mid S=25)$. For this likelihood function, the maximum occurs at $\theta=0.5$.
 
 \section{CHAPTER 8. ESTIMATION}
 ![](https://cdn.mathpix.com/cropped/2023_03_13_39570ad67b23e5b59046g-490.jpg?height=694&width=1388&top_left_y=239&top_left_x=150)
 
-Figure 8.4: Illustration of how the maximum-likelihood estimate of a set of i.i.d. Bernoulli random variables is determined. The subfigures above show two particular scenarios at $S=25$ and $S=12$, assuming that $N=50$. When $S=25$, the likelihood function has a quadratic shape centered at $\theta=0.5$. This point is also the peak of the likelihood function when $S=25$. Therefore, the ML estimate is $\widehat{\theta}_{\mathrm{ML}}=0.5$. The second case is when $S=12$. The quadratic likelihood is shifted toward the left. The $\mathrm{ML}$ estimate is $\widehat{\theta}_{\mathrm{ML}}=0.24$.
+Figure 8.4: Illustration of how the maximum-likelihood estimate of a set of i.i.d. Bernoulli random variables is determined. The subfigures above show two particular scenarios at $S=25$ and $S=12$, assuming that $N=50$. When $S=25$, the likelihood function has a quadratic shape centered at $\theta=0.5$. This point is also the peak of the likelihood function when $S=25$. Therefore, the ML estimate is $\widehat{\theta}=0.5$. The second case is when $S=12$. The quadratic likelihood is shifted toward the left. The $\mathrm{ML}$ estimate is $\widehat{\theta}=0.24$.
 
-- Scenario 2: $\mathbf{x}$ is a vector of measurements such that $S \stackrel{\text { def }}{=} \sum_{n=1}^{N} x^{(n)}=12$. The formula tells us that $\widehat{\theta}_{\mathrm{ML}}=\frac{12}{50}=0.24$. This is again the best guess based on the 50 measurements where 12 are heads. Referring to Figure $\mathbf{8 . 3}$ and Figure 8.4 we can see that the likelihood function corresponds to another cross section $\mathcal{L}(\theta \mid S=12)$ where the maximum occurs at $\theta=0.24$.
+- Scenario 2: $\mathbf{x}$ is a vector of measurements such that $S \stackrel{\text { def }}{=} \sum_{n=1}^{N} x^{(n)}=12$. The formula tells us that $\widehat{\theta}=\frac{12}{50}=0.24$. This is again the best guess based on the 50 measurements where 12 are heads. Referring to Figure $\mathbf{8 . 3}$ and Figure 8.4 we can see that the likelihood function corresponds to another cross section $\mathcal{L}(\theta \mid S=12)$ where the maximum occurs at $\theta=0.24$.
 
 At this point, you may wonder why the shape of the likelihood function $\mathcal{L}(\theta \mid \mathbf{x})$ changes so radically as $\mathbf{x}$ changes? The answer can be found in Figure 8.5. Imagine that we have $N=50$ measurements of which $S=40$ give us heads. If these i.i.d. Bernoulli random variables have a parameter $\theta=0.5$, it is quite unlikely that we will get 40 out of 50 measurements to be heads. (If it were $\theta=0.5$, we should get more or less 25 out of 50 heads.) When $S=40$, and without any additional information about the experiment, the most logical guess is that the Bernoulli random variables have a parameter $\theta=0.8$. Since the measurement $S$ can be as extreme as 0 out of 50 or 50 out of 50 , the likelihood function $\mathcal{L}(\theta \mid \mathbf{x})$ has to reflect these extreme cases. Therefore, as we change $\mathbf{x}$, we observe a big change in the shape of the likelihood function.
 
@@ -207,11 +60,11 @@ Maximum-likelihood estimation can also be understood directly from the PDF inste
 
 Practice Exercise 8.2. Suppose that $x^{(n)}$ is a Gaussian random variable. Assume that $\sigma=1$ is known but the mean $\theta$ is unknown. Find the ML estimate of the mean.
 
-Solution. The ML estimate $\widehat{\theta}_{\mathrm{ML}}$ is
+Solution. The ML estimate $\widehat{\theta}$ is
 
 $$
 \begin{aligned}
-\widehat{\theta}_{\mathrm{ML}} & =\underset{\theta}{\operatorname{argmax}} \log \mathcal{L}(\theta \mid \mathbf{x}) \\
+\widehat{\theta} & =\underset{\theta}{\operatorname{argmax}} \log \mathcal{L}(\theta \mid \mathbf{x}) \\
 & =\underset{\theta}{\operatorname{argmax}} \log \left\{\prod_{n=1}^{N} \frac{1}{\sqrt{2 \pi}} \exp \left\{-\frac{\left(x^{(n)}-\theta\right)^{2}}{2}\right\}\right\} \\
 & =\underset{\theta}{\operatorname{argmax}}-\frac{N}{2} \log (2 \pi)-\frac{1}{2} \sum_{n=1}^{N}\left(x^{(n)}-\theta\right)^{2} .
 \end{aligned}
@@ -226,7 +79,7 @@ $$
 This gives us $\sum_{n=1}^{N}\left(x^{(n)}-\theta\right)=0$. Therefore, the ML estimate is
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
+\widehat{\theta}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
 $$
 
 Now we will draw the PDF and compare it with the measured data points. Our focus
@@ -239,12 +92,12 @@ When $N=1$. There is only one observation $x^{(1)}$. The best Gaussian that fits
 
 $$
 \begin{aligned}
-\widehat{\theta}_{\mathrm{ML}}=\underset{\theta}{\operatorname{argmax}} \log L\left(\theta \mid x^{(1)}\right) & =\underset{\theta}{\operatorname{argmax}} \log \left\{\frac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left\{-\frac{\left(x^{(1)}-\theta\right)^{2}}{2 \sigma^{2}}\right\}\right\} \\
+\widehat{\theta}=\underset{\theta}{\operatorname{argmax}} \log L\left(\theta \mid x^{(1)}\right) & =\underset{\theta}{\operatorname{argmax}} \log \left\{\frac{1}{\sqrt{2 \pi \sigma^{2}}} \exp \left\{-\frac{\left(x^{(1)}-\theta\right)^{2}}{2 \sigma^{2}}\right\}\right\} \\
 & =\underset{\theta}{\operatorname{argmax}}-\left(x^{(1)}-\theta\right)^{2}=x^{(1)} .
 \end{aligned}
 $$
 
-Therefore, the ML estimate is $\widehat{\theta}_{\mathrm{ML}}=x^{(1)}$. Figure 8.6 illustrates this case. As we conduct the ML estimation, we imagine that there are a few candidate PDFs. The ML estimation says that among all these candidate PDFs we need to find one that can maximize the probability of obtaining the observation $x^{(1)}$. Since we only have one observation, we have no choice but to pick a Gaussian centered at $x^{(1)}$. Certainly the sample $x^{(1)}=x^{(1)}$ could be bad, and we may find a wrong Gaussian. However, with only one sample there is no way for us to make better decisions.
+Therefore, the ML estimate is $\widehat{\theta}=x^{(1)}$. Figure 8.6 illustrates this case. As we conduct the ML estimation, we imagine that there are a few candidate PDFs. The ML estimation says that among all these candidate PDFs we need to find one that can maximize the probability of obtaining the observation $x^{(1)}$. Since we only have one observation, we have no choice but to pick a Gaussian centered at $x^{(1)}$. Certainly the sample $x^{(1)}=x^{(1)}$ could be bad, and we may find a wrong Gaussian. However, with only one sample there is no way for us to make better decisions.
 
 ![](https://cdn.mathpix.com/cropped/2023_03_13_39570ad67b23e5b59046g-492.jpg?height=467&width=832&top_left_y=958&top_left_x=424)
 
@@ -254,7 +107,7 @@ When $N=2$. In this case we need to find a Gaussian that fits both $x^{(1)}$ and
 
 $$
 \begin{aligned}
-\widehat{\theta}_{\mathrm{ML}} & =\underset{\theta}{\operatorname{argmax}} \log \left\{\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right)^{2} \exp \left\{-\frac{\left.\left(x^{(1)}-\theta\right)^{2}+\left(x^{(2)}-\theta\right)^{2}\right)}{2 \sigma^{2}}\right\}\right\} \\
+\widehat{\theta} & =\underset{\theta}{\operatorname{argmax}} \log \left\{\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right)^{2} \exp \left\{-\frac{\left.\left(x^{(1)}-\theta\right)^{2}+\left(x^{(2)}-\theta\right)^{2}\right)}{2 \sigma^{2}}\right\}\right\} \\
 & =\underset{\theta}{\operatorname{argmax}}\left\{-\frac{\left(x^{(1)}-\theta\right)^{2}+\left(x^{(2)}-\theta\right)^{2}}{2 \sigma^{2}}\right\}=\frac{x^{(1)}+x^{(2)}}{2},
 \end{aligned}
 $$
@@ -275,13 +128,13 @@ Equating this with zero yields the solution $\theta=\frac{x^{(1)}+x^{(2)}}{2}$. 
 
 Figure 8.7: $N=2$. Suppose that we are given two observed data points located around $x^{(1)}=-0.98$ and $x^{(2)}=-1.15$. To conduct the $\mathrm{ML}$ estimation we propose a few candidate PDFs, each being a Gaussian with unit variance but a different mean $\theta$. The ML estimate is a parameter $\theta$ such that the corresponding PDF best matches the observed data. In this example the best match happens when the estimated Gaussian PDF is centered at $\left(x^{(1)}+x^{(2)}\right) / 2 \approx-1.07$.
 
-Does this result make sense? When you have two data points $x^{(1)}$ and $x^{(2)}$, the ML estimation is trying to find a Gaussian that can best fit both of these two data points. Your best bet here is $\widehat{\theta}_{\mathrm{ML}}=\left(x^{(1)}+x^{(2)}\right) / 2$, because there are no other choices. If you choose $\widehat{\theta}_{\mathrm{ML}}=x^{(1)}$ or $\widehat{\theta}_{\mathrm{ML}}=x^{(2)}$, it cannot be a good estimate because you are not using both data points. As shown in Figure 8.7 for these two observed data points $x^{(1)}$ and $x^{(2)}$, the PDF marked in red (which is a Gaussian centered at $\left(x^{(1)}+x^{(2)}\right) / 2$ ) is indeed the best fit.
+Does this result make sense? When you have two data points $x^{(1)}$ and $x^{(2)}$, the ML estimation is trying to find a Gaussian that can best fit both of these two data points. Your best bet here is $\widehat{\theta}=\left(x^{(1)}+x^{(2)}\right) / 2$, because there are no other choices. If you choose $\widehat{\theta}=x^{(1)}$ or $\widehat{\theta}=x^{(2)}$, it cannot be a good estimate because you are not using both data points. As shown in Figure 8.7 for these two observed data points $x^{(1)}$ and $x^{(2)}$, the PDF marked in red (which is a Gaussian centered at $\left(x^{(1)}+x^{(2)}\right) / 2$ ) is indeed the best fit.
 
 When $N=10$ and $N=100$. We can continue the above calculation for $N=10$ and $N=100$. In this case the MLE is
 
 $$
 \begin{aligned}
-\widehat{\theta}_{\mathrm{ML}} & =\underset{\theta}{\operatorname{argmax}} \log \left\{\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right)^{N} \exp \left\{-\frac{\left(x^{(1)}-\theta\right)^{2}+\cdots+\left(x^{(n)}-\theta\right)^{2}}{2 \sigma^{2}}\right\}\right\} \\
+\widehat{\theta} & =\underset{\theta}{\operatorname{argmax}} \log \left\{\left(\frac{1}{\sqrt{2 \pi \sigma^{2}}}\right)^{N} \exp \left\{-\frac{\left(x^{(1)}-\theta\right)^{2}+\cdots+\left(x^{(n)}-\theta\right)^{2}}{2 \sigma^{2}}\right\}\right\} \\
 & =\underset{\theta}{\operatorname{argmax}}-\sum_{n=1}^{N} \frac{\left(x^{(n)}-\theta\right)^{2}}{2 \sigma^{2}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)} .
 \end{aligned}
 $$
@@ -308,7 +161,7 @@ The above experiment tells us something about the ML estimation:
 
 (d) $N=100$
 
-Figure 8.8: When $N=10$ and $N=100$, the $\mathrm{ML}$ estimation continues to evaluate the different candidate PDFs. For a given set of data points, the ML estimation picks the best PDF to fit the data points. In this Gaussian example it was shown that the optimal parameter is $\widehat{\theta}_{\mathrm{ML}}=(1 / N) \sum_{n=1}^{N} x^{(n)}$, which is the sample average.
+Figure 8.8: When $N=10$ and $N=100$, the $\mathrm{ML}$ estimation continues to evaluate the different candidate PDFs. For a given set of data points, the ML estimation picks the best PDF to fit the data points. In this Gaussian example it was shown that the optimal parameter is $\widehat{\theta}=(1 / N) \sum_{n=1}^{N} x^{(n)}$, which is the sample average.
 
 How does $\mathrm{ML}$ estimation work, intuitively?
 
@@ -875,18 +728,18 @@ ML estimation is a very special type of estimation. Not all estimations are ML. 
 We know that an ML estimate is defined as
 
 $$
-\widehat{\theta}_{\mathrm{ML}}(\mathbf{x})=\underset{\theta}{\operatorname{argmax}} \mathcal{L}(\theta \mid \mathbf{x})
+\widehat{\theta}(\mathbf{x})=\underset{\theta}{\operatorname{argmax}} \mathcal{L}(\theta \mid \mathbf{x})
 $$
 
-We write $\widehat{\theta}_{\mathrm{ML}}(\mathbf{x})$ to emphasize that $\widehat{\theta}_{\mathrm{ML}}$ is a function of $\mathbf{x}$. The dependency of $\widehat{\theta}_{\mathrm{ML}}(\mathbf{x})$ on $\mathbf{x}$ should not be a surprise. For example, if the ML estimate is the sample average, we have that
+We write $\widehat{\theta}(\mathbf{x})$ to emphasize that $\widehat{\theta}$ is a function of $\mathbf{x}$. The dependency of $\widehat{\theta}(\mathbf{x})$ on $\mathbf{x}$ should not be a surprise. For example, if the ML estimate is the sample average, we have that
 
 $$
-\widehat{\theta}_{\mathrm{ML}}\left(x^{(1)}, \ldots, x^{(n)}\right)=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
+\widehat{\theta}\left(x^{(1)}, \ldots, x^{(n)}\right)=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
 $$
 
 where $\mathbf{x}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}$.
 
-However, in this setting we should always remember that $x^{(1)}, \ldots, x^{(n)}$ are realizations of the i.i.d. random variables $x^{(1)}, \ldots, x^{(n)}$. Therefore, if we want to analzye the randomness of the variables, it is more reasonable to write $\widehat{\theta}_{\mathrm{ML}}$ as a random variable $\widehat{\Theta}_{\mathrm{ML}}$. For example, in the case of sample average, we have that
+However, in this setting we should always remember that $x^{(1)}, \ldots, x^{(n)}$ are realizations of the i.i.d. random variables $x^{(1)}, \ldots, x^{(n)}$. Therefore, if we want to analzye the randomness of the variables, it is more reasonable to write $\widehat{\theta}$ as a random variable $\widehat{\Theta}_{\mathrm{ML}}$. For example, in the case of sample average, we have that
 
 $$
 \widehat{\Theta}_{\mathrm{ML}}\left(x^{(1)}, \ldots, x^{(n)}\right)=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
@@ -896,7 +749,7 @@ We call $\widehat{\Theta}_{\mathrm{ML}}$ the ML estimator of the true parameter 
 
 Estimate versus estimator
 
-- An estimate is a number, e.g., $\widehat{\theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}$. It is the random realization of a random variable.
+- An estimate is a number, e.g., $\widehat{\theta}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}$. It is the random realization of a random variable.
 
 - An estimator is a random variable, e.g., $\widehat{\Theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}$. It takes a set of random variables and generates another random variable.
 
@@ -1309,11 +1162,11 @@ What is the invariance principle?
 
 - There is a monotonic function $h$.
 
-- There is an ML estimate $\widehat{\theta}_{\mathrm{ML}}$ for $\theta$.
+- There is an ML estimate $\widehat{\theta}$ for $\theta$.
 
 - The monotonic function $h$ maps the true parameter $\theta \longmapsto h(\theta)$.
 
-- Then the same function will map the ML estimate $\widehat{\theta}_{\mathrm{ML}} \longmapsto h\left(\widehat{\theta}_{\mathrm{ML}}\right)$.
+- Then the same function will map the ML estimate $\widehat{\theta} \longmapsto h\left(\widehat{\theta}\right)$.
 
 The formal statement of the invariance principle is given by the theorem below.
 
@@ -1329,13 +1182,13 @@ $$
 
 \subsection{PROPERTIES OF ML ESTIMATES}
 
-Let $\widehat{\theta}_{\mathrm{ML}}$ be the ML estimate:
+Let $\widehat{\theta}$ be the ML estimate:
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\underset{\theta}{\operatorname{argmax}} \mathcal{L}(\theta)=\underset{\theta}{\operatorname{argmax}} \mathcal{L}\left(h^{-1}(h(\theta))\right) .
+\widehat{\theta}=\underset{\theta}{\operatorname{argmax}} \mathcal{L}(\theta)=\underset{\theta}{\operatorname{argmax}} \mathcal{L}\left(h^{-1}(h(\theta))\right) .
 $$
 
-By the definition of ML, $\widehat{\theta}_{\mathrm{ML}}$ must maximize the likelihood. Therefore, $\mathcal{L}\left(h^{-1}(h(\theta))\right)$ is maximized when $h^{-1}(h(\theta))=\widehat{\theta}_{\mathrm{ML}}$. This implies that $h(\theta)=h\left(\widehat{\theta}_{\mathrm{ML}}\right)$ because $h$ is monotonic. Since $h(\theta)$ is the parameter we try to estimate, the equality $h(\theta)=h\left(\widehat{\theta}_{\mathrm{ML}}\right)$ implies that $h\left(\widehat{\theta}_{\mathrm{ML}}\right)$ is the ML estimate of $h(\theta)$.
+By the definition of ML, $\widehat{\theta}$ must maximize the likelihood. Therefore, $\mathcal{L}\left(h^{-1}(h(\theta))\right)$ is maximized when $h^{-1}(h(\theta))=\widehat{\theta}$. This implies that $h(\theta)=h\left(\widehat{\theta}\right)$ because $h$ is monotonic. Since $h(\theta)$ is the parameter we try to estimate, the equality $h(\theta)=h\left(\widehat{\theta}\right)$ implies that $h\left(\widehat{\theta}\right)$ is the ML estimate of $h(\theta)$.
 
 Example 8.18. Consider the single-photon image sensor example we discussed in Section 8.1. We consider a set of i.i.d. Bernoulli random variables with PMF
 
@@ -1355,7 +1208,7 @@ $$
 
 $$
 \begin{aligned}
-\widehat{\theta}_{\mathrm{ML}} & =\underset{\theta}{\operatorname{argmax}} \prod_{n=1}^{N} \theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}} \\
+\widehat{\theta} & =\underset{\theta}{\operatorname{argmax}} \prod_{n=1}^{N} \theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}} \\
 & =\frac{1}{N} \sum_{n=1}^{N} x^{(n)} .
 \end{aligned}
 $$
@@ -1364,7 +1217,7 @@ The relationship between $\theta$ and $\eta$ is that $\theta=1-e^{-\eta}$, or $\
 
 $$
 \begin{aligned}
-\widehat{\eta}_{\mathrm{ML}} \stackrel{\text { def }}{=} \widehat{h(\theta)_{\mathrm{ML}}} & \stackrel{(i)}{=} h\left(\widehat{\theta}_{\mathrm{ML}}\right) \\
+\widehat{\eta}_{\mathrm{ML}} \stackrel{\text { def }}{=} \widehat{h(\theta)_{\mathrm{ML}}} & \stackrel{(i)}{=} h\left(\widehat{\theta}\right) \\
 & =-\log \left(1-\frac{1}{N} \sum_{n=1}^{N} x^{(n)}\right),
 \end{aligned}
 $$
@@ -1384,7 +1237,7 @@ $$
 \section{CHAPTER 8. ESTIMATION}
 ![](https://cdn.mathpix.com/cropped/2023_03_13_39570ad67b23e5b59046g-518.jpg?height=812&width=1024&top_left_y=233&top_left_x=328)
 
-Figure 8.14: The invariance principle is a transformation of the $M L$ estimate. In this example, we consider a Bernoulli log-likelihood function shown in the lowermost plot. For this log-likelihood, the ML estimate is $\widehat{\theta}_{\mathrm{ML}}=0.4$. On the left-hand side we show another log-likelihood, derived for a truncated Poisson random variable. Note that the $\mathrm{ML}$ estimate is $\widehat{\eta}_{\mathrm{ML}}=0.5108$. The invariance principle asserts that, instead of computing these $\mathrm{ML}$ estimates directly, we can first derive the relationship between $\eta$ and $\theta$ for any $\theta$. Since we know that $\theta=1-e^{-\eta}$, it follows that $\eta=-\log (1-\theta)$. We define this transformation as $\eta=h(\theta)=-\log (1-\theta)$. Then the $\mathrm{ML}$ estimate is $\widehat{\eta}_{\mathrm{ML}}=h\left(\widehat{\theta}_{\mathrm{ML}}\right)=h(0.4)=0.5108$. The invariance principle saves us the trouble of computing the maximization of the more truncated Poisson likelihood.
+Figure 8.14: The invariance principle is a transformation of the $M L$ estimate. In this example, we consider a Bernoulli log-likelihood function shown in the lowermost plot. For this log-likelihood, the ML estimate is $\widehat{\theta}=0.4$. On the left-hand side we show another log-likelihood, derived for a truncated Poisson random variable. Note that the $\mathrm{ML}$ estimate is $\widehat{\eta}_{\mathrm{ML}}=0.5108$. The invariance principle asserts that, instead of computing these $\mathrm{ML}$ estimates directly, we can first derive the relationship between $\eta$ and $\theta$ for any $\theta$. Since we know that $\theta=1-e^{-\eta}$, it follows that $\eta=-\log (1-\theta)$. We define this transformation as $\eta=h(\theta)=-\log (1-\theta)$. Then the $\mathrm{ML}$ estimate is $\widehat{\eta}_{\mathrm{ML}}=h\left(\widehat{\theta}\right)=h(0.4)=0.5108$. The invariance principle saves us the trouble of computing the maximization of the more truncated Poisson likelihood.
 
 In this particular example we let $S=20$, where $S$ denotes the sum of the $N=50$ Bernoulli random variables. The other log-likelihood is the truncated Poisson, which is given by
 
@@ -1392,7 +1245,7 @@ $$
 \log \mathcal{L}(\eta \mid S)=S \log \left(1-e^{-\eta}\right)+(1-S) \log \left(e^{-\eta}\right)
 $$
 
-The transformation between the two is the function $\eta=h(\theta)=-\log (1-\theta)$. Putting everything into the figure, we see that the ML estimate $(\theta=0.4)$ is translated to $\eta=0.5108$. The invariance principle asserts that this calculation can be done by $\widehat{\eta}_{\mathrm{ML}}=h\left(\widehat{\theta}_{\mathrm{ML}}\right)=$ $h(0.4)=-0.5108$.
+The transformation between the two is the function $\eta=h(\theta)=-\log (1-\theta)$. Putting everything into the figure, we see that the ML estimate $(\theta=0.4)$ is translated to $\eta=0.5108$. The invariance principle asserts that this calculation can be done by $\widehat{\eta}_{\mathrm{ML}}=h\left(\widehat{\theta}\right)=$ $h(0.4)=-0.5108$.
 
 \subsection{Maximum A Posteriori Estimation}
 
@@ -1628,13 +1481,13 @@ Thus, if $\widehat{\boldsymbol{\theta}}_{\mathrm{MAP}} \neq \boldsymbol{\theta}_
 As we said earlier, MAP offers something that ML does not. To see this, we will use the result of the Gaussian random variables as an example and analyze the MAP solution as we change the parameters $N$ and $\sigma_{0}$. Recall that if $x^{(1)}, \ldots, x^{(n)}$ are i.i.d. Gaussian random variables with unknown mean $\theta$ and known variance $\sigma$, the ML estimate is
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
+\widehat{\theta}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}
 $$
 
 Assuming that the parameter $\Theta$ is distributed according to a $\operatorname{PDF} \operatorname{Gaussian}\left(\mu_{0}, \sigma_{0}^{2}\right)$, we have shown in the previous subsection that
 
 $$
-\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2}\left(\frac{1}{N} \sum_{n=1}^{N} x^{(n)}\right)+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}} .
+\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2}\left(\frac{1}{N} \sum_{n=1}^{N} x^{(n)}\right)+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}} .
 $$
 
 In what follows, we will take a look at the behavior of the MAP estimate $\widehat{\theta}_{\text {MAP }}$ as $N$ and $\sigma_{0}$ change. The results of our discussion are summarized in Figure 8.16.
@@ -1643,7 +1496,7 @@ First, let's look at the effect of $N$.
 
 How does $N$ change $\widehat{\theta}_{\text {MAP }}$ ?
 
-- As $N \rightarrow \infty$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \widehat{\theta}_{\mathrm{ML}}$ : If we have enough samples, we trust the data.
+- As $N \rightarrow \infty$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \widehat{\theta}$ : If we have enough samples, we trust the data.
 
 \subsection{MAXIMUM A POSTERIORI ESTIMATION}
 
@@ -1655,14 +1508,14 @@ How does $N$ change $\widehat{\theta}_{\text {MAP }}$ ?
 
 (b) Effect of $\sigma_{0}$
 
-Figure 8.16: The MAP estimate $\widehat{\theta}_{\mathrm{MAP}}$ swings between the ML estimate $\widehat{\theta}_{\mathrm{ML}}$ and the prior $\mu_{0}$. (a) When $N$ increases, the likelihood is more reliable and so we lean towards the $\mathrm{ML}$ estimate. If $N$ is small, we should trust the prior more than the ML estimate. (b) When $\sigma_{0}$ decreases, we become more confident about the prior and so we will use it. If $\sigma_{0}$ is large, we use more information from the ML estimate.
+Figure 8.16: The MAP estimate $\widehat{\theta}_{\mathrm{MAP}}$ swings between the ML estimate $\widehat{\theta}$ and the prior $\mu_{0}$. (a) When $N$ increases, the likelihood is more reliable and so we lean towards the $\mathrm{ML}$ estimate. If $N$ is small, we should trust the prior more than the ML estimate. (b) When $\sigma_{0}$ decreases, we become more confident about the prior and so we will use it. If $\sigma_{0}$ is large, we use more information from the ML estimate.
 
 - As $N \rightarrow 0$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \theta_{0}$. If we do not have any samples, we trust the prior.
 
 These two results can be demonstrated by taking the limits. As $N \rightarrow \infty$, the MAP estimate converges to
 
 $$
-\lim _{N \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\lim _{N \rightarrow \infty} \frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\widehat{\theta}_{\mathrm{ML}} .
+\lim _{N \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\lim _{N \rightarrow \infty} \frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\widehat{\theta} .
 $$
 
 This result is not surprising. When we have infinitely many samples, we will completely rely on the data and make our estimate. Thus, the MAP estimate is the same as the ML estimate.
@@ -1670,20 +1523,20 @@ This result is not surprising. When we have infinitely many samples, we will com
 When $N \rightarrow 0$, the MAP estimate converges to
 
 $$
-\lim _{N \rightarrow 0} \widehat{\theta}_{\mathrm{MAP}}=\lim _{N \rightarrow 0} \frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\mu_{0} .
+\lim _{N \rightarrow 0} \widehat{\theta}_{\mathrm{MAP}}=\lim _{N \rightarrow 0} \frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\mu_{0} .
 $$
 
 This means that, when we do not have any samples, the MAP estimate $\widehat{\theta}_{\text {MAP }}$ will completely use the prior distribution, which has a mean $\mu_{0}$.
 
-The implication of this result is that MAP offers a natural swing between $\widehat{\theta}_{\mathrm{ML}}$ and $\widehat{\theta}_{0}$, controlled by $N$. Where does this $N$ come from? If we recall the derivation of the result, we note that the $N$ affects the likelihood term through the number of samples:
+The implication of this result is that MAP offers a natural swing between $\widehat{\theta}$ and $\widehat{\theta}_{0}$, controlled by $N$. Where does this $N$ come from? If we recall the derivation of the result, we note that the $N$ affects the likelihood term through the number of samples:
 
 $$
 \widehat{\theta}_{\mathrm{MAP}}=\underset{\theta}{\operatorname{argmax}}\{-\underbrace{\sum_{n=1}^{N} \frac{\left(x^{(n)}-\theta\right)^{2}}{2 \sigma^{2}}}_{N \text { terms here }}-\underbrace{\frac{\left(\theta-\mu_{0}\right)^{2}}{2 \sigma_{0}^{2}}}_{1 \text { term }}\} .
 $$
 
-Thus, as $N$ increases, the influence of the data term grows, and so the result will gradually shift towards $\widehat{\theta}_{\mathrm{ML}}$.
+Thus, as $N$ increases, the influence of the data term grows, and so the result will gradually shift towards $\widehat{\theta}$.
 
-Figure 8.17 illustrates a numerical experiment in which we draw $N$ random samples $x^{(1)}, \ldots, x^{(n)}$ according to a Gaussian distribution $\operatorname{Gaussian}\left(\theta, \sigma^{2}\right)$, with $\sigma=1$. We assume that the prior distribution is $\operatorname{Gaussian}\left(\mu_{0}, \sigma_{0}^{2}\right)$, with $\mu_{0}=0$ and $\sigma_{0}=0.25$. The ML estimate of this problem is $\widehat{\theta}_{\mathrm{ML}}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}$, whereas the MAP estimate is given by Equation 8.40 .
+Figure 8.17 illustrates a numerical experiment in which we draw $N$ random samples $x^{(1)}, \ldots, x^{(n)}$ according to a Gaussian distribution $\operatorname{Gaussian}\left(\theta, \sigma^{2}\right)$, with $\sigma=1$. We assume that the prior distribution is $\operatorname{Gaussian}\left(\mu_{0}, \sigma_{0}^{2}\right)$, with $\mu_{0}=0$ and $\sigma_{0}=0.25$. The ML estimate of this problem is $\widehat{\theta}=\frac{1}{N} \sum_{n=1}^{N} x^{(n)}$, whereas the MAP estimate is given by Equation 8.40 .
 
 \section{CHAPTER 8. ESTIMATION}
 
@@ -1703,14 +1556,14 @@ We next look at the effect of $\sigma_{0}$.
 
 How does $\sigma_{0}$ change $\widehat{\theta}_{\text {MAP }}$ ?
 
-- As $\sigma_{0} \rightarrow \infty$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \widehat{\theta}_{\mathrm{ML}}$ : If we have doubts about the prior, we trust the data.
+- As $\sigma_{0} \rightarrow \infty$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \widehat{\theta}$ : If we have doubts about the prior, we trust the data.
 
 - As $\sigma_{0} \rightarrow 0$, the MAP estimate $\widehat{\theta}_{\mathrm{MAP}} \rightarrow \theta_{0}$. If we are absolutely sure about the prior, we ignore the data.
 
 When $\sigma_{0} \rightarrow \infty$, the limit of $\widehat{\theta}_{\mathrm{MAP}}$ is
 
 $$
-\lim _{\sigma_{0} \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\lim _{\sigma_{0} \rightarrow \infty} \frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\widehat{\theta}_{\mathrm{ML}} .
+\lim _{\sigma_{0} \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\lim _{\sigma_{0} \rightarrow \infty} \frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\widehat{\theta} .
 $$
 
 The reason why this happens is that $\sigma_{0}$ is the uncertainty level of the prior. If $\sigma_{0}$ is high, we are not certain about the prior. In this case, MAP chooses to follow the ML estimate.
@@ -1718,7 +1571,7 @@ The reason why this happens is that $\sigma_{0}$ is the uncertainty level of the
 When $\sigma_{0} \rightarrow 0$, the limit of $\widehat{\theta}_{\mathrm{MAP}}$ is
 
 $$
-\lim _{\sigma_{0} \rightarrow 0} \widehat{\theta}_{\mathrm{MAP}}=\lim _{\sigma_{0} \rightarrow 0} \frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\mu_{0} .
+\lim _{\sigma_{0} \rightarrow 0} \widehat{\theta}_{\mathrm{MAP}}=\lim _{\sigma_{0} \rightarrow 0} \frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}=\mu_{0} .
 $$
 
 Note that when $\sigma_{0} \rightarrow 0$, we are essentially saying that we are absolutely sure about the prior. If we are so sure about the prior, there is no need to look at the data. In that case the MAP estimate is $\mu_{0}$.
@@ -1769,7 +1622,7 @@ $$
 where
 
 $$
-\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}, \quad \text { and } \quad \frac{1}{\widehat{\sigma}_{\mathrm{MAP}}^{2}}=\frac{1}{\sigma_{0}^{2}}+\frac{N}{\sigma^{2}}
+\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}, \quad \text { and } \quad \frac{1}{\widehat{\sigma}_{\mathrm{MAP}}^{2}}=\frac{1}{\sigma_{0}^{2}}+\frac{N}{\sigma^{2}}
 $$
 
 In other words, the posterior distribution $f_{\Theta \mid \mathbf{X}}(\theta \mid \mathbf{x})$ is also a Gaussian with
@@ -1783,16 +1636,16 @@ If $f_{\mathbf{X} \mid \boldsymbol{\Theta}}(\mathbf{x} \mid \boldsymbol{\theta})
 The posterior $f_{\boldsymbol{\Theta} \mid \mathbf{X}}(\boldsymbol{\theta} \mid \mathbf{x})$ is $\operatorname{Gaussian}\left(\widehat{\theta}_{\mathrm{MAP}}, \widehat{\sigma}_{\mathrm{MAP}}^{2}\right)$, where
 
 $$
-\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2} \widehat{\theta}_{\mathrm{ML}}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}, \quad \text { and } \quad \frac{1}{\widehat{\sigma}_{\mathrm{MAP}}^{2}}=\frac{1}{\sigma_{0}^{2}}+\frac{N}{\sigma^{2}} .
+\widehat{\theta}_{\mathrm{MAP}}=\frac{\sigma_{0}^{2} \widehat{\theta}+\frac{\sigma^{2}}{N} \mu_{0}}{\sigma_{0}^{2}+\frac{\sigma^{2}}{N}}, \quad \text { and } \quad \frac{1}{\widehat{\sigma}_{\mathrm{MAP}}^{2}}=\frac{1}{\sigma_{0}^{2}}+\frac{N}{\sigma^{2}} .
 $$
 
 The posterior tells us how $N$ and $\sigma_{0}$ will influence the MAP estimate. As $N$ grows, the posterior mean and variance becomes
 
 $$
-\lim _{N \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\widehat{\theta}_{\mathrm{ML}}=\theta, \quad \text { and } \quad \lim _{N \rightarrow \infty} \widehat{\sigma}_{\mathrm{MAP}}=0 .
+\lim _{N \rightarrow \infty} \widehat{\theta}_{\mathrm{MAP}}=\widehat{\theta}=\theta, \quad \text { and } \quad \lim _{N \rightarrow \infty} \widehat{\sigma}_{\mathrm{MAP}}=0 .
 $$
 
-As a result, the posterior distribution $f_{\Theta \mid \mathbf{X}}(\theta \mid \mathbf{x})$ will converge to a delta function centered at the ML estimate $\widehat{\theta}_{\mathrm{ML}}$. Therefore, as we try to solve the MAP problem by maximizing the posterior, the MAP estimate has to improve because $\widehat{\sigma}_{\mathrm{MAP}} \rightarrow 0$.
+As a result, the posterior distribution $f_{\Theta \mid \mathbf{X}}(\theta \mid \mathbf{x})$ will converge to a delta function centered at the ML estimate $\widehat{\theta}$. Therefore, as we try to solve the MAP problem by maximizing the posterior, the MAP estimate has to improve because $\widehat{\sigma}_{\mathrm{MAP}} \rightarrow 0$.
 
 We can plot the posterior distribution Gaussian $\left(\hat{\theta}_{\mathrm{MAP}}, \widehat{\sigma}_{\mathrm{MAP}}^{2}\right)$ as a function of the number of samples $N$. Figure 8.19 illustrates this example using the following configurations. The likelihood is Gaussian with $\mu=1, \sigma=0.25$. The prior is Gaussian with $\mu_{0}=0$ and $\sigma=0.25$. We construct the Gaussian according to Gaussian $\left(\widehat{\theta}_{\mathrm{MAP}}, \widehat{\sigma}_{\mathrm{MAP}}^{2}\right)$ by varying $N$. The result shown in Figure 8.19 confirms our prediction: As $N$ grows, the posterior becomes more like a delta function whose mean is the true mean $\mu$. The posterior estimator $\widehat{\theta}_{\mathrm{MAP}}$, for each $N$, is the peak of the respective Gaussian.
 
@@ -1945,7 +1798,7 @@ $$
 where
 
 $$
-\mu_{N}=\frac{\sigma^{2}}{N \sigma_{0}^{2}+\sigma^{2}} \mu_{0}+\frac{N \sigma_{0}^{2}}{N \sigma_{0}^{2}+\sigma^{2}} \widehat{\theta}_{\mathrm{ML}} \quad \text { and } \quad \sigma_{N}^{2}=\frac{\sigma^{2} \sigma_{0}^{2}}{\sigma^{2}+N \sigma_{0}^{2}}
+\mu_{N}=\frac{\sigma^{2}}{N \sigma_{0}^{2}+\sigma^{2}} \mu_{0}+\frac{N \sigma_{0}^{2}}{N \sigma_{0}^{2}+\sigma^{2}} \widehat{\theta} \quad \text { and } \quad \sigma_{N}^{2}=\frac{\sigma^{2} \sigma_{0}^{2}}{\sigma^{2}+N \sigma_{0}^{2}}
 $$
 
 Since $f_{\Theta \mid \mathbf{X}}(\theta \mid \mathbf{x})$ is in the same form as $f_{\Theta}(\theta)$, we know that $f_{\Theta}(\theta)$ is a conjugate prior.
@@ -2552,7 +2405,7 @@ $$
 Finally, the ML estimate is
 
 $$
-\widehat{\theta}_{\mathrm{ML}}(x)=\underset{\theta}{\operatorname{argmax}} \log f_{X \mid \Theta}(x \mid \theta)=\frac{1}{x} .
+\widehat{\theta}(x)=\underset{\theta}{\operatorname{argmax}} \log f_{X \mid \Theta}(x \mid \theta)=\frac{1}{x} .
 $$
 
 Practice Exercise 8.8. Following the previous example, derive the estimates for multiple observations $\mathbf{X}=\mathbf{x}$.
@@ -2578,11 +2431,11 @@ $$
 \begin{aligned}
 \widehat{\theta}_{\mathrm{MMSE}}(x) & =\frac{2}{\alpha+\sum_{n=1}^{N} x^{(n)}}, \\
 \widehat{\theta}_{\mathrm{MAP}}(x) & =\frac{1}{\alpha+\sum_{n=1}^{N} x^{(n)}}, \\
-\widehat{\theta}_{\mathrm{ML}}(x) & =\frac{1}{\sum_{n=1}^{N} x^{(n)}}
+\widehat{\theta}(x) & =\frac{1}{\sum_{n=1}^{N} x^{(n)}}
 \end{aligned}
 $$
 
-This example shows that as $N \rightarrow \infty$, the ML estimate $\widehat{\theta}_{\mathrm{ML}}(x) \rightarrow 0$. The reason is that the likelihood is an exponential distribution. Therefore, the peak is always at 0 . The posterior is an Erlang distribution, and therefore the peak is offset by $\alpha$ in the denominator. However, as $N \rightarrow \infty$ the posterior distribution is dominated by the likelihood, so the peak is shifted towards 0. Finally, since the Erlang distribution is asymmetric, the mean is different from the peak. Hence, the MMSE estimate is different from the MAP estimate.
+This example shows that as $N \rightarrow \infty$, the ML estimate $\widehat{\theta}(x) \rightarrow 0$. The reason is that the likelihood is an exponential distribution. Therefore, the peak is always at 0 . The posterior is an Erlang distribution, and therefore the peak is offset by $\alpha$ in the denominator. However, as $N \rightarrow \infty$ the posterior distribution is dominated by the likelihood, so the peak is shifted towards 0. Finally, since the Erlang distribution is asymmetric, the mean is different from the peak. Hence, the MMSE estimate is different from the MAP estimate.
 
 \subsubsection{MMSE estimator for multidimensional Gaussian}
 
@@ -2961,7 +2814,7 @@ $$
 (b) Find the maximum likelihood estimate $\widehat{\theta}$, i.e.,
 
 $$
-\widehat{\theta}_{\mathrm{ML}}=\underset{\theta}{\operatorname{argmax}} \log p_{x^{(1)}, \ldots, x^{(n)}}\left(x^{(1)}, \ldots, x^{(n)}\right)
+\widehat{\theta}=\underset{\theta}{\operatorname{argmax}} \log p_{x^{(1)}, \ldots, x^{(n)}}\left(x^{(1)}, \ldots, x^{(n)}\right)
 $$
 
 Express your answer in terms of $x^{(1)}, \ldots, x^{(n)}$.
@@ -2974,7 +2827,7 @@ Let $Y_{n}=\theta+W_{n}$ be the output of a noisy channel where the input is a s
 
 (a) Express the PDF of $Y_{n}$ in terms of $\theta$ and $y_{n}$. Find the joint PDF of $Y_{1}, \ldots, Y_{N}$.
 
-(b) Find the maximum likelihood estimate $\widehat{\theta}_{\mathrm{ML}}$. Express your answer in terms of $y_{1}, \ldots, y_{N}$.
+(b) Find the maximum likelihood estimate $\widehat{\theta}$. Express your answer in terms of $y_{1}, \ldots, y_{N}$.
 
 (c) Find $\mathbb{E}\left[\widehat{\Theta}_{\mathrm{ML}}\right]$
 
