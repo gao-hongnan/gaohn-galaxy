@@ -1,0 +1,1449 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Concept &#8212; Machine Learning Chronicles</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/bootstrap.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+
+  
+  <link href="../../../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=796348d33e8b1d947c94" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../../../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2">
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" href="../../../_static/styles/sphinx-book-theme.css?digest=4ec06e9971c5264fbd345897d5258098f11cc577" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/tabs.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/proof.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94">
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94">
+
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/clipboard.min.js"></script>
+    <script src="../../../_static/copybutton.js"></script>
+    <script src="../../../_static/scripts/sphinx-book-theme.js?digest=8bf782fb4ee92b3d3646425e50f299c4e1fd152d"></script>
+    <script src="../../../_static/tabs.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"tex": {"macros": {"defeq": "\\overset{\\text{def}}{=}", "defa": "\\overset{\\text{(a)}}{=}", "defb": "\\overset{\\text{(b)}}{=}", "defc": "\\overset{\\text{(c)}}{=}", "defd": "\\overset{\\text{(d)}}{=}", "st": "\\mid", "mod": "\\mid", "S": "\\Omega", "s": "\\omega", "e": "\\exp", "P": "\\mathbb{P}", "R": "\\mathbb{R}", "expectation": "\\mathbb{E}", "v": "\\mathbf{v}", "a": "\\mathbf{a}", "b": "\\mathbf{b}", "c": "\\mathbf{c}", "u": "\\mathbf{u}", "w": "\\mathbf{w}", "x": "\\mathbf{x}", "y": "\\mathbf{y}", "z": "\\mathbf{z}", "0": "\\mathbf{0}", "1": "\\mathbf{1}", "A": "\\mathbf{A}", "B": "\\mathbf{B}", "C": "\\mathbf{C}", "E": "\\mathcal{F}", "eventA": "\\mathcal{A}", "lset": "\\left\\{", "rset": "\\right\\}", "lsq": "\\left[", "rsq": "\\right]", "lpar": "\\left(", "rpar": "\\right)", "lcurl": "\\left\\{", "rcurl": "\\right\\}", "pmf": "p_X", "pdf": "f_X", "pdftwo": "f_{X,Y}", "pdfjoint": "f_{\\mathbf{X}}", "pmfjointxy": "p_{X, Y}", "pdfjointxy": "f_{X, Y}", "cdf": "F_X", "pspace": "(\\Omega, \\mathcal{F}, \\mathbb{P})", "var": "\\operatorname{Var}", "std": "\\operatorname{Std}", "bern": "\\operatorname{Bernoulli}", "binomial": "\\operatorname{Binomial}", "geometric": "\\operatorname{Geometric}", "poisson": "\\operatorname{Poisson}", "uniform": "\\operatorname{Uniform}", "normal": "\\operatorname{Normal}", "gaussian": "\\operatorname{Gaussian}", "gaussiansymbol": "\\mathcal{N}", "exponential": "\\operatorname{Exponential}", "iid": "\\textbf{i.i.d.}", "and": "\\text{and}"}}, "options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'probability_theory/08_estimation_theory/maximum_likelihood_estimation/concept';</script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="Gradient Descent" href="../../../optimization/gradient_descent/intro.html" />
+    <link rel="prev" title="Maximum Likelihood Estimation" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="docsearch:language" content="en">
+  </head>
+  
+  
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="180" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__primary" id="__primary">
+  <label class="overlay overlay-primary" for="__primary"></label>
+
+  
+  <input type="checkbox" class="sidebar-toggle" name="__secondary" id="__secondary">
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+      
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+  </div>
+
+  
+  <nav class="bd-header navbar navbar-expand-lg bd-navbar" id="navbar-main"><div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+      <span class="fa-solid fa-bars"></span>
+  </label>
+  <div id="navbar-start">
+    
+    
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    
+  </div>
+
+  
+  <div class="col-lg-9 navbar-header-items">
+    <div id="navbar-center" class="mr-auto">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../03_discrete_random_variables/intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../04_continuous_random_variables/intro.html">
+                        Chapter 4. Continuous Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../05_joint_distributions/intro.html">
+                        Chapter 5. Joint Distributions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../06_sample_statistics/intro.html">
+                        Chapter 6. Sample Statistics
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Estimation Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/framework.html">
+                        The Machine Learning Framework
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/linear_models/intro.html">
+                        Linear Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/generative/intro.html">
+                        Generative
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/model_selection_and_evaluation/intro.html">
+                        Model Selection and Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/trees/intro.html">
+                        Trees, Forests, Bagging and Boosting
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/decomposition/intro.html">
+                        Dimensionality Reduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/neighbours/intro.html">
+                        Neighbourhood
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+    </div>
+
+    <div id="navbar-end">
+      
+        <div class="navbar-end-item navbar-persistent--container">
+          
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+        </div>
+      
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+  </div>
+
+
+  
+  
+    <div class="navbar-persistent--mobile">
+<button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-toggle="tooltip">
+  <i class="fa-solid fa-magnifying-glass"></i>
+</button>
+    </div>
+  
+
+  
+  <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+  </label>
+  
+
+</div>
+  </nav>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+      
+      <div class="navbar-center-item">
+        <nav class="navbar-nav">
+    <p class="sidebar-header-items__title" role="heading" aria-level="1" aria-label="Site Navigation">
+        Site Navigation
+    </p>
+    <ul id="navbar-main-elements" class="navbar-nav">
+        
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/mathematical_notations.html">
+                        Mathematical Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/machine_learning_notations.html">
+                        Machine Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../notations/deep_learning_notations.html">
+                        Deep Learning Notations
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../01_mathematical_preliminaries/intro.html">
+                        Chapter 1. Mathematical Preliminaries
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../02_probability/intro.html">
+                        Chapter 2. Probability
+                      </a>
+                    </li>
+                
+            <div class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    More
+                </button>
+                <div class="dropdown-menu">
+                    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../03_discrete_random_variables/intro.html">
+                        Chapter 3. Discrete Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../04_continuous_random_variables/intro.html">
+                        Chapter 4. Continuous Random Variables
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../05_joint_distributions/intro.html">
+                        Chapter 5. Joint Distributions
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../06_sample_statistics/intro.html">
+                        Chapter 6. Sample Statistics
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="../intro.html">
+                        Estimation Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../optimization/gradient_descent/intro.html">
+                        Gradient Descent
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/framework.html">
+                        The Machine Learning Framework
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/fundamentals/intro.html">
+                        Fundamentals
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/linear_models/intro.html">
+                        Linear Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/generative/intro.html">
+                        Generative
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/model_selection_and_evaluation/intro.html">
+                        Model Selection and Evaluation
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/trees/intro.html">
+                        Trees, Forests, Bagging and Boosting
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/decomposition/intro.html">
+                        Dimensionality Reduction
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/neighbours/intro.html">
+                        Neighbourhood
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/mixtures/intro.html">
+                        Mixture Models
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../machine_learning/clustering/intro.html">
+                        Clustering
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../deep_learning/natural_language_processing/intro.html">
+                        Natural Language Processing (NLP)
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/bibliography.html">
+                        Bibliography
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../../../references_resources_roadmap/resources.html">
+                        Resources
+                      </a>
+                    </li>
+                
+                </div>
+            </div>
+            
+    </ul>
+</nav>
+      </div>
+      
+      </div>
+    
+
+    
+    
+    <div class="sidebar-header-items__end">
+      
+      <div class="navbar-end-item">
+        <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+</button>
+      </div>
+      
+      <div class="navbar-end-item">
+        <ul id="navbar-icon-links" class="navbar-nav" aria-label="Icon Links">
+      </ul>
+      </div>
+      
+    </div>
+    
+  </div>
+
+  
+  <div class="sidebar-start-items sidebar-primary__section">
+    <div class="sidebar-start-items__item">
+  
+
+
+<a class="navbar-brand logo" href="../../../intro.html">
+
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <img src="../../../_static/logo.png" class="logo__image only-light" alt="Logo image">
+    <img src="../../../_static/logo.png" class="logo__image only-dark" alt="Logo image">
+  
+  
+</a>
+    </div>
+    <div class="sidebar-start-items__item">
+<form class="bd-search d-flex align-items-center" action="../../../search.html" method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+    </div>
+    <div class="sidebar-start-items__item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../../intro.html">
+                    Introduction
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Notations</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/mathematical_notations.html">Mathematical Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/machine_learning_notations.html">Machine Learning Notations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../notations/deep_learning_notations.html">Deep Learning Notations</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Probability Theory</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../01_mathematical_preliminaries/intro.html">Chapter 1. Mathematical Preliminaries</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/01_combinatorics.html">Permutations and Combinations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/02_calculus.html">Calculus</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/contours.html">Contour Maps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../01_mathematical_preliminaries/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../02_probability/intro.html">Chapter 2. Probability</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0202_probability_space.html">Probability Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0203_probability_axioms.html">Probability Axioms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0204_conditional_probability.html">Conditional Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0205_independence.html">Independence</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/0206_bayes_theorem.html">Baye’s Theorem and the Law of Total Probability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../02_probability/summary.html">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../03_discrete_random_variables/intro.html">Chapter 3. Discrete Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0301_random_variables.html">Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0302_discrete_random_variables.html">Discrete Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0303_probability_mass_function.html">Probability Mass Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0304_cumulative_distribution_function.html">Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0305_expectation.html">Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/0306_moments_and_variance.html">Moments and Variance</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_discrete_random_variables/uniform/intro.html">Discrete Uniform Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/uniform/0307_discrete_uniform_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_discrete_random_variables/bernoulli/intro.html">Bernoulli Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/bernoulli/0308_bernoulli_distribution_application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/iid.html">Independent and Identically Distributed (IID)</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_discrete_random_variables/binomial/intro.html">Binomial Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/binomial/0309_binomial_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/binomial/0309_binomial_distribution_implementation.html">Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/binomial/0309_binomial_distribution_application.html">Real World Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_discrete_random_variables/geometric/intro.html">Geometric Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/geometric/0310_geometric_distribution_concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../03_discrete_random_variables/poisson/intro.html">Poisson Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/poisson/0311_poisson_distribution_concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../03_discrete_random_variables/poisson/0311_poisson_distribution_implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/summary.html">Important</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../03_discrete_random_variables/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../04_continuous_random_variables/intro.html">Chapter 4. Continuous Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-9"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/from_discrete_to_continuous.html">From Discrete to Continuous</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0401_continuous_random_variables.html">Continuous Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0402_probability_density_function.html">Probability Density Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0403_expectation.html">Expectation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0404_moments_and_variance.html">Moments and Variance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0405_cumulative_distribution_function.html">Cumulative Distribution Function</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0406_mean_median_mode.html">Mean, Median and Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0407_continuous_uniform_distribution.html">Continuous Uniform Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0408_exponential_distribution.html">Exponential Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0409_gaussian_distribution.html">Gaussian Distribution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0410_skewness_and_kurtosis.html">Skewness and Kurtosis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0411_convolve_and_sum_of_random_variables.html">Convolution and Sum of Random Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../04_continuous_random_variables/0412_functions_of_random_variables.html">Functions of Random Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../05_joint_distributions/intro.html">Chapter 5. Joint Distributions</a><input class="toctree-checkbox" id="toctree-checkbox-10" name="toctree-checkbox-10" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-10"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../05_joint_distributions/from_single_variable_to_joint_distributions.html">From Single Variable to Joint Distributions</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0501_joint_pmf_pdf/intro.html">Joint PMF and PDF</a><input class="toctree-checkbox" id="toctree-checkbox-11" name="toctree-checkbox-11" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-11"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0501_joint_pmf_pdf/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0502_joint_expectation_and_correlation/intro.html">Joint Expectation and Correlation</a><input class="toctree-checkbox" id="toctree-checkbox-12" name="toctree-checkbox-12" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-12"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0502_joint_expectation_and_correlation/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0503_conditional_pmf_pdf/intro.html">Conditional PMF and PDF</a><input class="toctree-checkbox" id="toctree-checkbox-13" name="toctree-checkbox-13" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-13"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0503_conditional_pmf_pdf/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0503_conditional_pmf_pdf/application.html">Application</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0504_conditional_expectation_variance/intro.html">Conditional Expectation and Variance</a><input class="toctree-checkbox" id="toctree-checkbox-14" name="toctree-checkbox-14" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-14"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0504_conditional_expectation_variance/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0504_conditional_expectation_variance/exercises.html">Exercises</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0505_sum_of_random_variables/intro.html">Sum of Random Variables</a><input class="toctree-checkbox" id="toctree-checkbox-15" name="toctree-checkbox-15" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-15"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0505_sum_of_random_variables/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0506_random_vectors/intro.html">Random Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-16" name="toctree-checkbox-16" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-16"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0506_random_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/intro.html">Multivariate Gaussian Distribution</a><input class="toctree-checkbox" id="toctree-checkbox-17" name="toctree-checkbox-17" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-17"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/application_transformation.html">Application: Plots and Transformations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/psd.html">Covariance Matrix is Positive Semi-Definite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/eigendecomposition.html">Eigendecomposition and Covariance Matrix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../05_joint_distributions/0507_multivariate_gaussian/geometry_of_multivariate_gaussian.html">The Geometry of Multivariate Gaussians</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../06_sample_statistics/intro.html">Chapter 6. Sample Statistics</a><input class="toctree-checkbox" id="toctree-checkbox-18" name="toctree-checkbox-18" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-18"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../06_sample_statistics/0601_moment_generating_and_characteristic_functions/intro.html">Moment Generating and Characteristic Functions</a><input class="toctree-checkbox" id="toctree-checkbox-19" name="toctree-checkbox-19" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-19"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function.html">Moment Generating Function</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0601_moment_generating_and_characteristic_functions/moment_generating_function_application_sum_of_rv.html">Application: Moment Generating Function and the Sum of Random Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0601_moment_generating_and_characteristic_functions/characteristic_function.html">Characteristic Function</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../06_sample_statistics/0602_probability_inequalities/intro.html">Probability Inequalities</a><input class="toctree-checkbox" id="toctree-checkbox-20" name="toctree-checkbox-20" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-20"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0602_probability_inequalities/concept.html">Probability Inequalities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0602_probability_inequalities/application.html">Application: Learning Theory</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../06_sample_statistics/0603_law_of_large_numbers/intro.html">Law of Large Numbers</a><input class="toctree-checkbox" id="toctree-checkbox-21" name="toctree-checkbox-21" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-21"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0603_law_of_large_numbers/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0603_law_of_large_numbers/convergence.html">Convergence of Sample Average</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../06_sample_statistics/0603_law_of_large_numbers/application.html">Application: Learning Theory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Estimation Theory</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-22" name="toctree-checkbox-22" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-22"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active has-children"><a class="reference internal" href="intro.html">Maximum Likelihood Estimation</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-23" name="toctree-checkbox-23" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-23"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l3 current active"><a class="current reference internal" href="#">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Optimization</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../optimization/gradient_descent/intro.html">Gradient Descent</a><input class="toctree-checkbox" id="toctree-checkbox-24" name="toctree-checkbox-24" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-24"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/concept.html">Gradient Descent Concept</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/implementation.html">Gradient Descent Construction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../optimization/gradient_descent/application.html">Application: Gradient Descent</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Machine Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../machine_learning/framework.html">The Machine Learning Framework</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/intro.html">Fundamentals</a><input class="toctree-checkbox" id="toctree-checkbox-25" name="toctree-checkbox-25" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-25"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/intro.html">Loss</a><input class="toctree-checkbox" id="toctree-checkbox-26" name="toctree-checkbox-26" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-26"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/cross_entropy_loss.html">Cross Entropy Loss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/criterions/focal_loss.html">Focal Loss</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/intro.html">Empirical Risk Minimization</a><input class="toctree-checkbox" id="toctree-checkbox-27" name="toctree-checkbox-27" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-27"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/empirical_risk_minimization/bayes_optimal_classifier.html">Bayes Optimal Classifier</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/learning_theory/intro.html">Is the Learning Problem Solvable?</a><input class="toctree-checkbox" id="toctree-checkbox-28" name="toctree-checkbox-28" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-28"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/learning_theory/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/bias_and_variance/intro.html">Bias and Variance Tradeoff</a><input class="toctree-checkbox" id="toctree-checkbox-29" name="toctree-checkbox-29" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-29"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/bias_and_variance/concept.html">Bias-Variance Tradeoff Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/decision_boundary/intro.html">Decision Boundary</a><input class="toctree-checkbox" id="toctree-checkbox-30" name="toctree-checkbox-30" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-30"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/decision_boundary/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/fundamentals/voronoi_region/intro.html">Voronoi Region</a><input class="toctree-checkbox" id="toctree-checkbox-31" name="toctree-checkbox-31" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-31"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/fundamentals/voronoi_region/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/linear_models/linear_regression/implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/linear_models/logistic_regression/intro.html">Logistic Regression</a><input class="toctree-checkbox" id="toctree-checkbox-34" name="toctree-checkbox-34" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-34"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/linear_models/logistic_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/linear_models/logistic_regression/implementation.html">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../machine_learning/linear_models/generalized_linear_models/intro.html">Generalized Linear Models</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/generative/intro.html">Generative</a><input class="toctree-checkbox" id="toctree-checkbox-35" name="toctree-checkbox-35" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-35"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/generative/naive_bayes/intro.html">Naive Bayes</a><input class="toctree-checkbox" id="toctree-checkbox-36" name="toctree-checkbox-36" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-36"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/generative/naive_bayes/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/generative/naive_bayes/implementation.html">Naives Bayes Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/generative/naive_bayes/example_penguins.html">Naive Bayes Application: Penguins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/generative/naive_bayes/application_mnist.html">Naive Bayes Application (MNIST)</a></li>
+
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/intro.html">Model Selection and Evaluation</a><input class="toctree-checkbox" id="toctree-checkbox-37" name="toctree-checkbox-37" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-37"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/intro.html">Metrics and Scoring Rules</a><input class="toctree-checkbox" id="toctree-checkbox-38" name="toctree-checkbox-38" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-38"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/classification/intro.html">Classification Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-39" name="toctree-checkbox-39" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-39"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/classification/accuracy.html">Accuracy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/classification/precision_recall_f1.html">Precision, Recall and F1 Score</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/classification/brier_score.html">Brier Score</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/regression/intro.html">Regression Metrics</a><input class="toctree-checkbox" id="toctree-checkbox-40" name="toctree-checkbox-40" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-40"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/regression/mae.html">Mean Absolute Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/regression/rmse.html">(Root) Mean Squared Error</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../machine_learning/model_selection_and_evaluation/metrics/regression/mape.html">Mean Absolute Percentage Error</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/trees/intro.html">Trees, Forests, Bagging and Boosting</a><input class="toctree-checkbox" id="toctree-checkbox-41" name="toctree-checkbox-41" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-41"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/trees/decision_trees/intro.html">Decision Trees</a><input class="toctree-checkbox" id="toctree-checkbox-42" name="toctree-checkbox-42" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-42"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/trees/decision_trees/concept.html">Braindump</a></li>
+
+
+
+
+
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/trees/ensemble_learning/intro.html">Ensemble Learning</a><input class="toctree-checkbox" id="toctree-checkbox-43" name="toctree-checkbox-43" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-43"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/trees/ensemble_learning/bagging/intro.html">Bagging</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/trees/ensemble_learning/random_forests/intro.html">Random Forests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/trees/ensemble_learning/boosting/intro.html">Boosting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/decomposition/intro.html">Dimensionality Reduction</a><input class="toctree-checkbox" id="toctree-checkbox-44" name="toctree-checkbox-44" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-44"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/decomposition/pca/intro.html">Principal Component Analysis</a><input class="toctree-checkbox" id="toctree-checkbox-45" name="toctree-checkbox-45" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-45"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/decomposition/pca/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/decomposition/pca/implementation.html">PCA</a></li>
+
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/decomposition/pca/eigenface.html">Eigenface</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/neighbours/intro.html">Neighbourhood</a><input class="toctree-checkbox" id="toctree-checkbox-46" name="toctree-checkbox-46" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-46"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../machine_learning/neighbours/k_nearest_neighbours/intro.html">K-Nearest Neighbours</a></li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/mixtures/intro.html">Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-47" name="toctree-checkbox-47" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-47"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/mixtures/gmm/intro.html">Gaussian Mixture Models</a><input class="toctree-checkbox" id="toctree-checkbox-48" name="toctree-checkbox-48" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-48"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/mixtures/gmm/concept.html">Concept</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../machine_learning/clustering/intro.html">Clustering</a><input class="toctree-checkbox" id="toctree-checkbox-49" name="toctree-checkbox-49" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-49"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/intro.html">K-Means</a><input class="toctree-checkbox" id="toctree-checkbox-50" name="toctree-checkbox-50" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-50"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/implementation.html">Implementation: K-Means (Lloyd)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../machine_learning/clustering/kmeans/image_segmentation.html">Application: Image Compression and Segmentation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Deep Learning</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/intro.html">Natural Language Processing (NLP)</a><input class="toctree-checkbox" id="toctree-checkbox-51" name="toctree-checkbox-51" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-51"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/intro.html">Vector Semantics and Embeddings</a><input class="toctree-checkbox" id="toctree-checkbox-52" name="toctree-checkbox-52" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-52"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/intro.html">Words and Vectors</a><input class="toctree-checkbox" id="toctree-checkbox-53" name="toctree-checkbox-53" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-53"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors/concept.html">Concept</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/intro.html">Cosine Similarity and Notion of Closeness</a><input class="toctree-checkbox" id="toctree-checkbox-54" name="toctree-checkbox-54" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-54"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/cosine_similarity/word_similarity.html">Application: Word Similarity</a></li>
+</ul>
+</li>
+<li class="toctree-l3 has-children"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/intro.html">Term Frequency-Inverse Document Frequency (TF-IDF)</a><input class="toctree-checkbox" id="toctree-checkbox-55" name="toctree-checkbox-55" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-55"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/concept.html">Concept</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/implementation.html">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../deep_learning/natural_language_processing/vector_semantics_and_embeddings/tf_idf/application.html">Movie Recommender System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">References, Resources and Roadmap</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/bibliography.html">Bibliography</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../references_resources_roadmap/resources.html">Resources</a></li>
+</ul>
+
+    </div>
+</nav>
+    </div>
+  </div>
+  
+
+  
+  <div class="sidebar-end-items sidebar-primary__section">
+    <div class="sidebar-end-items__item">
+    </div>
+  </div>
+
+  
+  <div id="rtd-footer-container"></div>
+
+      </div>
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+        <div class="bd-content">
+          <div class="bd-article-container">
+            
+            <div class="bd-header-article">
+                
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        <label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" data-toggle="tooltip" data-placement="right" title="Toggle primary sidebar">
+            <span class="fa-solid fa-bars"></span>
+        </label>
+    </div>
+    <div class="header-article__right">
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<div class="dropdown dropdown-repository-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">repository</span>
+</a>
+</a>
+      
+      <li><a href="https://github.com/gao-hongnan/gaohn-galaxy/issues/new?title=Issue%20on%20page%20%2Fprobability_theory/08_estimation_theory/maximum_likelihood_estimation/concept.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Open an issue"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">open issue</span>
+</a>
+</a>
+      
+  </ul>
+</div>
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      <li><a href="../../../_sources/probability_theory/08_estimation_theory/maximum_likelihood_estimation/concept.md" target="_blank"
+   class="btn btn-sm dropdown-item"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</a>
+      
+      <li>
+<button onclick="printPdf(this)"
+  class="btn btn-sm dropdown-item"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</a>
+      
+  </ul>
+</div>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary" data-toggle="tooltip" data-placement="left" title="Toggle secondary sidebar">
+            <span class="fa-solid fa-list"></span>
+        </label>
+    </div>
+</div>
+            </div>
+            
+            
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Concept</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#likelihood">
+   Likelihood
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-intuition">
+     Some Intuition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#independence-and-identically-distributed-iid">
+     Independence and Identically Distributed (IID)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#likelihood-in-the-context-of-machine-learning">
+     Likelihood in the Context of Machine Learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-log-likelihood-function">
+     The Log-Likelihood Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-the-likelihood-function">
+     Visualizing the Likelihood Function
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+            <article class="bd-article" role="main">
+              
+  <section class="tex2jax_ignore mathjax_ignore" id="concept">
+<h1>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h1>
+<section id="likelihood">
+<h2>Likelihood<a class="headerlink" href="#likelihood" title="Permalink to this heading">#</a></h2>
+<section id="some-intuition">
+<h3>Some Intuition<a class="headerlink" href="#some-intuition" title="Permalink to this heading">#</a></h3>
+<p><em><strong>This section is adapted from <span id="id1">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id2" title="Stanley H. Chan. Introduction to probability for Data Science. Michigan Publishing, 2021.">Chan, 2021</a>]</span>.</strong></em></p>
+<p>Consider a set of <span class="math notranslate nohighlight">\(N\)</span> data points <span class="math notranslate nohighlight">\(\mathcal{S}=\left\{x^{(1)}, x^{(2)}, \ldots, x^{(n)}\right\}\)</span>. We want to describe these data points using a probability distribution. What would be the most general way of defining such a distribution?</p>
+<p>Since we have <span class="math notranslate nohighlight">\(N\)</span> data points, and we do not know anything about them, the most general way to define a distribution is as a high-dimensional probability density function (PDF) <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span>. This is a PDF of a random vector <span class="math notranslate nohighlight">\(\mathbf{X}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}\)</span>. A particular realization of this random vector is <span class="math notranslate nohighlight">\(\mathbf{x}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is the most general description for the <span class="math notranslate nohighlight">\(N\)</span> data points because <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is the <strong>joint</strong> PDF of all variables. It provides the complete statistical description of the vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>. For example, we can compute the mean vector <span class="math notranslate nohighlight">\(\mathbb{E}[\mathbf{X}]\)</span>, the covariance matrix <span class="math notranslate nohighlight">\(\operatorname{Cov}(\mathbf{X})\)</span>, the marginal distributions, the conditional distribution, the conditional expectations, etc. In short, if we know <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span>, we know everything about <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>.</p>
+<p>The joint PDF <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is always <strong>parameterized</strong> by a certain parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>. For example, if we assume that <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is drawn from a joint Gaussian distribution, then <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is parameterized by the mean vector <span class="math notranslate nohighlight">\(\boldsymbol{\mu}\)</span> and the covariance matrix <span class="math notranslate nohighlight">\(\boldsymbol{\Sigma}\)</span>. So we say that the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is <span class="math notranslate nohighlight">\(\boldsymbol{\theta}=(\boldsymbol{\mu}, \boldsymbol{\Sigma})\)</span>. To state the dependency on the parameter explicitly, we write</p>
+<div class="math notranslate nohighlight">
+\[
+f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})=\mathrm{PDF} \text { of the random vector } \mathbf{X} \text { with a parameter } \boldsymbol{\theta} .
+\]</div>
+<p>When you express the joint PDF as a function of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, you have two variables to play with. The first variable is the <strong>observation</strong> <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, which is given by the measured data. We usually think about the probability density function <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> in terms of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, because the PDF is evaluated at <span class="math notranslate nohighlight">\(\mathbf{X}=\mathbf{x}\)</span>. In estimation, however, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is something that you cannot control. When your boss hands a dataset to you, <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is already fixed. You can consider the probability of getting this particular <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, but you cannot change <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
+<p>The second variable stated in <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})\)</span> is the <strong>parameter</strong> <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>. This parameter is what we want to find out, and it is the subject of interest in an estimation problem. Our goal is to find the optimal <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> that can offer the “best explanation” to data <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>, in the sense that it can maximize <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})\)</span>.</p>
+<p>The likelihood function is the PDF that shifts the emphasis to <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, let’s define it formally.</p>
+</section>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<div class="proof definition admonition" id="def:likelihood">
+<p class="admonition-title"><span class="caption-number">Definition 103 </span> (Likelihood Function)</p>
+<section class="definition-content" id="proof-content">
+<p>Let <span class="math notranslate nohighlight">\(\mathbf{X}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}\)</span> be a random vector drawn from a joint PDF <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})\)</span>, and let <span class="math notranslate nohighlight">\(\mathbf{x}=\left[x^{(1)}, \ldots, x^{(n)}\right]^{T}\)</span> be the realizations. The likelihood function is a
+function of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> given the realizations <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> :</p>
+<div class="math notranslate nohighlight" id="equation-eq-likelihood">
+<span class="eqno">(51)<a class="headerlink" href="#equation-eq-likelihood" title="Permalink to this equation">#</a></span>\[
+\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x}) \stackrel{\text { def }}{=} f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})
+\]</div>
+</section>
+</div><div class="proof remark admonition" id="rem:likelihood">
+<p class="admonition-title"><span class="caption-number">Remark 21 </span> (Likelihood is not Conditional PDF)</p>
+<section class="remark-content" id="proof-content">
+<p>A word of caution: <span class="math notranslate nohighlight">\(\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})\)</span> is not a conditional PDF because <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is not a random variable. The correct way to interpret <span class="math notranslate nohighlight">\(\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x})\)</span> is to view it as a function of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>.</p>
+</section>
+</div></section>
+<section id="independence-and-identically-distributed-iid">
+<h3>Independence and Identically Distributed (IID)<a class="headerlink" href="#independence-and-identically-distributed-iid" title="Permalink to this heading">#</a></h3>
+<p>While <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> provides us with a complete picture of the random vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span>, using <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is tedious. We need to describe how each <span class="math notranslate nohighlight">\(x^{(n)}\)</span> is generated and describe how <span class="math notranslate nohighlight">\(x^{(n)}\)</span> is related to <span class="math notranslate nohighlight">\(X_{m}\)</span> for all pairs of <span class="math notranslate nohighlight">\(n\)</span> and <span class="math notranslate nohighlight">\(m\)</span>. If the vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> contains <span class="math notranslate nohighlight">\(N\)</span> entries, then there are <span class="math notranslate nohighlight">\(N^{2} / 2\)</span> pairs of correlations we need to compute. When <span class="math notranslate nohighlight">\(N\)</span> is large, finding <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> would be very difficult if not impossible.</p>
+<p>What does this mean? Two things.</p>
+<ol class="arabic simple">
+<li><p>There is no assumption of <strong>independence</strong> between the data points. This means that
+describing the joint PDF <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is very difficult.</p></li>
+<li><p>Each data point <em>can</em> be drawn from a different distribution <span class="math notranslate nohighlight">\(f_{X^{(n)}}(x^{(n)})\)</span> for
+each <span class="math notranslate nohighlight">\(n\)</span>.</p></li>
+</ol>
+<p>Hope is not lost.</p>
+<p>Enter the <strong>independence and identically distributed (IID)</strong> assumption.
+This assumption states that the data points <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> are independent and identically distributed.</p>
+<p>In other words, each data point <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> is drawn from <strong>identical</strong> distribution
+<span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})\)</span> parameterized by <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> and
+each pair of data points <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{x}^{(m)}\)</span> are <strong>independent</strong> of each other.</p>
+<p>Now, we can write the problem in a much simpler way, where the joint PDF <span class="math notranslate nohighlight">\(f_{\mathbf{X}}(\mathbf{x})\)</span> is replaced by the product of the PDFs of each data point <span class="math notranslate nohighlight">\(f_{x^{(n)}}(x^{(n)})\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[
+f_{\mathbf{X}}(\mathbf{x})=f_{x^{(1)}, \ldots, x^{(n)}}\left(x^{(1)}, \ldots, x^{(n)}\right)=\prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)}\right) .
+\]</div>
+<p>or in our context, we can add the <strong>parameter</strong> <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> to the PDFs.</p>
+<div class="math notranslate nohighlight">
+\[
+f_{\mathbf{X}}(\mathbf{x} ; \boldsymbol{\theta})=f_{x^{(1)}, \ldots, x^{(n)}}\left(x^{(1)}, \ldots, x^{(n)}\right)=\prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)} ; \boldsymbol{\theta}\right) .
+\]</div>
+<p>Let’s formally redefine the likelihood function with the IID assumption. Note this is
+an ubiquitous assumption in machine learning and therefore we will stick to this unless
+otherwise stated.</p>
+<div class="proof definition admonition" id="def:likelihood-iid">
+<p class="admonition-title"><span class="caption-number">Definition 104 </span> (Likelihood Function with IID Assumption)</p>
+<section class="definition-content" id="proof-content">
+<p>Given <span class="math notranslate nohighlight">\(i.i.d.\)</span> random variables <span class="math notranslate nohighlight">\(x^{(1)}, \ldots, x^{(n)}\)</span> that all have the same PDF <span class="math notranslate nohighlight">\(f_{x^{(n)}}\left(x^{(n)}\right)\)</span>, the <strong>likelihood function</strong> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\boldsymbol{\theta} \mid \mathbf{x}) \stackrel{\text { def }}{=} \prod_{n=1}^{N} f_{x^{(n)}}\left(x^{(n)} ; \boldsymbol{\theta}\right)
+\]</div>
+</section>
+</div><p>Notice that in the previous sections, there was an implicit assumption that the random vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is a vector of <strong>univariate</strong>* random variables. This is not always the case. In fact, most of the time, the random vector <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is a “vector” (collection) of <strong>multivariate</strong> random variables in the machine
+learning realm.</p>
+<p>Let’s redefine the likelihood function for the higher dimensional case, and also take the opportunity
+to introduce the definition in the context of machine learning.</p>
+</section>
+<section id="likelihood-in-the-context-of-machine-learning">
+<h3>Likelihood in the Context of Machine Learning<a class="headerlink" href="#likelihood-in-the-context-of-machine-learning" title="Permalink to this heading">#</a></h3>
+<div class="proof definition admonition" id="def:likelihood-iid-higher-dim">
+<p class="admonition-title"><span class="caption-number">Definition 105 </span> (Likelihood Function with IID Assumption (Higher Dimension))</p>
+<section class="definition-content" id="proof-content">
+<p>Given a dataset <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right\}\)</span> where each <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> is a vector of <span class="math notranslate nohighlight">\(D\)</span>-dimensional drawn <span class="math notranslate nohighlight">\(i.i.d.\)</span> from the same underlying distribution
+<span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right)\)</span>, the <strong>likelihood function</strong> is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-eq-likelihood-machine-learning">
+<span class="eqno">(52)<a class="headerlink" href="#equation-eq-likelihood-machine-learning" title="Permalink to this equation">#</a></span>\[
+\mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \prod_{n=1}^{N} \mathbb{P}_{\mathcal{D}}\left(\mathbf{x}^{(n)} ; \boldsymbol{\theta}\right)
+\]</div>
+</section>
+</div><div class="proof remark admonition" id="rem:where-y">
+<p class="admonition-title"><span class="caption-number">Remark 22 </span> (Where’s the <span class="math notranslate nohighlight">\(y\)</span>?)</p>
+<section class="remark-content" id="proof-content">
+<p>Some people may ask, isn’t the setting in our classification problem a supervised one with labels?
+Where are the <span class="math notranslate nohighlight">\(y\)</span> in the likelihood function? Good point, the <span class="math notranslate nohighlight">\(y\)</span> is not included in our current section
+for simplicity. However, the inclusion of <span class="math notranslate nohighlight">\(y\)</span> can be merely thought as denoting “an additional”
+random variable in the likelihood function above.</p>
+<p>For example, let’s say <span class="math notranslate nohighlight">\(y\)</span> is the target column of a classification problem on breast cancer, denoting
+whether the patient has cancer or not. Then, the likelihood function can be written as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \prod_{n=1}^{N} \mathbb{P}_{\mathcal{D}}\left(\mathbf{x}^{(n)}, y^{(n)} ; \boldsymbol{\theta}\right)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{S} = \left\{\left(\mathbf{x}^{(1)}, y^{(1)}\right), \ldots, \left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}
+\]</div>
+</section>
+</div></section>
+<section id="the-log-likelihood-function">
+<h3>The Log-Likelihood Function<a class="headerlink" href="#the-log-likelihood-function" title="Permalink to this heading">#</a></h3>
+<p>We will later see in an example that why the log-likelihood function is useful. For now, let’s just
+say that due to numerical reasons (underflow), we will use the log-likelihood function instead of
+the likelihood function. The intuition is that the likelihood defined in <a class="reference internal" href="#equation-eq-likelihood-machine-learning">(52)</a> is a product of individual PDFs. If we have 1 billion samples (i.e. <span class="math notranslate nohighlight">\(N = 1,000,000,000\)</span>), then the likelihood function will be a product of 1 billion PDFs. This is a very small number and will cause <a class="reference external" href="https://en.wikipedia.org/wiki/Arithmetic_underflow"><strong>arithmetic underflow</strong></a>. The log-likelihood function is a solution to this problem.</p>
+<div class="proof definition admonition" id="def:log-likelihood">
+<p class="admonition-title"><span class="caption-number">Definition 106 </span> (Log-Likelihood Function)</p>
+<section class="definition-content" id="proof-content">
+<p>Given a dataset <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right\}\)</span> where each <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)}\)</span> is a vector of <span class="math notranslate nohighlight">\(D\)</span>-dimensional drawn <span class="math notranslate nohighlight">\(i.i.d.\)</span> from the same underlying distribution
+<span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right)\)</span>, the <strong>log-likelihood function</strong> is defined as:</p>
+<div class="math notranslate nohighlight" id="equation-e-log-likelihood-machine-learning">
+<span class="eqno">(53)<a class="headerlink" href="#equation-e-log-likelihood-machine-learning" title="Permalink to this equation">#</a></span>\[
+\log \mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \sum_{n=1}^{N} \log \mathbb{P}_{\mathcal{D}}\left(\mathbf{x}^{(n)} ; \boldsymbol{\theta}\right)
+\]</div>
+</section>
+</div><p>One will soon see that <strong>maximization</strong> of the log-likelihood function is equivalent to <strong>maximization</strong> of the likelihood function. They give the same result.</p>
+<p>Let’s walk through an example:</p>
+<div class="proof example admonition" id="ex:log-likelihood-bernoulli">
+<p class="admonition-title"><span class="caption-number">Example 22 </span> (Log-Likelihood of Bernoulli Distribution)</p>
+<section class="example-content" id="proof-content">
+<p>The log-likelihood of a sequence of <span class="math notranslate nohighlight">\(i.i.d.\)</span> Bernoulli <em>univariate</em> random variables
+<span class="math notranslate nohighlight">\(x^{(1)}, \ldots, x^{(n)}\)</span> with parameter <span class="math notranslate nohighlight">\(\theta\)</span>.</p>
+<p>If <span class="math notranslate nohighlight">\(x^{(1)}, \ldots, x^{(n)}\)</span> are i.i.d. Bernoulli random variables, we have</p>
+<div class="math notranslate nohighlight">
+\[
+f_{\mathbf{X}}(\mathbf{x} ; \theta)=\prod_{n=1}^{N}\left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\} .
+\]</div>
+<p>Taking the log on both sides of the equation yields the log-likelihood function:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\log \mathcal{L}(\theta \mid \mathbf{x}) &amp; =\log \left\{\prod_{n=1}^{N}\left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\}\right\} \\
+&amp; =\sum_{n=1}^{N} \log \left\{\theta^{x^{(n)}}(1-\theta)^{1-x^{(n)}}\right\} \\
+&amp; =\sum_{n=1}^{N} x^{(n)} \log \theta+\left(1-x^{(n)}\right) \log (1-\theta) \\
+&amp; =\left(\sum_{n=1}^{N} x^{(n)}\right) \cdot \log \theta+\left(N-\sum_{n=1}^{N} x^{(n)}\right) \cdot \log (1-\theta)
+\end{aligned}
+\end{split}\]</div>
+</section>
+</div><p>Now there will be more examples of higher-dimensional log-likelihood functions in the next section.
+Furthermore, the section Maximum Likelihood Estimation for Priors in <a class="reference internal" href="../../../machine_learning/generative/naive_bayes/concept.html"><span class="doc std std-doc">Naive Bayes</span></a> details one example of log-likelihood function for a higher-dimensional multivariate Bernoulli (Catagorical) distribution.</p>
+</section>
+<section id="visualizing-the-likelihood-function">
+<h3>Visualizing the Likelihood Function<a class="headerlink" href="#visualizing-the-likelihood-function" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./probability_theory/08_estimation_theory/maximum_likelihood_estimation"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+            </article>
+            
+
+            
+            
+            <footer class="bd-footer-article">
+                <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+  <a class='left-prev' id="prev-link" href="intro.html" title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+          <p class="prev-next-subtitle">previous</p>
+          <p class="prev-next-title">Maximum Likelihood Estimation</p>
+      </div>
+  </a>
+  <a class='right-next' id="next-link" href="../../../optimization/gradient_descent/intro.html" title="next page">
+  <div class="prev-next-info">
+      <p class="prev-next-subtitle">next</p>
+      <p class="prev-next-title">Gradient Descent</p>
+  </div>
+  <i class="fa-solid fa-angle-right"></i>
+  </a>
+</div>
+            </footer>
+            
+          </div>
+          
+          
+          
+            <div class="bd-sidebar-secondary bd-toc">
+              
+<div class="toc-item">
+  
+<div class="tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+</div>
+<nav id="bd-toc-nav" class="page-toc">
+    <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#likelihood">
+   Likelihood
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#some-intuition">
+     Some Intuition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#definition">
+     Definition
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#independence-and-identically-distributed-iid">
+     Independence and Identically Distributed (IID)
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#likelihood-in-the-context-of-machine-learning">
+     Likelihood in the Context of Machine Learning
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#the-log-likelihood-function">
+     The Log-Likelihood Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#visualizing-the-likelihood-function">
+     Visualizing the Likelihood Function
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+</nav>
+</div>
+
+            </div>
+          
+          
+        </div>
+        <footer class="bd-footer-content">
+          <div class="bd-footer-content__inner">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Gao Hongnan
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+<p class="copyright">
+
+    &copy; Copyright 2023.<br>
+
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    <p class="last-updated">
+Last updated on None.<br>
+</p>
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </div>
+        </footer>
+        
+
+      </main>
+    </div>
+  </div>
+
+  
+    
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../../../_static/scripts/bootstrap.js?digest=796348d33e8b1d947c94"></script>
+<script src="../../../_static/scripts/pydata-sphinx-theme.js?digest=796348d33e8b1d947c94"></script>
+
+  </body>
+</html>
