@@ -32,8 +32,6 @@ name: union_bound
 Conditions under which the union bound is loose or tight. [Left] The union bound is loose when the sets are overlapping. [Right] The union bound is tight when the sets are (nearly) disjoint. Image Credit: {cite}`chan_2021`.
 ```
 
-
-
 ## The Cauchy-Schwarz Inequality
 
 ```{prf:theorem} Cauchy-Schwarz Inequality

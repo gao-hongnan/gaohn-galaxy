@@ -17,6 +17,13 @@ a solid foundation in how to think about machine learning.
 
 Read [Foundations of Machine Learning](https://cs.nyu.edu/~mohri/mlbook/) for a more formal introduction to the framework.
 
+As an example, we refer to this important paragraph:
+
+We consider a multi-class classification problem with $c$ classes, $c \geq 1$. Let $y=$ $\{1, \ldots, c\}$ denote the output space and $\mathcal{D}$ a distribution over $\mathcal{X} \times \mathcal{y}$. The learner receives a labeled training sample $S=\left(\left(x_1, y_1\right), \ldots,\left(x_m, y_m\right)\right) \in(\mathcal{X} \times \mathcal{y})^m$ drawn i.i.d. according to $\mathcal{D}$. As in Chapter 12, we assume that, additionally, the learner has access to a feature mapping $\Phi: X \times y \rightarrow \mathbb{R}^N$ with $\mathbb{R}^N$ a normed vector space and with $\|\Phi\|_{\infty} \leq r$. We will denote by $\mathcal{H}$ a family of real-valued functions containing the component feature functions $\Phi_j$ with $j \in[N]$. Note that in the most general case, we may have $N=+\infty$. The problem consists of using the training sample $S$ to learn an accurate conditional probability $\mathrm{p}[\cdot \mid x]$, for any $x \in X$.
+
+This is extracted from section 13.1. Learning Problem in [Foundations of Machine Learning](https://cs.nyu.edu/~mohri/mlbook/).
+This treatment is important for you to appreciate the following notations.
+
 ## Further Readings
 
 **Work in Progress** to refer to notes below.

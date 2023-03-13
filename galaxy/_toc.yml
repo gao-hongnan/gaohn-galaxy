@@ -141,6 +141,12 @@ parts:
         - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/convergence.ipynb
         - file: probability_theory/06_sample_statistics/0603_law_of_large_numbers/application.md
 
+    - file: probability_theory/08_estimation_theory/intro.md
+      sections:
+      - file: probability_theory/08_estimation_theory/maximum_likelihood_estimation/intro.md
+        sections:
+        - file: probability_theory/08_estimation_theory/maximum_likelihood_estimation/concept.md
+
   - caption: Optimization
     chapters:
       - file: optimization/gradient_descent/intro.md
@@ -151,6 +157,7 @@ parts:
 
   - caption: Machine Learning
     chapters:
+    - file: machine_learning/framework.md
     - file: machine_learning/fundamentals/intro.md
       sections:
       - file: machine_learning/fundamentals/criterions/intro.md
