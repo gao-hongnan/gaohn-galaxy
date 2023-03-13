@@ -1124,14 +1124,14 @@ title="Print to PDF"
 <h2>Decision Boundary<a class="headerlink" href="#decision-boundary" title="Permalink to this heading">#</a></h2>
 <p>We will assume that the dataset has <span class="math notranslate nohighlight">\(N\)</span> samples,<span class="math notranslate nohighlight">\(K=2\)</span> classes and <span class="math notranslate nohighlight">\(D\)</span> features.</p>
 <div class="proof definition admonition" id="def:decision_boundary">
-<p class="admonition-title"><span class="caption-number">Definition 122 </span> (Decision Boundary)</p>
+<p class="admonition-title"><span class="caption-number">Definition 123 </span> (Decision Boundary)</p>
 <section class="definition-content" id="proof-content">
 <p>A decision boundary is a hyperplane that separates the two classes in a
 dataset (sample) <span class="math notranslate nohighlight">\(\mathcal{S} = \{(\mathbf{x}_i, y_i)\}_{i=1}^N\)</span>.</p>
 <p>More specifically, it is the set of points <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> such that the following
 equation holds:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decision-boundary-eq-1">
-<span class="eqno">(79)<a class="headerlink" href="#equation-eq-decision-boundary-eq-1" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(80)<a class="headerlink" href="#equation-eq-decision-boundary-eq-1" title="Permalink to this equation">#</a></span>\[
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) = \mathbb{P}(\hat{Y} = 0 \mid \mathbf{X} ;  \boldsymbol{\hat{\theta}})
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\hat{Y}\)</span> is the predicted class (or logits), <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the feature vector, and
@@ -1164,9 +1164,9 @@ that <span class="math notranslate nohighlight">\(\mathbb{P}(\hat{Y}=0 \mid \mat
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) &amp;= \frac{1}{2} \\
 \end{aligned}
 \end{split}\]</div>
-<p>So another way of writing <a class="reference internal" href="#equation-eq-decision-boundary-eq-1">(79)</a> is</p>
+<p>So another way of writing <a class="reference internal" href="#equation-eq-decision-boundary-eq-1">(80)</a> is</p>
 <div class="math notranslate nohighlight" id="equation-eq-decision-boundary-eq-2">
-<span class="eqno">(80)<a class="headerlink" href="#equation-eq-decision-boundary-eq-2" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(81)<a class="headerlink" href="#equation-eq-decision-boundary-eq-2" title="Permalink to this equation">#</a></span>\[
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) = \frac{1}{2}
 \]</div>
 </section>
@@ -1198,13 +1198,13 @@ Y &amp;= \sigma(\boldsymbol{\theta}^T \mathbf{x}) \\
 <p>In any case, we aim to model the probability of the positive class, <span class="math notranslate nohighlight">\(\mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}})\)</span>, where <span class="math notranslate nohighlight">\(\hat{Y}\)</span> is the predicted class (or logits), <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> is the feature vector, and find the parameters <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\theta}}\)</span> that minimize the loss function.</p>
 <p>Now the decision boundary is given by:</p>
 <div class="math notranslate nohighlight" id="equation-eq-decision-boundary-logistic-eq-1">
-<span class="eqno">(81)<a class="headerlink" href="#equation-eq-decision-boundary-logistic-eq-1" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(82)<a class="headerlink" href="#equation-eq-decision-boundary-logistic-eq-1" title="Permalink to this equation">#</a></span>\[
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) = \mathbb{P}(\hat{Y} = 0 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}})
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\boldsymbol{\hat{\theta}}\)</span> is the vector of parameters that minimizes the loss function.</p>
 <p>Equivalently, you can also solve</p>
 <div class="math notranslate nohighlight" id="equation-eq-decision-boundary-logistic-eq-2">
-<span class="eqno">(82)<a class="headerlink" href="#equation-eq-decision-boundary-logistic-eq-2" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(83)<a class="headerlink" href="#equation-eq-decision-boundary-logistic-eq-2" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{aligned}
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) &amp;= \frac{1}{2} \\
 \end{aligned}
@@ -1222,7 +1222,7 @@ e^{-(\hat{\theta}_1 x_1 + \hat{\theta}_2 x_2 + \hat{\theta}_0)} &amp;= 1 \\
 \end{aligned}
 \end{split}\]</div>
 <p>Thus the decision boundary is a line in the 2D space.</p>
-<p>Note if you want to solve it by <a class="reference internal" href="#equation-eq-decision-boundary-logistic-eq-1">(81)</a>, then you just define</p>
+<p>Note if you want to solve it by <a class="reference internal" href="#equation-eq-decision-boundary-logistic-eq-1">(82)</a>, then you just define</p>
 <div class="math notranslate nohighlight">
 \[
 \mathbb{P}(\hat{Y} = 1 \mid \mathbf{X} ; \boldsymbol{\hat{\theta}}) = \frac{1}{1 + e^{-(\hat{\theta}_1 x_1 + \hat{\theta}_2 x_2 + \hat{\theta}_0)}}

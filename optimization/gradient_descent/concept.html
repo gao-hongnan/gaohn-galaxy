@@ -1202,7 +1202,7 @@ a factor of <span class="math notranslate nohighlight">\(4\)</span> increase to 
 <section id="gradient-vector">
 <h2>Gradient Vector<a class="headerlink" href="#gradient-vector" title="Permalink to this heading">#</a></h2>
 <div class="proof definition admonition" id="grad_vec">
-<p class="admonition-title"><span class="caption-number">Definition 107 </span> (Gradient Vector)</p>
+<p class="admonition-title"><span class="caption-number">Definition 108 </span> (Gradient Vector)</p>
 <section class="definition-content" id="proof-content">
 <p>Let <span class="math notranslate nohighlight">\(f: \R^n \to \R\)</span> be a function that maps <span class="math notranslate nohighlight">\(\x\)</span> to <span class="math notranslate nohighlight">\(f(\x)\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -1215,18 +1215,18 @@ f \colon \R^n &amp;\longrightarrow \R \\
 <p>where <span class="math notranslate nohighlight">\(\x = [x_1, x_2, \ldots, x_n]^\top\)</span> is a vector of <span class="math notranslate nohighlight">\(n\)</span> variables.</p>
 <p>Then the <em><strong>gradient</strong></em> of <span class="math notranslate nohighlight">\(f\)</span> is the <strong>vector</strong> of first-order partial derivatives of <span class="math notranslate nohighlight">\(f\)</span> with respect to each of the <span class="math notranslate nohighlight">\(n\)</span> variables.</p>
 <div class="math notranslate nohighlight" id="equation-grad-vec">
-<span class="eqno">(54)<a class="headerlink" href="#equation-grad-vec" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(55)<a class="headerlink" href="#equation-grad-vec" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 \nabla f(\x) = \bigg[\frac{\partial f(\x)}{\partial x_1}, \frac{\partial f(\x)}{\partial x_2}, \ldots, \frac{\partial f(\x)}{\partial x_n} \bigg]^{\top}
 \end{equation}
 \]</div>
-<p>We can also replace the notation <span class="math notranslate nohighlight">\(\frac{\partial f(\x)}{\partial x_i}\)</span> in equation <a class="reference internal" href="#equation-grad-vec">(54)</a> with <span class="math notranslate nohighlight">\(f_{x_i}\)</span>.</p>
+<p>We can also replace the notation <span class="math notranslate nohighlight">\(\frac{\partial f(\x)}{\partial x_i}\)</span> in equation <a class="reference internal" href="#equation-grad-vec">(55)</a> with <span class="math notranslate nohighlight">\(f_{x_i}\)</span>.</p>
 </section>
 </div></section>
 <section id="directional-derivatives">
 <h2>Directional Derivatives<a class="headerlink" href="#directional-derivatives" title="Permalink to this heading">#</a></h2>
 <div class="proof definition admonition" id="directional_der">
-<p class="admonition-title"><span class="caption-number">Definition 108 </span> (Directional Derivative)</p>
+<p class="admonition-title"><span class="caption-number">Definition 109 </span> (Directional Derivative)</p>
 <section class="definition-content" id="proof-content">
 <p>Let <span class="math notranslate nohighlight">\(f: \R^n \to \R\)</span> be a function that maps <span class="math notranslate nohighlight">\(\x\)</span> to <span class="math notranslate nohighlight">\(f(\x)\)</span>:</p>
 <div class="math notranslate nohighlight">
@@ -1244,7 +1244,7 @@ f \colon \R^n &amp;\longrightarrow \R \\
 \]</div>
 <p>is the function <span class="math notranslate nohighlight">\(D_{\v}(f)\)</span> defined by the limit:</p>
 <div class="math notranslate nohighlight" id="equation-directional-derivative-def">
-<span class="eqno">(55)<a class="headerlink" href="#equation-directional-derivative-def" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(56)<a class="headerlink" href="#equation-directional-derivative-def" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 D_{\v}(f) = \lim_{h \to 0} \frac{f(\x + h\v) - f(\x)}{h}
 \end{equation}
@@ -1291,25 +1291,25 @@ D_{\v}(f(1, 1)) &amp;= \lim_{h \to 0} \frac{f(\x + h\v) - f(\x)}{h} \\
 The components of <span class="math notranslate nohighlight">\(\nabla f\)</span> are the partial derivatives of <span class="math notranslate nohighlight">\(f\)</span> with respect to <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span>.</p>
 <p>More concretely, given the partial derivative</p>
 <div class="math notranslate nohighlight" id="equation-partial-x">
-<span class="eqno">(56)<a class="headerlink" href="#equation-partial-x" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(57)<a class="headerlink" href="#equation-partial-x" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 \frac{\partial f(x, y)}{\partial x}
 \end{equation}
 \]</div>
-<p>equation <a class="reference internal" href="#equation-partial-x">(56)</a> answers the question:
+<p>equation <a class="reference internal" href="#equation-partial-x">(57)</a> answers the question:
 how much does the value of <span class="math notranslate nohighlight">\(f\)</span> change when we hold <span class="math notranslate nohighlight">\(y\)</span> constant and nudge <span class="math notranslate nohighlight">\(x\)</span> by a small amount in the <span class="math notranslate nohighlight">\(x\)</span> direction (i.e. in the direction pointed to by the vector <span class="math notranslate nohighlight">\(\begin{bmatrix} 1 &amp; 0 \end{bmatrix}^\top\)</span>) <span id="id3">[<a class="reference internal" href="../../references_resources_roadmap/bibliography.html#id13" title="Sootla Sten. URL: https://sootlasten.github.io/2017/gradient-steepest-ascent/.">Sten, n.d.</a>]</span>.</p>
 <p>In a similar vein, given the partial derivative</p>
 <div class="math notranslate nohighlight" id="equation-partial-y">
-<span class="eqno">(57)<a class="headerlink" href="#equation-partial-y" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(58)<a class="headerlink" href="#equation-partial-y" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 \frac{\partial f(x, y)}{\partial y}
 \end{equation}
 \]</div>
-<p>equation <a class="reference internal" href="#equation-partial-y">(57)</a> answers the question:
+<p>equation <a class="reference internal" href="#equation-partial-y">(58)</a> answers the question:
 how much does the value of <span class="math notranslate nohighlight">\(f\)</span> change when we hold <span class="math notranslate nohighlight">\(x\)</span> constant and nudge <span class="math notranslate nohighlight">\(y\)</span> by a small amount in the <span class="math notranslate nohighlight">\(y\)</span> direction (i.e. in the direction pointed to by the vector <span class="math notranslate nohighlight">\(\begin{bmatrix} 0 &amp; 1 \end{bmatrix}^\top\)</span>) <span id="id4">[<a class="reference internal" href="../../references_resources_roadmap/bibliography.html#id13" title="Sootla Sten. URL: https://sootlasten.github.io/2017/gradient-steepest-ascent/.">Sten, n.d.</a>]</span>.</p>
 <p>Finally, it is often useful to note that <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> can move in tandem (i.e. we do not hold any of them constant), how do we then calculate how much <span class="math notranslate nohighlight">\(f\)</span> changes when we nudge both <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> by a small amount.
 Note that moving <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> both by <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(b\)</span> respectively is synonymous with moving the point <span class="math notranslate nohighlight">\((x, y)\)</span> by the vector <span class="math notranslate nohighlight">\(\begin{bmatrix} a &amp; b \end{bmatrix}^\top\)</span>. With vector in the playing field, we now attach the notion of a “direction”.</p>
-<p>We can use equation <a class="reference internal" href="#equation-directional-derivative-def">(55)</a> to compute how much <span class="math notranslate nohighlight">\(f\)</span> changes when we nudge the points <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> by a small amount in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions respectively.
+<p>We can use equation <a class="reference internal" href="#equation-directional-derivative-def">(56)</a> to compute how much <span class="math notranslate nohighlight">\(f\)</span> changes when we nudge the points <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> by a small amount in the <span class="math notranslate nohighlight">\(x\)</span> and <span class="math notranslate nohighlight">\(y\)</span> directions respectively.
 However, the calculation is cumbersome if we use the definition of the directional derivative.
 We will now use an example to derive an <em>alternate</em> formula by relating directional derivative to their partial derivatives composition.</p>
 <div class="proof example admonition" id="example-4">
@@ -1364,7 +1364,7 @@ derive a new formula to calculate the directional derivative of <span class="mat
 <p>Let <span class="math notranslate nohighlight">\(f: \R^n \to \R\)</span> be a function <span class="math notranslate nohighlight">\(f(\x)\)</span> where <span class="math notranslate nohighlight">\(\x = [x_1, x_2, \ldots, x_n]^\top\)</span> is a vector of <span class="math notranslate nohighlight">\(n\)</span> variables.</p>
 <p>If <span class="math notranslate nohighlight">\(f\)</span> is <strong>differentiable</strong> at <span class="math notranslate nohighlight">\(\x\)</span>, then the directional derivative <span class="math notranslate nohighlight">\(D_{\v}(f)\)</span> at <span class="math notranslate nohighlight">\(\x\)</span> is defined as follows:</p>
 <div class="math notranslate nohighlight" id="equation-directional-derivative-theorem">
-<span class="eqno">(58)<a class="headerlink" href="#equation-directional-derivative-theorem" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(59)<a class="headerlink" href="#equation-directional-derivative-theorem" title="Permalink to this equation">#</a></span>\[
 \begin{equation}
 D_{\v}(f(\x)) = \nabla f(\x) \cdot \v
 \end{equation}
@@ -1389,7 +1389,7 @@ between the gradient and the directional derivative.
 It is easy to confuse the two terms.</p>
 <p>Let us go back to the definitions:</p>
 <ul class="simple">
-<li><p>The <strong>gradient</strong> of a mutlivariate function <span class="math notranslate nohighlight">\(f\)</span> at a point <span class="math notranslate nohighlight">\(\x\)</span> is the <em><strong>vector</strong></em> of partial derivatives of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\x\)</span>, as defined in equation <a class="reference internal" href="#equation-grad-vec">(54)</a>.</p></li>
+<li><p>The <strong>gradient</strong> of a mutlivariate function <span class="math notranslate nohighlight">\(f\)</span> at a point <span class="math notranslate nohighlight">\(\x\)</span> is the <em><strong>vector</strong></em> of partial derivatives of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\x\)</span>, as defined in equation <a class="reference internal" href="#equation-grad-vec">(55)</a>.</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[
@@ -1397,7 +1397,7 @@ It is easy to confuse the two terms.</p>
 \]</div>
 <ul class="simple">
 <li><p>The <strong>directional derivative</strong> of a mutlivariate function <span class="math notranslate nohighlight">\(f\)</span> at a point <span class="math notranslate nohighlight">\(\x\)</span> is the <em><strong>scalar</strong></em> value of the partial derivative of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\x\)</span> in the direction of <span class="math notranslate nohighlight">\(\v\)</span>,
-as defined in equation <a class="reference internal" href="#equation-directional-derivative-def">(55)</a> and <a class="reference internal" href="#equation-directional-derivative-theorem">(58)</a>.</p></li>
+as defined in equation <a class="reference internal" href="#equation-directional-derivative-def">(56)</a> and <a class="reference internal" href="#equation-directional-derivative-theorem">(59)</a>.</p></li>
 </ul>
 <p>There are infinite directional derivatives around a point <span class="math notranslate nohighlight">\(\x\)</span> since there are infinitely many directions <span class="math notranslate nohighlight">\(\v\)</span>.
 However, there is only one gradient vector around a point <span class="math notranslate nohighlight">\(\x\)</span> and this is defined to be the vector that is the steepest ascent, which we will prove in the next section.</p>
@@ -1437,10 +1437,10 @@ In other words, <span class="math notranslate nohighlight">\(f\)</span> increase
 </div></blockquote>
 <p>This can then be found easily by following the theorem/definition in the <a class="reference internal" href="#gradient-descent-concept-md-theorem-the-direction-derivative"><span class="std std-ref">section on the alternative definition of the directional derivative</span></a>.</p>
 <p>The logic is that the <strong>directional derivative</strong> of <span class="math notranslate nohighlight">\(f\)</span> at <span class="math notranslate nohighlight">\(\x\)</span> is the <strong>rate of change</strong>, then it suffices to find the <strong>direction vector</strong> <span class="math notranslate nohighlight">\(\v\)</span> that gives the <strong>fastest rate of change</strong>.</p>
-<p>The theorem <a class="reference internal" href="#equation-directional-derivative-theorem">(58)</a> states that <span class="math notranslate nohighlight">\(D_{\v}(f(\x)) = \nabla f(\x) \cdot \v\)</span>.
+<p>The theorem <a class="reference internal" href="#equation-directional-derivative-theorem">(59)</a> states that <span class="math notranslate nohighlight">\(D_{\v}(f(\x)) = \nabla f(\x) \cdot \v\)</span>.
 We then seek to solve the optimization problem:</p>
 <div class="math notranslate nohighlight" id="equation-optimal-direction-1">
-<span class="eqno">(59)<a class="headerlink" href="#equation-optimal-direction-1" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(60)<a class="headerlink" href="#equation-optimal-direction-1" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{align}
 \v_{\max} &amp;\overset{(a)}{=} \underset{\v, \lVert \v \rVert = 1}{\operatorname{argmax}}D_{\v}(f(\x)) \\
           &amp;\overset{(b)}{=} \underset{\v, \lVert \v \rVert = 1}{\operatorname{argmax}}\nabla f(\x) \cdot \v \\
@@ -1448,11 +1448,11 @@ We then seek to solve the optimization problem:</p>
 \end{align}
 \end{split}\]</div>
 <p>where we want to find the <strong>unique</strong> <span class="math notranslate nohighlight">\(\v_{\max}\)</span> such that <span class="math notranslate nohighlight">\(D_{\v}(f(\x))\)</span> is the <strong>maximum</strong>.</p>
-<p>In <a class="reference internal" href="#equation-optimal-direction-1">(59)</a>, equation (c), we invoked the <a class="reference external" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">geometric definition of the dot product</a>
+<p>In <a class="reference internal" href="#equation-optimal-direction-1">(60)</a>, equation (c), we invoked the <a class="reference external" href="https://en.wikipedia.org/wiki/Dot_product#Geometric_definition">geometric definition of the dot product</a>
 to represent the dot product as the <strong>cosine of the angle between the two vectors</strong>.</p>
 <p>Since we are optimizing over <span class="math notranslate nohighlight">\(\v\)</span> and the length of <span class="math notranslate nohighlight">\(\v\)</span> is 1, we can simplify the expression to:</p>
 <div class="math notranslate nohighlight" id="equation-optimal-direction-2">
-<span class="eqno">(60)<a class="headerlink" href="#equation-optimal-direction-2" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(61)<a class="headerlink" href="#equation-optimal-direction-2" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{align}
 \v_{\max} &amp;\overset{(d)}{=}  \underset{\v, \lVert \v \rVert = 1}{\operatorname{argmax}} \lVert \nabla f(\x) \rVert \cdot \lVert \v \rVert \cos(\theta) \\
           &amp;\overset{(e)}{=}  \underset{\v}{\operatorname{argmax}} \lVert \nabla f(\x) \rVert \cos(\theta) \\
@@ -1461,8 +1461,8 @@ to represent the dot product as the <strong>cosine of the angle between the two 
 \end{split}\]</div>
 <p>where</p>
 <ul class="simple">
-<li><p>In <a class="reference internal" href="#equation-optimal-direction-2">(60)</a> equation (e), <span class="math notranslate nohighlight">\(\lVert \v \rVert\)</span> was dropped since it is 1;</p></li>
-<li><p>In <a class="reference internal" href="#equation-optimal-direction-2">(60)</a> equation (f), <span class="math notranslate nohighlight">\(\lVert \nabla f(\x) \rVert\)</span> was dropped since it is not a function of <span class="math notranslate nohighlight">\(\v\)</span> and hence it is irrelevant.</p></li>
+<li><p>In <a class="reference internal" href="#equation-optimal-direction-2">(61)</a> equation (e), <span class="math notranslate nohighlight">\(\lVert \v \rVert\)</span> was dropped since it is 1;</p></li>
+<li><p>In <a class="reference internal" href="#equation-optimal-direction-2">(61)</a> equation (f), <span class="math notranslate nohighlight">\(\lVert \nabla f(\x) \rVert\)</span> was dropped since it is not a function of <span class="math notranslate nohighlight">\(\v\)</span> and hence it is irrelevant.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\theta\)</span>, however, being the angle between <span class="math notranslate nohighlight">\(\v\)</span> and <span class="math notranslate nohighlight">\(\nabla f(\x)\)</span>, is dependent on <span class="math notranslate nohighlight">\(\v\)</span>.</p></li>
 <li><p>Therefore, <span class="math notranslate nohighlight">\(\cos(\theta)\)</span> is maximal when <span class="math notranslate nohighlight">\(\cos(\theta) = 1 \implies \theta = 0\)</span>.</p></li>
 <li><p>Consequently, <span class="math notranslate nohighlight">\(\theta = 0\)</span> implies <span class="math notranslate nohighlight">\(\nabla f(\x)\)</span> and <span class="math notranslate nohighlight">\(\v\)</span> are parallel.</p></li>

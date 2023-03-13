@@ -1326,7 +1326,7 @@ from the following sources:</p>
 <section id="some-abuse-of-notations">
 <h2>Some Abuse of Notations<a class="headerlink" href="#some-abuse-of-notations" title="Permalink to this heading">#</a></h2>
 <div class="proof remark admonition" id="remark-learning-problem-notations-learning-theory">
-<p class="admonition-title"><span class="caption-number">Remark 29 </span> (Notations)</p>
+<p class="admonition-title"><span class="caption-number">Remark 30 </span> (Notations)</p>
 <section class="remark-content" id="proof-content">
 <p>We will abbrieviate:</p>
 <div class="math notranslate nohighlight">
@@ -1683,22 +1683,22 @@ it also solidifies many theories governing the framework underlying machine lear
 <a class="reference internal" href="../../../notations/machine_learning_notations.html"><span class="doc std std-doc">machine learning notations</span></a>,
 the in-sample error is our Empirical Risk Minimization (ERM) function <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{S}}\left(h\right)\)</span>.</p>
 <div class="proof definition admonition" id="prf:definition:zero-one-loss">
-<p class="admonition-title"><span class="caption-number">Definition 113 </span> (Zero-One Loss)</p>
+<p class="admonition-title"><span class="caption-number">Definition 114 </span> (Zero-One Loss)</p>
 <section class="definition-content" id="proof-content">
 <p>The zero-one loss is defined as</p>
 <div class="math notranslate nohighlight" id="equation-eq-zero-one-loss">
-<span class="eqno">(68)<a class="headerlink" href="#equation-eq-zero-one-loss" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(69)<a class="headerlink" href="#equation-eq-zero-one-loss" title="Permalink to this equation">#</a></span>\[
 \mathcal{L}\left(\left(\mathbf{x}, y\right), h\right) = \boldsymbol{1}\left\{h\left(\mathbf{x}\right) \neq y\right\}
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(\boldsymbol{1}\left\{h\left(\mathbf{x}\right) \neq y\right\}\)</span> is the indicator function that returns 1 if the condition is true, and 0 otherwise.</p>
 </section>
 </div><p>With this,</p>
 <div class="proof definition admonition" id="prf:definition:in-sample-error">
-<p class="admonition-title"><span class="caption-number">Definition 114 </span> (In-Sample Error (Empirical Risk Minimization))</p>
+<p class="admonition-title"><span class="caption-number">Definition 115 </span> (In-Sample Error (Empirical Risk Minimization))</p>
 <section class="definition-content" id="proof-content">
 <p>Consider a training set <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{(\mathbf{x}^{(1)}, y^{(1)}), (\mathbf{x}^{(2)}, y^{(2)}), \ldots, (\mathbf{x}^{(N)}, y^{(N)})\right\} \overset{\text{iid}}{\sim} \mathbb{P}_{\mathcal{D}}\)</span>, and a target function <span class="math notranslate nohighlight">\(f\)</span>. The in-sample error (or the training error) of a hypothesis function <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is the empirical average of the zero-one loss <span class="math notranslate nohighlight">\(\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right) : =\left\{h\left(\mathbf{x}^{(n)}\right) \neq f\left(\mathbf{x}^{(n)}\right)\right\}\)</span> :</p>
 <div class="math notranslate nohighlight" id="equation-eq-in-sample-error">
-<span class="eqno">(69)<a class="headerlink" href="#equation-eq-in-sample-error" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(70)<a class="headerlink" href="#equation-eq-in-sample-error" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{aligned}
 \hat{\mathcal{R}}_{\mathcal{S}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} :&amp;= \frac{1}{N} \sum_{n=1}^N \mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right) \\
 &amp;= \frac{1}{N} \sum_{n=1}^N \boldsymbol{1}\left\{h\left(\mathbf{x}^{(n)}\right) \neq f\left(\mathbf{x}^{(n)}\right)\right\} \\
@@ -1709,7 +1709,7 @@ the in-sample error is our Empirical Risk Minimization (ERM) function <span clas
 </div><p>Training error is the amount of error we have during the training process. A good learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> should pick a hypothesis <span class="math notranslate nohighlight">\(h\)</span> that gives low training error. Training error is sometimes called the cost (empirical risk) function (or the loss function) when we post the learning problem as an optimization. Thus, picking a good hypothesis is equivalent to minimizing the training error.</p>
 <p>How about the out-samples? Since we assume that <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> is drawn from a distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathbf{x})\)</span>, we can define the out-sample error as the probability that <span class="math notranslate nohighlight">\(\{h(\mathbf{x}) \neq f(\mathbf{x})\}\)</span>, for all <span class="math notranslate nohighlight">\(\mathbf{x} \sim \mathbb{P}_{\mathcal{D}}(\mathbf{x})\)</span>.</p>
 <div class="proof definition admonition" id="prf:definition:out-sample-error">
-<p class="admonition-title"><span class="caption-number">Definition 115 </span> (Out-Sample Error (Generalization Error))</p>
+<p class="admonition-title"><span class="caption-number">Definition 116 </span> (Out-Sample Error (Generalization Error))</p>
 <section class="definition-content" id="proof-content">
 <p>Consider an input space <span class="math notranslate nohighlight">\(\mathcal{X}\)</span> containing elements <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> drawn from a distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, and a target function <span class="math notranslate nohighlight">\(f\)</span>. The out-sample error (or the true risk/testing error) of a hypothesis function <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is</p>
 <div class="math notranslate nohighlight">
@@ -1750,7 +1750,7 @@ training samples <span class="math notranslate nohighlight">\(\mathcal{S}\)</spa
 the generalization risk/error <span class="math notranslate nohighlight">\(\mathcal{R} \leq \hat{\mathcal{R}} + \epsilon\)</span> with high probability.</p>
 <p>How can we do that? Let’s start with the Law of Large Numbers.</p>
 <div class="proof remark admonition" id="remark-learning-problem-notations">
-<p class="admonition-title"><span class="caption-number">Remark 30 </span> (Notation)</p>
+<p class="admonition-title"><span class="caption-number">Remark 31 </span> (Notation)</p>
 <section class="remark-content" id="proof-content">
 <p>It should be clear from context that <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> is the <strong>generalization error</strong> of the hypothesis
 <span class="math notranslate nohighlight">\(h\)</span> over the entire distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>. In other words, this is the expected error based on
@@ -1762,7 +1762,7 @@ training samples <span class="math notranslate nohighlight">\(\mathcal{S}\)</spa
 <section id="the-generalization-gap">
 <h3>The Generalization Gap<a class="headerlink" href="#the-generalization-gap" title="Permalink to this heading">#</a></h3>
 <div class="proof definition admonition" id="def-generalization-gap">
-<p class="admonition-title"><span class="caption-number">Definition 116 </span> (Generalization Gap)</p>
+<p class="admonition-title"><span class="caption-number">Definition 117 </span> (Generalization Gap)</p>
 <section class="definition-content" id="proof-content">
 <p>Given a sample set <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}_{n=1}^{N}\)</span>
 drawn <span class="math notranslate nohighlight">\(\iid\)</span> from the distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>, a hypothesis <span class="math notranslate nohighlight">\(h_S \in \mathcal{H}\)</span> learnt by the
@@ -1790,12 +1790,12 @@ suggesting that the random variable is the loss value of <span class="math notra
 <p>Let <span class="math notranslate nohighlight">\(\bar{\mathcal{L}}\)</span> be the sample average defined in <a class="reference internal" href="../../../probability_theory/06_sample_statistics/0603_law_of_large_numbers/concept.html#equation-eq-sample-average">(43)</a> and <span class="math notranslate nohighlight">\(\mathbb{E}[\mathcal{L}^2] &lt; \infty\)</span>.</p>
 <p>Then, for any <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have</p>
 <div class="math notranslate nohighlight" id="equation-eq-weak-law-of-large-numbers-3">
-<span class="eqno">(70)<a class="headerlink" href="#equation-eq-weak-law-of-large-numbers-3" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(71)<a class="headerlink" href="#equation-eq-weak-law-of-large-numbers-3" title="Permalink to this equation">#</a></span>\[
 \lim_{N\to\infty}\mathbb{P}\left[\left|\underset{\mathcal{L} \sim P}{\mathbb{E}}[\mathcal{L}]-\frac{1}{N} \sum_{n=1}^N \mathbf{x}^{(n)}\right|&gt;\epsilon\right] := \lim_{N\to\infty} \mathbb{P}\left[\left|\mu - \bar{\mathcal{L}}^{(N)} \right| &gt; \epsilon\right] = 0
 \]</div>
 <p>This means that</p>
 <div class="math notranslate nohighlight" id="equation-eq-weak-law-of-large-numbers-4">
-<span class="eqno">(71)<a class="headerlink" href="#equation-eq-weak-law-of-large-numbers-4" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(72)<a class="headerlink" href="#equation-eq-weak-law-of-large-numbers-4" title="Permalink to this equation">#</a></span>\[
 \bar{\mathcal{L}} \xrightarrow{p} \underset{\mathcal{L} \sim P}{\mathbb{E}}[\mathcal{L}] \quad \text{as } N \to \infty
 \]</div>
 </section>
@@ -1821,7 +1821,7 @@ we can rewrite the True Risk Function as:</p>
 <p>which means that the True Risk Function is the expected loss/error of all possible samples. This is because
 we treat <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> as a <strong>random variable</strong> and we take the expected value of it.</p>
 <div class="proof remark admonition" id="remark-random-variable-is-a-function">
-<p class="admonition-title"><span class="caption-number">Remark 31 </span> (Random Variable is a Function)</p>
+<p class="admonition-title"><span class="caption-number">Remark 32 </span> (Random Variable is a Function)</p>
 <section class="remark-content" id="proof-content">
 <p>The notation might seem overloaded and abused, but since random variable in itself is a function,
 and <span class="math notranslate nohighlight">\(\mathcal{L}(\cdot)\)</span> is also a function mapping states <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span> to a real number,
@@ -1835,20 +1835,20 @@ Then we can rewrite the Empirical Risk Function as:</p>
 \]</div>
 <p>which means that the Empirical Risk Function is the average loss/error of all training samples.</p>
 <p>Notice that they both have exactly the same form as the Weak Law of Large Numbers, so we can apply the Weak Law of Large Numbers to the True Risk Function and the Empirical Risk Function.
-This natural application of the Weak Law of Large Numbers allows us to answer the following question (also in <a class="reference internal" href="intro.html#equation-eq-learning-problem-solvable">(67)</a>):</p>
+This natural application of the Weak Law of Large Numbers allows us to answer the following question (also in <a class="reference internal" href="intro.html#equation-eq-learning-problem-solvable">(68)</a>):</p>
 <div class="proof remark admonition" id="remark-summary-1">
-<p class="admonition-title"><span class="caption-number">Remark 32 </span> (Summary)</p>
+<p class="admonition-title"><span class="caption-number">Remark 33 </span> (Summary)</p>
 <section class="remark-content" id="proof-content">
 <p>Given a dataset <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}_{n=1}^N\)</span>, and a <strong>fixed</strong> and <strong>single</strong> hypothesis <span class="math notranslate nohighlight">\(h\)</span>, the Weak Law of Large Numbers tells us that as the number of samples in your training set increases from <span class="math notranslate nohighlight">\(N\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span>, the Empirical Risk Function will converge to the True Risk Function.</p>
 <div class="math notranslate nohighlight" id="equation-eq-convergence-of-empirical-risk-to-true-risk">
-<span class="eqno">(72)<a class="headerlink" href="#equation-eq-convergence-of-empirical-risk-to-true-risk" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(73)<a class="headerlink" href="#equation-eq-convergence-of-empirical-risk-to-true-risk" title="Permalink to this equation">#</a></span>\[
 \lim_{N \rightarrow \infty} \mathbb{P}\left[\left|\mathcal{R}_{\mathcal{D}}(h) - \hat{\mathcal{R}}_{\mathcal{S}}(h)\right|&gt;\epsilon\right]=0
 \]</div>
 <p>where the notation of <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> are simplified to only contain <span class="math notranslate nohighlight">\(h\)</span> for readability.</p>
 <p>Well, this is something. At least we know that if we can bump up the number of samples
 in our training set to <span class="math notranslate nohighlight">\(\infty\)</span>, then we can guarantee that the Empirical Risk Function will be close to the True Risk Function. But this is not really very useful, because we can’t really get <span class="math notranslate nohighlight">\(\infty\)</span> samples in practice.</p>
 <p>Can we do better by finding an upper bound on the
-right hand side of <a class="reference internal" href="#equation-eq-convergence-of-empirical-risk-to-true-risk">(72)</a>? This bound has to be
+right hand side of <a class="reference internal" href="#equation-eq-convergence-of-empirical-risk-to-true-risk">(73)</a>? This bound has to be
 a function of the number of samples <span class="math notranslate nohighlight">\(N\)</span> so we at least know how many samples we need to get a good approximation of the True Risk Function, or even if we cannot get more samples, then what
 is the theoretical maximum error we can expect from the Empirical Risk Function?</p>
 </section>
@@ -1877,7 +1877,7 @@ we have not learnt <span class="math notranslate nohighlight">\(h_S\)</span> yet
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of samples in the dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>, and <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> are the True Risk Function and the Empirical Risk Function respectively.</p>
 </section>
 </div><div class="proof remark admonition" id="remark-things-to-note">
-<p class="admonition-title"><span class="caption-number">Remark 33 </span> (Things to Note (Important))</p>
+<p class="admonition-title"><span class="caption-number">Remark 34 </span> (Things to Note (Important))</p>
 <section class="remark-content" id="proof-content">
 <ol class="arabic simple">
 <li><p>Note that both <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> and the samples
@@ -1934,7 +1934,7 @@ Say cross-entropy loss, then you just need to know that the difference between t
 <h2>Hoeffding Inequality is Invalid for <span class="math notranslate nohighlight">\(h_S\)</span> learnt from <span class="math notranslate nohighlight">\(\mathcal{S}\)</span><a class="headerlink" href="#hoeffding-inequality-is-invalid-for-h-s-learnt-from-mathcal-s" title="Permalink to this heading">#</a></h2>
 <p>Now, there is one last problem we need to resolve. The above Hoeffding inequality holds for a fixed hypothesis function <span class="math notranslate nohighlight">\(h\)</span>. This means that <span class="math notranslate nohighlight">\(h\)</span> is already chosen before we generate the dataset. If we allow <span class="math notranslate nohighlight">\(h\)</span> to change after we have generated the dataset, then the Hoeffding inequality is no longer valid. What do we mean by after generating the dataset? In any learning scenario, we are given a training dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>. Based on this dataset, we have to choose a hypothesis function <span class="math notranslate nohighlight">\(h_S\)</span> from the hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. The hypothesis <span class="math notranslate nohighlight">\(h_S\)</span> we choose depends on what samples are inside <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> and which learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> we use. So <span class="math notranslate nohighlight">\(h_S\)</span> changes after the dataset is generated.</p>
 <p>Now this is a non-trivial problem, and to fully understand this requires close scrutiny.
-Recall in <a class="reference internal" href="#remark-things-to-note">Remark 33</a>’s point 2, we said that <span class="math notranslate nohighlight">\(h\)</span> is fixed prior to
+Recall in <a class="reference internal" href="#remark-things-to-note">Remark 34</a>’s point 2, we said that <span class="math notranslate nohighlight">\(h\)</span> is fixed prior to
 generating the dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> and using <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to learn <span class="math notranslate nohighlight">\(h_S\)</span> from <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
 <p>Here are some links that explains the issue in details on where exactly the problem lies. All in all,
 one just needs to know that the <em><strong>assumption of <span class="math notranslate nohighlight">\(\iid\)</span> is broken in Hoeffding’s Inequality
@@ -1953,7 +1953,7 @@ instead of just a single hypothesis <span class="math notranslate nohighlight">\
 <h2>Union Bound<a class="headerlink" href="#union-bound" title="Permalink to this heading">#</a></h2>
 <p>Suppose that <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> contains <span class="math notranslate nohighlight">\(M\)</span> hypothesis functions <span class="math notranslate nohighlight">\(h_{1}, \ldots, h_{M}\)</span>. The final hypothesis <span class="math notranslate nohighlight">\(h_S\)</span> that your learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> picked is one of these potential hypotheses. To have <span class="math notranslate nohighlight">\(\left|\mathcal{R}_{\mathcal{D}}(h_S) - \hat{\mathcal{R}}_{\mathcal{S}}(h_S)\right|&gt;\epsilon\)</span>, we need to ensure that at least one of the <span class="math notranslate nohighlight">\(M\)</span> potential hypotheses can satisfy the inequality.</p>
 <div class="proof remark admonition" id="prf:remark-bounding-the-entire-hypothesis-set">
-<p class="admonition-title"><span class="caption-number">Remark 34 </span> (Bounding the Entire Hypothesis Set)</p>
+<p class="admonition-title"><span class="caption-number">Remark 35 </span> (Bounding the Entire Hypothesis Set)</p>
 <section class="remark-content" id="proof-content">
 <p>This part helps visualize why you need to use union bound to bound all hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
 <p>This is best read together with the example in <a class="reference external" href="https://en.wikipedia.org/wiki/Boole%27s_inequality#Example">Wikipedia</a>.</p>
@@ -2031,7 +2031,7 @@ the problem of finding <span class="math notranslate nohighlight">\(\mathbb{P}(\
 \]</div>
 <p>Where <span class="math notranslate nohighlight">\(\bigcup\)</span> denotes the union of the events, which also corresponds to the logical OR operator. Using the union bound inequality, we get:</p>
 <div class="math notranslate nohighlight" id="equation-eq-union-bound-1">
-<span class="eqno">(73)<a class="headerlink" href="#equation-eq-union-bound-1" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(74)<a class="headerlink" href="#equation-eq-union-bound-1" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{aligned}
 \mathbb{P}\left\{\left|\hat{\mathcal{R}}_{\mathcal{D}}(h_S)-\mathcal{R}_{\mathcal{S}}(h_S)\right|&gt;\epsilon\right\} &amp;\stackrel{(a)}{\leq} \mathbb{P}\left[\sup _{h \in \mathcal{H}}\left|\mathcal{R}(h)-\hat{\mathcal{R}}(h)\right|&gt;\epsilon\right] \\
 &amp;= \mathbb{P}\left[\bigcup_{h \in \mathcal{H}}\left|\mathcal{R}(h)-\hat{\mathcal{R}}(h)\right|&gt;\epsilon\right]\\
@@ -2094,7 +2094,7 @@ our expression is now in the form of “at least one <span class="math notransla
 </section>
 </div><div class="toggle docutils container">
 <div class="proof remark admonition" id="prf:remark-major-confusion-alert">
-<p class="admonition-title"><span class="caption-number">Remark 35 </span> (Major Confusion Alert)</p>
+<p class="admonition-title"><span class="caption-number">Remark 36 </span> (Major Confusion Alert)</p>
 <section class="remark-content" id="proof-content">
 <p>DEFUNCT AS OF 1ST MARCH, 2023, READ WITH CAUTION AS IT IS NOT CORRECT. I AM LEAVING IT HERE FOR HISTORICAL PURPOSES.</p>
 <p>What this means is that out of <span class="math notranslate nohighlight">\(M\)</span> hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, at least one of them <strong>does satisfy the Hoeffding’s Inequality, but you do not know which <span class="math notranslate nohighlight">\(h\)</span> it is.</strong>
@@ -2120,7 +2120,7 @@ or equals to <span class="math notranslate nohighlight">\(2 e^{-2 \epsilon^{2} N
 set <span class="math notranslate nohighlight">\(\mathcal{H} = \left\{h_{1}, \ldots, h_{M}\right\}\)</span> be a finite set of hypotheses. Then, suppose we fix a hypothesis <span class="math notranslate nohighlight">\(h_S\)</span> in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> which is found by the learning
 algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>. Then for any <span class="math notranslate nohighlight">\(\epsilon &gt; 0\)</span>, we have the following bound:</p>
 <div class="math notranslate nohighlight" id="equation-eq-learning-theory-1">
-<span class="eqno">(74)<a class="headerlink" href="#equation-eq-learning-theory-1" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(75)<a class="headerlink" href="#equation-eq-learning-theory-1" title="Permalink to this equation">#</a></span>\[
 \mathbb{P}\left[\left|\mathcal{R}_{\mathcal{D}}(h) - \hat{\mathcal{R}}_{\mathcal{S}}(h)\right|&gt;\epsilon\right] \leq 2\left|\mathcal{H}\right| e^{-2 \epsilon^{2} N} = 2M e^{-2 \epsilon^{2} N} \text{. }
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(M\)</span> is the number of hypotheses in the dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>, and <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> are the True Risk Function and the Empirical Risk Function respectively.</p>
@@ -2179,7 +2179,7 @@ many machine learning courses. We will get to that later!</p>
 </ol>
 <section id="generalization-bound">
 <h3>Generalization Bound<a class="headerlink" href="#generalization-bound" title="Permalink to this heading">#</a></h3>
-<p>We first see that the Hoeffding’s and Union bound earlier in <a class="reference internal" href="#equation-eq-union-bound-1">(73)</a> give us the following result:</p>
+<p>We first see that the Hoeffding’s and Union bound earlier in <a class="reference internal" href="#equation-eq-union-bound-1">(74)</a> give us the following result:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
 \begin{aligned}
@@ -2212,11 +2212,11 @@ gap is more than <span class="math notranslate nohighlight">\(\epsilon\)</span>.
 <section class="theorem-content" id="proof-content">
 <p>Consider a learning problem where we have a dataset <span class="math notranslate nohighlight">\(\mathcal{S}=\left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\right\}\)</span>, and a hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}=\left\{h_{1}, \ldots, h_{M}\right\}\)</span>. Suppose <span class="math notranslate nohighlight">\(h_S\)</span> is the final hypothesis picked by the learning algorithm. Then, with probability at least <span class="math notranslate nohighlight">\(1-\delta\)</span>,</p>
 <div class="math notranslate nohighlight" id="equation-eq-generalization-bound-1">
-<span class="eqno">(75)<a class="headerlink" href="#equation-eq-generalization-bound-1" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(76)<a class="headerlink" href="#equation-eq-generalization-bound-1" title="Permalink to this equation">#</a></span>\[
 \hat{\mathcal{R}}_{\mathcal{S}}(h_S)-\sqrt{\frac{1}{2 N} \log \frac{2 M}{\delta}} \leq \mathcal{R}_{\mathcal{D}}(h_S) \leq \hat{\mathcal{R}}_{\mathcal{S}}(h_S)+\sqrt{\frac{1}{2 N} \log \frac{2 M}{\delta}} .
 \]</div>
 </section>
-</div><p>The inequality given by <a class="reference internal" href="#equation-eq-generalization-bound-1">(75)</a> is called the generalization bound, which we can consider it as an “error bar”. There are two sides of the generalization bound:</p>
+</div><p>The inequality given by <a class="reference internal" href="#equation-eq-generalization-bound-1">(76)</a> is called the generalization bound, which we can consider it as an “error bar”. There are two sides of the generalization bound:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}(h_S) \leq \hat{\mathcal{R}}_{\mathcal{S}}(h_S)+\epsilon\)</span> (Upper Bound). The upper bound gives us a safe-guard of how worse <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}(h_S)\)</span> can be compared to <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}_{\mathcal{S}}(h_S)\)</span>. It says that the unknown quantity <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}(h_S)\)</span> will not be significantly higher than <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}_{\mathcal{S}}(h_S)\)</span>. The amount is specified by <span class="math notranslate nohighlight">\(\epsilon\)</span>.</p></li>
 <li><p><span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}(h_S) \geq \hat{\mathcal{R}}_{\mathcal{S}}(h_S)+\epsilon\)</span> (Lower Bound). The lower bound tells us what to expect. It says that the unknown quantity <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}(h_S)\)</span> cannot be better than <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}_{\mathcal{S}}(h_S)-\epsilon\)</span>.</p></li>
@@ -2224,7 +2224,7 @@ gap is more than <span class="math notranslate nohighlight">\(\epsilon\)</span>.
 <p>To make sense of the generalization bound, we need to ensure that <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span> as <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>. In doing so, we need to assume that <span class="math notranslate nohighlight">\(M\)</span> does not grow exponentially fast, for otherwise term <span class="math notranslate nohighlight">\(\log 2 M\)</span> will cancel out the effect of <span class="math notranslate nohighlight">\(1 / N\)</span>. However, if <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is an infinite set, then <span class="math notranslate nohighlight">\(M\)</span> is unavoidably infinite.</p>
 <p>To concluse, this is our first generalization bound, it states that the generalization error is upper bounded by the training error plus a function of the hypothesis space size and the dataset size. We can also see that the the bigger the hypothesis space gets, the bigger the generalization error becomes.</p>
 <div class="proof remark admonition" id="rmk:infinite-hypothesis-space">
-<p class="admonition-title"><span class="caption-number">Remark 36 </span> (What is the Hypothesis Space is Infinite?)</p>
+<p class="admonition-title"><span class="caption-number">Remark 37 </span> (What is the Hypothesis Space is Infinite?)</p>
 <section class="remark-content" id="proof-content">
 <p>For a linear hypothesis of the form <span class="math notranslate nohighlight">\(h(x)=w x+b\)</span>, we also have <span class="math notranslate nohighlight">\(|\mathcal{H}|=\infty\)</span> as there is infinitely many lines that can be drawn. So the generalization error of the linear hypothesis space should be unbounded! If that’s true, how does perceptrons, logistic regression, support vector machines and essentially any ML model that uses a linear hypothesis work with the learning theory bound we just proposed?</p>
 <p>There is something missing from the picture. Let’s take a deeper look at the generalization bound.</p>
@@ -2251,11 +2251,11 @@ in <a class="reference external" href="https://mostafa-samir.github.io/ml-theory
 \end{split}\]</div>
 <p>More generally, the definition of <span class="math notranslate nohighlight">\(\mathcal{H}\left(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\right)\)</span> is as follows.</p>
 <div class="proof definition admonition" id="def:dichotomy">
-<p class="admonition-title"><span class="caption-number">Definition 117 </span> (Dichotomy)</p>
+<p class="admonition-title"><span class="caption-number">Definition 118 </span> (Dichotomy)</p>
 <section class="definition-content" id="proof-content">
 <p>Let <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)} \in \mathcal{X}\)</span>. The dichotomies generated by <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> on these points are</p>
 <div class="math notranslate nohighlight" id="equation-eq-dichotomy">
-<span class="eqno">(76)<a class="headerlink" href="#equation-eq-dichotomy" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(77)<a class="headerlink" href="#equation-eq-dichotomy" title="Permalink to this equation">#</a></span>\[
 \mathcal{H}\left(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\right)=\left\{\left(h\left(\mathbf{x}^{(1)}\right), \ldots, h\left(\mathbf{x}^{(N)}\right)\right) \middle \vert h \in \mathcal{H}\right\}
 \]</div>
 </section>
@@ -2272,11 +2272,11 @@ such that the <span class="math notranslate nohighlight">\(-1\)</span> is on one
 </figure>
 <p>Now we want to define a quantity that measures the number of dichotomies. This quantity should be universal for any configuration of <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\)</span>, and should only be a function of <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> and <span class="math notranslate nohighlight">\(N\)</span>. If we can obtain such quantity, then we will have a way to make a better estimate than <span class="math notranslate nohighlight">\(M\)</span>. To eliminate the dependency on <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\)</span>, we realize that among all the possible configurations of <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\)</span>, there exists one that can maximize the size of <span class="math notranslate nohighlight">\(\mathcal{H}\left(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\right)\)</span>. Define this maximum as the growth function.</p>
 <div class="proof definition admonition" id="ece595_def4.6">
-<p class="admonition-title"><span class="caption-number">Definition 118 </span> (Growth Function)</p>
+<p class="admonition-title"><span class="caption-number">Definition 119 </span> (Growth Function)</p>
 <section class="definition-content" id="proof-content">
 <p>The growth function for a hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is</p>
 <div class="math notranslate nohighlight" id="equation-eq-growth-function">
-<span class="eqno">(77)<a class="headerlink" href="#equation-eq-growth-function" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(78)<a class="headerlink" href="#equation-eq-growth-function" title="Permalink to this equation">#</a></span>\[
 m_{\mathcal{H}}(N)=\max _{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)} \in \mathcal{X}}\left|\mathcal{H}\left(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\right)\right|
 \]</div>
 <p>where <span class="math notranslate nohighlight">\(|\cdot|\)</span> denotes the cardinality of a set.</p>
@@ -2293,7 +2293,7 @@ m_{\mathcal{H}}(N) \leq 2^{N}
 <p>If a hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is able to generate all <span class="math notranslate nohighlight">\(2^{N}\)</span> dichotomies, then we say that <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> shatter <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\)</span>. For example, a <span class="math notranslate nohighlight">\(2 \mathrm{D}\)</span> perceptron algorithm is able to shatter 3 data points because <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(3)=2^{3}\)</span>. However, the same <span class="math notranslate nohighlight">\(2 \mathrm{D}\)</span> perceptron algorithm is not able to shatter 4 data points because <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(4)=14&lt;2^{4}\)</span></p>
 </section>
 </div><div class="proof definition admonition" id="restricted_hypothesis_space">
-<p class="admonition-title"><span class="caption-number">Definition 119 </span> (Restricted Hypothesis Space)</p>
+<p class="admonition-title"><span class="caption-number">Definition 120 </span> (Restricted Hypothesis Space)</p>
 <section class="definition-content" id="proof-content">
 <p>By only choosing the distinct effective hypotheses on the dataset <span class="math notranslate nohighlight">\(S\)</span>, we restrict the hypothesis space <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> to a smaller subspace that depends on the dataset. We call this new hypothesis space a restricted one:</p>
 <div class="math notranslate nohighlight">
@@ -2301,7 +2301,7 @@ m_{\mathcal{H}}(N) \leq 2^{N}
 \mathcal{H}_{\mid S}
 \]</div>
 </section>
-</div><p>Ah, what is a consequence of all this? Can we do better with the generalization bound <a class="reference internal" href="#equation-eq-generalization-bound-1">(75)</a> defined in <a class="reference internal" href="#thm:generalization-bound">Theorem 64</a>.</p>
+</div><p>Ah, what is a consequence of all this? Can we do better with the generalization bound <a class="reference internal" href="#equation-eq-generalization-bound-1">(76)</a> defined in <a class="reference internal" href="#thm:generalization-bound">Theorem 64</a>.</p>
 <p>The most straight forward step is to replace <span class="math notranslate nohighlight">\(M\)</span> by <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)\)</span> :</p>
 <div class="math notranslate nohighlight">
 \[
@@ -2330,13 +2330,13 @@ m_{\mathcal{H}}(N) \leq 2^{N}
 <h3>The VC Dimension<a class="headerlink" href="#the-vc-dimension" title="Permalink to this heading">#</a></h3>
 <p>Can we find a better upper bound on <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)\)</span> so that we can send the error bar to zero as <span class="math notranslate nohighlight">\(N\)</span> grows? Here we introduce some definitions allows us to characterize the growth function.</p>
 <div class="proof definition admonition" id="shatters">
-<p class="admonition-title"><span class="caption-number">Definition 120 </span> (Shattering)</p>
+<p class="admonition-title"><span class="caption-number">Definition 121 </span> (Shattering)</p>
 <section class="definition-content" id="proof-content">
 <p>If a hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is able to generate all <span class="math notranslate nohighlight">\(2^N\)</span> dichotomies, then we say that <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> shatter <span class="math notranslate nohighlight">\(\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(N)}\)</span>.</p>
 <p>In other words, a set of data points <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is shattered by a hypothesis class <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> if there are hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> that split <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> in all of the <span class="math notranslate nohighlight">\(2^{\left|\mathcal{S}\right|}\)</span> possible ways; i.e., all possible ways of classifying points in <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> are achievable using concepts in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
 </section>
 </div><div class="proof definition admonition" id="vc_dimension">
-<p class="admonition-title"><span class="caption-number">Definition 121 </span> (VC Dimension of <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>)</p>
+<p class="admonition-title"><span class="caption-number">Definition 122 </span> (VC Dimension of <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>)</p>
 <section class="definition-content" id="proof-content">
 <p>The <strong>Vapnik-Chervonenkis</strong> dimension of a hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, denoted by <span class="math notranslate nohighlight">\(\mathrm{VCdim}\)</span>, is the largest value of <span class="math notranslate nohighlight">\(N\)</span> for which <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)=2^{N}\)</span>.</p>
 </section>
@@ -2446,7 +2446,7 @@ boundary can be very complex. See <a class="reference external" href="https://sc
 <section class="theorem-content" id="proof-content">
 <p>For any tolerance <span class="math notranslate nohighlight">\(\delta&gt;0\)</span></p>
 <div class="math notranslate nohighlight" id="equation-eq-vc-generalization-bound">
-<span class="eqno">(78)<a class="headerlink" href="#equation-eq-vc-generalization-bound" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(79)<a class="headerlink" href="#equation-eq-vc-generalization-bound" title="Permalink to this equation">#</a></span>\[
 \mathcal{R}_{\mathcal{D}}(h_S) \leq \hat{\mathcal{R}}_{\mathcal{S}}(h_S)+\sqrt{\frac{\mathscr{8}}{N} \log \frac{\mathscr{4} m_{\mathcal{H}}(\mathscr{2}N)}{\delta}}
 \]</div>
 <p>with probability at least <span class="math notranslate nohighlight">\(1-\delta\)</span>.</p>
@@ -2455,7 +2455,7 @@ boundary can be very complex. See <a class="reference external" href="https://sc
 </section>
 <section id="interpretating-the-generalization-bound">
 <h3>Interpretating the Generalization Bound<a class="headerlink" href="#interpretating-the-generalization-bound" title="Permalink to this heading">#</a></h3>
-<p>The VC generalization bound in <a class="reference internal" href="#equation-eq-vc-generalization-bound">(78)</a> is universal in the sense that it applies to all hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, input space <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, and <strong>binary</strong> target function <span class="math notranslate nohighlight">\(f\)</span>. So can we use the VC generalization bound to predict the exact generalization error for any learning scenario? Unfortunately the answer is no. The VC generalization bound we derived is a valid upper bound but also a very loose upper bound. The loose-ness nature of the generalization bound comes from the following reasons (among others):</p>
+<p>The VC generalization bound in <a class="reference internal" href="#equation-eq-vc-generalization-bound">(79)</a> is universal in the sense that it applies to all hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span>, input space <span class="math notranslate nohighlight">\(\mathcal{X}\)</span>, distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, and <strong>binary</strong> target function <span class="math notranslate nohighlight">\(f\)</span>. So can we use the VC generalization bound to predict the exact generalization error for any learning scenario? Unfortunately the answer is no. The VC generalization bound we derived is a valid upper bound but also a very loose upper bound. The loose-ness nature of the generalization bound comes from the following reasons (among others):</p>
 <ul class="simple">
 <li><p>The Hoeffding inequality has a slack. The inequality works for all values of <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}\)</span>. However, the behavior of <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal{D}}\)</span> could be very different at different values, e.g., at 0 or at 0.5. Using one bound to capture both cases will result in some slack.</p></li>
 <li><p>The growth function <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)\)</span> gives the worst case scenario of how many dichotomies are there. If we draw the <span class="math notranslate nohighlight">\(N\)</span> data points at random, it is unlikely that we will land on the worst case, and hence the typical value of <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)\)</span> could be far fewer than <span class="math notranslate nohighlight">\(2^{N}\)</span> even if <span class="math notranslate nohighlight">\(m_{\mathcal{H}}(N)=2^{N}\)</span>.</p></li>

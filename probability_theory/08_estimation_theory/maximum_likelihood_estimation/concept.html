@@ -1125,6 +1125,16 @@ title="Print to PDF"
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#maximum-likelihood-estimation">
+   Maximum Likelihood Estimation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -1289,7 +1299,74 @@ Furthermore, the section Maximum Likelihood Estimation for Priors in <a class="r
 </section>
 <section id="visualizing-the-likelihood-function">
 <h3>Visualizing the Likelihood Function<a class="headerlink" href="#visualizing-the-likelihood-function" title="Permalink to this heading">#</a></h3>
+<p>This section mainly details how the likelihood function, despite being a function
+of <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, also depends on the underlying dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>. The
+presence of both should be kept in mind when we talk about the likelihood function.</p>
+<p>For a more detailed analysis, see page 471-472 of Professor Stanley Chan’s book “Introduction to Probability for Data Science” (see references section).</p>
 </section>
+</section>
+<section id="maximum-likelihood-estimation">
+<h2>Maximum Likelihood Estimation<a class="headerlink" href="#maximum-likelihood-estimation" title="Permalink to this heading">#</a></h2>
+<p>After rigorously defining the likelihood function, we can now talk about the term <strong>maximum</strong> in maximum likelihood estimation.</p>
+<p>The action of maximization is in itself under <a class="reference external" href="https://en.wikipedia.org/wiki/Mathematical_optimization">optimization theory</a>, a branch in mathematics. Consequently, the maximum
+likelihood estimation problem is an optimization problem that seeks to find the
+parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> that maximizes the likelihood function.</p>
+<div class="proof definition admonition" id="def:maximum-likelihood-estimation">
+<p class="admonition-title"><span class="caption-number">Definition 107 </span> (Maximum Likelihood Estimation)</p>
+<section class="definition-content" id="proof-content">
+<p>Given a dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> consisting of <span class="math notranslate nohighlight">\(N\)</span> samples defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{S} = \left\{\mathbf{x}^{(1)}, \ldots, \mathbf{x}^{(n)}\right\},
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is <span class="math notranslate nohighlight">\(i.i.d.\)</span> generated from the distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right)\)</span>, parametrized by <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span>, where the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> can be a vector of parameters defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\boldsymbol{\theta} = \left\{\theta_{1}, \ldots, \theta_{k}\right\}.
+\]</div>
+<p>We define the likelihood function to be:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\boldsymbol{\theta}) = \mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \boldsymbol{\theta}\right),
+\]</div>
+<p>then the maximum-likelihood estimate of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is a parameter that maximizes the likelihood function:</p>
+<div class="math notranslate nohighlight" id="equation-eq-maximum-likelihood-estimation">
+<span class="eqno">(54)<a class="headerlink" href="#equation-eq-maximum-likelihood-estimation" title="Permalink to this equation">#</a></span>\[\begin{split}
+\begin{aligned}
+\widehat{\boldsymbol{\theta}} &amp;\stackrel{\text { def }}{=} \underset{\boldsymbol{\theta}}{\operatorname{argmax}} \mathcal{L}\left(\boldsymbol{\theta} \mid \mathcal{S}\right) \\
+&amp;\stackrel{\text{ def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X} ; \widehat{\boldsymbol{\theta}}\right)
+\end{aligned}
+\end{split}\]</div>
+</section>
+</div><div class="proof remark admonition" id="rmk:maximum-likelihood-estimation">
+<p class="admonition-title"><span class="caption-number">Remark 23 </span> (Maximum Likelihood Estimation for <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> with Label <span class="math notranslate nohighlight">\(y\)</span>)</p>
+<section class="remark-content" id="proof-content">
+<p>To be more verbose, let’s also define the maximum likelihood estimate of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> for a dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> with label <span class="math notranslate nohighlight">\(y\)</span>.</p>
+<p>First, we redefine <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> to be:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{S} = \left\{\left(\mathbf{x}^{(1)}, y^{(1)}\right), \ldots, \left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is generated from the distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta}\right)\)</span>. The likelihood function is then defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathcal{L}(\boldsymbol{\theta}) = \mathcal{L}(\boldsymbol{\theta} \mid \mathcal{S}) \stackrel{\text { def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y}; \boldsymbol{\theta}\right),
+\]</div>
+<p>then the maximum-likelihood estimate of the parameter <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> is a parameter that maximizes the likelihood function:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+\widehat{\boldsymbol{\theta}} &amp;\stackrel{\text { def }}{=} \underset{\boldsymbol{\theta}}{\operatorname{argmax}} \mathcal{L}\left(\boldsymbol{\theta} \mid \mathcal{S}, y\right) \\
+&amp;\stackrel{\text{ def }}{=} \mathbb{P}_{\mathcal{D}}\left(\mathcal{X}, \mathcal{Y}; \widehat{\boldsymbol{\theta}}\right)
+\end{aligned}
+\end{split}\]</div>
+</section>
+</div></section>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Chan, Stanley H. “Chapter 8.1. Maximum-Likelihood Estimation.” In Introduction to Probability for Data Science. Ann Arbor, Michigan: Michigan Publishing Services, 2021.</p></li>
+</ul>
 </section>
 </section>
 
@@ -1387,6 +1464,16 @@ Furthermore, the section Maximum Likelihood Estimation for Priors in <a class="r
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#maximum-likelihood-estimation">
+   Maximum Likelihood Estimation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
+  </a>
  </li>
 </ul>
 

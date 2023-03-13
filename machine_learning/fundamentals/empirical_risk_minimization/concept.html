@@ -1142,14 +1142,14 @@ However, to implement this informal goal we need to define what is meant precise
 by “any data point”. Maybe the most widely used approach to the define the
 concept of “any data point” is the <span class="math notranslate nohighlight">\(\iid\)</span> assumption.</p>
 <div class="proof definition admonition" id="def-true-risk">
-<p class="admonition-title"><span class="caption-number">Definition 111 </span> (True Risk/Generalization Error)</p>
+<p class="admonition-title"><span class="caption-number">Definition 112 </span> (True Risk/Generalization Error)</p>
 <section class="definition-content" id="proof-content">
 <p>Let <span class="math notranslate nohighlight">\(\left(\mathbf{x}, y\right)\)</span> be any data point
 drawn from an <span class="math notranslate nohighlight">\(\iid\)</span> joint distribution (<a class="reference internal" href="../../../probability_theory/03_discrete_random_variables/iid.html#def_iid">Definition 31</a>) <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
 then the (true) risk of a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is the expectation of the loss
 incurred by <span class="math notranslate nohighlight">\(h\)</span> on (the realizations of) a random data point.</p>
 <div class="math notranslate nohighlight" id="equation-eq-true-risk">
-<span class="eqno">(61)<a class="headerlink" href="#equation-eq-true-risk" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(62)<a class="headerlink" href="#equation-eq-true-risk" title="Permalink to this equation">#</a></span>\[
 \mathcal{R}_{\mathcal{D}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} := \mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right] = \int_{\mathcal{X}} \int_{\mathcal{Y}} \mathcal{L}((\mathbf{x}, y), h) \mathbb{P}_{\mathcal{D}}(\mathbf{x}, y) \mathrm{d} \mathbf{x} \mathrm{d} y
 \]</div>
 <p>Note that if <span class="math notranslate nohighlight">\(\mathrm{x}\)</span> is <span class="math notranslate nohighlight">\(D\)</span>-dimensional, then the integral <span class="math notranslate nohighlight">\(\int_{\mathcal{X}}\)</span> is actually
@@ -1157,7 +1157,7 @@ a <span class="math notranslate nohighlight">\(D\)</span>-dimensional integral.<
 <p>We use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> if <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is clear from the context.</p>
 </section>
 </div><div class="proof remark admonition" id="remark-interpretation-true-risk">
-<p class="admonition-title"><span class="caption-number">Remark 23 </span> (Interpretation of True Risk)</p>
+<p class="admonition-title"><span class="caption-number">Remark 24 </span> (Interpretation of True Risk)</p>
 <section class="remark-content" id="proof-content">
 <p>We know in <a class="reference internal" href="../../../probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/concept.html"><span class="doc std std-doc">Joint Expection</span></a>
 can be found by integrating over the joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
@@ -1180,7 +1180,7 @@ of the event happening is the probability of the joint distribution <span class=
 <p>Though the associated probability is the same, the state and the event are different.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-iid-erm">
-<p class="admonition-title"><span class="caption-number">Remark 24 </span> (<span class="math notranslate nohighlight">\(\iid\)</span> Assumption in ERM)</p>
+<p class="admonition-title"><span class="caption-number">Remark 25 </span> (<span class="math notranslate nohighlight">\(\iid\)</span> Assumption in ERM)</p>
 <section class="remark-content" id="proof-content">
 <p>Since the <span class="math notranslate nohighlight">\(\iid\)</span> assumption interprets data points as realizations of iid RVs with a
 common probability distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then the concept of
@@ -1192,9 +1192,9 @@ from the same distribution <span class="math notranslate nohighlight">\(\mathbb{
 <section class="theorem-content" id="proof-content">
 <p>If we do know the true distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then we can minimize
 the true risk directly by finding/learning a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span>
-such that its true risk <a class="reference internal" href="#equation-eq-true-risk">(61)</a> is minimized.</p>
+such that its true risk <a class="reference internal" href="#equation-eq-true-risk">(62)</a> is minimized.</p>
 <div class="math notranslate nohighlight" id="equation-eq-true-risk-minimization">
-<span class="eqno">(62)<a class="headerlink" href="#equation-eq-true-risk-minimization" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(63)<a class="headerlink" href="#equation-eq-true-risk-minimization" title="Permalink to this equation">#</a></span>\[
 h^{*} = \underset{h \in \mathcal{H}}{\mathrm{argmin}} \mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right]
 \]</div>
 </section>
@@ -1206,7 +1206,7 @@ The idea is that if we know the true distribution <span class="math notranslate 
 it is relatively easy to find the hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> that minimizes the true risk.</p>
 <p>We can simply construct such a hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> as</p>
 <div class="math notranslate nohighlight" id="equation-eq-bayes-optimal-classifier">
-<span class="eqno">(63)<a class="headerlink" href="#equation-eq-bayes-optimal-classifier" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(64)<a class="headerlink" href="#equation-eq-bayes-optimal-classifier" title="Permalink to this equation">#</a></span>\[
 h^{*}(\mathbf{x}) = \underset{y \in \mathcal{Y}}{\mathrm{argmax}} \mathbb{P}_{\mathcal{D}}\left(y \mid \mathbf{x}\right)
 \]</div>
 <p>and declare that this hypothesis <span class="math notranslate nohighlight">\(h^{*}\)</span> minimizes the true risk <span class="math notranslate nohighlight">\(R\left\{\mathcal{L}((\mathbf{x}, y), h)\right\}\)</span>.</p>
@@ -1214,11 +1214,11 @@ h^{*}(\mathbf{x}) = \underset{y \in \mathcal{Y}}{\mathrm{argmax}} \mathbb{P}_{\m
 </div><p>Of course, in practice we do not know the true distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, and therefore
 we cannot minimize the true risk directly. Instead, the empirical risk minimization (ERM) principle
 states that we can minimize the empirical risk. That is to say, we approximate the
-expectation in <a class="reference internal" href="#equation-eq-true-risk">(61)</a> by the empirical average of the loss incurred by <span class="math notranslate nohighlight">\(h\)</span> on the training data
+expectation in <a class="reference internal" href="#equation-eq-true-risk">(62)</a> by the empirical average of the loss incurred by <span class="math notranslate nohighlight">\(h\)</span> on the training data
 <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
 <p>More concretely, we state it as follows.</p>
 <div class="proof definition admonition" id="def-empirical-risk">
-<p class="admonition-title"><span class="caption-number">Definition 112 </span> (Empirical Risk)</p>
+<p class="admonition-title"><span class="caption-number">Definition 113 </span> (Empirical Risk)</p>
 <section class="definition-content" id="proof-content">
 <p>Let <span class="math notranslate nohighlight">\(\mathcal{S} = \left \{ \left(\mathbf{x}^{(n)}, y^{(n)} \right) \right \}_{n=1}^N\)</span>
 be the dataset with <span class="math notranslate nohighlight">\(N\)</span> samples and <span class="math notranslate nohighlight">\(D\)</span> predictors where each data point in <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>
@@ -1226,7 +1226,7 @@ follows an <span class="math notranslate nohighlight">\(\iid\)</span> joint dist
 then the empirical risk of a hypothesis <span class="math notranslate nohighlight">\(h \in \mathcal{H}\)</span> is the average of the loss
 incurred by <span class="math notranslate nohighlight">\(h\)</span> on the training data.</p>
 <div class="math notranslate nohighlight" id="equation-eq-empirical-risk">
-<span class="eqno">(64)<a class="headerlink" href="#equation-eq-empirical-risk" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(65)<a class="headerlink" href="#equation-eq-empirical-risk" title="Permalink to this equation">#</a></span>\[
 \hat{\mathcal{R}}_{\mathcal{S}} \left\{\mathcal{L}((\mathbf{x}, y), h)\right\} := \frac{1}{N} \sum_{n=1}^N \mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)
 \]</div>
 <p>To ease notation, we use <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> if <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> is clear from the context.</p>
@@ -1260,7 +1260,7 @@ More formally, if <span class="math notranslate nohighlight">\(\mathcal{D}\)</sp
 <p>The empirical risk minimization (ERM) principle states that we can minimize the empirical risk
 as follows:</p>
 <div class="math notranslate nohighlight" id="equation-eq-empirical-risk-minimization">
-<span class="eqno">(65)<a class="headerlink" href="#equation-eq-empirical-risk-minimization" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(66)<a class="headerlink" href="#equation-eq-empirical-risk-minimization" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{aligned}
 \hat{h} \in \mathcal{H} &amp;= \underset{h \in \mathcal{H}}{\mathrm{argmin}} \hat{\mathcal{R}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} \\
 &amp;= \underset{h \in \mathcal{H}}{\mathrm{argmin}} \frac{1}{N} \sum_{n=1}^N \mathcal{L}\left(\left(\mathbf{x}^{(n)}, y^{(n)}\right), h\right)
@@ -1269,14 +1269,14 @@ as follows:</p>
 <p>We see that <span class="math notranslate nohighlight">\(\hat{h}\)</span> may not be unique, so it can mean any hypothesis that minimizes the empirical risk.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-risk-vs-loss">
-<p class="admonition-title"><span class="caption-number">Remark 25 </span> (Risk vs Loss)</p>
+<p class="admonition-title"><span class="caption-number">Remark 26 </span> (Risk vs Loss)</p>
 <section class="remark-content" id="proof-content">
 <p>Note that the empirical risk <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> is the expectation of the loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>.
 They are not the same thing!</p>
 <p>Sometimes we also call the risk the cost function or the objective function.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-erm-trial-and-error">
-<p class="admonition-title"><span class="caption-number">Remark 26 </span> (ERM is “learning from data using trial and error”)</p>
+<p class="admonition-title"><span class="caption-number">Remark 27 </span> (ERM is “learning from data using trial and error”)</p>
 <section class="remark-content" id="proof-content">
 <p>As we can see now, there is no closed-form solution to the empirical risk minimization problem and therefore
 we may try to find a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> by trial and error. And a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> is one that has
@@ -1291,7 +1291,7 @@ the least empirical risk among all hypotheses in <span class="math notranslate n
 <p>If we have a large enough dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> with <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>,
 then the empirical risk minimization (ERM) principle approximates the true risk minimization (TRM) principle.</p>
 <div class="math notranslate nohighlight" id="equation-eq-empirical-risk-approximates-true-risk">
-<span class="eqno">(66)<a class="headerlink" href="#equation-eq-empirical-risk-approximates-true-risk" title="Permalink to this equation">#</a></span>\[
+<span class="eqno">(67)<a class="headerlink" href="#equation-eq-empirical-risk-approximates-true-risk" title="Permalink to this equation">#</a></span>\[
 \mathcal{R}_{\mathcal{D}}\left\{\mathcal{L}((\mathbf{x}, y), h)\right\} \approx \hat{\mathcal{R}}\left\{\mathcal{L}((\mathbf{x}^{(n)}, y^{(n)}), h)\right\} \quad \text{as} \quad N \rightarrow \infty
 \]</div>
 <p>This is just a corollary of The Convergence Theorem of The Law of Large Numbers
