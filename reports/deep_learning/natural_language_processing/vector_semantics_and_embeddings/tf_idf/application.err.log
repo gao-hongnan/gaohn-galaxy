@@ -1,19 +1,19 @@
 Traceback (most recent call last):
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\jupyter_cache\executors\utils.py", line 58, in single_nb_execution
     executenb(
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/client.py", line 1204, in execute
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\client.py", line 1204, in execute
     return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/util.py", line 84, in wrapped
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\util.py", line 84, in wrapped
     return just_run(coro(*args, **kwargs))
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/util.py", line 62, in just_run
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\util.py", line 62, in just_run
     return loop.run_until_complete(coro)
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/asyncio/base_events.py", line 647, in run_until_complete
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\asyncio\base_events.py", line 647, in run_until_complete
     return future.result()
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/client.py", line 663, in async_execute
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\client.py", line 663, in async_execute
     await self.async_execute_cell(
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/client.py", line 965, in async_execute_cell
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\client.py", line 965, in async_execute_cell
     await self._check_raise_for_error(cell, cell_index, exec_reply)
-  File "/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/nbclient/client.py", line 862, in _check_raise_for_error
+  File "C:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\nbclient\client.py", line 862, in _check_raise_for_error
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
@@ -23,43 +23,57 @@ cosine_sim = cosine_similarity(X_train_tfidf, X_train_tfidf)
 print(cosine_sim.shape)
 ------------------
 
-[0;31m---------------------------------------------------------------------------[0m
-[0;31mMemoryError[0m                               Traceback (most recent call last)
-Cell [0;32mIn[8], line 3[0m
-[1;32m      1[0m [38;5;66;03m# %%time[39;00m
-[1;32m      2[0m [38;5;66;03m# compute and print the cosine similarity matrix[39;00m
-[0;32m----> 3[0m cosine_sim [38;5;241m=[39m [43mcosine_similarity[49m[43m([49m[43mX_train_tfidf[49m[43m,[49m[43m [49m[43mX_train_tfidf[49m[43m)[49m
-[1;32m      4[0m [38;5;28mprint[39m(cosine_sim[38;5;241m.[39mshape)
+[1;31m---------------------------------------------------------------------------[0m
+[1;31mMemoryError[0m                               Traceback (most recent call last)
+Cell [1;32mIn[8], line 3[0m
+[0;32m      1[0m [38;5;66;03m# %%time[39;00m
+[0;32m      2[0m [38;5;66;03m# compute and print the cosine similarity matrix[39;00m
+[1;32m----> 3[0m cosine_sim [38;5;241m=[39m [43mcosine_similarity[49m[43m([49m[43mX_train_tfidf[49m[43m,[49m[43m [49m[43mX_train_tfidf[49m[43m)[49m
+[0;32m      4[0m [38;5;28mprint[39m(cosine_sim[38;5;241m.[39mshape)
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/metrics/pairwise.py:1401[0m, in [0;36mcosine_similarity[0;34m(X, Y, dense_output)[0m
-[1;32m   1398[0m [38;5;28;01melse[39;00m:
-[1;32m   1399[0m     Y_normalized [38;5;241m=[39m normalize(Y, copy[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
-[0;32m-> 1401[0m K [38;5;241m=[39m [43msafe_sparse_dot[49m[43m([49m[43mX_normalized[49m[43m,[49m[43m [49m[43mY_normalized[49m[38;5;241;43m.[39;49m[43mT[49m[43m,[49m[43m [49m[43mdense_output[49m[38;5;241;43m=[39;49m[43mdense_output[49m[43m)[49m
-[1;32m   1403[0m [38;5;28;01mreturn[39;00m K
+File [1;32mC:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\sklearn\metrics\pairwise.py:1401[0m, in [0;36mcosine_similarity[1;34m(X, Y, dense_output)[0m
+[0;32m   1398[0m [38;5;28;01melse[39;00m:
+[0;32m   1399[0m     Y_normalized [38;5;241m=[39m normalize(Y, copy[38;5;241m=[39m[38;5;28;01mTrue[39;00m)
+[1;32m-> 1401[0m K [38;5;241m=[39m [43msafe_sparse_dot[49m[43m([49m[43mX_normalized[49m[43m,[49m[43m [49m[43mY_normalized[49m[38;5;241;43m.[39;49m[43mT[49m[43m,[49m[43m [49m[43mdense_output[49m[38;5;241;43m=[39;49m[43mdense_output[49m[43m)[49m
+[0;32m   1403[0m [38;5;28;01mreturn[39;00m K
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/sklearn/utils/extmath.py:197[0m, in [0;36msafe_sparse_dot[0;34m(a, b, dense_output)[0m
-[1;32m    189[0m     ret [38;5;241m=[39m a [38;5;241m@[39m b
-[1;32m    191[0m [38;5;28;01mif[39;00m (
-[1;32m    192[0m     sparse[38;5;241m.[39missparse(a)
-[1;32m    193[0m     [38;5;129;01mand[39;00m sparse[38;5;241m.[39missparse(b)
-[1;32m    194[0m     [38;5;129;01mand[39;00m dense_output
-[1;32m    195[0m     [38;5;129;01mand[39;00m [38;5;28mhasattr[39m(ret, [38;5;124m"[39m[38;5;124mtoarray[39m[38;5;124m"[39m)
-[1;32m    196[0m ):
-[0;32m--> 197[0m     [38;5;28;01mreturn[39;00m [43mret[49m[38;5;241;43m.[39;49m[43mtoarray[49m[43m([49m[43m)[49m
-[1;32m    198[0m [38;5;28;01mreturn[39;00m ret
+File [1;32mC:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\sklearn\utils\extmath.py:189[0m, in [0;36msafe_sparse_dot[1;34m(a, b, dense_output)[0m
+[0;32m    187[0m         ret [38;5;241m=[39m np[38;5;241m.[39mdot(a, b)
+[0;32m    188[0m [38;5;28;01melse[39;00m:
+[1;32m--> 189[0m     ret [38;5;241m=[39m [43ma[49m[43m [49m[38;5;241;43m@[39;49m[43m [49m[43mb[49m
+[0;32m    191[0m [38;5;28;01mif[39;00m (
+[0;32m    192[0m     sparse[38;5;241m.[39missparse(a)
+[0;32m    193[0m     [38;5;129;01mand[39;00m sparse[38;5;241m.[39missparse(b)
+[0;32m    194[0m     [38;5;129;01mand[39;00m dense_output
+[0;32m    195[0m     [38;5;129;01mand[39;00m [38;5;28mhasattr[39m(ret, [38;5;124m"[39m[38;5;124mtoarray[39m[38;5;124m"[39m)
+[0;32m    196[0m ):
+[0;32m    197[0m     [38;5;28;01mreturn[39;00m ret[38;5;241m.[39mtoarray()
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/_compressed.py:1051[0m, in [0;36m_cs_matrix.toarray[0;34m(self, order, out)[0m
-[1;32m   1049[0m [38;5;28;01mif[39;00m out [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m [38;5;129;01mand[39;00m order [38;5;129;01mis[39;00m [38;5;28;01mNone[39;00m:
-[1;32m   1050[0m     order [38;5;241m=[39m [38;5;28mself[39m[38;5;241m.[39m_swap([38;5;124m'[39m[38;5;124mcf[39m[38;5;124m'[39m)[[38;5;241m0[39m]
-[0;32m-> 1051[0m out [38;5;241m=[39m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_process_toarray_args[49m[43m([49m[43morder[49m[43m,[49m[43m [49m[43mout[49m[43m)[49m
-[1;32m   1052[0m [38;5;28;01mif[39;00m [38;5;129;01mnot[39;00m (out[38;5;241m.[39mflags[38;5;241m.[39mc_contiguous [38;5;129;01mor[39;00m out[38;5;241m.[39mflags[38;5;241m.[39mf_contiguous):
-[1;32m   1053[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m'[39m[38;5;124mOutput array must be C or F contiguous[39m[38;5;124m'[39m)
+File [1;32mC:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\scipy\sparse\_base.py:630[0m, in [0;36mspmatrix.__matmul__[1;34m(self, other)[0m
+[0;32m    627[0m [38;5;28;01mif[39;00m isscalarlike(other):
+[0;32m    628[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m"[39m[38;5;124mScalar operands are not allowed, [39m[38;5;124m"[39m
+[0;32m    629[0m                      [38;5;124m"[39m[38;5;124muse [39m[38;5;124m'[39m[38;5;124m*[39m[38;5;124m'[39m[38;5;124m instead[39m[38;5;124m"[39m)
+[1;32m--> 630[0m [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_mul_dispatch[49m[43m([49m[43mother[49m[43m)[49m
 
-File [0;32m/opt/hostedtoolcache/Python/3.9.16/x64/lib/python3.9/site-packages/scipy/sparse/_base.py:1298[0m, in [0;36mspmatrix._process_toarray_args[0;34m(self, order, out)[0m
-[1;32m   1296[0m     [38;5;28;01mreturn[39;00m out
-[1;32m   1297[0m [38;5;28;01melse[39;00m:
-[0;32m-> 1298[0m     [38;5;28;01mreturn[39;00m [43mnp[49m[38;5;241;43m.[39;49m[43mzeros[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mshape[49m[43m,[49m[43m [49m[43mdtype[49m[38;5;241;43m=[39;49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdtype[49m[43m,[49m[43m [49m[43morder[49m[38;5;241;43m=[39;49m[43morder[49m[43m)[49m
+File [1;32mC:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\scipy\sparse\_base.py:541[0m, in [0;36mspmatrix._mul_dispatch[1;34m(self, other)[0m
+[0;32m    539[0m     [38;5;28;01mif[39;00m [38;5;28mself[39m[38;5;241m.[39mshape[[38;5;241m1[39m] [38;5;241m!=[39m other[38;5;241m.[39mshape[[38;5;241m0[39m]:
+[0;32m    540[0m         [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m([38;5;124m'[39m[38;5;124mdimension mismatch[39m[38;5;124m'[39m)
+[1;32m--> 541[0m     [38;5;28;01mreturn[39;00m [38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43m_mul_sparse_matrix[49m[43m([49m[43mother[49m[43m)[49m
+[0;32m    543[0m [38;5;66;03m# If it's a list or whatever, treat it like a matrix[39;00m
+[0;32m    544[0m other_a [38;5;241m=[39m np[38;5;241m.[39masanyarray(other)
 
-[0;31mMemoryError[0m: Unable to allocate 15.8 GiB for an array with shape (46064, 46064) and data type float64
-MemoryError: Unable to allocate 15.8 GiB for an array with shape (46064, 46064) and data type float64
+File [1;32mC:\hostedtoolcache\windows\Python\3.9.13\x64\lib\site-packages\scipy\sparse\_compressed.py:530[0m, in [0;36m_cs_matrix._mul_sparse_matrix[1;34m(self, other)[0m
+[0;32m    528[0m indptr [38;5;241m=[39m np[38;5;241m.[39mempty(major_axis [38;5;241m+[39m [38;5;241m1[39m, dtype[38;5;241m=[39midx_dtype)
+[0;32m    529[0m indices [38;5;241m=[39m np[38;5;241m.[39mempty(nnz, dtype[38;5;241m=[39midx_dtype)
+[1;32m--> 530[0m data [38;5;241m=[39m [43mnp[49m[38;5;241;43m.[39;49m[43mempty[49m[43m([49m[43mnnz[49m[43m,[49m[43m [49m[43mdtype[49m[38;5;241;43m=[39;49m[43mupcast[49m[43m([49m[38;5;28;43mself[39;49m[38;5;241;43m.[39;49m[43mdtype[49m[43m,[49m[43m [49m[43mother[49m[38;5;241;43m.[39;49m[43mdtype[49m[43m)[49m[43m)[49m
+[0;32m    532[0m fn [38;5;241m=[39m [38;5;28mgetattr[39m(_sparsetools, [38;5;28mself[39m[38;5;241m.[39mformat [38;5;241m+[39m [38;5;124m'[39m[38;5;124m_matmat[39m[38;5;124m'[39m)
+[0;32m    533[0m fn(M, N, np[38;5;241m.[39masarray([38;5;28mself[39m[38;5;241m.[39mindptr, dtype[38;5;241m=[39midx_dtype),
+[0;32m    534[0m    np[38;5;241m.[39masarray([38;5;28mself[39m[38;5;241m.[39mindices, dtype[38;5;241m=[39midx_dtype),
+[0;32m    535[0m    [38;5;28mself[39m[38;5;241m.[39mdata,
+[1;32m   (...)[0m
+[0;32m    538[0m    other[38;5;241m.[39mdata,
+[0;32m    539[0m    indptr, indices, data)
+
+[1;31mMemoryError[0m: Unable to allocate 4.09 GiB for an array with shape (548765651,) and data type float64
+MemoryError: Unable to allocate 4.09 GiB for an array with shape (548765651,) and data type float64
 
