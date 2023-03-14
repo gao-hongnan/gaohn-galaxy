@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1287,7 +1288,7 @@ represented as a count vector, a column in <a class="reference internal" href="#
 <p>Readers who are familiar with Machine Learning will start to notice that this matrix has very similar representation to the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Design_matrix">Design Matrix</a>.</p>
 <div class="proof remark admonition" id="term-document-remark">
-<p class="admonition-title"><span class="caption-number">Remark 49 </span> (Number of Features)</p>
+<p class="admonition-title"><span class="caption-number">Remark 50 </span> (Number of Features)</p>
 <section class="remark-content" id="proof-content">
 <p>The authors remarked that this example has only 4 dimensions (words), and 4 samples (documents). However, in practice, the
 there can be <span class="math notranslate nohighlight">\(D\)</span> documents and <span class="math notranslate nohighlight">\(T\)</span> words. Consequently, <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> will have <span class="math notranslate nohighlight">\(D\)</span> rows and <span class="math notranslate nohighlight">\(T\)</span> columns.</p>
@@ -1344,11 +1345,6 @@ conclude that 7 and 13 are <em>closer</em> than 1 and 0.</p>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span>
 <span class="kn">from</span> <span class="nn">rich</span> <span class="kn">import</span> <span class="nb">print</span>
 <span class="kn">from</span> <span class="nn">rich.pretty</span> <span class="kn">import</span> <span class="n">pprint</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
 </pre></div>
 </div>
 </div>
@@ -1696,7 +1692,7 @@ for visualization purposes (<code class="docutils literal notranslate"><span cla
         },
         kernelOptions: {
             name: "python3",
-            path: "./deep_learning\natural_language_processing\vector_semantics_and_embeddings\words_and_vectors"
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors"
         },
         predefinedOutput: true
     }

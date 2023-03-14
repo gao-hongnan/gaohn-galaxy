@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1127,6 +1128,11 @@ title="Print to PDF"
 This means we seek to find <span class="math notranslate nohighlight">\(\hat{\mathbf{w}}\)</span> that minimizes the loss function <span class="math notranslate nohighlight">\(\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)\)</span>.</p>
 <p>We sometimes abuse notation by writing <span class="math notranslate nohighlight">\(\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)\)</span> as <span class="math notranslate nohighlight">\(\mathcal{L}\left(y, \hat{y}\right)\)</span>, where <span class="math notranslate nohighlight">\(\hat{y}=h(\mathbf{x})\)</span> is the predicted label of the hypothesis <span class="math notranslate nohighlight">\(h\)</span> for the data point <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>.</p>
 </section>
+</div><div class="proof remark admonition" id="remark-loss-function-parameters">
+<p class="admonition-title"><span class="caption-number">Remark 24 </span> (Loss Function is a function of the parameters)</p>
+<section class="remark-content" id="proof-content">
+<p><strong>Important is that the loss function in machine learning is a function of the parameters <span class="math notranslate nohighlight">\(\boldsymbol{\theta}\)</span> of the hypothesis <span class="math notranslate nohighlight">\(h\)</span> and not of the data points <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and labels <span class="math notranslate nohighlight">\(y\)</span>!</strong></p>
+</section>
 </div><div class="proof definition admonition" id="def-loss-function-rv">
 <p class="admonition-title"><span class="caption-number">Definition 111 </span> (Loss Function as a Random Variable)</p>
 <section class="definition-content" id="proof-content">
@@ -1163,7 +1169,7 @@ this is also the <strong>state</strong> of the random variable.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\fundamentals\criterions"
+            path: "./machine_learning/fundamentals/criterions"
         },
         predefinedOutput: true
     }

@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1326,7 +1327,7 @@ from the following sources:</p>
 <section id="some-abuse-of-notations">
 <h2>Some Abuse of Notations<a class="headerlink" href="#some-abuse-of-notations" title="Permalink to this heading">#</a></h2>
 <div class="proof remark admonition" id="remark-learning-problem-notations-learning-theory">
-<p class="admonition-title"><span class="caption-number">Remark 30 </span> (Notations)</p>
+<p class="admonition-title"><span class="caption-number">Remark 31 </span> (Notations)</p>
 <section class="remark-content" id="proof-content">
 <p>We will abbrieviate:</p>
 <div class="math notranslate nohighlight">
@@ -1750,7 +1751,7 @@ training samples <span class="math notranslate nohighlight">\(\mathcal{S}\)</spa
 the generalization risk/error <span class="math notranslate nohighlight">\(\mathcal{R} \leq \hat{\mathcal{R}} + \epsilon\)</span> with high probability.</p>
 <p>How can we do that? Let’s start with the Law of Large Numbers.</p>
 <div class="proof remark admonition" id="remark-learning-problem-notations">
-<p class="admonition-title"><span class="caption-number">Remark 31 </span> (Notation)</p>
+<p class="admonition-title"><span class="caption-number">Remark 32 </span> (Notation)</p>
 <section class="remark-content" id="proof-content">
 <p>It should be clear from context that <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> is the <strong>generalization error</strong> of the hypothesis
 <span class="math notranslate nohighlight">\(h\)</span> over the entire distribution <span class="math notranslate nohighlight">\(\mathcal{D}\)</span>. In other words, this is the expected error based on
@@ -1821,7 +1822,7 @@ we can rewrite the True Risk Function as:</p>
 <p>which means that the True Risk Function is the expected loss/error of all possible samples. This is because
 we treat <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> as a <strong>random variable</strong> and we take the expected value of it.</p>
 <div class="proof remark admonition" id="remark-random-variable-is-a-function">
-<p class="admonition-title"><span class="caption-number">Remark 32 </span> (Random Variable is a Function)</p>
+<p class="admonition-title"><span class="caption-number">Remark 33 </span> (Random Variable is a Function)</p>
 <section class="remark-content" id="proof-content">
 <p>The notation might seem overloaded and abused, but since random variable in itself is a function,
 and <span class="math notranslate nohighlight">\(\mathcal{L}(\cdot)\)</span> is also a function mapping states <span class="math notranslate nohighlight">\((\mathbf{x}, y)\)</span> to a real number,
@@ -1837,7 +1838,7 @@ Then we can rewrite the Empirical Risk Function as:</p>
 <p>Notice that they both have exactly the same form as the Weak Law of Large Numbers, so we can apply the Weak Law of Large Numbers to the True Risk Function and the Empirical Risk Function.
 This natural application of the Weak Law of Large Numbers allows us to answer the following question (also in <a class="reference internal" href="intro.html#equation-eq-learning-problem-solvable">(68)</a>):</p>
 <div class="proof remark admonition" id="remark-summary-1">
-<p class="admonition-title"><span class="caption-number">Remark 33 </span> (Summary)</p>
+<p class="admonition-title"><span class="caption-number">Remark 34 </span> (Summary)</p>
 <section class="remark-content" id="proof-content">
 <p>Given a dataset <span class="math notranslate nohighlight">\(\mathcal{S} = \left\{\left(\mathbf{x}^{(n)}, y^{(n)}\right)\right\}_{n=1}^N\)</span>, and a <strong>fixed</strong> and <strong>single</strong> hypothesis <span class="math notranslate nohighlight">\(h\)</span>, the Weak Law of Large Numbers tells us that as the number of samples in your training set increases from <span class="math notranslate nohighlight">\(N\)</span> to <span class="math notranslate nohighlight">\(\infty\)</span>, the Empirical Risk Function will converge to the True Risk Function.</p>
 <div class="math notranslate nohighlight" id="equation-eq-convergence-of-empirical-risk-to-true-risk">
@@ -1877,7 +1878,7 @@ we have not learnt <span class="math notranslate nohighlight">\(h_S\)</span> yet
 <p>where <span class="math notranslate nohighlight">\(N\)</span> is the number of samples in the dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>, and <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> and <span class="math notranslate nohighlight">\(\hat{\mathcal{R}}\)</span> are the True Risk Function and the Empirical Risk Function respectively.</p>
 </section>
 </div><div class="proof remark admonition" id="remark-things-to-note">
-<p class="admonition-title"><span class="caption-number">Remark 34 </span> (Things to Note (Important))</p>
+<p class="admonition-title"><span class="caption-number">Remark 35 </span> (Things to Note (Important))</p>
 <section class="remark-content" id="proof-content">
 <ol class="arabic simple">
 <li><p>Note that both <span class="math notranslate nohighlight">\(\mathcal{L}((\mathbf{x}, y), h)\)</span> and the samples
@@ -1934,7 +1935,7 @@ Say cross-entropy loss, then you just need to know that the difference between t
 <h2>Hoeffding Inequality is Invalid for <span class="math notranslate nohighlight">\(h_S\)</span> learnt from <span class="math notranslate nohighlight">\(\mathcal{S}\)</span><a class="headerlink" href="#hoeffding-inequality-is-invalid-for-h-s-learnt-from-mathcal-s" title="Permalink to this heading">#</a></h2>
 <p>Now, there is one last problem we need to resolve. The above Hoeffding inequality holds for a fixed hypothesis function <span class="math notranslate nohighlight">\(h\)</span>. This means that <span class="math notranslate nohighlight">\(h\)</span> is already chosen before we generate the dataset. If we allow <span class="math notranslate nohighlight">\(h\)</span> to change after we have generated the dataset, then the Hoeffding inequality is no longer valid. What do we mean by after generating the dataset? In any learning scenario, we are given a training dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>. Based on this dataset, we have to choose a hypothesis function <span class="math notranslate nohighlight">\(h_S\)</span> from the hypothesis set <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>. The hypothesis <span class="math notranslate nohighlight">\(h_S\)</span> we choose depends on what samples are inside <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> and which learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> we use. So <span class="math notranslate nohighlight">\(h_S\)</span> changes after the dataset is generated.</p>
 <p>Now this is a non-trivial problem, and to fully understand this requires close scrutiny.
-Recall in <a class="reference internal" href="#remark-things-to-note">Remark 34</a>’s point 2, we said that <span class="math notranslate nohighlight">\(h\)</span> is fixed prior to
+Recall in <a class="reference internal" href="#remark-things-to-note">Remark 35</a>’s point 2, we said that <span class="math notranslate nohighlight">\(h\)</span> is fixed prior to
 generating the dataset <span class="math notranslate nohighlight">\(\mathcal{S}\)</span> and using <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> to learn <span class="math notranslate nohighlight">\(h_S\)</span> from <span class="math notranslate nohighlight">\(\mathcal{S}\)</span>.</p>
 <p>Here are some links that explains the issue in details on where exactly the problem lies. All in all,
 one just needs to know that the <em><strong>assumption of <span class="math notranslate nohighlight">\(\iid\)</span> is broken in Hoeffding’s Inequality
@@ -1953,7 +1954,7 @@ instead of just a single hypothesis <span class="math notranslate nohighlight">\
 <h2>Union Bound<a class="headerlink" href="#union-bound" title="Permalink to this heading">#</a></h2>
 <p>Suppose that <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> contains <span class="math notranslate nohighlight">\(M\)</span> hypothesis functions <span class="math notranslate nohighlight">\(h_{1}, \ldots, h_{M}\)</span>. The final hypothesis <span class="math notranslate nohighlight">\(h_S\)</span> that your learning algorithm <span class="math notranslate nohighlight">\(\mathcal{A}\)</span> picked is one of these potential hypotheses. To have <span class="math notranslate nohighlight">\(\left|\mathcal{R}_{\mathcal{D}}(h_S) - \hat{\mathcal{R}}_{\mathcal{S}}(h_S)\right|&gt;\epsilon\)</span>, we need to ensure that at least one of the <span class="math notranslate nohighlight">\(M\)</span> potential hypotheses can satisfy the inequality.</p>
 <div class="proof remark admonition" id="prf:remark-bounding-the-entire-hypothesis-set">
-<p class="admonition-title"><span class="caption-number">Remark 35 </span> (Bounding the Entire Hypothesis Set)</p>
+<p class="admonition-title"><span class="caption-number">Remark 36 </span> (Bounding the Entire Hypothesis Set)</p>
 <section class="remark-content" id="proof-content">
 <p>This part helps visualize why you need to use union bound to bound all hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>.</p>
 <p>This is best read together with the example in <a class="reference external" href="https://en.wikipedia.org/wiki/Boole%27s_inequality#Example">Wikipedia</a>.</p>
@@ -2094,7 +2095,7 @@ our expression is now in the form of “at least one <span class="math notransla
 </section>
 </div><div class="toggle docutils container">
 <div class="proof remark admonition" id="prf:remark-major-confusion-alert">
-<p class="admonition-title"><span class="caption-number">Remark 36 </span> (Major Confusion Alert)</p>
+<p class="admonition-title"><span class="caption-number">Remark 37 </span> (Major Confusion Alert)</p>
 <section class="remark-content" id="proof-content">
 <p>DEFUNCT AS OF 1ST MARCH, 2023, READ WITH CAUTION AS IT IS NOT CORRECT. I AM LEAVING IT HERE FOR HISTORICAL PURPOSES.</p>
 <p>What this means is that out of <span class="math notranslate nohighlight">\(M\)</span> hypotheses in <span class="math notranslate nohighlight">\(\mathcal{H}\)</span>, at least one of them <strong>does satisfy the Hoeffding’s Inequality, but you do not know which <span class="math notranslate nohighlight">\(h\)</span> it is.</strong>
@@ -2224,7 +2225,7 @@ gap is more than <span class="math notranslate nohighlight">\(\epsilon\)</span>.
 <p>To make sense of the generalization bound, we need to ensure that <span class="math notranslate nohighlight">\(\epsilon \rightarrow 0\)</span> as <span class="math notranslate nohighlight">\(N \rightarrow \infty\)</span>. In doing so, we need to assume that <span class="math notranslate nohighlight">\(M\)</span> does not grow exponentially fast, for otherwise term <span class="math notranslate nohighlight">\(\log 2 M\)</span> will cancel out the effect of <span class="math notranslate nohighlight">\(1 / N\)</span>. However, if <span class="math notranslate nohighlight">\(\mathcal{H}\)</span> is an infinite set, then <span class="math notranslate nohighlight">\(M\)</span> is unavoidably infinite.</p>
 <p>To concluse, this is our first generalization bound, it states that the generalization error is upper bounded by the training error plus a function of the hypothesis space size and the dataset size. We can also see that the the bigger the hypothesis space gets, the bigger the generalization error becomes.</p>
 <div class="proof remark admonition" id="rmk:infinite-hypothesis-space">
-<p class="admonition-title"><span class="caption-number">Remark 37 </span> (What is the Hypothesis Space is Infinite?)</p>
+<p class="admonition-title"><span class="caption-number">Remark 38 </span> (What is the Hypothesis Space is Infinite?)</p>
 <section class="remark-content" id="proof-content">
 <p>For a linear hypothesis of the form <span class="math notranslate nohighlight">\(h(x)=w x+b\)</span>, we also have <span class="math notranslate nohighlight">\(|\mathcal{H}|=\infty\)</span> as there is infinitely many lines that can be drawn. So the generalization error of the linear hypothesis space should be unbounded! If that’s true, how does perceptrons, logistic regression, support vector machines and essentially any ML model that uses a linear hypothesis work with the learning theory bound we just proposed?</p>
 <p>There is something missing from the picture. Let’s take a deeper look at the generalization bound.</p>
@@ -2688,7 +2689,7 @@ So, if we were to <em>a-priori pick</em> a guess function <span class="math notr
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\fundamentals\learning_theory"
+            path: "./machine_learning/fundamentals/learning_theory"
         },
         predefinedOutput: true
     }

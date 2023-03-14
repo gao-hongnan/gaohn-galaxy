@@ -35,7 +35,106 @@ use_svg_display()
 ```{contents}
 ```
 
-## Problem Statement
+## Intuition
+
+Let's first look at an example by randomly generating data points[^y] that can be
+partitioned into 3 distinct clusters.
+
+```{code-cell} ipython3
+:tags: [remove-input]
+
+from sklearn.datasets import make_blobs
+
+X, y = make_blobs(
+    n_samples=150,
+    n_features=2,
+    centers=3,
+    cluster_std=0.5,
+    shuffle=True,
+    random_state=0,
+)
+
+plt.scatter(X[:, 0], X[:, 1], c="white", marker="o", edgecolor="black", s=50)
+plt.xlabel("$\mathbf{x}_1$: Feature 1")
+plt.ylabel("$\mathbf{x}_2$: Feature 2")
+
+plt.grid(False)
+plt.tight_layout()
+plt.show()
+```
+
+The question on hand is, if we are given data of this form, how do we cluster them into $3$ distinct clusters?
+
+Visually, we can literally just circle out the $3$ clusters. The luxury of such simplicity
+is because we are working with $2$ features, i.e. $\mathbf{x} \in \mathbb{R}^{2}$. In addition,
+the dataset generated is relatively simple to partition, i.e. the clusters are well separated.
+
+However, in the real world, we are working with
+$D$-dimensional features where $\mathbf{x}$ resides in $\mathbb{R}^{D}$.
+$D$ can be very large and we are unable to visually inspect anymore.
+
+In any case, even with
+such a simple dataset, how do we tell the machine to find the $3$ clusters that our visuals
+have identified?
+
+### The Hypothesis Space
+
+Formulating such a problem is not trivial is non-trivial. We first have to formulate the problem
+in a way that the machine can understand, and that is done mathematically.
+
+For one, there is no ground truth labels as in the supervised setting, and therefore our learner
+or hypothesis need not output a label, but rather a cluster assignment.
+
+Retrospectively, we can think of the learner as a function $h(\cdot)$ that takes in many data points
+$\mathbf{x}^{(1)}, \mathbf{x}^{(2)}, \dots, \mathbf{x}^{(N)}$ and outputs a
+cluster assignment $\mathcal{A}(\mathbf{x})$ for each data point $\mathbf{x}$.
+
+For now, let's informally define the hypothesis space $\mathcal{H}$ to be the set of all possible
+cluster assignments $\mathcal{A}(\cdot)$.
+
+$$
+\mathcal{H} = \{\mathcal{A}(\cdot) \mid \mathcal{A}(\cdot) \text{ somehow assigns the data points to the correct cluster.}\}
+$$
+
+We will make this more precise later.
+
+### The Loss/Cost/Objective Function
+
+The second part of formulating a machine learning problem is to define the loss function $\mathcal{L}(\cdot)$
+and subsequently the cost function $\widehat{\mathcal{J}}(\cdot)$.
+
+In supervised learning, we have our typical loss functions such as cross-entropy loss (classification),
+and in regression, we have mean squared error. We also have
+metrics like accuracy, precision, recall, etc to measure the performance of the model.
+
+This means, given a hypothesis $\hat{y}:=h(\mathbf{x})$, how close is it to the true label $y$?
+In unsupervised, we do not have such ground truth label $y$ to compare with, but the notion of
+closeness is still there.
+
+#### The Notion of Similarity and Closeness
+
+To define such a metric for unsupervised learning, we can fall back on our intuition.
+The purpose of clustering is to group similar data points together. So we seek to find
+a metric that measures the similarity between data points in a dataset.
+
+A very simple idea is to use
+[**intra-cluster variance**](https://stats.stackexchange.com/questions/120509/inter-cluster-variance).
+For example, within a cluster, the data points are close to each other if
+the variance is small.
+
+Consequently, to make our intuition precise, we need to define a metric rule and an assignment $\mathcal{A}(\cdot)$ to assign data points to clusters. We also
+need to define the notion of closeness and similarity between data points.
+
+Lastly, such algorithms require an initial guess of the cluster centers, so that
+eventually the algorithm can converge to the optimal cluster centers, since we have no way of knowing
+the optimal cluster centers beforehand, especially in high dimensional space.
+
+More formally, the optimization problem requires us to minimize the sum of squared distances between each data point and its cluster center.
+This is equivalent to minimizing the variance within each cluster.
+
+Let's look at some definitions first that will gradually lead us to the formulation of the objective function.
+
+## Problem Formulation
 
 ```{prf:remark} Remark
 :label: remark-kmeans-problem-statement
@@ -218,74 +317,6 @@ that this is a special case of the expectation maximization algorithm.
 In the following sections, we will phrase K-Means (Lloyd's algorithm) as an optimization problem, in which the goal is to find the optimal
 cluster centers and cluster assignments that minimize the clustering error. We will also prove why this is the case.
 
-## Intuition
-
-Some intuition on choosing the cost function $\widehat{\mathcal{J}}$.
-
-In supervised learning, we have our typical loss functions such as cross-entropy loss (classification),
-and in regression, we have mean squared error. We also have
-metrics like accuracy, precision, recall, etc to measure the performance of the model.
-
-This means, given a hypothesis $\hat{y}:=h(\mathbf{x})$, how close is it to the true label $y$?
-In unsupervised, we do not have such ground truth label $y$ to compare with, but the notion of
-closeness is still there.
-
-### Example
-
-Let's first look at an example by randomly generating data points[^y] that can be
-partitioned into 3 distinct clusters.
-
-```{code-cell} ipython3
-:tags: [remove-input]
-
-from sklearn.datasets import make_blobs
-
-X, y = make_blobs(
-    n_samples=150,
-    n_features=2,
-    centers=3,
-    cluster_std=0.5,
-    shuffle=True,
-    random_state=0,
-)
-
-plt.scatter(X[:, 0], X[:, 1], c="white", marker="o", edgecolor="black", s=50)
-plt.xlabel("$\mathbf{x}_1$: Feature 1")
-plt.ylabel("$\mathbf{x}_2$: Feature 2")
-
-plt.grid(False)
-plt.tight_layout()
-plt.show()
-```
-
-Visually, we can literally just circle out the 3 clusters. The luxury of such simplicity
-is because we are working with 2 features, i.e. $\mathbf{x} \in \mathbb{R}^{2}$.
-In real world, we are working with
-$D$ features in $\mathbb{R}^{D}$, where $D$ can be very large. Furthermore, even with
-such a simple dataset, how do we tell the machine to find the 3 clusters?
-
-### The Notion of Similarity and Closeness
-
-To define such a metric for unsupervised learning, we can fall back on our intuition.
-The purpose of clustering is to group similar data points together. So we seek to find
-a metric that measures the similarity between data points in a dataset.
-
-A very simple idea is to use
-[**intra-cluster variance**](https://stats.stackexchange.com/questions/120509/inter-cluster-variance). For example, within a cluster, the data points are close to each other if
-the variance is small.
-
-Consequently, to make our intuition precise, we need to define a metric rule and an assignment $\mathcal{A}(\cdot)$ to assign data points to clusters. We also
-need to define the notion of closeness and similarity between data points.
-
-Lastly, such algorithms require an initial guess of the cluster centers, so that
-eventually the algorithm can converge to the optimal cluster centers, since we have no way of knowing
-the optimal cluster centers beforehand, especially in high dimensional space.
-
-More formally, the optimization problem requires us to minimize the sum of squared distances between each data point and its cluster center.
-This is equivalent to minimizing the variance within each cluster.
-
-Let's look at some definitions first that will gradually lead us to the formulation of the objective function.
-
 ## Partition and Voronoi Regions
 
 K-Means can be formulated via the lens of [**Voronoi regions**](https://en.wikipedia.org/wiki/Voronoi_diagram)
@@ -389,6 +420,27 @@ $$
 \boldsymbol{v}_k \text{ represents cluster } C_k \text{ for } k = 1, 2, \ldots, K.
 $$
 ```
+
+## Hypothesis Space
+
+For completeness sake, let’s define the hypothesis space $\mathcal{H}$ for K-Means.
+
+Intuitively, the hypothesis space $\mathcal{H}$ is the set of all possible clusterings of the data.
+
+Formally, given a set of $N$ data points $\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N$,
+let $C_k$ be the Voronoi cell of the $k$-th cluster center $\boldsymbol{\mu}_k$.
+
+Then, we can write the class of functions $\mathcal{H}$ as:
+
+$$
+\begin{aligned}
+\mathcal{H} &= \left\{\mathcal{A}: \mathbb{Z} \rightarrow \mathbb{Z} \mid \mathcal{A}(n) \in \{1, 2, \dots, K\} \text{ for all } n \in \{1, 2, \dots, N\}\right\} \\
+\end{aligned}
+$$
+
+This means the hypothesis space $\mathcal{H}$ is finite with cardinality $K^N$.
+
+For more details, see [here](https://stats.stackexchange.com/posts/502352/) and [here](https://courses.cs.washington.edu/courses/cse446/16sp/clustering_1.pdf).
 
 ## Cost Function
 
@@ -877,26 +929,6 @@ to different local minima.
 We can initialize the algorithm with different initializations, and run the algorithm
 multiple times. Then, we can choose the best solution among the different local minima.
 
-## Hypothesis Space
-
-For completeness sake, let’s define the hypothesis space $\mathcal{H}$ for K-Means.
-
-Intuitively, the hypothesis space $\mathcal{H}$ is the set of all possible clusterings of the data.
-
-Formally, given a set of $N$ data points $\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N$,
-let $C_k$ be the Voronoi cell of the $k$-th cluster center $\boldsymbol{\mu}_k$.
-
-Then, we can write the class of functions $\mathcal{H}$ as:
-
-$$
-\begin{aligned}
-\mathcal{H} &= \left\{\mathcal{A}: \mathbb{Z} \rightarrow \mathbb{Z} \mid \mathcal{A}(n) \in \{1, 2, \dots, K\} \text{ for all } n \in \{1, 2, \dots, N\}\right\} \\
-\end{aligned}
-$$
-
-This means the hypothesis space $\mathcal{H}$ is finite with cardinality $K^N$.
-
-For more details, see [here](https://stats.stackexchange.com/posts/502352/) and [here](https://courses.cs.washington.edu/courses/cse446/16sp/clustering_1.pdf).
 
 ## How to find $K$?
 

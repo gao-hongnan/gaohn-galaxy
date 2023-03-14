@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1151,13 +1152,13 @@ the true risk <span class="math notranslate nohighlight">\(\mathcal{R}_{\mathcal
 \mathcal{R}_{\mathcal{D}}(h) \geq \mathcal{R}_{\mathcal{D}}(h^{*})
 \]</div>
 <div class="proof remark admonition" id="remark-bayes-optimal-classifier-naive-bayes">
-<p class="admonition-title"><span class="caption-number">Remark 28 </span> (Bayes Optimal Classifier and Naive Bayes)</p>
+<p class="admonition-title"><span class="caption-number">Remark 29 </span> (Bayes Optimal Classifier and Naive Bayes)</p>
 <section class="remark-content" id="proof-content">
 <p>If the components of <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> are conditionally independent given <span class="math notranslate nohighlight">\(Y\)</span>, then the Bayes classifier is
 the same as the Naive Bayes classifier.</p>
 </section>
 </div><div class="proof remark admonition" id="remark-bayes-optimal-classifier">
-<p class="admonition-title"><span class="caption-number">Remark 29 </span> (Some remarks)</p>
+<p class="admonition-title"><span class="caption-number">Remark 30 </span> (Some remarks)</p>
 <section class="remark-content" id="proof-content">
 <p>Note that this definition merely says that the Bayes classifier achieves minimal zero-one loss over any other
 deterministic classifier, it does not say anything about it achieving zero error.</p>
@@ -1193,7 +1194,7 @@ the underlying distribution <span class="math notranslate nohighlight">\(\mathca
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\fundamentals\empirical_risk_minimization"
+            path: "./machine_learning/fundamentals/empirical_risk_minimization"
         },
         predefinedOutput: true
     }

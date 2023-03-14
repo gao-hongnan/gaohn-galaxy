@@ -66,7 +66,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script>DOCUMENTATION_OPTIONS.pagename = 'machine_learning/linear_models/linear_regression/intro';</script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="Concept" href="concept.html" />
+    <link rel="next" title="Linear Regression via Probabilistic Perspective" href="concept_probabilistic_pov.html" />
     <link rel="prev" title="Linear Models" href="../intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="docsearch:language" content="en">
@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../intro.html">Linear Models</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
 <li class="toctree-l2 current active has-children"><a class="current reference internal" href="#">Linear Regression</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1089,8 +1090,13 @@ title="Print to PDF"
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#further-readings">
-   Further Readings
+  <a class="reference internal nav-link" href="#table-of-contents">
+   Table of Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>
@@ -1105,8 +1111,22 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="linear-regression">
 <h1>Linear Regression<a class="headerlink" href="#linear-regression" title="Permalink to this heading">#</a></h1>
 <p>In this chapter, we discuss linear regression, which is a very widely used method for predicting a real-valued output (also called the dependent variable or target) <span class="math notranslate nohighlight">\(y \in \mathbb{R}\)</span>, given a vector of real-valued inputs (also called independent variables, explanatory variables, or covariates) <span class="math notranslate nohighlight">\(\boldsymbol{x} \in \mathbb{R}^D\)</span>. The key property of the model is that the expected value of the output is assumed to be a linear function of the input, <span class="math notranslate nohighlight">\(\mathbb{E}[y \mid \boldsymbol{x}]=\boldsymbol{w}^{\top} \boldsymbol{x}\)</span>, which makes the model easy to interpret, and easy to fit to data <span id="id1">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id3" title="Kevin P. Murphy. Probabilistic Machine Learning: An introduction. MIT Press, 2022. URL: probml.ai.">Murphy, 2022</a>]</span>.</p>
-<section id="further-readings">
-<h2>Further Readings<a class="headerlink" href="#further-readings" title="Permalink to this heading">#</a></h2>
+<p>There are two views to solving Linear Regression, we will focus on the probabilistic aspect of it and leave
+the geometry/linear algebra interpretation for further readings.</p>
+<p>Regression in itself is a very broad topic, the analysis in itself can be made as a course/book.
+Therefore, I will just touch and go on the important parts of it.</p>
+<section id="table-of-contents">
+<h2>Table of Contents<a class="headerlink" href="#table-of-contents" title="Permalink to this heading">#</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
+<li class="toctree-l1"><a class="reference internal" href="implementation.html">Implementation</a></li>
+</ul>
+</div>
+</section>
+<section id="references-and-further-readings">
+<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://d2l.ai/">https://d2l.ai/</a></p></li>
 <li><p>Murphy, Kevin P. “Chapter .” In Probabilistic Machine Learning: An Introduction. MIT Press, 2022.</p></li>
@@ -1119,8 +1139,6 @@ title="Print to PDF"
 <li><p><a class="github reference external" href="https://github.com/goodboychan/goodboychan.github.io/tree/main/_notebooks">goodboychan/goodboychan.github.io</a></p></li>
 </ul>
 </section>
-<div class="toctree-wrapper compound">
-</div>
 </section>
 
     <script type="text/x-thebe-config">
@@ -1136,7 +1154,7 @@ title="Print to PDF"
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\linear_models\linear_regression"
+            path: "./machine_learning/linear_models/linear_regression"
         },
         predefinedOutput: true
     }
@@ -1158,10 +1176,10 @@ title="Print to PDF"
           <p class="prev-next-title">Linear Models</p>
       </div>
   </a>
-  <a class='right-next' id="next-link" href="concept.html" title="next page">
+  <a class='right-next' id="next-link" href="concept_probabilistic_pov.html" title="next page">
   <div class="prev-next-info">
       <p class="prev-next-subtitle">next</p>
-      <p class="prev-next-title">Concept</p>
+      <p class="prev-next-title">Linear Regression via Probabilistic Perspective</p>
   </div>
   <i class="fa-solid fa-angle-right"></i>
   </a>
@@ -1182,8 +1200,13 @@ title="Print to PDF"
 <nav id="bd-toc-nav" class="page-toc">
     <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#further-readings">
-   Further Readings
+  <a class="reference internal nav-link" href="#table-of-contents">
+   Table of Contents
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#references-and-further-readings">
+   References and Further Readings
   </a>
  </li>
 </ul>

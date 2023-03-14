@@ -154,7 +154,7 @@ to the joint distribution of the input and the label,
     More concretely, a hypothesis $h$ partitions the feature space into decision regions.
     A specific decision region $R_{\hat{y}}$ consists of all feature vectors
     $\mathbf{x}$ that are mapped to the same predicted label $h(\mathbf{x})=\hat{y}$ for all $\mathbf{x} \in R_{\hat{y}}$.
-* - $\mathcal{L}$
+* - $\mathcal{L}$ or $\mathcal{L}(\boldsymbol{\theta})$
   - Formally, a loss function is a map {cite}`jung_2023`
 
     $$
@@ -175,6 +175,8 @@ to the joint distribution of the input and the label,
     loss of a single data point).
 
     Sometimes we subscript $\mathcal{L}$ with the training set $\mathcal{S}$ to indicate that the loss is applied to all training samples $\left(\mathbf{x}^{(n)}, y^{(n)}\right)$ in the training set $\mathcal{S}$.
+
+    **Important is that the loss function in machine learning is a function of the parameters $\boldsymbol{\theta}$ of the hypothesis $h$ and not of the data points $\mathbf{x}$ and labels $y$!**
 * - $\mathcal{R}$ or $\mathcal{R}_{\mathcal{D}}$ or $\mathbb{E}_{\mathcal{D}}\left[\mathcal{L}((\mathbf{x}, y), h)\right]$
   - The true risk function $\mathcal{R}$ is the expected loss $\mathcal{L}$ over all (any) data points drawn $\iid$ from the distribution $\mathcal{D}$.
 

@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1351,7 +1352,7 @@ furthermore, <span class="math notranslate nohighlight">\(Y^{(n)}\)</span> is a 
 <p>where <span class="math notranslate nohighlight">\(\boldsymbol{\mu} = \begin{bmatrix} \mu_1 &amp; \mu_2 \end{bmatrix}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\sigma} = \begin{bmatrix} \sigma_1 &amp; \sigma_2 \end{bmatrix}\)</span>.</p>
 </section>
 </div><div class="proof remark admonition" id="some-remarks">
-<p class="admonition-title"><span class="caption-number">Remark 38 </span> (Some remarks)</p>
+<p class="admonition-title"><span class="caption-number">Remark 39 </span> (Some remarks)</p>
 <section class="remark-content" id="proof-content">
 <ul class="simple">
 <li><p>From now on, we will refer the realization of <span class="math notranslate nohighlight">\(Y\)</span> as <span class="math notranslate nohighlight">\(k\)</span> instead.</p></li>
@@ -1682,7 +1683,7 @@ into its components that contain the parameters we want to estimate.</p>
 which is computationally expensive. Not to forget that we need to estimate for each class <span class="math notranslate nohighlight">\(k \in \{1, 2, 3, \ldots, K\}\)</span>
 which has a complexity of <span class="math notranslate nohighlight">\(\sim \mathcal{O}(2^DK)\)</span>.</p>
 <div class="proof remark admonition" id="2dparameters">
-<p class="admonition-title"><span class="caption-number">Remark 39 </span> (Why <span class="math notranslate nohighlight">\(2^D\)</span> parameters?)</p>
+<p class="admonition-title"><span class="caption-number">Remark 40 </span> (Why <span class="math notranslate nohighlight">\(2^D\)</span> parameters?)</p>
 <section class="remark-content" id="proof-content">
 <p>Let’s simplify the problem by assuming each feature <span class="math notranslate nohighlight">\(X_d\)</span> and the class label <span class="math notranslate nohighlight">\(Y\)</span> are binary random variables,
 i.e. <span class="math notranslate nohighlight">\(X_d \in \{0, 1\}\)</span> and <span class="math notranslate nohighlight">\(Y \in \{0, 1\}\)</span>.</p>
@@ -1811,7 +1812,7 @@ associated with feature <span class="math notranslate nohighlight">\(d\)</span> 
 \end{bmatrix}_{3 \times 2}
 \end{split}\]</div>
 <p>This means we have effectively reduced our complexity from <span class="math notranslate nohighlight">\(\sim \mathcal{O}(2^D)\)</span> to <span class="math notranslate nohighlight">\(\sim \mathcal{O}(KD + 1)\)</span>
-assuming the same setup in <a class="reference internal" href="#2dparameters">Remark 39</a>.</p>
+assuming the same setup in <a class="reference internal" href="#2dparameters">Remark 40</a>.</p>
 <p>One big misconception is that the elements in <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_{\{\mathbf{X} \mid Y\}}\)</span> are scalar values.
 This is not true, for example, let’s look at the first entry <span class="math notranslate nohighlight">\(\theta_{11}\)</span>, corresponding to
 the parameter of class <span class="math notranslate nohighlight">\(K=1\)</span> and feature <span class="math notranslate nohighlight">\(D=1\)</span>, i.e. <span class="math notranslate nohighlight">\(\theta_{11}\)</span> is the parameter of the class conditional
@@ -1833,7 +1834,7 @@ This corresponds to the shape of the matrix <span class="math notranslate nohigh
 <span class="math notranslate nohighlight">\(\mathbf{M_1}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{M_3}\)</span> hold the PDFs while <span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span> and <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_{\{\mathbf{X} \mid Y\}}\)</span> hold the parameters
 of these PDFs.</p>
 <div class="proof remark admonition" id="remark-empirical-parameters">
-<p class="admonition-title"><span class="caption-number">Remark 40 </span> (Empirical Parameters)</p>
+<p class="admonition-title"><span class="caption-number">Remark 41 </span> (Empirical Parameters)</p>
 <section class="remark-content" id="proof-content">
 <p>It is worth noting that we are discussing the parameter vectors <span class="math notranslate nohighlight">\(\boldsymbol{\pi}\)</span>
 and <span class="math notranslate nohighlight">\(\boldsymbol{\theta}_{\{\mathbf{X} \mid Y\}}\)</span> which represents the true
@@ -2137,7 +2138,7 @@ using the Maximum Likelihood Estimation (MLE) method to obtain the maximum likel
 <h3>Maximum Likelihood Estimation<a class="headerlink" href="#maximum-likelihood-estimation" title="Permalink to this heading">#</a></h3>
 <p>First, read chapter 8.1 of <span id="id11">[<a class="reference internal" href="../../../references_resources_roadmap/bibliography.html#id2" title="Stanley H. Chan. Introduction to probability for Data Science. Michigan Publishing, 2021.">Chan, 2021</a>]</span> for a refresher on MLE.</p>
 <div class="proof remark admonition" id="remark-univariate-mle">
-<p class="admonition-title"><span class="caption-number">Remark 41 </span> (Univariate Maximum Likelihood Estimation)</p>
+<p class="admonition-title"><span class="caption-number">Remark 42 </span> (Univariate Maximum Likelihood Estimation)</p>
 <section class="remark-content" id="proof-content">
 <p>In <a class="reference external" href="https://dafriedman97.github.io/mlbook/content/c4/concept.html#linear-discriminative-analysis-lda">LDA</a>,
 <span class="math notranslate nohighlight">\(\mathbf{X} \mid Y=k\)</span>, the distribution of the features <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> conditioned on <span class="math notranslate nohighlight">\(Y=k\)</span>, has no
@@ -2287,7 +2288,7 @@ of the definition of the Category distribution in <a class="reference internal" 
 \end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(N_k\)</span> is the number of samples that belong to the <span class="math notranslate nohighlight">\(k\)</span>-th category.</p>
 <div class="proof remark admonition" id="notation-overload">
-<p class="admonition-title"><span class="caption-number">Remark 42 </span> (Notation Overload)</p>
+<p class="admonition-title"><span class="caption-number">Remark 43 </span> (Notation Overload)</p>
 <section class="remark-content" id="proof-content">
 <p>We note to ourselves that we are reusing, and hence abusing the notation <span class="math notranslate nohighlight">\(\mathcal{L}\)</span> for the log-likelihood function to be the same as the likelihood function, this is just for the ease of re-defining a new symbol for the log-likelihood function, <span class="math notranslate nohighlight">\(\log \mathcal{L}\)</span>.</p>
 </section>
@@ -2740,7 +2741,7 @@ is <span class="math notranslate nohighlight">\(\mathcal{O}(1)\)</span>.</p>
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\generative\naive_bayes"
+            path: "./machine_learning/generative/naive_bayes"
         },
         predefinedOutput: true
     }

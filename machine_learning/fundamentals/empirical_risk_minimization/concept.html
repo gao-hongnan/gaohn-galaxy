@@ -816,7 +816,8 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept.html">Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
 </li>
@@ -1157,7 +1158,7 @@ a <span class="math notranslate nohighlight">\(D\)</span>-dimensional integral.<
 <p>We use <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> if <span class="math notranslate nohighlight">\(\mathcal{D}\)</span> is clear from the context.</p>
 </section>
 </div><div class="proof remark admonition" id="remark-interpretation-true-risk">
-<p class="admonition-title"><span class="caption-number">Remark 24 </span> (Interpretation of True Risk)</p>
+<p class="admonition-title"><span class="caption-number">Remark 25 </span> (Interpretation of True Risk)</p>
 <section class="remark-content" id="proof-content">
 <p>We know in <a class="reference internal" href="../../../probability_theory/05_joint_distributions/0502_joint_expectation_and_correlation/concept.html"><span class="doc std std-doc">Joint Expection</span></a>
 can be found by integrating over the joint distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}(\mathcal{X}, \mathcal{Y} ; \boldsymbol{\theta})\)</span>,
@@ -1180,7 +1181,7 @@ of the event happening is the probability of the joint distribution <span class=
 <p>Though the associated probability is the same, the state and the event are different.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-iid-erm">
-<p class="admonition-title"><span class="caption-number">Remark 25 </span> (<span class="math notranslate nohighlight">\(\iid\)</span> Assumption in ERM)</p>
+<p class="admonition-title"><span class="caption-number">Remark 26 </span> (<span class="math notranslate nohighlight">\(\iid\)</span> Assumption in ERM)</p>
 <section class="remark-content" id="proof-content">
 <p>Since the <span class="math notranslate nohighlight">\(\iid\)</span> assumption interprets data points as realizations of iid RVs with a
 common probability distribution <span class="math notranslate nohighlight">\(\mathbb{P}_{\mathcal{D}}\)</span>, then the concept of
@@ -1269,14 +1270,14 @@ as follows:</p>
 <p>We see that <span class="math notranslate nohighlight">\(\hat{h}\)</span> may not be unique, so it can mean any hypothesis that minimizes the empirical risk.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-risk-vs-loss">
-<p class="admonition-title"><span class="caption-number">Remark 26 </span> (Risk vs Loss)</p>
+<p class="admonition-title"><span class="caption-number">Remark 27 </span> (Risk vs Loss)</p>
 <section class="remark-content" id="proof-content">
 <p>Note that the empirical risk <span class="math notranslate nohighlight">\(\mathcal{R}\)</span> is the expectation of the loss <span class="math notranslate nohighlight">\(\mathcal{L}\)</span>.
 They are not the same thing!</p>
 <p>Sometimes we also call the risk the cost function or the objective function.</p>
 </section>
 </div><div class="proof remark admonition" id="rem-erm-trial-and-error">
-<p class="admonition-title"><span class="caption-number">Remark 27 </span> (ERM is “learning from data using trial and error”)</p>
+<p class="admonition-title"><span class="caption-number">Remark 28 </span> (ERM is “learning from data using trial and error”)</p>
 <section class="remark-content" id="proof-content">
 <p>As we can see now, there is no closed-form solution to the empirical risk minimization problem and therefore
 we may try to find a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> by trial and error. And a good hypothesis <span class="math notranslate nohighlight">\(h\)</span> is one that has
@@ -1327,7 +1328,7 @@ we can design different loss functions, and in turn different empirical risk min
         },
         kernelOptions: {
             name: "python3",
-            path: "./machine_learning\fundamentals\empirical_risk_minimization"
+            path: "./machine_learning/fundamentals/empirical_risk_minimization"
         },
         predefinedOutput: true
     }
