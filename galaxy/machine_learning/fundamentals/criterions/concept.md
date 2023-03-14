@@ -22,6 +22,12 @@ This means we seek to find $\hat{\mathbf{w}}$ that minimizes the loss function $
 We sometimes abuse notation by writing $\mathcal{L}\left(\left(\mathbf{x}, y\right), h\right)$ as $\mathcal{L}\left(y, \hat{y}\right)$, where $\hat{y}=h(\mathbf{x})$ is the predicted label of the hypothesis $h$ for the data point $\mathbf{x}$.
 ```
 
+```{prf:remark} Loss Function is a function of the parameters
+:label: remark-loss-function-parameters
+
+**Important is that the loss function in machine learning is a function of the parameters $\boldsymbol{\theta}$ of the hypothesis $h$ and not of the data points $\mathbf{x}$ and labels $y$!**
+```
+
 ```{prf:definition} Loss Function as a Random Variable
 :label: def-loss-function-rv
 
