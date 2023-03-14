@@ -816,7 +816,7 @@ const thebe_selector_output = ".output, .cell_output"
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../../../../machine_learning/linear_models/intro.html">Linear Models</a><input class="toctree-checkbox" id="toctree-checkbox-32" name="toctree-checkbox-32" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-32"><i class="fa-solid fa-chevron-down"></i></label><ul>
 <li class="toctree-l2 has-children"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/intro.html">Linear Regression</a><input class="toctree-checkbox" id="toctree-checkbox-33" name="toctree-checkbox-33" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-33"><i class="fa-solid fa-chevron-down"></i></label><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept_probabilistic_pov.html">Linear Regression via Probabilistic Perspective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept.html">Concept</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/concept_linear_algebra_pov.html">Linear Regression via Linear Algebra Perspective</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../machine_learning/linear_models/linear_regression/implementation.html">Implementation</a></li>
 </ul>
@@ -1269,7 +1269,7 @@ table below, highlighting the columns of the table.</p>
 </table>
 <p>We can represent this table as a matrix:</p>
 <div class="math notranslate nohighlight" id="equation-eq-term-document-matrix">
-<span class="eqno">(147)<a class="headerlink" href="#equation-eq-term-document-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(149)<a class="headerlink" href="#equation-eq-term-document-matrix" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{equation*}
 \mathbf{X} = \begin{bmatrix}
 \textcolor{red}{1} &amp; \textcolor{green}{0} &amp; \textcolor{blue}{7} &amp; \textcolor{orange}{13} \\
@@ -1288,7 +1288,7 @@ represented as a count vector, a column in <a class="reference internal" href="#
 <p>Readers who are familiar with Machine Learning will start to notice that this matrix has very similar representation to the
 <a class="reference external" href="https://en.wikipedia.org/wiki/Design_matrix">Design Matrix</a>.</p>
 <div class="proof remark admonition" id="term-document-remark">
-<p class="admonition-title"><span class="caption-number">Remark 50 </span> (Number of Features)</p>
+<p class="admonition-title"><span class="caption-number">Remark 51 </span> (Number of Features)</p>
 <section class="remark-content" id="proof-content">
 <p>The authors remarked that this example has only 4 dimensions (words), and 4 samples (documents). However, in practice, the
 there can be <span class="math notranslate nohighlight">\(D\)</span> documents and <span class="math notranslate nohighlight">\(T\)</span> words. Consequently, <span class="math notranslate nohighlight">\(\mathbf{X}\)</span> will have <span class="math notranslate nohighlight">\(D\)</span> rows and <span class="math notranslate nohighlight">\(T\)</span> columns.</p>
@@ -1348,14 +1348,9 @@ conclude that 7 and 13 are <em>closer</em> than 1 and 0.</p>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
-</pre></div>
-</div>
-</div>
 </div>
 <p>Consider the following numpy array <code class="docutils literal notranslate"><span class="pre">X</span></code> representing the one defined in equation
-<a class="reference internal" href="#equation-eq-term-document-matrix">(147)</a>.</p>
+<a class="reference internal" href="#equation-eq-term-document-matrix">(149)</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
@@ -1535,7 +1530,7 @@ when compared to the <a class="reference internal" href="#term-document-table-co
 </table>
 <p>Let’s see how the new matrix look.</p>
 <div class="math notranslate nohighlight" id="equation-eq-term-document-matrix-doc-dimensions">
-<span class="eqno">(148)<a class="headerlink" href="#equation-eq-term-document-matrix-doc-dimensions" title="Permalink to this equation">#</a></span>\[\begin{split}
+<span class="eqno">(150)<a class="headerlink" href="#equation-eq-term-document-matrix-doc-dimensions" title="Permalink to this equation">#</a></span>\[\begin{split}
 \begin{equation*}
 \mathbf{X} = \begin{bmatrix}
 \textcolor{red}{1} &amp; \textcolor{red}{0} &amp; \textcolor{red}{7} &amp; \textcolor{red}{13} \\
@@ -1697,7 +1692,7 @@ for visualization purposes (<code class="docutils literal notranslate"><span cla
         },
         kernelOptions: {
             name: "python3",
-            path: "./deep_learning\natural_language_processing\vector_semantics_and_embeddings\words_and_vectors"
+            path: "./deep_learning/natural_language_processing/vector_semantics_and_embeddings/words_and_vectors"
         },
         predefinedOutput: true
     }
