@@ -213,6 +213,8 @@ to the joint distribution of the input and the label,
 
     Of course, as mentioned, it can be also be used as the sum of squared distances between the data points and their cluster centers in the case of K-Means,
     and hence not restricted to the expected loss $\mathcal{L}$.
+* - $\mathcal{A}$
+  - The learning algorithm $\mathcal{A}$ is the algorithm that is used to learn the parameters $\boldsymbol{\theta}$ of the hypothesis $h$.
 ```
 
 ## Common Terminologies

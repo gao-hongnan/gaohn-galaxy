@@ -101,7 +101,7 @@ We will make this more precise later.
 ### The Loss/Cost/Objective Function
 
 The second part of formulating a machine learning problem is to define the loss function $\mathcal{L}(\cdot)$
-and subsequently the cost function $\widehat{\mathcal{J}}(\cdot)$.
+and subsequently the cost function $\mathcal{J}(\cdot)$.
 
 In supervised learning, we have our typical loss functions such as cross-entropy loss (classification),
 and in regression, we have mean squared error. We also have
@@ -442,11 +442,38 @@ This means the hypothesis space $\mathcal{H}$ is finite with cardinality $K^N$.
 
 For more details, see [here](https://stats.stackexchange.com/posts/502352/) and [here](https://courses.cs.washington.edu/courses/cse446/16sp/clustering_1.pdf).
 
-## Cost Function
+## Loss Function
 
-We make precise the notion of closeness and similarity between data points by defining a cost function
+We make precise the notion of closeness and similarity between data points by defining a loss function
 utilizing the [**euclidean distance**](https://en.wikipedia.org/wiki/Euclidean_distance). In practice, we can use other distance metrics such as [**manhattan distance**](https://simple.wikipedia.org/wiki/Manhattan_distance)
 that suits one's needs.
+
+```{prf:definition} K-Means Loss Function
+:label: def:kmeans-loss
+
+For any assignment $\mathcal{A}(\cdot)$ that maps the set $\{1, 2, \ldots, N\}$ to $\{1, 2, \ldots, K\}$ and
+any centroids $\boldsymbol{v}_1, \boldsymbol{v}_2, \dots, \boldsymbol{v}_K \in \mathbb{R}^{D}$,
+we construct the loss function as follows:
+
+$$
+\begin{aligned}
+\widehat{\mathcal{L}}_{\mathcal{S}}\left(\mathcal{A}, \boldsymbol{v}_1, \boldsymbol{v}_2, \ldots, \boldsymbol{v}_K \right) &= \left\|\mathbf{x}^{(n)} - \boldsymbol{v}_{\mathcal{A}(n)} \right\|^2 \\
+\end{aligned}
+$$
+```
+
+This just means the loss for one single data point $\mathbf{x}^{(n)}$ is the squared euclidean distance between the data point and its assigned centroid.
+
+As a reminder, the hat symbol $\widehat{\cdot}$ is used to denote an estimate of a quantity or function.
+In this case, the loss function $\widehat{\mathcal{L}}_{\mathcal{S}}$ is an estimate of the loss function
+$\mathcal{L}$ since we do not have access to all the data points $\mathbf{x}$.
+
+## Cost Function
+
+However, we are not interested in the loss for a single data point, but rather the loss for all data points in the dataset $\mathcal{S}$.
+
+To this end, the cost function in K-Means is the sum of the loss function over all data points
+$\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N$, defined as follows:
 
 ```{prf:definition} K-Means Cost Function
 :label: def:kmeans-cost
