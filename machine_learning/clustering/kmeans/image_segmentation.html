@@ -1227,7 +1227,47 @@ title="Print to PDF"
             <article class="bd-article" role="main">
               
   <section class="tex2jax_ignore mathjax_ignore" id="application-image-compression-and-segmentation">
-<h1>Application: Image Compression and Segmentation<a class="headerlink" href="#application-image-compression-and-segmentation" title="Permalink to this heading">#</a></h1>
+<h1><a class="toc-backref" href="#id2" role="doc-backlink">Application: Image Compression and Segmentation</a><a class="headerlink" href="#application-image-compression-and-segmentation" title="Permalink to this heading">#</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#application-image-compression-and-segmentation" id="id2">Application: Image Compression and Segmentation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#k-means" id="id3">K-Means</a></p></li>
+<li><p><a class="reference internal" href="#vector-quantization" id="id4">Vector Quantization</a></p>
+<ul>
+<li><p><a class="reference internal" href="#step-1" id="id5">Step 1.</a></p></li>
+<li><p><a class="reference internal" href="#step-2" id="id6">Step 2.</a></p></li>
+<li><p><a class="reference internal" href="#step-3" id="id7">Step 3.</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#a-primer-on-binary-digits-bits-and-8-bit-unsigned-integers" id="id8">A Primer on Binary Digits (Bits) and 8-bit Unsigned Integers</a></p>
+<ul>
+<li><p><a class="reference internal" href="#number-of-bits-needed-for-a-positive-integer" id="id9">Number of Bits needed for a Positive Integer</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#image-compression-with-k-means" id="id10">Image Compression with K-Means</a></p>
+<ul>
+<li><p><a class="reference internal" href="#problem-statement" id="id11">Problem Statement</a></p></li>
+<li><p><a class="reference internal" href="#steps-to-compress-an-image" id="id12">Steps to Compress an Image</a></p></li>
+<li><p><a class="reference internal" href="#example" id="id13">Example</a></p></li>
+<li><p><a class="reference internal" href="#step-by-step-code-implementation" id="id14">Step-By-Step Code Implementation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#load-and-read-the-image" id="id15">Load and Read the Image</a></p></li>
+<li><p><a class="reference internal" href="#size-of-the-image" id="id16">Size of the Image</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#applying-compression-via-k-means" id="id17">Applying Compression via K-Means</a></p></li>
+<li><p><a class="reference internal" href="#reconstruction" id="id18">Reconstruction</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#image-segmentation" id="id19">Image Segmentation</a></p></li>
+<li><p><a class="reference internal" href="#conclusion" id="id20">Conclusion</a></p></li>
+<li><p><a class="reference internal" href="#references-and-further-readings" id="id21">References and Further Readings</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
 <p>Image compression is the process of reducing the size of an image file while maintaining its quality.</p>
 <p>This is important because images take up a lot of memory and bandwidth, and therefore, compressing them can save time, space, and money.</p>
 <p>A frequently used technique for image compression is vector quantization, which maps each pixel in an image to a more limited set of representative colors. One method to accomplish this is through K-Means clustering, where the image is divided into <span class="math notranslate nohighlight">\(K\)</span> clusters and each pixel’s color is replaced by the average color of its cluster. This results in the image being represented by <span class="math notranslate nohighlight">\(K\)</span> distinct colors, which significantly reduces its size.</p>
@@ -1275,23 +1315,23 @@ title="Print to PDF"
 </div>
 </div>
 <section id="k-means">
-<h2>K-Means<a class="headerlink" href="#k-means" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">K-Means</a><a class="headerlink" href="#k-means" title="Permalink to this heading">#</a></h2>
 <p>Before we proceed, ensure that you have a grasp on what K-Means is and how it works. If you need a refresher, you can read the <a class="reference internal" href="concept.html"><span class="doc std std-doc">K-Means concept</span></a> page.</p>
 </section>
 <section id="vector-quantization">
-<h2>Vector Quantization<a class="headerlink" href="#vector-quantization" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Vector Quantization</a><a class="headerlink" href="#vector-quantization" title="Permalink to this heading">#</a></h2>
 <p>Recall that we mentioned that vector quantization is a technique used in image compression to reduce the amount of data needed to represent an image, and that K-Means is a method of vector quantization. We shall see below that they are of equivalent form. Below is an adaptation from “Chapter 21.3. K-Means Clustering.” In Probabilistic Machine Learning: An Introduction, written by Murphy, Kevin P.</p>
 <p>Given a sequence of real-valued vector <span class="math notranslate nohighlight">\(\left\{\mathbf{x}^{(n)}\right\}_{n=1}^N\)</span> where each <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)} \in \mathbb{R}^{D}\)</span>, we can use vector quantization to perform a lossy compression as follows:</p>
 <section id="step-1">
-<h3>Step 1.<a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">Step 1.</a><a class="headerlink" href="#step-1" title="Permalink to this heading">#</a></h3>
 <p>First, we replace each real-valued vector <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)} \in \mathbb{R}^D\)</span> with a discrete symbol <span class="math notranslate nohighlight">\(\mathbf{z}^{(n)} \in \{1, \ldots , K\}\)</span>.</p>
 </section>
 <section id="step-2">
-<h3>Step 2.<a class="headerlink" href="#step-2" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Step 2.</a><a class="headerlink" href="#step-2" title="Permalink to this heading">#</a></h3>
 <p>Then, we define a codebook of <span class="math notranslate nohighlight">\(K\)</span> prototypes <span class="math notranslate nohighlight">\(\left\{\boldsymbol{\mu}_k\right\}_{k=1}^K \in \mathbb{R}^D\)</span>. Since each real-valued vector <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)} \in \mathbb{R}^D\)</span> is replaced with a discrete symbol <span class="math notranslate nohighlight">\(\mathbf{z}^{(n)} \in \{1, \ldots , K\}\)</span>, we can think of the codebook as a lookup table that maps each symbol to a prototype.</p>
 </section>
 <section id="step-3">
-<h3>Step 3.<a class="headerlink" href="#step-3" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Step 3.</a><a class="headerlink" href="#step-3" title="Permalink to this heading">#</a></h3>
 <p>Finally, we encode each real-valued vector <span class="math notranslate nohighlight">\(\mathbf{x}^{(n)} \in \mathbb{R}^D\)</span> by identifying the prototype that is most similar to it, using Euclidean distance as a measure of similarity:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1307,7 +1347,7 @@ title="Print to PDF"
 </section>
 </section>
 <section id="a-primer-on-binary-digits-bits-and-8-bit-unsigned-integers">
-<h2>A Primer on Binary Digits (Bits) and 8-bit Unsigned Integers<a class="headerlink" href="#a-primer-on-binary-digits-bits-and-8-bit-unsigned-integers" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">A Primer on Binary Digits (Bits) and 8-bit Unsigned Integers</a><a class="headerlink" href="#a-primer-on-binary-digits-bits-and-8-bit-unsigned-integers" title="Permalink to this heading">#</a></h2>
 <p>To better appreciate how image compression work, it is important to understand how images (and any information) are stored in computers.</p>
 <p>Information is stored in computers as a series of bits, the smallest units of information used in a computer. They have binary values, meaning they can either be 0 or 1. A series of bits are used to represent data and constitute the backbone of all digital information.</p>
 <p>Images are often stored in 8-bit precision, which means they are represented as 8-bit unsigned integers. An 8-bit unsigned integer is a type of integer data type that can store a positive value between 0 and 255, inclusive, without a sign bit. Each bit in an 8-bit unsigned integer requires one memory space and can only have a value of 0 or 1.</p>
@@ -1315,7 +1355,7 @@ title="Print to PDF"
 <p>This is why most images range from 0 to 255, as they are stored as 8-bit unsigned integers.</p>
 <p>The number of bits needed to store an image depends on the size of the image, the number of color channels, and the number of bits used to represent each color channel.</p>
 <section id="number-of-bits-needed-for-a-positive-integer">
-<h3>Number of Bits needed for a Positive Integer<a class="headerlink" href="#number-of-bits-needed-for-a-positive-integer" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id9" role="doc-backlink">Number of Bits needed for a Positive Integer</a><a class="headerlink" href="#number-of-bits-needed-for-a-positive-integer" title="Permalink to this heading">#</a></h3>
 <p>Given a positive integer <span class="math notranslate nohighlight">\(K\)</span>, the number of bits needed to represent it is:</p>
 <div class="math notranslate nohighlight">
 \[
@@ -1377,11 +1417,11 @@ n_{bits} = \lceil \log_2 K \rceil
 </section>
 </section>
 <section id="image-compression-with-k-means">
-<h2>Image Compression with K-Means<a class="headerlink" href="#image-compression-with-k-means" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Image Compression with K-Means</a><a class="headerlink" href="#image-compression-with-k-means" title="Permalink to this heading">#</a></h2>
 <p>In image compression, we use K-Means to group similar pixels into <span class="math notranslate nohighlight">\(K\)</span> clusters. Each cluster centroid represents a representative color for the pixels in the cluster, and we can map each pixel to the closest centroid. This reduces the number of colors required to represent the image, and thus the size of the image data. The mapping of each pixel to a cluster centroid can be stored using a smaller number of bits compared to the original 24-bit RGB values.</p>
 <p>Where did this 24-bit come from? Let’s define the problem statement and find out!</p>
 <section id="problem-statement">
-<h3>Problem Statement<a class="headerlink" href="#problem-statement" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">Problem Statement</a><a class="headerlink" href="#problem-statement" title="Permalink to this heading">#</a></h3>
 <p>Let an image be denoted by <span class="math notranslate nohighlight">\(\mathbf{I} \in \mathbb{R}^{m \times n \times 3}\)</span>, where <span class="math notranslate nohighlight">\(m\)</span> is the width of the image, <span class="math notranslate nohighlight">\(n\)</span> is the height of the image, and 3 is the number of color channels representing the red, green, and blue colors.</p>
 <p>We have the following properties:</p>
 <ul class="simple">
@@ -1395,7 +1435,7 @@ n_{bits} = \lceil \log_2 K \rceil
 <p>We can then reconstruct the original image <span class="math notranslate nohighlight">\(\mathbf{I}\)</span> from the compressed image <span class="math notranslate nohighlight">\(\mathbf{z}\)</span> by a reconstruction map <span class="math notranslate nohighlight">\(r: \mathbb{R}^{M} \rightarrow \mathbb{R}^{N}\)</span>, such that <span class="math notranslate nohighlight">\(\hat{\mathbf{x}} = r(\mathbf{z}) = r(h(\mathbf{x}))\)</span>. Note that <span class="math notranslate nohighlight">\(\hat{\mathbf{x}}\)</span> is the reconstructed representation of <span class="math notranslate nohighlight">\(\mathbf{x}\)</span> and may or may not be the same as <span class="math notranslate nohighlight">\(\mathbf{x}\)</span>. If they are not the same, then the compression is lossy.</p>
 </section>
 <section id="steps-to-compress-an-image">
-<h3>Steps to Compress an Image<a class="headerlink" href="#steps-to-compress-an-image" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">Steps to Compress an Image</a><a class="headerlink" href="#steps-to-compress-an-image" title="Permalink to this heading">#</a></h3>
 <p>Here is a step-by-step guide of using K-Means for image compression, we will later
 solidify this with code implementation.</p>
 <ul class="simple">
@@ -1407,7 +1447,7 @@ solidify this with code implementation.</p>
 </ul>
 </section>
 <section id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id13" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Permalink to this heading">#</a></h3>
 <p>To put things into perspective, let’s consider a simple example.</p>
 <div class="proof example admonition" id="example-pixels">
 <p class="admonition-title"><span class="caption-number">Example 41 </span> (Example)</p>
@@ -1440,10 +1480,10 @@ This amounts to a total of <span class="math notranslate nohighlight">\(10,000 \
 </section>
 </div></section>
 <section id="step-by-step-code-implementation">
-<h3>Step-By-Step Code Implementation<a class="headerlink" href="#step-by-step-code-implementation" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Step-By-Step Code Implementation</a><a class="headerlink" href="#step-by-step-code-implementation" title="Permalink to this heading">#</a></h3>
 <p>In this section, we will go through the process of applying K-Means for compressing images. Specifically, we will use a hestain<a class="footnote-reference brackets" href="#reference-hestain" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> image, a type of tissue image stained with hematoxylin and eosin (H&amp;E). Pathologists utilize this staining technique to differentiate between tissue types that are colored blue-purple and pink.</p>
 <section id="load-and-read-the-image">
-<h4>Load and Read the Image<a class="headerlink" href="#load-and-read-the-image" title="Permalink to this heading">#</a></h4>
+<h4><a class="toc-backref" href="#id15" role="doc-backlink">Load and Read the Image</a><a class="headerlink" href="#load-and-read-the-image" title="Permalink to this heading">#</a></h4>
 <p>Let’s load the image into memory first.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1478,11 +1518,11 @@ Image dtype: uint8
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/b18cef5b4923862a86741063e0204fc8c18357a70e1761ff7dc8847ea0e54766.svg" src="../../../_images/b18cef5b4923862a86741063e0204fc8c18357a70e1761ff7dc8847ea0e54766.svg" /></div>
+<img alt="../../../_images/a911c89f43f8cd4d323ba735804aeb8689238992efa0d2cbb4d9f002221a41bd.svg" src="../../../_images/a911c89f43f8cd4d323ba735804aeb8689238992efa0d2cbb4d9f002221a41bd.svg" /></div>
 </div>
 </section>
 <section id="size-of-the-image">
-<h4>Size of the Image<a class="headerlink" href="#size-of-the-image" title="Permalink to this heading">#</a></h4>
+<h4><a class="toc-backref" href="#id16" role="doc-backlink">Size of the Image</a><a class="headerlink" href="#size-of-the-image" title="Permalink to this heading">#</a></h4>
 <p>We use the function <code class="docutils literal notranslate"><span class="pre">calculate_num_bits</span></code> defined earlier to calculate how many bits this image takes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1501,7 +1541,7 @@ Image dtype: uint8
 </section>
 </section>
 <section id="applying-compression-via-k-means">
-<h3>Applying Compression via K-Means<a class="headerlink" href="#applying-compression-via-k-means" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Applying Compression via K-Means</a><a class="headerlink" href="#applying-compression-via-k-means" title="Permalink to this heading">#</a></h3>
 <p>In what follows, we will write a function <code class="docutils literal notranslate"><span class="pre">compress_image</span></code> that takes in an image represented as a numpy array <code class="docutils literal notranslate"><span class="pre">image</span></code> and other optional parameters as a dictionary <code class="docutils literal notranslate"><span class="pre">kmeans_kwargs,</span></code> which are passed to the K-Means algorithm.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1621,7 +1661,7 @@ Image dtype: uint8
 </div>
 </section>
 <section id="reconstruction">
-<h3>Reconstruction<a class="headerlink" href="#reconstruction" title="Permalink to this heading">#</a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Reconstruction</a><a class="headerlink" href="#reconstruction" title="Permalink to this heading">#</a></h3>
 <p>In this section, we will write a function <code class="docutils literal notranslate"><span class="pre">reconstruct_image</span></code> that takes in the compressed image represented as a NumPy array <code class="docutils literal notranslate"><span class="pre">compressed_image</span></code>, the <code class="docutils literal notranslate"><span class="pre">centroids</span></code> that was learned from the K-Means algorithm, and <code class="docutils literal notranslate"><span class="pre">original_shape</span></code>, which is the shape of the original image.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1661,7 +1701,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/7545146d55a9400ea7ec1cde715d33a8eaf6b7d13cdaea45bef9398269a57791.svg" src="../../../_images/7545146d55a9400ea7ec1cde715d33a8eaf6b7d13cdaea45bef9398269a57791.svg" /></div>
+<img alt="../../../_images/1164ff83a54fa70b3f18725aabb3e1c6e7e17c99aa6a37951530c6cfb9b27a35.svg" src="../../../_images/1164ff83a54fa70b3f18725aabb3e1c6e7e17c99aa6a37951530c6cfb9b27a35.svg" /></div>
 </div>
 <p>To make the colors more distinct, we can use <code class="docutils literal notranslate"><span class="pre">skimage.color</span></code>.</p>
 <div class="cell docutils container">
@@ -1672,7 +1712,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../../_images/c7d2f6e772ff3399b08f47a6321614580712eb34a2a0fa482f36a3c5656746d9.svg" src="../../../_images/c7d2f6e772ff3399b08f47a6321614580712eb34a2a0fa482f36a3c5656746d9.svg" /></div>
+<img alt="../../../_images/366b9566c000307bfa25dd871d6bda9cb548673dcfa2671feec4bd12eea6687b.svg" src="../../../_images/366b9566c000307bfa25dd871d6bda9cb548673dcfa2671feec4bd12eea6687b.svg" /></div>
 </div>
 <p>We can clearly see that with <span class="math notranslate nohighlight">\(K=2\)</span> clusters, the image is dichotomized into two distinct segments. This is quite a coarse representation of the original image.</p>
 <p>Let’s run the compression technique a few more times, this time with <span class="math notranslate nohighlight">\(K=2, 3, 6\)</span> and <span class="math notranslate nohighlight">\(16\)</span> and observe the results.</p>
@@ -1720,9 +1760,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 |    Compressed size    | 137634  |
 |   Compression ratio   |  0.08   |
 +-----------------------+---------+
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>+-----------------------+---------+
++-----------------------+---------+
 |        Metric         |  Value  |
 +-----------------------+---------+
 |     Original size     | 1650744 |
@@ -1744,7 +1782,7 @@ In summary, the reconstruct_image function takes a compressed image represented 
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/35026401d59095821ce733360dd22af19b96cf179d7824d7c70525dd5329d798.svg" src="../../../_images/35026401d59095821ce733360dd22af19b96cf179d7824d7c70525dd5329d798.svg" /></div>
+<img alt="../../../_images/b3de3e2609e71b90fed4b391b14ed4fdb01e8eb5dc41aa688be4dc8eedfdf482.svg" src="../../../_images/b3de3e2609e71b90fed4b391b14ed4fdb01e8eb5dc41aa688be4dc8eedfdf482.svg" /></div>
 </div>
 <p>As we can see, the quality of the compressed image will depend on the number of clusters used. In general, a larger number of clusters will result in higher image quality, but at the expense of a larger file size.</p>
 <p>We can also use our own implementation of K-Means to perform image compression, we see that the results are the same.
@@ -1774,10 +1812,10 @@ However, ours is very slow since not every operation is vectorized.</p>
 </div><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Converged at iteration 23
 </pre></div>
 </div>
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7ff8e5752d00&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.image.AxesImage at 0x7f4f20ee7f10&gt;
 </pre></div>
 </div>
-<img alt="../../../_images/1f067f347512570623fc378d2a2c31bf41768c28cbe585ba2f68216f43707422.svg" src="../../../_images/1f067f347512570623fc378d2a2c31bf41768c28cbe585ba2f68216f43707422.svg" /></div>
+<img alt="../../../_images/d8322b074269423930d66a5d7abbe40ba54dcd032adff8ce0b52bd0107891c4d.svg" src="../../../_images/d8322b074269423930d66a5d7abbe40ba54dcd032adff8ce0b52bd0107891c4d.svg" /></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1838,14 +1876,14 @@ However, ours is very slow since not every operation is vectorized.</p>
 +-----------------------+---------+
 </pre></div>
 </div>
-<img alt="../../../_images/ca26a260195e28362916a3435345ebcad6efb4222b05f7d66ea7d875c2a5c269.svg" src="../../../_images/ca26a260195e28362916a3435345ebcad6efb4222b05f7d66ea7d875c2a5c269.svg" /></div>
+<img alt="../../../_images/1fdf00d852c9e1fe189510cc6fa22ed9f697ef9caa852ec94a2f6f2c3434c91b.svg" src="../../../_images/1fdf00d852c9e1fe189510cc6fa22ed9f697ef9caa852ec94a2f6f2c3434c91b.svg" /></div>
 </div>
 <p>It is important to note that while K-Means can provide significant size reductions for some images, it may not always be the best method for image compression. K-Means is a lossy compression method, meaning that the quality of the compressed image will be lower than the original image. This means that while it can provide significant size reductions, it may not always be the best method for image compression (i.e. if you are seeking for lossless compression).</p>
 <p>The quality of the compressed image will depend on the number of clusters used and the similarity of the pixels in the image. In general, a larger number of clusters will result in higher image quality, but also a larger file size. Experimentation is often necessary to find the optimal number of clusters for a given image.</p>
 </section>
 </section>
 <section id="image-segmentation">
-<h2>Image Segmentation<a class="headerlink" href="#image-segmentation" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Image Segmentation</a><a class="headerlink" href="#image-segmentation" title="Permalink to this heading">#</a></h2>
 <p>Image compression using K-Means can be viewed as a form of image segmentation in the RGB space. Why is that the case? Let’s first look at the definition of image segmentation.</p>
 <blockquote>
 <div><p>Image segmentation is the process of partitioning a digital image into multiple segments or regions, each of which corresponds to a separate object or part of the image. (Extracted from Wikipedia, Image Segmentation.)</p>
@@ -1856,12 +1894,12 @@ However, ours is very slow since not every operation is vectorized.</p>
 <p>Although K-Means does not assume any underlying probability distribution (unless you view it as Gaussian Mixture Model), we can still view the clustering method as treating each pixel as an independent data point and grouping them together solely based on their color values. As a result, neighboring pixels with different colors may be assigned to different clusters or segments, leading to a loss of spatial coherence in the resulting segmentation or compression. Therefore, if you think that segmenting an image based on the color space is not the aim, you might need to explore other methods. Modern deep learning tends to handle it better with more fine-grained segments.</p>
 </section>
 <section id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">Conclusion</a><a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h2>
 <p>In this article, we covered how we can utilize K-Means as a way to compress images through the concept of vector quantization. We further link how the images can be segmented into different color spaces as a consequence of performing the clustering algorithm.</p>
 <p>K-Means has many other applications, for example, in the context of Natural Language Processing (NLP), you can use it to <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/text/plot_document_clustering.html">cluster documents</a> as well.</p>
 </section>
 <section id="references-and-further-readings">
-<h2>References and Further Readings<a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">References and Further Readings</a><a class="headerlink" href="#references-and-further-readings" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
 <li><p>Murphy, Kevin P. “Chapter 21.3. K-Means Clustering.” In Probabilistic Machine Learning: An Introduction. MIT Press, 2022.</p></li>
 <li><p>Bishop, Christopher M. “Chapter 9.1.1. Image Segmentation and Compression.” In Pattern Recognition and Machine Learning. New York: Springer-Verlag, 2016.</p></li>

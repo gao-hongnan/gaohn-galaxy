@@ -32,6 +32,9 @@ use_svg_display()
 
 # Concept
 
+```{contents}
+```
+
 ## Problem Statement
 
 ```{prf:remark} Remark
@@ -750,6 +753,20 @@ It is important to recognize that the K-Means (Lloyd's) Algorithm optimizes two 
 It alternatively changes both the assignment step $\mathcal{A}^{*}(\cdot)$ and the update step $\boldsymbol{\mu}_k^{[t+1]}$
 to greedily minimize the cost function $\widehat{\mathcal{J}}(\mathcal{A}, \boldsymbol{\mu})$.
 ```
+
+## Model Fitting
+
+The fitting of the K-Means model is straightforward, we directly apply the K-Means Algorithm
+defined in {prf:ref}`lloyd-kmeans-algorithm` to the training data $\mathcal{S}$ to obtain
+the optimal assignment $\mathcal{A}^{*}$ and the optimal cluster centers $\boldsymbol{\mu}^{*}$.
+
+## Model Inference
+
+The inference of the K-Means model is also straightforward, for the new
+data point $\mathbf{x}^{(q)}$, we apply the assignment step $\mathcal{A}^{*}(\cdot)$ to
+it and find the closest cluster center $\boldsymbol{\mu}_k^{*}$, then we assign it to cluster $k$.
+In other words, we assign $\mathbf{x}^{(q)}$ to the cluster that has the closest cluster center.
+
 
 ## Convergence
 

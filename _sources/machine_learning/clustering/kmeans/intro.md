@@ -3,6 +3,11 @@
 K-Means is a non-probabilistic clustering algorithm that is used to group data points into a specified number of clusters.
 However, it can be treated as EM algorithm with a single Gaussian distribution.
 
+## Table of Contents
+
+```{tableofcontents}
+```
+
 ## References and Further Readings
 
 ### Books and Lectures
